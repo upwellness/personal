@@ -8,11 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
-<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/prop-types@15.8.1/prop-types.min.js"></script>
-<script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <style>
   :root {
     --rose: #8C4C4C; --rose-light: #C4857E; --rose-soft: #F4E6E6; --rose-ultra: #FAF3F2;
@@ -32,59 +27,39 @@
   .font-mono { font-family: 'JetBrains Mono', monospace; }
   .font-thai { font-family: 'Sarabun', sans-serif; }
 
-  /* Hero gradient */
   .hero-gradient {
     background:
       radial-gradient(at 80% 20%, rgba(140,76,76,0.95) 0%, transparent 50%),
       radial-gradient(at 20% 80%, rgba(57,103,85,0.9) 0%, transparent 55%),
       linear-gradient(135deg, #6B3535 0%, #8C4C4C 50%, #396755 100%);
   }
-  .card-gradient-rose {
-    background: linear-gradient(135deg, #FAF3F2 0%, #F4E6E6 100%);
-  }
-  .card-gradient-green {
-    background: linear-gradient(135deg, #F0F8F4 0%, #E6EFEA 100%);
-  }
-  .card-gradient-amber {
-    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
-  }
-  .card-gradient-cream {
-    background: linear-gradient(135deg, #FFFDFA 0%, #F5F0EB 100%);
-  }
+  .card-gradient-rose  { background: linear-gradient(135deg, #FAF3F2 0%, #F4E6E6 100%); }
+  .card-gradient-green { background: linear-gradient(135deg, #F0F8F4 0%, #E6EFEA 100%); }
+  .card-gradient-amber { background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); }
   .glow-rose  { box-shadow: 0 8px 32px -8px rgba(140,76,76,0.35), 0 2px 8px rgba(140,76,76,0.1); }
   .glow-green { box-shadow: 0 8px 32px -8px rgba(57,103,85,0.35), 0 2px 8px rgba(57,103,85,0.1); }
   .glow-amber { box-shadow: 0 8px 32px -8px rgba(184,134,11,0.3), 0 2px 8px rgba(184,134,11,0.08); }
 
-  /* Animated counter on entry */
   @keyframes slide-up {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
   .anim-in { animation: slide-up 0.6s ease-out backwards; }
 
-  /* Status pill */
-  .pill-good   { background: #DCFCE7; color: #166534; }
-  .pill-warn   { background: #FEF3C7; color: #92400E; }
-  .pill-bad    { background: #FEE2E2; color: #B91C1C; }
-  .pill-neutral{ background: #F1F5F9; color: #475569; }
+  .pill-good    { background: #DCFCE7; color: #166534; }
+  .pill-warn    { background: #FEF3C7; color: #92400E; }
+  .pill-bad     { background: #FEE2E2; color: #B91C1C; }
+  .pill-neutral { background: #F1F5F9; color: #475569; }
 
-  /* Scroll-snap timeline */
-  .timeline-scroll {
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-  }
-  .timeline-scroll > div {
-    scroll-snap-align: start;
-  }
-
-  /* Sticky nav */
-  .nav-pill {
-    transition: all 0.2s;
-  }
+  .nav-pill { transition: all 0.2s; }
   .nav-pill:hover { background: rgba(140,76,76,0.08); }
-  .nav-pill.active { background: var(--rose); color: white; }
 
-  /* Print */
+  /* Inline SVG line chart */
+  .chart-svg .grid-line { stroke: #E5E2DD; stroke-dasharray: 3 3; }
+  .chart-svg .axis      { fill: #A8A5A0; font-size: 11px; font-family: 'JetBrains Mono', monospace; }
+  .chart-svg .target    { stroke: #16A34A; stroke-dasharray: 4 4; }
+  .chart-svg .target-label { fill: #16A34A; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+
   @media print {
     nav { display: none; }
     .no-print { display: none; }
@@ -109,21 +84,18 @@ window.addEventListener("error", function(e) {
     p.textContent = "Error: " + e.message + "\nFile: " + (e.filename || "inline") + "\nLine: " + e.lineno;
   }
 });
-window.addEventListener("unhandledrejection", function(e) {
-  var p = document.getElementById("error-pane");
-  if (p) {
-    p.style.display = "block";
-    p.textContent = "Promise rejection: " + (e.reason && e.reason.message || e.reason);
-  }
-});
 </script>
 
-<script type="text/babel" data-presets="react">
-const { useState, useEffect, useMemo, useRef } = React;
-const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, ReferenceArea, Legend } = Recharts;
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/htm@3.1.1/dist/htm.umd.js"></script>
 
-/* ─── DATA ──────────────────────────────────────────── */
+<script>
+/* ─── Boot ────────────────────────────────────────── */
+const { useState, useEffect, useMemo } = React;
+const html = htm.bind(React.createElement);
 
+/* ─── DATA ────────────────────────────────────────── */
 const LAB_HISTORY = [
   { date: "Feb 2024",  short: "02/24", hba1c: 7.3, fbs: 117, tg: 227, ldl: 94, hdl: null, uric: null,  source: "Baseline" },
   { date: "May 2024",  short: "05/24", hba1c: 7.4, fbs: 144, tg: 191, ldl: 80, hdl: null, uric: null,  source: "Lab" },
@@ -137,12 +109,12 @@ const LAB_HISTORY = [
 ];
 
 const CGM_STATS = [
-  { label: "Avg glucose",    value: "116",  unit: "mg/dL", target: "<110",  status: "warn",  note: "match HbA1c 6.0" },
-  { label: "GMI (est HbA1c)",value: "6.08%",unit: "",      target: "<5.7%", status: "warn" },
-  { label: "Time in Range",  value: "46.6%",unit: "70-110",target: "≥70%",  status: "bad",   note: "ห่างจากเป้ามาก" },
-  { label: "Hyperglycemia ≥30 min", value: "46", unit: "ครั้ง/30 วัน", target: "<10", status: "bad" },
-  { label: "Worst peak",     value: "234",  unit: "mg/dL", target: "—",     status: "bad",   note: "ขนมเปี๊ยะ+ขนมจีน" },
-  { label: "Coffee spike",   value: "+83",  unit: "mg/dL", target: "≤+30",  status: "bad",   note: "dawn cortisol effect" },
+  { label: "Avg glucose",       value: "116",  unit: "mg/dL", target: "<110",  status: "warn",  note: "match HbA1c 6.0" },
+  { label: "GMI (est HbA1c)",   value: "6.08%",unit: "",      target: "<5.7%", status: "warn", note: null },
+  { label: "Time in Range",     value: "46.6%",unit: "70-110",target: "≥70%",  status: "bad",   note: "ห่างจากเป้ามาก" },
+  { label: "Hyperglycemia ≥30 min", value: "46", unit: "ครั้ง/30 วัน", target: "<10", status: "bad", note: null },
+  { label: "Worst peak",        value: "234",  unit: "mg/dL", target: "—",     status: "bad",   note: "ขนมเปี๊ยะ+ขนมจีน" },
+  { label: "Coffee spike",      value: "+83",  unit: "mg/dL", target: "≤+30",  status: "bad",   note: "dawn cortisol effect" },
 ];
 
 const SUPPLEMENT_PLAN = [
@@ -170,13 +142,13 @@ const DRIFTS = [
 ];
 
 const TARGETS_4WK = [
-  { metric: "CGM Time in Range",  current: "46.6%",       target: "≥ 65%" },
-  { metric: "CGM Avg glucose",    current: "116 mg/dL",   target: "≤ 108" },
-  { metric: "Hyperglycemia episodes", current: "46/30d",  target: "≤ 20" },
-  { metric: "Morning coffee spike", current: "+83 mg/dL", target: "≤ +30" },
-  { metric: "HbA1c (รอบหน้า)",    current: "6.2%",        target: "≤ 5.9%" },
-  { metric: "LDL",                current: "78",          target: "เข้าใจสาเหตุ + ≤ 60" },
-  { metric: "น้ำหนัก",             current: "plateau",     target: "ลง 1-2 kg" },
+  { metric: "CGM Time in Range",      current: "46.6%",       target: "≥ 65%" },
+  { metric: "CGM Avg glucose",        current: "116 mg/dL",   target: "≤ 108" },
+  { metric: "Hyperglycemia episodes", current: "46/30d",      target: "≤ 20" },
+  { metric: "Morning coffee spike",   current: "+83 mg/dL",   target: "≤ +30" },
+  { metric: "HbA1c (รอบหน้า)",         current: "6.2%",        target: "≤ 5.9%" },
+  { metric: "LDL",                    current: "78",          target: "เข้าใจสาเหตุ + ≤ 60" },
+  { metric: "น้ำหนัก",                 current: "plateau",     target: "ลง 1-2 kg" },
 ];
 
 const QUESTIONS_JIN = [
@@ -196,20 +168,24 @@ const SECTIONS = [
   { id: "questions", label: "ถามจิ้น" },
 ];
 
-/* ─── COMPONENTS ────────────────────────────────────── */
+/* ─── Components ─────────────────────────────────── */
 
 function StatusPill({ status, children }) {
-  const cls = {
-    good: "pill-good",
-    warn: "pill-warn",
-    bad:  "pill-bad",
-    neutral: "pill-neutral",
-  }[status];
-  return <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold ${cls}`}>{children}</span>;
+  const cls = { good: "pill-good", warn: "pill-warn", bad: "pill-bad", neutral: "pill-neutral" }[status];
+  return html`<span className=${"inline-flex items-center rounded-full px-3 py-1 text-xs font-bold " + cls}>${children}</span>`;
+}
+
+function HeroStat({ label, value, unit }) {
+  return html`
+    <div className="rounded-2xl bg-white/10 backdrop-blur px-4 py-3 border border-white/15">
+      <div className="text-[10px] uppercase tracking-wider text-white/65 font-mono">${label}</div>
+      <div className="mt-0.5 font-head text-2xl md:text-3xl font-extrabold">${value}</div>
+      <div className="text-xs text-white/60 mt-0.5">${unit}</div>
+    </div>`;
 }
 
 function Hero() {
-  return (
+  return html`
     <header className="hero-gradient text-white">
       <div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
         <div className="flex flex-wrap items-center gap-2 mb-3">
@@ -224,10 +200,10 @@ function Hero() {
           Review Brief ส่งให้จิ้น — ฉบับปรับปรุงหลังเห็น Lab History 2024-2026 + CGM 30 วัน
         </p>
         <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl">
-          <HeroStat label="Lab Records" value="15" unit="จุดเวลา" />
-          <HeroStat label="CGM Readings" value="7,655" unit="ใน 30 วัน" />
-          <HeroStat label="BCA History" value="✓" unit="2 ปี+" />
-          <HeroStat label="Generated" value="16/05" unit="2569" />
+          <${HeroStat} label="Lab Records" value="15" unit="จุดเวลา" />
+          <${HeroStat} label="CGM Readings" value="7,655" unit="ใน 30 วัน" />
+          <${HeroStat} label="BCA History" value="✓" unit="2 ปี+" />
+          <${HeroStat} label="Generated" value="16/05" unit="2569" />
         </div>
         <div className="mt-10 flex flex-wrap items-center gap-2 text-sm text-white/75 font-mono">
           <span>HN R-62-031476</span>
@@ -237,60 +213,55 @@ function Hero() {
           <span>Female · 50+</span>
         </div>
       </div>
-    </header>
-  );
-}
-
-function HeroStat({ label, value, unit }) {
-  return (
-    <div className="rounded-2xl bg-white/10 backdrop-blur px-4 py-3 border border-white/15">
-      <div className="text-[10px] uppercase tracking-wider text-white/65 font-mono">{label}</div>
-      <div className="mt-0.5 font-head text-2xl md:text-3xl font-extrabold">{value}</div>
-      <div className="text-xs text-white/60 mt-0.5">{unit}</div>
-    </div>
-  );
+    </header>`;
 }
 
 function StickyNav({ active, onJump }) {
-  return (
+  return html`
     <nav className="no-print sticky top-0 z-30 bg-white/80 backdrop-blur-lg border-b border-rose-100/60">
       <div className="mx-auto max-w-6xl px-6 py-3 flex flex-wrap items-center gap-1.5">
-        {SECTIONS.map((s) => (
+        ${SECTIONS.map((s) => html`
           <button
-            key={s.id}
-            onClick={() => onJump(s.id)}
-            className={`nav-pill rounded-full px-4 py-1.5 text-sm font-semibold ${active === s.id ? "active text-white" : "text-stone-600"}`}
-            style={active === s.id ? { background: "var(--rose)" } : {}}
-          >
-            {s.label}
-          </button>
-        ))}
+            key=${s.id}
+            onClick=${() => onJump(s.id)}
+            className=${"nav-pill rounded-full px-4 py-1.5 text-sm font-semibold " + (active === s.id ? "text-white" : "text-stone-600")}
+            style=${active === s.id ? { background: "#8C4C4C" } : {}}>
+            ${s.label}
+          </button>`)}
       </div>
-    </nav>
-  );
+    </nav>`;
 }
 
 function SectionLabel({ number, label, accent = "rose" }) {
   const accentColor = { rose: "text-rose-700", green: "text-emerald-700", amber: "text-amber-700" }[accent];
-  return (
+  return html`
     <div className="flex items-baseline gap-3 mb-6">
-      <span className={`font-mono text-xs font-bold tracking-widest ${accentColor}`}>{number}</span>
-      <h2 className="font-head text-3xl md:text-4xl font-extrabold tracking-tight text-stone-900">{label}</h2>
-    </div>
-  );
+      <span className=${"font-mono text-xs font-bold tracking-widest " + accentColor}>${number}</span>
+      <h2 className="font-head text-3xl md:text-4xl font-extrabold tracking-tight text-stone-900">${label}</h2>
+    </div>`;
+}
+
+function BigStat({ label, value, suffix, sub, color }) {
+  const colorClass = { green: "text-emerald-700", amber: "text-amber-700", rose: "text-rose-700" }[color];
+  return html`
+    <div className="bg-white rounded-2xl p-4 shadow-sm">
+      <div className="font-mono text-[10px] uppercase tracking-wider text-stone-500 font-bold">${label}</div>
+      <div className=${"mt-1 font-head text-3xl md:text-4xl font-extrabold leading-none " + colorClass}>
+        ${value}<span className="text-base font-normal text-stone-400">${suffix || ""}</span>
+      </div>
+      <div className="mt-1 text-xs text-stone-500 font-thai">${sub}</div>
+    </div>`;
 }
 
 function Overview() {
-  return (
+  return html`
     <section id="overview" className="mx-auto max-w-6xl px-6 py-14 anim-in">
-      <SectionLabel number="01" label="ภาพรวม — เห็นอะไรหลังย้อนดู 2 ปี" />
+      <${SectionLabel} number="01" label="ภาพรวม — เห็นอะไรหลังย้อนดู 2 ปี" />
 
       <div className="card-gradient-rose glow-rose rounded-3xl p-8 md:p-10 border border-rose-100">
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div>
-            <div className="font-mono text-xs uppercase tracking-widest text-rose-700 font-bold mb-2">
-              ⚡ Key Insight
-            </div>
+            <div className="font-mono text-xs uppercase tracking-widest text-rose-700 font-bold mb-2">⚡ Key Insight</div>
             <h3 className="font-head text-2xl md:text-3xl font-extrabold leading-tight text-stone-900 mb-4">
               Jun 2025 ของจิ้น <span className="text-rose-700">ได้ผลจริง</span><br/>
               ตอนนี้ปัญหาคือ <span className="text-amber-700">protocol หลุด</span>
@@ -300,242 +271,200 @@ function Overview() {
             </p>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <BigStat label="HbA1c best ever" value="5.8" suffix="%" sub="Jun 2025 ✨" color="green" />
-            <BigStat label="ตอนนี้" value="6.2" suffix="%" sub="Feb 2026" color="amber" />
-            <BigStat label="TG best" value="88" sub="Jun 2025 ✨" color="green" />
-            <BigStat label="TG ตอนนี้" value="132" sub="✅ ยังต่ำกว่า 150" color="green" />
+            <${BigStat} label="HbA1c best ever" value="5.8" suffix="%" sub="Jun 2025 ✨" color="green" />
+            <${BigStat} label="ตอนนี้" value="6.2" suffix="%" sub="Feb 2026" color="amber" />
+            <${BigStat} label="TG best" value="88" sub="Jun 2025 ✨" color="green" />
+            <${BigStat} label="TG ตอนนี้" value="132" sub="✅ ยังต่ำกว่า 150" color="green" />
           </div>
         </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6 mt-8">
-        {/* WINS */}
         <div className="card-gradient-green rounded-3xl p-6 md:p-8 border border-emerald-100 glow-green">
           <div className="flex items-center gap-2 mb-4">
             <span className="text-2xl">🟢</span>
             <h3 className="font-head text-xl font-extrabold text-emerald-800">Wins · ของจริง</h3>
           </div>
           <div className="space-y-3">
-            {WINS.map((w, i) => (
-              <div key={i} className="bg-white/60 backdrop-blur rounded-xl p-4">
+            ${WINS.map((w, i) => html`
+              <div key=${i} className="bg-white/60 backdrop-blur rounded-xl p-4">
                 <div className="flex items-center justify-between gap-3">
-                  <div className="font-thai font-bold text-stone-900">{w.metric}</div>
+                  <div className="font-thai font-bold text-stone-900">${w.metric}</div>
                   <div className="font-mono text-sm">
-                    <span className="text-stone-400 line-through">{w.from}{w.suffix}</span>
+                    <span className="text-stone-400 line-through">${w.from}${w.suffix}</span>
                     <span className="text-stone-400 mx-1">→</span>
-                    <span className="font-bold text-emerald-700 text-base">{w.to}{w.suffix}</span>
+                    <span className="font-bold text-emerald-700 text-base">${w.to}${w.suffix}</span>
                   </div>
                 </div>
-                <div className="mt-1 text-xs text-stone-600 font-thai">{w.trend}</div>
-              </div>
-            ))}
+                <div className="mt-1 text-xs text-stone-600 font-thai">${w.trend}</div>
+              </div>`)}
           </div>
         </div>
 
-        {/* DRIFTS */}
         <div className="card-gradient-amber rounded-3xl p-6 md:p-8 border border-amber-100 glow-amber">
           <div className="flex items-center gap-2 mb-4">
             <span className="text-2xl">🟠</span>
             <h3 className="font-head text-xl font-extrabold text-amber-800">Drift · กำลังหลุด</h3>
           </div>
           <div className="space-y-3">
-            {DRIFTS.map((d, i) => (
-              <div key={i} className="bg-white/60 backdrop-blur rounded-xl p-4">
+            ${DRIFTS.map((d, i) => html`
+              <div key=${i} className="bg-white/60 backdrop-blur rounded-xl p-4">
                 <div className="flex items-center justify-between gap-3">
-                  <div className="font-thai font-bold text-stone-900">{d.metric}</div>
+                  <div className="font-thai font-bold text-stone-900">${d.metric}</div>
                   <div className="font-mono text-sm">
-                    <span className="text-emerald-700">{d.from}{d.suffix}</span>
+                    <span className="text-emerald-700">${d.from}${d.suffix}</span>
                     <span className="text-stone-400 mx-1">→</span>
-                    <span className="font-bold text-amber-700 text-base">{d.to}{d.suffix}</span>
+                    <span className="font-bold text-amber-700 text-base">${d.to}${d.suffix}</span>
                   </div>
                 </div>
-                <div className="mt-1 text-xs text-stone-600 font-thai">{d.trend}</div>
-              </div>
-            ))}
+                <div className="mt-1 text-xs text-stone-600 font-thai">${d.trend}</div>
+              </div>`)}
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>`;
 }
 
-function BigStat({ label, value, suffix, sub, color }) {
-  const colorClass = {
-    green:  "text-emerald-700",
-    amber:  "text-amber-700",
-    rose:   "text-rose-700",
-  }[color];
-  return (
-    <div className="bg-white rounded-2xl p-4 shadow-sm">
-      <div className="font-mono text-[10px] uppercase tracking-wider text-stone-500 font-bold">{label}</div>
-      <div className={`mt-1 font-head text-3xl md:text-4xl font-extrabold leading-none ${colorClass}`}>
-        {value}<span className="text-base font-normal text-stone-400">{suffix}</span>
-      </div>
-      <div className="mt-1 text-xs text-stone-500 font-thai">{sub}</div>
-    </div>
-  );
-}
+/* ─── Custom SVG line chart (no Recharts) ─────────────────── */
+function TimelineChart({ data, color, target, targetLabel, unit }) {
+  const W = 760, H = 320, pad = { top: 20, right: 30, bottom: 36, left: 50 };
+  const xs = data.map((_, i) => i);
+  const ys = data.map((d) => d.value);
+  const allYs = [...ys, target];
+  const yMin = Math.min(...allYs) * 0.92;
+  const yMax = Math.max(...allYs) * 1.08;
+  const xScale = (i) => pad.left + (i / Math.max(1, data.length - 1)) * (W - pad.left - pad.right);
+  const yScale = (v) => pad.top + (1 - (v - yMin) / (yMax - yMin)) * (H - pad.top - pad.bottom);
 
-/* ─── Timeline Chart ─────────────────────────────────── */
+  const linePath = data.map((d, i) => (i === 0 ? "M" : "L") + xScale(i) + " " + yScale(d.value)).join(" ");
+  const yTicks = 4;
+  const yTickValues = Array.from({ length: yTicks + 1 }, (_, i) => yMin + (i / yTicks) * (yMax - yMin));
+
+  return html`
+    <svg className="chart-svg" viewBox=${"0 0 " + W + " " + H} style=${{ width: "100%", height: "auto" }} preserveAspectRatio="xMidYMid meet">
+      ${yTickValues.map((v, i) => html`
+        <g key=${"y" + i}>
+          <line className="grid-line" x1=${pad.left} y1=${yScale(v)} x2=${W - pad.right} y2=${yScale(v)} />
+          <text className="axis" x=${pad.left - 8} y=${yScale(v) + 4} textAnchor="end">${v.toFixed(0)}</text>
+        </g>`)}
+
+      <line className="target" x1=${pad.left} y1=${yScale(target)} x2=${W - pad.right} y2=${yScale(target)} />
+      <text className="target-label" x=${W - pad.right - 4} y=${yScale(target) - 6} textAnchor="end">${targetLabel}</text>
+
+      <path d=${linePath} fill="none" stroke=${color} strokeWidth="3" />
+
+      ${data.map((d, i) => {
+        const cx = xScale(i), cy = yScale(d.value);
+        const isBest = d.best;
+        return html`
+          <g key=${"pt" + i}>
+            <circle cx=${cx} cy=${cy} r=${isBest ? 9 : 5} fill=${isBest ? "#FBBF24" : color} stroke="white" strokeWidth="2.5" />
+            ${isBest && html`<text x=${cx} y=${cy - 18} textAnchor="middle" fontSize="11" fontWeight="bold" fill="#92400E">✨ Best</text>`}
+            <text className="axis" x=${cx} y=${H - 18} textAnchor="middle">${d.short}</text>
+            <title>${d.date}: ${d.value} ${unit}</title>
+          </g>`;
+      })}
+    </svg>`;
+}
 
 function Timeline() {
   const [metric, setMetric] = useState("hba1c");
-  const metricDef = {
+  const metricDefs = {
     hba1c: { label: "HbA1c", unit: "%",     color: "#8C4C4C", target: 5.7, targetLabel: "เป้า <5.7" },
     fbs:   { label: "FBS",   unit: "mg/dL", color: "#B8860B", target: 99,  targetLabel: "เป้า <100" },
     tg:    { label: "Triglyceride", unit: "mg/dL", color: "#396755", target: 150, targetLabel: "เป้า <150" },
     ldl:   { label: "LDL",   unit: "mg/dL", color: "#3A9CB3", target: 100, targetLabel: "เป้า <100" },
-  }[metric];
-  const data = LAB_HISTORY
-    .filter((d) => d[metric] != null)
-    .map((d) => ({ ...d, value: d[metric] }));
+  };
+  const def = metricDefs[metric];
+  const data = LAB_HISTORY.filter((d) => d[metric] != null).map((d) => ({ ...d, value: d[metric] }));
 
-  return (
+  return html`
     <section id="timeline" className="bg-white py-16">
       <div className="mx-auto max-w-6xl px-6 anim-in">
-        <SectionLabel number="02" label="Timeline · 2 ปีย้อนหลัง" accent="rose" />
+        <${SectionLabel} number="02" label="Timeline · 2 ปีย้อนหลัง" accent="rose" />
 
-        {/* Metric switcher */}
         <div className="flex flex-wrap gap-2 mb-6">
-          {Object.entries(metricDef && { hba1c:1, fbs:1, tg:1, ldl:1 }).map(([k]) => (
-            <button key={k}
-              onClick={() => setMetric(k)}
-              className={`rounded-full px-5 py-2 text-sm font-bold transition-all ${
-                metric === k
-                  ? "bg-stone-900 text-white shadow-md"
-                  : "bg-stone-100 text-stone-600 hover:bg-stone-200"
-              }`}>
-              {{hba1c:"HbA1c %", fbs:"FBS", tg:"Triglyceride", ldl:"LDL"}[k]}
-            </button>
-          ))}
+          ${Object.keys(metricDefs).map((k) => html`
+            <button key=${k}
+              onClick=${() => setMetric(k)}
+              className=${"rounded-full px-5 py-2 text-sm font-bold transition-all " + (metric === k ? "bg-stone-900 text-white shadow-md" : "bg-stone-100 text-stone-600 hover:bg-stone-200")}>
+              ${({ hba1c: "HbA1c %", fbs: "FBS", tg: "Triglyceride", ldl: "LDL" })[k]}
+            </button>`)}
         </div>
 
         <div className="rounded-3xl bg-stone-50 p-6 md:p-8 border border-stone-100">
           <div className="flex items-baseline justify-between mb-4">
             <div>
-              <div className="font-mono text-xs uppercase tracking-wider text-stone-500 font-bold">{metricDef.label}</div>
-              <div className="mt-1 font-head text-2xl font-extrabold text-stone-900">{metricDef.label} ({metricDef.unit})</div>
+              <div className="font-mono text-xs uppercase tracking-wider text-stone-500 font-bold">${def.label}</div>
+              <div className="mt-1 font-head text-2xl font-extrabold text-stone-900">${def.label} (${def.unit})</div>
             </div>
-            <div className="text-right">
-              <div className="text-xs text-stone-500 font-thai">{metricDef.targetLabel}</div>
-            </div>
+            <div className="text-right text-xs text-stone-500 font-thai">${def.targetLabel}</div>
           </div>
-
-          <div style={{ height: 320 }}>
-            <ResponsiveContainer>
-              <LineChart data={data} margin={{ top: 16, right: 24, bottom: 8, left: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#E5E2DD" />
-                <XAxis dataKey="short" stroke="#A8A5A0" style={{ fontSize: 12 }} />
-                <YAxis stroke="#A8A5A0" style={{ fontSize: 12 }} />
-                <Tooltip
-                  contentStyle={{
-                    background: "white",
-                    border: "1px solid #E5E2DD",
-                    borderRadius: 12,
-                    padding: 12,
-                    fontFamily: "Sarabun, sans-serif",
-                  }}
-                  formatter={(v, n, p) => [`${v} ${metricDef.unit}`, metricDef.label]}
-                  labelFormatter={(l, payload) => payload?.[0]?.payload?.date ?? l}
-                />
-                <ReferenceLine y={metricDef.target} stroke="#16A34A" strokeDasharray="4 4" label={{ value: metricDef.targetLabel, position: "right", fill: "#16A34A", fontSize: 11 }} />
-                <Line
-                  type="monotone" dataKey="value"
-                  stroke={metricDef.color} strokeWidth={3}
-                  dot={(props) => {
-                    const { cx, cy, payload } = props;
-                    const isBest = payload.best;
-                    return (
-                      <g>
-                        <circle cx={cx} cy={cy} r={isBest ? 10 : 5} fill={isBest ? "#FBBF24" : metricDef.color} stroke="white" strokeWidth={2} />
-                        {isBest && <text x={cx} y={cy - 18} textAnchor="middle" fontSize="11" fontWeight="bold" fill="#92400E">✨ Best</text>}
-                      </g>
-                    );
-                  }}
-                  activeDot={{ r: 8 }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+          <${TimelineChart} data=${data} color=${def.color} target=${def.target} targetLabel=${def.targetLabel} unit=${def.unit} />
         </div>
 
-        {/* Source legend */}
         <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-2 text-xs">
-          {LAB_HISTORY.map((d, i) => (
-            <div key={i} className={`rounded-lg px-3 py-2 ${d.best ? "bg-amber-50 border border-amber-200" : "bg-stone-50"}`}>
-              <div className="font-mono font-bold text-stone-900">{d.date}</div>
-              <div className="text-stone-500">{d.source}</div>
-            </div>
-          ))}
+          ${LAB_HISTORY.map((d, i) => html`
+            <div key=${i} className=${"rounded-lg px-3 py-2 " + (d.best ? "bg-amber-50 border border-amber-200" : "bg-stone-50")}>
+              <div className="font-mono font-bold text-stone-900">${d.date}</div>
+              <div className="text-stone-500">${d.source}</div>
+            </div>`)}
         </div>
       </div>
-    </section>
-  );
+    </section>`;
 }
 
-/* ─── CGM Section ─────────────────────────────────── */
-
 function CgmSection() {
-  return (
+  const triggerMeals = [
+    { meal: "ขนมเปี๊ยะ + ขนมจีน", peak: 234, note: "refined carb stack" },
+    { meal: "Jonesalad", peak: 220, note: "dressing/croutons" },
+    { meal: "ขนมเปี๊ยะเดี่ยว", peak: 209, note: "flour + sugar" },
+    { meal: "กาแฟดำเปล่า", peak: 202, note: "dawn cortisol +83" },
+  ];
+  return html`
     <section id="cgm" className="mx-auto max-w-6xl px-6 py-16 anim-in">
-      <SectionLabel number="03" label="CGM 30 วัน · ยืนยัน priority" accent="amber" />
-
+      <${SectionLabel} number="03" label="CGM 30 วัน · ยืนยัน priority" accent="amber" />
       <p className="text-lg text-stone-600 mb-8 font-thai">
         ดึงข้อมูลตรงจาก Supabase · 7,655 readings · 30.4 วัน (21 ก.พ. – 23 มี.ค. 2569)
       </p>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {CGM_STATS.map((s, i) => (
-          <div key={i} className="bg-white rounded-2xl p-6 border border-stone-100 shadow-sm hover:shadow-md transition-shadow">
+        ${CGM_STATS.map((s, i) => html`
+          <div key=${i} className="bg-white rounded-2xl p-6 border border-stone-100 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-3">
-              <div className="font-mono text-[10px] uppercase tracking-wider text-stone-500 font-bold">{s.label}</div>
-              <StatusPill status={s.status}>
-                {s.status === "good" ? "OK" : s.status === "warn" ? "เฝ้า" : "เกิน"}
-              </StatusPill>
+              <div className="font-mono text-[10px] uppercase tracking-wider text-stone-500 font-bold">${s.label}</div>
+              <${StatusPill} status=${s.status}>${s.status === "good" ? "OK" : s.status === "warn" ? "เฝ้า" : "เกิน"}</${StatusPill}>
             </div>
             <div className="flex items-baseline gap-1">
-              <span className="font-head text-3xl md:text-4xl font-extrabold text-stone-900">{s.value}</span>
-              <span className="text-sm text-stone-400 font-mono">{s.unit}</span>
+              <span className="font-head text-3xl md:text-4xl font-extrabold text-stone-900">${s.value}</span>
+              <span className="text-sm text-stone-400 font-mono">${s.unit}</span>
             </div>
             <div className="mt-2 text-sm text-stone-500 font-thai">
-              {s.target && <span className="font-mono">เป้า {s.target}</span>}
-              {s.note && <div className="text-xs mt-1 text-stone-500">{s.note}</div>}
+              ${s.target && html`<span className="font-mono">เป้า ${s.target}</span>`}
+              ${s.note && html`<div className="text-xs mt-1 text-stone-500">${s.note}</div>`}
             </div>
-          </div>
-        ))}
+          </div>`)}
       </div>
 
-      {/* Worst meals */}
       <div className="mt-8 rounded-3xl bg-gradient-to-br from-rose-50 to-amber-50 p-6 md:p-8 border border-rose-100">
-        <div className="font-mono text-xs uppercase tracking-widest text-rose-700 font-bold mb-4">
-          🍽️ Top trigger meals
-        </div>
+        <div className="font-mono text-xs uppercase tracking-widest text-rose-700 font-bold mb-4">🍽️ Top trigger meals</div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          {[
-            { meal: "ขนมเปี๊ยะ + ขนมจีน", peak: 234, note: "refined carb stack" },
-            { meal: "Jonesalad", peak: 220, note: "dressing/croutons" },
-            { meal: "ขนมเปี๊ยะเดี่ยว", peak: 209, note: "flour + sugar" },
-            { meal: "กาแฟดำเปล่า", peak: 202, note: "dawn cortisol +83" },
-          ].map((m, i) => (
-            <div key={i} className="bg-white/80 backdrop-blur rounded-xl p-4">
-              <div className="font-thai font-bold text-sm text-stone-900">{m.meal}</div>
+          ${triggerMeals.map((m, i) => html`
+            <div key=${i} className="bg-white/80 backdrop-blur rounded-xl p-4">
+              <div className="font-thai font-bold text-sm text-stone-900">${m.meal}</div>
               <div className="mt-1 flex items-baseline gap-1">
-                <span className="font-head text-2xl font-extrabold text-rose-700">{m.peak}</span>
+                <span className="font-head text-2xl font-extrabold text-rose-700">${m.peak}</span>
                 <span className="text-xs text-stone-500 font-mono">mg/dL</span>
               </div>
-              <div className="mt-1 text-xs text-stone-500 font-thai">{m.note}</div>
-            </div>
-          ))}
+              <div className="mt-1 text-xs text-stone-500 font-thai">${m.note}</div>
+            </div>`)}
         </div>
       </div>
-    </section>
-  );
+    </section>`;
 }
 
-/* ─── Plan Section ─────────────────────────────────── */
-
 function PlanSection() {
-  const tierLabel = (level) => ({ 1: "Top Priority", 2: "Important", 3: "Maintenance" }[level]);
+  const tierLabel = (level) => ({ 1: "Top Priority", 2: "Important", 3: "Maintenance" })[level];
   const changeColor = {
     expand: "bg-amber-100 text-amber-800",
     new: "bg-rose-100 text-rose-800 ring-2 ring-rose-300",
@@ -544,130 +473,102 @@ function PlanSection() {
     keep: "bg-emerald-100 text-emerald-800",
     delay: "bg-stone-100 text-stone-500",
   };
-
-  return (
+  return html`
     <section id="plan" className="bg-white py-16">
       <div className="mx-auto max-w-6xl px-6 anim-in">
-        <SectionLabel number="04" label="ตารางปรับ Supplement v2" />
-
+        <${SectionLabel} number="04" label="ตารางปรับ Supplement v2" />
         <p className="text-lg text-stone-600 mb-8 font-thai">
           จัดลำดับใหม่ตาม priority ปัจจุบัน · เน้น glucose control · ลด TG-focused (TG แก้ได้แล้ว)
         </p>
-
         <div className="space-y-3">
-          {SUPPLEMENT_PLAN.map((p, i) => (
-            <div key={i} className={`rounded-2xl border p-5 md:p-6 transition-all hover:shadow-lg ${
+          ${SUPPLEMENT_PLAN.map((p, i) => html`
+            <div key=${i} className=${"rounded-2xl border p-5 md:p-6 transition-all hover:shadow-lg " + (
               p.level === 1 ? "card-gradient-rose border-rose-200" :
               p.level === 2 ? "bg-white border-stone-200" :
               "bg-stone-50 border-stone-100"
-            }`}>
+            )}>
               <div className="flex flex-wrap items-start gap-4">
                 <div className="flex items-center gap-3 shrink-0">
-                  <span className="text-3xl md:text-4xl">{p.rank}</span>
+                  <span className="text-3xl md:text-4xl">${p.rank}</span>
                   <div>
-                    <div className="font-mono text-[10px] uppercase tracking-wider text-stone-500 font-bold">{tierLabel(p.level)}</div>
-                    <div className="font-head text-xl md:text-2xl font-extrabold text-stone-900">{p.sku}</div>
+                    <div className="font-mono text-[10px] uppercase tracking-wider text-stone-500 font-bold">${tierLabel(p.level)}</div>
+                    <div className="font-head text-xl md:text-2xl font-extrabold text-stone-900">${p.sku}</div>
                   </div>
                 </div>
                 <div className="flex-1 min-w-[200px]">
                   <div className="font-mono text-[10px] uppercase tracking-wider text-stone-500 font-bold mb-1">Dose · Timing</div>
-                  <div className="font-thai text-base text-stone-800 leading-snug">{p.dose}</div>
+                  <div className="font-thai text-base text-stone-800 leading-snug">${p.dose}</div>
                 </div>
-                <span className={`shrink-0 self-start rounded-full px-3 py-1 text-xs font-bold ${changeColor[p.changeType]}`}>
-                  {p.change}
+                <span className=${"shrink-0 self-start rounded-full px-3 py-1 text-xs font-bold " + changeColor[p.changeType]}>
+                  ${p.change}
                 </span>
               </div>
-              <div className="mt-4 pl-1 md:pl-16 font-thai text-stone-700 leading-relaxed">
-                {p.reason}
-              </div>
-            </div>
-          ))}
+              <div className="mt-4 pl-1 md:pl-16 font-thai text-stone-700 leading-relaxed">${p.reason}</div>
+            </div>`)}
         </div>
       </div>
-    </section>
-  );
+    </section>`;
 }
 
-/* ─── Targets ─────────────────────────────────────── */
-
 function Targets() {
-  return (
+  return html`
     <section id="targets" className="mx-auto max-w-6xl px-6 py-16 anim-in">
-      <SectionLabel number="05" label="เป้า 4 สัปดาห์" accent="green" />
-
+      <${SectionLabel} number="05" label="เป้า 4 สัปดาห์" accent="green" />
       <div className="card-gradient-green rounded-3xl p-8 md:p-10 border border-emerald-100 glow-green">
-        <div className="font-mono text-xs uppercase tracking-widest text-emerald-700 font-bold mb-2">
-          🎯 หลัง start v2 protocol
-        </div>
+        <div className="font-mono text-xs uppercase tracking-widest text-emerald-700 font-bold mb-2">🎯 หลัง start v2 protocol</div>
         <h3 className="font-head text-2xl md:text-3xl font-extrabold text-stone-900 mb-6">
           ภายใน 28 วัน · ตัวเลขที่ควรเห็น
         </h3>
-
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {TARGETS_4WK.map((t, i) => (
-            <div key={i} className="bg-white/70 backdrop-blur rounded-2xl p-5">
-              <div className="font-thai text-sm font-semibold text-stone-600">{t.metric}</div>
+          ${TARGETS_4WK.map((t, i) => html`
+            <div key=${i} className="bg-white/70 backdrop-blur rounded-2xl p-5">
+              <div className="font-thai text-sm font-semibold text-stone-600">${t.metric}</div>
               <div className="mt-2 flex items-baseline justify-between">
                 <div>
                   <div className="font-mono text-[10px] text-stone-400 uppercase tracking-wider">Now</div>
-                  <div className="font-head text-lg font-bold text-stone-500">{t.current}</div>
+                  <div className="font-head text-lg font-bold text-stone-500">${t.current}</div>
                 </div>
                 <div className="text-2xl text-emerald-600">→</div>
                 <div className="text-right">
                   <div className="font-mono text-[10px] text-emerald-700 uppercase tracking-wider">Target</div>
-                  <div className="font-head text-lg font-extrabold text-emerald-700">{t.target}</div>
+                  <div className="font-head text-lg font-extrabold text-emerald-700">${t.target}</div>
                 </div>
               </div>
-            </div>
-          ))}
+            </div>`)}
         </div>
       </div>
-    </section>
-  );
+    </section>`;
 }
-
-/* ─── Questions for Jin ──────────────────────────────── */
 
 function Questions() {
   const [checked, setChecked] = useState({});
-
   const toggle = (i) => setChecked((p) => ({ ...p, [i]: !p[i] }));
-
-  return (
+  return html`
     <section id="questions" className="bg-stone-900 text-white py-16 anim-in">
       <div className="mx-auto max-w-4xl px-6">
         <div className="flex items-baseline gap-3 mb-6">
           <span className="font-mono text-xs font-bold tracking-widest text-rose-300">06</span>
-          <h2 className="font-head text-3xl md:text-4xl font-extrabold tracking-tight text-white">
-            ขอจิ้น Review 5 ข้อ
-          </h2>
+          <h2 className="font-head text-3xl md:text-4xl font-extrabold tracking-tight text-white">ขอจิ้น Review 5 ข้อ</h2>
         </div>
-        <p className="text-lg text-stone-300 mb-10 font-thai">
-          ก่อนนำไปคุยกับพี่สุ · ติ้กเช็คเมื่อจิ้น confirm แต่ละข้อ
-        </p>
+        <p className="text-lg text-stone-300 mb-10 font-thai">ก่อนนำไปคุยกับพี่สุ · ติ้กเช็คเมื่อจิ้น confirm แต่ละข้อ</p>
 
         <div className="space-y-3">
-          {QUESTIONS_JIN.map((q, i) => (
-            <div key={i}
-              onClick={() => toggle(i)}
-              className={`group cursor-pointer rounded-2xl p-5 md:p-6 transition-all border ${
-                checked[i] ? "bg-emerald-900/30 border-emerald-400/40" : "bg-white/5 border-white/10 hover:bg-white/10"
-              }`}>
+          ${QUESTIONS_JIN.map((q, i) => html`
+            <div key=${i}
+              onClick=${() => toggle(i)}
+              className=${"group cursor-pointer rounded-2xl p-5 md:p-6 transition-all border " + (checked[i] ? "bg-emerald-900/30 border-emerald-400/40" : "bg-white/5 border-white/10 hover:bg-white/10")}>
               <div className="flex items-start gap-4">
-                <div className={`shrink-0 h-7 w-7 rounded-md flex items-center justify-center mt-0.5 transition-all ${
-                  checked[i] ? "bg-emerald-500 text-white" : "bg-white/10 border border-white/30"
-                }`}>
-                  {checked[i] ? "✓" : <span className="font-mono text-xs text-white/60">{i + 1}</span>}
+                <div className=${"shrink-0 h-7 w-7 rounded-md flex items-center justify-center mt-0.5 transition-all " + (checked[i] ? "bg-emerald-500 text-white" : "bg-white/10 border border-white/30")}>
+                  ${checked[i] ? "✓" : html`<span className="font-mono text-xs text-white/60">${i + 1}</span>`}
                 </div>
                 <div className="flex-1">
-                  <div className={`font-head text-lg md:text-xl font-extrabold ${checked[i] ? "line-through text-stone-400" : "text-white"}`}>
-                    {q.q}
+                  <div className=${"font-head text-lg md:text-xl font-extrabold " + (checked[i] ? "line-through text-stone-400" : "text-white")}>
+                    ${q.q}
                   </div>
-                  <div className="mt-2 text-stone-300 font-thai leading-relaxed">{q.desc}</div>
+                  <div className="mt-2 text-stone-300 font-thai leading-relaxed">${q.desc}</div>
                 </div>
               </div>
-            </div>
-          ))}
+            </div>`)}
         </div>
 
         <div className="mt-10 rounded-2xl bg-amber-500/15 border border-amber-400/30 p-6">
@@ -682,14 +583,11 @@ function Questions() {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>`;
 }
 
-/* ─── Footer ─────────────────────────────────────────── */
-
 function FooterBlock() {
-  return (
+  return html`
     <footer className="bg-stone-100 py-12">
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
@@ -706,11 +604,8 @@ function FooterBlock() {
           เอกสารนี้สำหรับ Pharmacist Review เท่านั้น · ห้ามแชร์ก่อนจิ้น confirm · UPLABS internal use
         </div>
       </div>
-    </footer>
-  );
+    </footer>`;
 }
-
-/* ─── App ────────────────────────────────────────────── */
 
 function App() {
   const [active, setActive] = useState("overview");
@@ -728,26 +623,26 @@ function App() {
   }, []);
 
   const onJump = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  return (
+  return html`
     <div className="min-h-screen">
-      <Hero />
-      <StickyNav active={active} onJump={onJump} />
-      <Overview />
-      <Timeline />
-      <CgmSection />
-      <PlanSection />
-      <Targets />
-      <Questions />
-      <FooterBlock />
-    </div>
-  );
+      <${Hero} />
+      <${StickyNav} active=${active} onJump=${onJump} />
+      <${Overview} />
+      <${Timeline} />
+      <${CgmSection} />
+      <${PlanSection} />
+      <${Targets} />
+      <${Questions} />
+      <${FooterBlock} />
+    </div>`;
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<App />);
+root.render(html`<${App} />`);
 </script>
 
 </body>
