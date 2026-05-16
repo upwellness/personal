@@ -120,7 +120,7 @@ const CGM_STATS = [
 const SUPPLEMENT_PLAN = [
   { rank: "🥇", level: 1, sku: "Calow", dose: "2 เม็ด ก่อนทั้ง 3 มื้อหลัก · 15-20 นาที", reason: "Glucose drift กลับ · CGM peak 234 จาก refined carb · ขยายจากเฉพาะมื้อ trigger เป็น 3 มื้อหลัก", change: "ขยาย dose", changeType: "expand" },
   { rank: "🥇", level: 1, sku: "Berberine ⭐ ใหม่", dose: "500mg ก่อนมื้อใหญ่ 1-2 ครั้ง/วัน", reason: "HbA1c drift 5.8→6.2 · evidence A สำหรับ insulin sensitivity · ตรง issue ที่สุดตอนนี้", change: "เพิ่มใหม่", changeType: "new" },
-  { rank: "🥇", level: 1, sku: "Fiber Powder", dose: "1 ช้อนก่อนมื้อเช้า + ก่อนกาแฟ", reason: "กาแฟดำ +83 spike · fiber blunt morning glucose ตรงจุด · เลือก fiber > protein (พี่สุได้ protein พอจากอาหาร)", change: "ระบุชัด", changeType: "modify" },
+  { rank: "🥇", level: 1, sku: "Nutrilite Fiber (Powder หรือ Chewable Blend)", dose: "ก่อนมื้อเช้า + ก่อนกาแฟ · ขนาดตาม label SKU ที่จิ้นมี", reason: "กาแฟดำ +83 spike · fiber blunt morning glucose ตรงจุด · เลือก fiber > protein (พี่สุได้ protein พอจากอาหาร)", change: "ระบุชัด", changeType: "modify" },
   { rank: "🥈", level: 2, sku: "Vitamin D3", dose: "2,000 IU/วัน (pharmacy)", reason: "ขาดอยู่ · D ต่ำ → insulin resistance · Nutrilite TH dose ต่ำเกิน → pharmacy แทน", change: "คงเดิม", changeType: "keep" },
   { rank: "🥈", level: 2, sku: "Triple Omega", dose: "1-2 เม็ด/วัน · maintenance", reason: "TG normalized แล้ว (132) ไม่ใช่ priority · ใช้สำหรับ anti-inflammatory + HDL boost (HDL ยังต่ำ)", change: "ลด dose", changeType: "reduce" },
   { rank: "🥉", level: 3, sku: "Vitamin B Plus + Bio C", dose: "1 เม็ดเช้า แต่ละตัว", reason: "Foundational stack · stress metabolism + antioxidant", change: "คงเดิม", changeType: "keep" },
@@ -157,7 +157,7 @@ const SYSTEM_REVIEW = [
     journey: "7.4 → 5.8 ✨ → 6.2 · drift กลับใน 9 เดือน",
     status: "drift",
     verdict: "ห่างจาก T2DM 0.3 จุด · priority #1 ตอนนี้",
-    upWellness: ["Full Course Phase 1 = replicate Jun 25 strict reset", "Calow 2 เม็ด · 3 มื้อหลัก", "Fiber Powder ก่อนกาแฟเช้า", "CGM-guided ระหว่าง program"],
+    upWellness: ["Full Course Phase 1 = replicate Jun 25 strict reset", "Calow 2 เม็ด · 3 มื้อหลัก", "Nutrilite Fiber product ก่อนกาแฟเช้า (Fiber Powder หรือ Chewable Fiber Blend ตามที่จิ้นมี stock)", "CGM-guided ระหว่าง program"],
     external: [
       { item: "Berberine HCl 500mg × 3/day", nutrilite: "❌ Nutrilite ไม่มี (global ก็ไม่มี · ไม่ใช่ Amway ingredient)", note: "iHerb / Mega We Care · ~1,200 บ/เดือน · จิ้นต้อง clear drug interaction" },
       { item: "OGTT 2hr · Fasting Insulin · HOMA-IR", nutrilite: "—", note: "lab test · Paolo ~2,500 บ" }
@@ -308,7 +308,7 @@ const SYSTEM_REVIEW = [
     journey: "66 kg → ลดได้ → plateau 9 เดือน",
     status: "watch",
     verdict: "Stuck · Insulin resistance + NAFLD = metabolic block",
-    upWellness: ["Full Course 60 วัน (4 phases · BDK alternating · 14 ซอง/กล่อง)", "All Plant Protein 35g/2 scoops (สนับสนุน lean mass · prevent sarcopenia · ฿1,330/450g)", "BCA Tracker monthly + UP Pulse wearable"],
+    upWellness: ["Full Course 60 วัน (4 phases · BDK alternating · 14 ซอง/กล่อง)", "All Plant Protein · soy+wheat+pea blend (สนับสนุน lean mass · prevent sarcopenia · ดูปริมาณโปรตีน/scoop จาก label · catalog ไม่ consistent)", "BCA Tracker monthly + UP Pulse wearable"],
     external: [
       { item: "Strength training 2-3x/week", nutrilite: "—", note: "🌱 สำคัญที่สุดสำหรับหญิง 50+ · prevent sarcopenia" },
       { item: "GLP-1 (Ozempic/Mounjaro) consideration", nutrilite: "❌ ไม่มีใน Nutrilite", note: "คุยแพทย์ endocrine · ~5-8k/เดือน · 3-6 เดือน trial" }
@@ -320,7 +320,7 @@ const SYSTEM_REVIEW = [
     journey: "ขาดเรื้อรัง",
     status: "active",
     verdict: "ต้องตรวจ + เสริมทันที",
-    upWellness: ["Cal-Mag-D 2 tabs/วัน = ~330 IU D3 (จาก 164 IU × 2 tabs) · ยังต่ำกว่า 2,000 IU therapeutic", "DoubleX ~100 IU/6-tab dose · เสริมไม่ถึง"],
+    upWellness: ["Cal-Mag-D 2 tabs/วัน = ~330 IU D3 (จาก 164 IU × 2 tabs) · ยังต่ำกว่า 2,000 IU therapeutic", "DoubleX 5mcg (~200 IU) per 6-tab dose · เสริมไม่ถึง therapeutic"],
     external: [
       { item: "Vitamin D3 2,000 IU/วัน standalone", nutrilite: "❌ Nutrilite Vitamin D = DISCONTINUED TH (global SKU 119346 มี 2000 IU แต่ไทยไม่ active)", note: "Pharmacy · ~200-400 บ/เดือน · D3 (cholecalciferol) ดูดซึมดีกว่า D2" },
       { item: "25(OH)D test baseline", nutrilite: "—", note: "ตรวจก่อนเริ่ม · Paolo ~600 บ · เป้าหมาย ≥ 40 ng/mL" }
@@ -339,7 +339,7 @@ const NUTRILITE_GAP_ANALYSIS = {
     { item: "Fiber (mixed soluble/insoluble)", note: "Chewable Fiber Blend · 13 plants" },
     { item: "Probiotic", note: "1 sachet/วัน · strain ไม่เปิดเผย" },
     { item: "Plant protein", note: "All Plant Protein · 16g/scoop · soy+wheat+pea" },
-    { item: "Phytonutrient (turmeric · quercetin · resveratrol)", note: "Concentrated F&V + DoubleX" },
+    { item: "Phytonutrient (turmeric · quercetin · lutein · lycopene · rosemary)", note: "Concentrated F&V + DoubleX 17 phyto blend (catalog confirmed · ไม่มี resveratrol)" },
     { item: "Calow (carb blocker)", note: "เฉพาะ UP Wellness · 2 tabs ก่อนอาหาร" },
   ],
   cannotCover: [
