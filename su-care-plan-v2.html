@@ -159,8 +159,8 @@ const SYSTEM_REVIEW = [
     verdict: "ห่างจาก T2DM 0.3 จุด · priority #1 ตอนนี้",
     upWellness: ["Full Course Phase 1 = replicate Jun 25 strict reset", "Calow 2 เม็ด · 3 มื้อหลัก", "Fiber Powder ก่อนกาแฟเช้า", "CGM-guided ระหว่าง program"],
     external: [
-      { item: "Berberine HCl 500mg × 3/day", nutrilite: "❌ ไม่มีใน Nutrilite", note: "pharmacy · จิ้นต้อง clear drug interaction" },
-      { item: "OGTT 2hr · Fasting Insulin · HOMA-IR", nutrilite: "—", note: "lab test · ~2,500 บ" }
+      { item: "Berberine HCl 500mg × 3/day", nutrilite: "❌ Nutrilite ไม่มี (global ก็ไม่มี · ไม่ใช่ Amway ingredient)", note: "iHerb / Mega We Care · ~1,200 บ/เดือน · จิ้นต้อง clear drug interaction" },
+      { item: "OGTT 2hr · Fasting Insulin · HOMA-IR", nutrilite: "—", note: "lab test · Paolo ~2,500 บ" }
     ],
     observe: "ถ้า HbA1c > 6.5 หลัง 8 สัปดาห์ = ต้องคุยหมอเรื่อง metformin" },
 
@@ -169,19 +169,19 @@ const SYSTEM_REVIEW = [
     journey: "275 → 88 ✨ → 132 · stable <150 มา 9 เดือน",
     status: "win",
     verdict: "ระบบเราพิสูจน์แล้ว · maintain mode พอ",
-    upWellness: ["Triple Omega 1-2 เม็ด/วัน (ลดจาก 3)", "ไม่ต้องลงทุน intervention ใหม่"],
+    upWellness: ["Triple Omega 1-2 cap/วัน (ลดจาก 3) · EPA 286+DHA 214/cap", "ไม่ต้องลงทุน intervention ใหม่"],
     external: [],
-    observe: "ถ้า TG > 150 หลัง 3 เดือน = adherence issue · review diet" },
+    observe: "ถ้า TG > 150 หลัง 3 เดือน = adherence issue · review diet · AHA = 1-2g EPA+DHA/วัน = ต้อง Triple Omega 2-4 cap" },
 
   { id: "ldl", system: "Lipid · LDL", icon: "🟡",
     current: "78 mg/dL (acceptable แต่ bounce)",
     journey: "94 → 42 ✨ → 78 · +36 ใน 5 เดือน",
     status: "watch",
     verdict: "Bounce shocking · ต้องรู้ root cause ก่อน",
-    upWellness: ["Customer Records review (track ของเก่า)", "Triple Omega · DoubleX support"],
+    upWellness: ["Customer Records review (track ของเก่า)", "Triple Omega · DoubleX support", "Garlic Heart Care = DISCONTINUED TH (เคยมี allicin ~5mg)"],
     external: [
       { item: "คุยแพทย์เรื่อง statin", nutrilite: "—", note: "ถ้าเคยกินแล้วหยุด = ทำไม?" },
-      { item: "Apo B + Lp(a)", nutrilite: "—", note: "true CV risk · ~1,500 บ" }
+      { item: "Apo B + Lp(a)", nutrilite: "—", note: "true CV risk · Paolo ~1,500 บ" }
     ],
     observe: "LDL goal สำหรับพี่สุ = <100 (มี NAFLD + pre-diabetes = risk เพิ่ม)" },
 
@@ -192,47 +192,47 @@ const SYSTEM_REVIEW = [
     verdict: "Improving · ต้องการ +4-6 อีก",
     upWellness: ["Full Course standard stack (Triple Omega + DoubleX + protein)", "Strength training · UP Wellness coaching"],
     external: [
-      { item: "Niacin (B3) 500mg", nutrilite: "🟡 Vitamin B Plus มี niacin · dose ต่ำ", note: "ปรึกษาแพทย์ · ถ้า dose สูงทำให้ flush" }
+      { item: "Niacin (B3) 500-2000mg therapy", nutrilite: "🟡 Vit B Plus = niacinamide 16mg/tab · DoubleX 10mg/6-tab · ต่ำกว่า therapeutic dose 30-100×", note: "ถ้าจำเป็น = pharmacy extended-release niacin · แพทย์สั่ง" }
     ],
-    observe: "HDL function test (HDL efflux) ถ้าอยากแม่นจริง · pharmacy lab" },
+    observe: "HDL function test (HDL efflux) ถ้าอยากแม่นจริง · pharmacy lab · niacin therapy ทำ flush + liver enzyme rise" },
 
   { id: "nafld", system: "Liver · NAFLD", icon: "🟫",
     current: "FibroScan CAP 263.5 (S1) · E 7.1 (F1-F2)",
     journey: "ตรวจครั้งแรก Nov 25 · ไม่มี trend",
     status: "active",
     verdict: "Active disease · มีพังผืดเริ่ม · reversible ใน 1-2 ปี",
-    upWellness: ["Full Course = NAFLD program (BodyKey + Triple Omega + DoubleX + Bio C)", "low fructose diet ใน meal plan", "Choline เป็น part ของ DoubleX phyto blend"],
+    upWellness: ["Full Course = NAFLD program (BodyKey + Triple Omega + DoubleX + Bio C)", "low fructose diet ใน meal plan", "Concentrated F&V (รวม turmeric · quercetin · phytonutrient) · 1615 บ/30 วัน"],
     external: [
-      { item: "Vitamin E 400 IU mixed tocopherol", nutrilite: "🟡 DoubleX มี Vit E · dose ต่ำ (PIVENS = 800 IU)", note: "pharmacy · ต้องตรวจ ALT baseline" },
-      { item: "Choline 500mg / Phosphatidylcholine", nutrilite: "❌ ไม่มีใน TH · DoubleX มีน้อย", note: "pharmacy" },
-      { item: "Silymarin (Milk Thistle) 140mg", nutrilite: "❌ ไม่มีใน TH", note: "optional · B-grade evidence" },
+      { item: "Vitamin E 400-800 IU mixed tocopherol", nutrilite: "❌ Standalone Vit E = DISCONTINUED TH (Lecithin-E เก่ามี 30 IU · ตอนนี้ไม่มี) · DoubleX มี Vit E แต่ < clinical dose มาก", note: "Pharmacy · PIVENS NEJM 2010 dose = 800 IU · ต้องตรวจ ALT baseline" },
+      { item: "Choline 500mg / Phosphatidylcholine", nutrilite: "❌ Nutrilite TH ไม่มี choline standalone · Lecithin-E เก่ามี soy lecithin แต่ DISCONTINUED", note: "Pharmacy · NAFLD evidence B · ~600 บ/เดือน" },
+      { item: "Silymarin (Milk Thistle) 140mg", nutrilite: "❌ ไม่มีใน Nutrilite TH · ไม่มีใน global lineup", note: "optional · B-grade evidence · ~500 บ/เดือน" },
       { item: "FibroScan ซ้ำ 6 เดือน", nutrilite: "—", note: "Paolo · ~2,000 บ" }
     ],
-    observe: "ALT/AST baseline ก่อนเริ่ม Vit E · ถ้า ALT > 60 = ปรึกษา hepatologist" },
+    observe: "ALT/AST baseline ก่อนเริ่ม Vit E · ถ้า ALT > 60 = ปรึกษา hepatologist · NAFLD พี่สุ Active = need Vit E + Choline ที่ Nutrilite TH ไม่ครอบ" },
 
   { id: "kidney", system: "Kidney · eGFR", icon: "🟧",
     current: "89.51 (Stage 2 · borderline)",
     journey: "ตรวจ Nov 25 ครั้งแรก",
     status: "watch",
     verdict: "Mild early CKD · associated กับ metabolic syndrome",
-    upWellness: ["Cal Mag D ก่อนนอน (electrolyte + insulin)", "CoQ10 Phase 2 (mitochondria)", "ห้าม Vit C > 500mg (oxalate stones)"],
+    upWellness: ["Cal Mag D 2 tabs/วัน (Ca 234+Mg 118 elemental/tab × 2)", "CoQ10 Plus 1-3 caps Phase 2 (mitochondria · 29.5mg/cap = ต้อง 3-7 caps สำหรับ clinical 100mg)", "ห้าม Bio C > 500mg/วัน (1 tab Bio C Plus = 550mg = อย่ากินเกิน · oxalate stone)"],
     external: [
-      { item: "Urine ACR (microalbumin)", nutrilite: "—", note: "Paolo · diabetic nephropathy screen" },
+      { item: "Urine ACR (microalbumin)", nutrilite: "—", note: "Paolo · diabetic nephropathy screen · ~500 บ" },
       { item: "eGFR ซ้ำทุก 3 เดือน", nutrilite: "—", note: "" }
     ],
-    observe: "ถ้า eGFR < 60 = หยุด supplement บางตัว · ปรึกษา nephrologist" },
+    observe: "ถ้า eGFR < 60 = หยุด supplement บางตัว (Mg, K, Vit C) · ปรึกษา nephrologist" },
 
   { id: "cbc", system: "CBC · Mild Anemia", icon: "🔴",
     current: "WBC 3.84 · Hb 11.7 · Hct 35.2 · Lymph 52% (high)",
     journey: "ตรวจ Nov 25 ครั้งแรก",
     status: "watch",
     verdict: "Mild anemia + Lymph สูง · ต้อง workup ก่อน",
-    upWellness: ["Vitamin B Plus (B-complex)", "Bio C (iron absorption · เมื่อพร้อม)"],
+    upWellness: ["Vitamin B Plus (B-complex รวม · B12 dose 2mcg ต่ำ · ผู้สูงอายุควรได้ 500-1000mcg)", "Bio C Plus (550mg · ช่วย iron absorption · 1 tab/วัน)", "Spinach Plus (Folic 170mcg/tab · 2 tabs = 340mcg · close to RDA 400)"],
     external: [
-      { item: "Iron Folate", nutrilite: "✅ Nutrilite Iron Folate (Fe 18mg + Folate)", note: "ใช้ Nutrilite ได้ · แต่ตรวจ ferritin ก่อน" },
-      { item: "Ferritin · Serum Iron · TIBC · B12 · Folate", nutrilite: "—", note: "ก่อน supplement · ~1,500 บ" }
+      { item: "Iron supplement 18-65mg", nutrilite: "❌ Iron Folic = DISCONTINUED TH · Spinach Plus มี Folate แต่ไม่มี iron · DoubleX iron 3.5mg/dose (ต่ำมาก)", note: "Pharmacy iron · Ferrous fumarate / sulfate · ~300 บ/เดือน · เริ่มเมื่อ ferritin confirm ต่ำ" },
+      { item: "Ferritin · Serum Iron · TIBC · B12 · Folate", nutrilite: "—", note: "Paolo · ~1,500 บ · ก่อนเสริม iron" }
     ],
-    observe: "⚠️ ถ้า ferritin สูง = NAFLD iron overload · ห้าม iron · ถ้า Lymph > 4,000 absolute = ปรึกษา hematologist" },
+    observe: "⚠️ ถ้า ferritin สูง = NAFLD iron overload · ห้าม iron · ถ้า Lymph > 4,000 absolute (ตรวจ absolute count) = ปรึกษา hematologist" },
 
   { id: "thyroid", system: "Thyroid", icon: "🦋",
     current: "TSH 2.274 · FT3 2.49 · FT4 1.11 (all normal)",
@@ -287,12 +287,12 @@ const SYSTEM_REVIEW = [
     journey: "Detected Nov 25 · ไม่มี baseline",
     status: "watch",
     verdict: "ก้ำกึ่ง · ต้องตรวจซ้ำ + คุยหมอ",
-    upWellness: ["CoQ10 200mg (mitochondria + cardiac)", "Triple Omega (rhythm support)"],
+    upWellness: ["CoQ10 Plus 3-4 caps/วัน (29.5mg/cap · ต้อง 3-4 caps ให้ได้ 100mg clinical dose · ค่อนข้างแพง)", "Triple Omega 2 caps/วัน (rhythm support · AHA dose)"],
     external: [
       { item: "EKG repeat + Echo + Stress test", nutrilite: "—", note: "ถ้ามีอาการเหนื่อย/แน่นหน้าอก · ~3,000 บ" },
       { item: "ปรึกษาแพทย์โรคหัวใจ", nutrilite: "—", note: "Paolo มี" }
     ],
-    observe: "ถ้ามี palpitation · chest pain · SOB = ตรวจทันที · ไม่รอ" },
+    observe: "ถ้ามี palpitation · chest pain · SOB = ตรวจทันที · ไม่รอ · CoQ10 Plus 4 caps × 60 วัน = 4 ขวด ค่อนข้างหนักงบ" },
 
   { id: "chest", system: "Imaging · Chest X-ray", icon: "🫁",
     current: "ปกติ",
@@ -308,24 +308,55 @@ const SYSTEM_REVIEW = [
     journey: "66 kg → ลดได้ → plateau 9 เดือน",
     status: "watch",
     verdict: "Stuck · Insulin resistance + NAFLD = metabolic block",
-    upWellness: ["Full Course 60 วัน (4 phases · BDK alternating)", "BCA Tracker monthly", "All Plant Protein (preserve muscle)"],
+    upWellness: ["Full Course 60 วัน (4 phases · BDK alternating · 14 ซอง/กล่อง)", "All Plant Protein 35g/2 scoops (สนับสนุน lean mass · prevent sarcopenia · ฿1,330/450g)", "BCA Tracker monthly + UP Pulse wearable"],
     external: [
-      { item: "Strength training 2-3x/week", nutrilite: "—", note: "🌱 สำคัญที่สุดสำหรับหญิง 50+ · prevent sarcopenia" }
+      { item: "Strength training 2-3x/week", nutrilite: "—", note: "🌱 สำคัญที่สุดสำหรับหญิง 50+ · prevent sarcopenia" },
+      { item: "GLP-1 (Ozempic/Mounjaro) consideration", nutrilite: "❌ ไม่มีใน Nutrilite", note: "คุยแพทย์ endocrine · ~5-8k/เดือน · 3-6 เดือน trial" }
     ],
-    observe: "ถ้า BMI > 30 + HbA1c > 6.5 = GLP-1 candidate · คุยแพทย์ endocrine" },
+    observe: "ถ้า BMI > 30 + HbA1c > 6.5 = GLP-1 candidate · คุยแพทย์ endocrine · พี่สุ BMI อาจไม่ถึง 30 แต่ visceral fat patterns + NAFLD ก็พิจารณาได้" },
 
   { id: "vitd", system: "Vitamin D", icon: "☀️",
     current: "ขาด (ตามประวัติ · ไม่ได้ตรวจล่าสุด)",
     journey: "ขาดเรื้อรัง",
     status: "active",
     verdict: "ต้องตรวจ + เสริมทันที",
-    upWellness: ["DoubleX มี Vit D แต่ dose ต่ำ"],
+    upWellness: ["Cal-Mag-D 2 tabs/วัน = ~330 IU D3 (จาก 164 IU × 2 tabs) · ยังต่ำกว่า 2,000 IU therapeutic", "DoubleX ~100 IU/6-tab dose · เสริมไม่ถึง"],
     external: [
-      { item: "Vitamin D3 2,000 IU/วัน", nutrilite: "❌ Nutrilite TH dose ต่ำเกิน (400 IU)", note: "pharmacy · 300 บ/เดือน" },
-      { item: "25(OH)D test baseline", nutrilite: "—", note: "ตรวจก่อนเริ่ม · เป้าหมาย > 40 ng/mL" }
+      { item: "Vitamin D3 2,000 IU/วัน standalone", nutrilite: "❌ Nutrilite Vitamin D = DISCONTINUED TH (global SKU 119346 มี 2000 IU แต่ไทยไม่ active)", note: "Pharmacy · ~200-400 บ/เดือน · D3 (cholecalciferol) ดูดซึมดีกว่า D2" },
+      { item: "25(OH)D test baseline", nutrilite: "—", note: "ตรวจก่อนเริ่ม · Paolo ~600 บ · เป้าหมาย ≥ 40 ng/mL" }
     ],
-    observe: "ถ้า 25(OH)D < 20 = deficient · loading dose 50,000 IU/สัปดาห์ × 8 สัปดาห์" }
+    observe: "ถ้า 25(OH)D < 20 = deficient · loading dose D2/D3 50,000 IU/สัปดาห์ × 8 สัปดาห์ (แพทย์สั่ง) · Nutrilite TH dose ต่ำเกินไป · ต้อง pharmacy" }
 ];
+
+const NUTRILITE_GAP_ANALYSIS = {
+  canCover: [
+    { item: "Triple Omega (EPA+DHA)", note: "500mg/cap · ต้อง 2-4 caps/วัน ให้ AHA dose 1-2g" },
+    { item: "Vitamin B Plus (B-complex)", note: "B12 dose ต่ำ (2mcg) · ผู้สูงอายุควรได้ 500-1000mcg" },
+    { item: "Bio C Plus (Vitamin C)", note: "550mg/tab · well-dosed" },
+    { item: "Calcium + Magnesium + Vit D combo", note: "Cal-Mag-D · Vit D ต่ำเกิน · Ca/Mg พอใช้" },
+    { item: "Multivitamin foundation", note: "DoubleX PhytoBlend · 12 vit + 9 mineral + 17 phyto" },
+    { item: "Folate", note: "Spinach Plus 170mcg/tab · DoubleX 100mcg/6-tab" },
+    { item: "Fiber (mixed soluble/insoluble)", note: "Chewable Fiber Blend · 13 plants" },
+    { item: "Probiotic", note: "1 sachet/วัน · strain ไม่เปิดเผย" },
+    { item: "Plant protein", note: "All Plant Protein · 16g/scoop · soy+wheat+pea" },
+    { item: "Phytonutrient (turmeric · quercetin · resveratrol)", note: "Concentrated F&V + DoubleX" },
+    { item: "Calow (carb blocker)", note: "เฉพาะ UP Wellness · 2 tabs ก่อนอาหาร" },
+  ],
+  cannotCover: [
+    { item: "Vitamin D3 2,000 IU standalone", reason: "DISCONTINUED TH · pharmacy เท่านั้น" },
+    { item: "Vitamin E 400-800 IU mixed tocopherol", reason: "Lecithin-E DISCONTINUED · NAFLD PIVENS dose ไม่มีใน TH" },
+    { item: "Choline / Phosphatidylcholine 500mg", reason: "ไม่มีใน Nutrilite TH · NAFLD adjunct" },
+    { item: "Silymarin (Milk Thistle) 140mg", reason: "ไม่มีใน Nutrilite line ที่ไหนเลย · NAFLD adjunct" },
+    { item: "Iron supplement 18-65mg", reason: "Iron Folic DISCONTINUED · Spinach Plus มี folate ไม่มี iron พอ" },
+    { item: "Garlic / Allicin", reason: "Garlic Heart Care DISCONTINUED TH (เคยมี allicin 5mg/dose)" },
+    { item: "Niacin (B3) 500-2000mg therapy", reason: "B Plus 16mg · ต่ำกว่า therapeutic 30-100×" },
+    { item: "CoQ10 100mg clinical dose", reason: "CoQ10 Plus 29.5mg/cap · ต้อง 3-4 caps/วัน = แพง" },
+    { item: "L-carnitine / Taurine clinical", reason: "CoQ10 Plus มี L-carnitine 100mg + Taurine 150mg · ต่ำกว่า study dose 5-20×" },
+    { item: "Berberine HCl", reason: "ไม่มีใน Nutrilite product line global · iHerb/Mega" },
+    { item: "GLP-1 agonist (Ozempic/Mounjaro)", reason: "Pharmaceutical · แพทย์สั่ง" },
+    { item: "Metformin", reason: "Pharmaceutical · แพทย์สั่ง · ราคา ~150 บ/เดือน" },
+  ],
+};
 
 const QUESTIONS_JIN = [
   { q: "Jun 2025 protocol คืออะไรกันแน่", desc: "Nutrilite stack + dose + meal plan ตอนนั้นเป็นแบบไหน? ถ้า replicate ได้คือคำตอบหลัก · อย่าให้เราเริ่มจากศูนย์" },
@@ -779,8 +810,58 @@ function SystemReview() {
           ${filtered.map((item) => html`<${SystemCard} key=${item.id} item=${item} />`)}
         </div>
 
-        <div className="mt-10 rounded-2xl bg-stone-900 text-white p-6 md:p-8">
-          <div className="font-mono text-xs uppercase tracking-widest text-rose-300 font-bold mb-3">📊 Summary</div>
+        <div className="mt-10 rounded-3xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
+          <div className="font-mono text-xs uppercase tracking-widest text-rose-700 font-bold mb-2">💊 Nutrilite TH Coverage Analysis</div>
+          <h3 className="font-head text-2xl md:text-3xl font-extrabold text-stone-900 mb-2">Nutrilite ทำได้แค่ไหน · ที่ต้องไป External</h3>
+          <p className="font-thai text-stone-600 mb-6">
+            ข้อมูลจาก Nutrilite Thailand catalog 23 SKUs · จิ้น cross-check ได้
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-5">
+            <div className="rounded-2xl bg-emerald-50 border border-emerald-200 p-5">
+              <div className="font-mono text-xs uppercase tracking-widest text-emerald-700 font-bold mb-3">
+                ✅ Nutrilite TH ครอบได้ (${NUTRILITE_GAP_ANALYSIS.canCover.length} รายการ)
+              </div>
+              <ul className="space-y-2">
+                ${NUTRILITE_GAP_ANALYSIS.canCover.map((c, i) => html`
+                  <li key=${i} className="font-thai text-sm leading-snug">
+                    <div className="font-semibold text-stone-900 flex items-start gap-1.5">
+                      <span className="text-emerald-600 shrink-0">●</span><span>${c.item}</span>
+                    </div>
+                    <div className="text-xs text-stone-500 ml-4">${c.note}</div>
+                  </li>`)}
+              </ul>
+            </div>
+
+            <div className="rounded-2xl bg-rose-50 border border-rose-200 p-5">
+              <div className="font-mono text-xs uppercase tracking-widest text-rose-700 font-bold mb-3">
+                ❌ Nutrilite TH ครอบไม่ได้ · ต้อง External (${NUTRILITE_GAP_ANALYSIS.cannotCover.length} รายการ)
+              </div>
+              <ul className="space-y-2">
+                ${NUTRILITE_GAP_ANALYSIS.cannotCover.map((c, i) => html`
+                  <li key=${i} className="font-thai text-sm leading-snug">
+                    <div className="font-semibold text-stone-900 flex items-start gap-1.5">
+                      <span className="text-rose-600 shrink-0">●</span><span>${c.item}</span>
+                    </div>
+                    <div className="text-xs text-stone-500 ml-4">${c.reason}</div>
+                  </li>`)}
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-6 rounded-2xl bg-amber-50 border border-amber-200 p-5">
+            <div className="font-mono text-xs uppercase tracking-widest text-amber-700 font-bold mb-2">⚠️ จุดเสี่ยงสำหรับพี่สุ (NAFLD + Pre-diabetes + Anemia + Vit D ขาด)</div>
+            <p className="font-thai text-stone-800 leading-relaxed">
+              พี่สุต้องการ <b className="text-rose-700">Vit D3, Vit E (NAFLD), Iron (anemia)</b> ที่ Nutrilite TH discontinued ทั้งหมด
+              + <b className="text-rose-700">Berberine, Choline, Silymarin</b> ที่ไม่มีใน lineup เลย
+              <br/><br/>
+              → ต้องผสม UP Wellness Full Course + Pharmacy adjunct = <b>70/30 split</b> ตามที่เสนอ
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-6 rounded-2xl bg-stone-900 text-white p-6 md:p-8">
+          <div className="font-mono text-xs uppercase tracking-widest text-rose-300 font-bold mb-3">📊 Status Summary</div>
           <h3 className="font-head text-2xl font-extrabold mb-4">16 ระบบ · ตอนนี้ยืนตรงไหน</h3>
           <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
             ${Object.entries({
