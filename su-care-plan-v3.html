@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>พี่สุ · Care Plan v3 — รีวิวผลล่าสุด Feb 2026 + CGM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --rose: #8C4C4C; --rose-deep: #6B3535; --rose-soft: #F4E6E6; --rose-ultra: #FAF3F2;
+    --green: #396755; --green-deep: #2A4F40; --green-soft: #E6EFEA;
+    --cream: #F5F0EB; --ink: #1F1F1F; --amber: #B8860B;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Sarabun', 'Inter', sans-serif;
+    background: #F8FAFC;
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  .font-head { font-family: 'Inter', sans-serif; letter-spacing: -0.02em; }
+  .font-mono { font-family: 'JetBrains Mono', monospace; }
+  .font-thai { font-family: 'Sarabun', sans-serif; }
+
+  /* Smooth transitions — 200ms per design system */
+  button, a, [role="button"] { transition: all 200ms ease; cursor: pointer; }
+  button:focus-visible, a:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; }
+
+  .hero-gradient {
+    background:
+      radial-gradient(at 15% 25%, rgba(140,76,76,0.95) 0%, transparent 50%),
+      radial-gradient(at 85% 15%, rgba(184,134,11,0.4) 0%, transparent 50%),
+      radial-gradient(at 25% 85%, rgba(57,103,85,0.9) 0%, transparent 55%),
+      linear-gradient(135deg, #6B3535 0%, #8C4C4C 40%, #396755 100%);
+  }
+
+  /* Priority card themes */
+  .pri-1 { background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 60%, #fff 100%); }
+  .pri-2 { background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 60%, #fff 100%); }
+  .pri-3 { background: linear-gradient(135deg, #FFFBEB 0%, #FDE68A 50%, #fff 100%); }
+  .pri-4 { background: linear-gradient(135deg, #FEFCE8 0%, #FEF9C3 60%, #fff 100%); }
+  .pri-5 { background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 50%, #fff 100%); }
+
+  .pill-rose   { background: #FEE2E2; color: #991B1B; }
+  .pill-amber  { background: #FEF3C7; color: #92400E; }
+  .pill-green  { background: #D1FAE5; color: #065F46; }
+  .pill-stone  { background: #F1F5F9; color: #475569; }
+
+  .glow-rose  { box-shadow: 0 8px 32px -8px rgba(140,76,76,0.25); }
+  .glow-green { box-shadow: 0 8px 32px -8px rgba(57,103,85,0.25); }
+  .glow-amber { box-shadow: 0 8px 32px -8px rgba(184,134,11,0.25); }
+
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .anim-in { animation: slide-up 600ms ease-out backwards; }
+  @media (prefers-reduced-motion: reduce) {
+    .anim-in { animation: none; }
+    * { transition: none !important; }
+  }
+
+  @media print { .no-print { display: none !important; } body { background: white; } section { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div id="root">
+  <div style="padding: 60px 24px; max-width: 600px; margin: 0 auto; text-align: center; font-family: Sarabun, sans-serif;">
+    <div style="font-size: 14px; color: #8C4C4C; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;">UP Wellness</div>
+    <div style="margin-top: 16px; font-size: 24px; font-weight: 800;">กำลังโหลด...</div>
+    <div id="error-pane" style="margin-top: 24px; padding: 16px; background: #FEE2E2; color: #991B1B; border-radius: 12px; font-family: monospace; font-size: 13px; text-align: left; white-space: pre-wrap; display: none;"></div>
+  </div>
+</div>
+<script>
+window.addEventListener("error", function(e) {
+  var p = document.getElementById("error-pane");
+  if (p) { p.style.display = "block"; p.textContent = "Error: " + e.message; }
+});
+</script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/htm@3.1.1/dist/htm.umd.js"></script>
+
+<script>
+const { useState, useEffect } = React;
+const html = htm.bind(React.createElement);
+
+/* ─── DATA ─────────────────────────────────────── */
+
+const SNAPSHOT = [
+  { metric: "HbA1c %",     best: "5.8", now: "6.2",   delta: "+0.4", status: "amber", note: "ห่าง T2DM 0.3 จุด" },
+  { metric: "FBS mg/dL",   best: "100", now: "116",   delta: "+16",  status: "amber", note: "" },
+  { metric: "TG mg/dL",    best: "88",  now: "132",   delta: "+44",  status: "green", note: "ยังต่ำกว่า 150" },
+  { metric: "LDL mg/dL",   best: "47",  now: "78",    delta: "+31",  status: "amber", note: "ต้องสืบสาเหตุ" },
+  { metric: "HDL mg/dL",   best: "38",  now: "46",    delta: "+8",   status: "amber", note: "ยังต่ำกว่า 50" },
+  { metric: "Uric mg/dL",  best: "7.2", now: "5.3",   delta: "-1.9", status: "green", note: "Normalized" },
+  { metric: "CGM TIR",     best: "—",   now: "46.6%", delta: "",     status: "rose",  note: "เป้า ≥70%" },
+  { metric: "Hyperglyc.",  best: "—",   now: "46/30d", delta: "",    status: "rose",  note: "≥30 min episodes" },
+];
+
+const PRIORITIES = [
+  {
+    pri: 1, num: "01", level: "🔴 PRIORITY #1",
+    title: "Glucose Drift",
+    sub: "HbA1c กำลังไต่กลับ · CGM TIR 46.6% · ห่าง T2DM 0.3 จุด",
+    body: "ปัญหาเร่งด่วนที่สุด · ทุกมื้อ refined carb peak >180 mg/dL · กาแฟดำตอนเช้า +83 (dawn cortisol)",
+    actions: [
+      { tag: "Nutrilite", item: "Calow 1,314", note: "90 เม็ด · 2 เม็ดก่อน 3 มื้อหลัก · 15-20 นาที = block ~300 kcal carb/มื้อ" },
+      { tag: "Nutrilite", item: "Fiber Powder 1,627", note: "30 ซอง · 1 ซองก่อนกาแฟเช้า · blunt morning spike (+83 → ≤+30)" },
+      { tag: "Pharmacy", item: "Berberine HCl 500mg × 3", note: "~1,200/เดือน · evidence A · ขอจิ้น check drug interaction ก่อน" },
+      { tag: "Behavior", item: "ห้ามกาแฟดำตอนท้องว่าง", note: "กิน protein/fiber ก่อน 5-10 นาที (ไข่ต้ม · โยเกิร์ตไม่หวาน · All Plant Protein 1 scoop)" },
+      { tag: "Behavior", item: "IF 16:8 ทุกวัน", note: "กิน 10:00-18:00 · ไม่มีมื้อดึก" },
+    ],
+  },
+  {
+    pri: 2, num: "02", level: "🟠 PRIORITY #2",
+    title: "LDL Bounce 42 → 78",
+    sub: "+31 ใน 5 เดือน · ต้องสืบสาเหตุก่อนทำต่อ",
+    body: "LDL ขึ้นเร็วผิดปกติ · ก่อนใส่ supplement ใหม่ต้องรู้ root cause",
+    actions: [
+      { tag: "Question", item: "ถามจิ้น/พี่สุ", note: '"เคยกิน statin? หยุดเมื่อไหร่? ทำไม?"' },
+      { tag: "Lab", item: "Apo B + Lp(a)", note: "~1,500 บ (Paolo) · true CV risk · ไม่ใช่แค่ LDL" },
+      { tag: "Nutrilite", item: "Garlic 1,195", note: "150 เม็ด · 1 เม็ด × 3 เวลา · evidence B lipid/BP" },
+    ],
+  },
+  {
+    pri: 3, num: "03", level: "🟠 PRIORITY #3",
+    title: "NAFLD Active F1-F2",
+    sub: "FibroScan CAP 263.5 (S1) · E 7.1 · reversible 1-2 ปี",
+    body: "ตับเริ่มมีพังผืด · ยังกลับได้ ถ้าเริ่มทำเดี๋ยวนี้ · window ของเรา",
+    actions: [
+      { tag: "Nutrilite", item: "Lecithin E 659", note: "110 เม็ดเคี้ยว · 3 เม็ด/วัน = Vit E 15 IU + PC 216mg (partial NAFLD support)" },
+      { tag: "Nutrilite", item: "Triple Omega 975", note: "30 cap · 2 caps/วัน = EPA 572 + DHA 428 · anti-inflammatory" },
+      { tag: "Nutrilite", item: "Concentrated F&V (CVF) 1,468", note: "60 tabs · 2/วัน · turmeric + quercetin + 17 phyto" },
+      { tag: "Pharmacy", item: "Vitamin E 400-800 IU mixed tocopherol", note: "~400/เดือน · PIVENS NEJM 2010 = 800 IU · ตรวจ ALT baseline ก่อนเริ่ม" },
+      { tag: "Behavior", item: "ลด fructose · ห้าม cassia cinnamon · ห้ามแอลกอฮอล์", note: "" },
+      { tag: "Follow-up", item: "FibroScan ซ้ำ 6 เดือน · ALT/AST ทุก 3 เดือน", note: "" },
+    ],
+  },
+  {
+    pri: 4, num: "04", level: "🟡 PRIORITY #4",
+    title: "HDL ต่ำ + Mild Anemia",
+    sub: "HDL 46 (target ≥50) · Hb 11.7",
+    body: "ปัญหาสะสม · จัดได้พร้อม glucose control · ระวัง iron overload",
+    actions: [
+      { tag: "Nutrilite", item: "Spinach Plus 636", note: "120 tabs · 1/วัน = Ferrous fumarate 17mg + Folate 170mcg + Ca · prevention/mild" },
+      { tag: "Nutrilite", item: "Vitamin B Plus 527", note: "60 tabs · 2/วัน · B12 + B-complex" },
+      { tag: "Nutrilite", item: "Bio C Plus 990", note: "60 tabs · 2/วัน · ช่วย iron absorption + antioxidant" },
+      { tag: "Lifestyle", item: "Strength training 2-3x/สัปดาห์", note: "HDL booster ที่ดีที่สุด · prevent sarcopenia 50+" },
+      { tag: "Lab", item: "Ferritin · TIBC · B12 · Folate", note: "~1,500 บ · ก่อนเสริม iron · ถ้า ferritin >300 = NAFLD iron overload · ห้าม iron" },
+    ],
+  },
+  {
+    pri: 5, num: "05", level: "🟢 PRIORITY #5",
+    title: "Breast + EKG Surveillance",
+    sub: "Cyst 4.3mm + microcalc 2 ข้าง · EKG borderline",
+    body: "ไม่ใช่ active disease · ติดตามตามมาตรฐาน",
+    actions: [
+      { tag: "Lab", item: "Mammogram + Breast US ทุก 6 เดือน", note: "~2,500 บ · Paolo · ขอ BI-RADS rating" },
+      { tag: "Warning", item: "หลีกเลี่ยง phytoestrogen สูง", note: "Dong Quai · Black Cohosh · soy isoflavone จากอาหารทั่วไป OK" },
+      { tag: "Lab", item: "EKG repeat + Echo + Stress test", note: "~3,000 บ · ถ้ามีอาการเหนื่อย/แน่นหน้าอก" },
+      { tag: "Nutrilite", item: "CoQ10 Plus 2,209", note: "60 caps · 1/วัน · mitochondrial + cardiac · 50+ statin co-therapy" },
+    ],
+  },
+];
+
+const STACK_CORE = [
+  ["BodyKey", "1,700", "× 4 box (4 phase สลับ)", "Meal replacement"],
+  ["All Plant Protein 450g", "1,209", "× 2", "ตัวหลัก · preserve muscle"],
+  ["DoubleX PhytoBlend", "2,364", "× 2", "Foundation multi-vitamin"],
+  ["Vitamin B Plus", "527", "× 2", "CBC + B12 + methylation"],
+  ["Triple Omega", "975", "× 4", "NAFLD + HDL + CV"],
+  ["Bio C Plus", "990", "× 2", "Iron absorption + antioxidant"],
+  ["Fiber Powder", "1,627", "× 4", "Glucose blunt"],
+  ["Probiotic", "1,650", "× 2", "Gut-hormone axis"],
+  ["Green Tea Plus", "—", "× 2", "Thermogenic standard"],
+];
+
+const STACK_ADDON = [
+  ["Calow ⭐", "1,314", "× 3", "Glucose drift priority"],
+  ["Lecithin E ⭐", "659", "× 2", "NAFLD Vit E + PC"],
+  ["Spinach Plus ⭐", "636", "× 2", "Iron + Folate"],
+  ["Garlic", "1,195", "× 2", "LDL + BP"],
+  ["CoQ10 Plus", "2,209", "× 1", "Heart 50+"],
+  ["Cal-Mag-D", "1,077", "× 1", "Bone + electrolyte"],
+  ["Concentrated F&V", "1,468", "× 2", "NAFLD + immune"],
+];
+
+const STACK_EXTERNAL = [
+  ["Vitamin D3 2,000 IU", "~300/เดือน", "ขาดอยู่ · Cal-Mag-D max 330 IU"],
+  ["Berberine HCl 500mg × 3", "~1,200/เดือน", "Glucose hammer · evidence A"],
+  ["Vitamin E 400 IU mixed tocopherol", "~400/เดือน", "NAFLD PIVENS"],
+  ["Choline 500mg (optional)", "~600/เดือน", "NAFLD adjunct"],
+  ["Silymarin 140mg (optional)", "~500/เดือน", "NAFLD B-grade"],
+];
+
+const TARGETS_4WK = [
+  ["CGM Time in Range", "46.6%", "≥ 65%"],
+  ["CGM Avg glucose", "116 mg/dL", "≤ 108"],
+  ["Hyperglycemia episodes", "46/30d", "≤ 20"],
+  ["Coffee spike", "+83 mg/dL", "≤ +30"],
+];
+
+const TARGETS_12WK = [
+  ["HbA1c", "6.2%", "≤ 5.9%"],
+  ["FBS", "116", "≤ 100"],
+  ["LDL", "78", "เข้าใจสาเหตุ + ≤ 60"],
+  ["HDL", "46", "≥ 50"],
+  ["Hb", "11.7", "≥ 12"],
+  ["น้ำหนัก", "plateau", "-2 to -4 kg"],
+];
+
+const QUESTIONS = [
+  "Jun 2025 protocol exact stack? (replicate ได้)",
+  "LDL bounce — พี่สุเคยกิน statin? หยุดเมื่อไหร่? ทำไม?",
+  "Berberine drug interaction กับยาที่กินอยู่",
+  "Calow 3 มื้อ ปลอดภัยระยะยาว?",
+  "Vit E 800 IU NAFLD · ALT baseline?",
+  "Iron supplement timing — ferritin ก่อน?",
+  "EKG repeat — อาการเหนื่อย/แน่นหน้าอก?",
+];
+
+const SECTIONS = [
+  { id: "snapshot",  label: "Snapshot" },
+  { id: "priorities", label: "5 Priorities" },
+  { id: "stack",     label: "Stack" },
+  { id: "targets",   label: "Targets" },
+  { id: "cost",      label: "Cost" },
+  { id: "questions", label: "ขอจิ้น Review" },
+];
+
+/* ─── Components ──────────────────────────────── */
+
+function StatusPill({ status, children }) {
+  const cls = { rose: "pill-rose", amber: "pill-amber", green: "pill-green", stone: "pill-stone" }[status];
+  return html`<span className=${"inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-bold " + cls}>${children}</span>`;
+}
+
+function TagPill({ tag }) {
+  const styles = {
+    Nutrilite: { cls: "bg-rose-100 text-rose-800", icon: "💊" },
+    Pharmacy: { cls: "bg-blue-100 text-blue-800", icon: "🌐" },
+    Behavior: { cls: "bg-emerald-100 text-emerald-800", icon: "🌱" },
+    Lifestyle: { cls: "bg-emerald-100 text-emerald-800", icon: "💪" },
+    Question: { cls: "bg-amber-100 text-amber-800", icon: "❓" },
+    Lab: { cls: "bg-purple-100 text-purple-800", icon: "🧪" },
+    Warning: { cls: "bg-orange-100 text-orange-800", icon: "⚠️" },
+    "Follow-up": { cls: "bg-stone-100 text-stone-700", icon: "📅" },
+  }[tag] || { cls: "bg-stone-100 text-stone-700", icon: "" };
+  return html`<span className=${"inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-bold " + styles.cls}>
+    <span>${styles.icon}</span><span>${tag}</span>
+  </span>`;
+}
+
+function Hero() {
+  return html`
+    <header className="hero-gradient text-white relative overflow-hidden">
+      <div className="absolute inset-0 bg-black/15"></div>
+      <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-20">
+        <div className="flex flex-wrap items-center gap-2 mb-4">
+          <span className="rounded-full bg-white/15 backdrop-blur px-3 py-1 text-xs font-mono uppercase tracking-widest border border-white/20">UP Wellness · UP Labs</span>
+          <span className="rounded-full bg-amber-500/30 backdrop-blur px-3 py-1 text-xs font-bold border border-amber-300/30">v3 · 16 พ.ค. 2569</span>
+        </div>
+        <h1 className="font-head text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
+          พี่สุ · Care Plan v3
+        </h1>
+        <p className="mt-4 max-w-3xl text-xl text-white/90 leading-relaxed font-thai">
+          รีวิวผลล่าสุด <b>Feb 2026 + CGM 30 วัน</b> · 5 ประเด็นเร่งด่วน · stack พร้อมราคา verified · ส่งจิ้น review
+        </p>
+        <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl">
+          <${HeroStat} label="HbA1c" value="6.2%" sub="↑ +0.4 จาก Jun 25" />
+          <${HeroStat} label="CGM TIR" value="46.6%" sub="เป้า ≥ 70%" />
+          <${HeroStat} label="LDL bounce" value="+31" sub="42 → 78" />
+          <${HeroStat} label="ห่าง T2DM" value="0.3" sub="HbA1c 6.2 vs 6.5" />
+        </div>
+      </div>
+    </header>`;
+}
+
+function HeroStat({ label, value, sub }) {
+  return html`
+    <div className="rounded-2xl bg-white/10 backdrop-blur px-4 py-3 border border-white/15">
+      <div className="text-[10px] uppercase tracking-wider text-white/65 font-mono">${label}</div>
+      <div className="mt-0.5 font-head text-2xl md:text-3xl font-extrabold">${value}</div>
+      <div className="text-xs text-white/65 mt-0.5">${sub}</div>
+    </div>`;
+}
+
+function StickyNav({ active, onJump }) {
+  return html`
+    <nav className="no-print sticky top-0 z-30 bg-white/85 backdrop-blur-lg border-b border-rose-100/60">
+      <div className="mx-auto max-w-6xl px-4 py-3 flex flex-wrap items-center gap-1.5">
+        ${SECTIONS.map((s) => html`
+          <button key=${s.id} onClick=${() => onJump(s.id)}
+            className=${"rounded-full px-3 py-1.5 text-xs font-bold " + (active === s.id ? "bg-rose-700 text-white" : "text-stone-600 hover:bg-stone-100")}>
+            ${s.label}
+          </button>`)}
+      </div>
+    </nav>`;
+}
+
+function SectionLabel({ number, title, subtitle, accent }) {
+  const c = { rose: "text-rose-700", amber: "text-amber-700", green: "text-emerald-700" }[accent || "rose"];
+  return html`
+    <div className="mb-8">
+      <div className="flex items-baseline gap-3 mb-2">
+        <span className=${"font-mono text-xs font-bold tracking-[0.2em] " + c}>${number}</span>
+        <h2 className="font-head text-3xl md:text-4xl font-extrabold tracking-tight text-stone-900">${title}</h2>
+      </div>
+      ${subtitle && html`<p className="font-thai text-lg text-stone-600 leading-relaxed">${subtitle}</p>`}
+    </div>`;
+}
+
+/* ─── Section: Snapshot ──────────────────────────── */
+
+function SnapshotSection() {
+  return html`
+    <section id="snapshot" className="py-14 md:py-20 anim-in">
+      <div className="mx-auto max-w-6xl px-6">
+        <${SectionLabel} number="01" title="Snapshot ตอนนี้ vs Best (Jun 2025)"
+          subtitle="Jun 2025 protocol ทำสำเร็จจริง · 9 เดือนหลัง drift กลับ · ห่าง T2DM แค่ 0.3 จุด" accent="rose" />
+
+        <div className="overflow-hidden rounded-3xl bg-white border border-stone-200 shadow-sm">
+          <table className="w-full text-sm">
+            <thead className="bg-stone-50 border-b border-stone-200">
+              <tr className="text-left font-mono text-[10px] uppercase tracking-widest text-stone-500">
+                <th className="px-4 py-3">Marker</th>
+                <th className="px-4 py-3 text-emerald-700">Jun 25 best ✨</th>
+                <th className="px-4 py-3 text-rose-700">Feb 26 ตอนนี้</th>
+                <th className="px-4 py-3">Δ</th>
+                <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Note</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-stone-100 font-thai">
+              ${SNAPSHOT.map((row, i) => html`
+                <tr key=${i} className="hover:bg-stone-50/50">
+                  <td className="px-4 py-3 font-semibold">${row.metric}</td>
+                  <td className="px-4 py-3 font-mono text-emerald-700">${row.best}</td>
+                  <td className="px-4 py-3 font-mono font-bold text-rose-700">${row.now}</td>
+                  <td className="px-4 py-3 font-mono text-stone-500">${row.delta}</td>
+                  <td className="px-4 py-3"><${StatusPill} status=${row.status}>${row.status === "rose" ? "เร่งด่วน" : row.status === "amber" ? "เฝ้า" : "OK"}</${StatusPill}></td>
+                  <td className="px-4 py-3 text-stone-600 text-xs">${row.note}</td>
+                </tr>`)}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="mt-6 rounded-3xl bg-gradient-to-br from-rose-50 to-amber-50 p-6 md:p-8 border border-rose-100">
+          <div className="font-mono text-xs uppercase tracking-widest text-rose-700 font-bold mb-2">⚡ Verdict</div>
+          <p className="font-head text-xl md:text-2xl font-extrabold text-stone-900 leading-snug">
+            Jun 2025 ของจิ้น <span className="text-emerald-700">ได้ผลจริง</span> · 9 เดือนหลัง <span className="text-amber-700">drift กลับ</span> · ตอน reset + lock <span className="text-rose-700">ภายใน 2-3 เดือนข้างหน้า</span>
+          </p>
+        </div>
+      </div>
+    </section>`;
+}
+
+/* ─── Section: Priorities ─────────────────────────── */
+
+function PriorityCard({ p }) {
+  const bg = ["", "pri-1", "pri-2", "pri-3", "pri-4", "pri-5"][p.pri];
+  const accent = ["", "rose", "amber", "amber", "amber", "green"][p.pri];
+  const glow = ["", "glow-rose", "glow-amber", "glow-amber", "glow-amber", "glow-green"][p.pri];
+  return html`
+    <div className=${"rounded-3xl border border-stone-200 p-6 md:p-8 mb-5 " + bg + " " + glow}>
+      <div className="flex items-baseline gap-3 flex-wrap mb-3">
+        <span className=${"font-mono text-xs font-bold tracking-widest text-" + accent + "-700"}>${p.level}</span>
+        <span className="font-mono text-xs text-stone-400">#${p.num}</span>
+      </div>
+      <h3 className="font-head text-2xl md:text-3xl font-extrabold text-stone-900 mb-2">${p.title}</h3>
+      <p className="font-thai text-base text-stone-600 mb-2">${p.sub}</p>
+      <p className="font-thai text-sm text-stone-500 leading-relaxed mb-5">${p.body}</p>
+
+      <div className="space-y-2">
+        ${p.actions.map((a, i) => html`
+          <div key=${i} className="rounded-2xl bg-white p-4 border border-stone-100 flex flex-wrap items-start gap-3">
+            <${TagPill} tag=${a.tag} />
+            <div className="flex-1 min-w-[200px]">
+              <div className="font-head font-bold text-stone-900">${a.item}</div>
+              ${a.note && html`<div className="font-thai text-sm text-stone-600 mt-1 leading-relaxed">${a.note}</div>`}
+            </div>
+          </div>`)}
+      </div>
+    </div>`;
+}
+
+function PrioritiesSection() {
+  return html`
+    <section id="priorities" className="bg-white py-14 md:py-20 anim-in">
+      <div className="mx-auto max-w-6xl px-6">
+        <${SectionLabel} number="02" title="5 ประเด็นจัดการทันที"
+          subtitle="เรียงตามความเร่งด่วน · Glucose Priority #1 · LDL bounce → NAFLD → HDL/anemia → surveillance" accent="rose" />
+
+        ${PRIORITIES.map((p) => html`<${PriorityCard} key=${p.pri} p=${p} />`)}
+      </div>
+    </section>`;
+}
+
+/* ─── Section: Stack ──────────────────────────────── */
+
+function StackTable({ title, rows, columns, color }) {
+  const headerCls = { rose: "bg-rose-700", green: "bg-emerald-700", amber: "bg-amber-700", blue: "bg-blue-700" }[color];
+  return html`
+    <div className="rounded-3xl overflow-hidden bg-white border border-stone-200 shadow-sm">
+      <div className=${"px-5 py-3 text-white font-mono text-xs uppercase tracking-widest font-bold " + headerCls}>${title}</div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead className="bg-stone-50 border-b border-stone-100">
+            <tr className="text-left text-[10px] uppercase tracking-widest text-stone-500 font-mono">
+              ${columns.map((c, i) => html`<th key=${i} className="px-4 py-2">${c}</th>`)}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-stone-100">
+            ${rows.map((row, i) => html`
+              <tr key=${i} className="font-thai hover:bg-stone-50/50">
+                ${row.map((cell, j) => html`
+                  <td key=${j} className=${"px-4 py-2 " + (j === 0 ? "font-semibold text-stone-900" : j === 1 ? "font-mono text-stone-700" : "text-stone-600 text-xs")}>${cell}</td>`)}
+              </tr>`)}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function StackSection() {
+  return html`
+    <section id="stack" className="py-14 md:py-20 anim-in">
+      <div className="mx-auto max-w-6xl px-6">
+        <${SectionLabel} number="03" title="Recommended Stack" subtitle="Nutrilite verified prices + External pharmacy" accent="amber" />
+
+        <div className="space-y-5">
+          <${StackTable}
+            title="🅰️ Core Stack · Full Course Track Metabolic 60 วัน"
+            color="rose"
+            columns=${["Product", "฿ member", "ปริมาณ/วัน", "Role"]}
+            rows=${STACK_CORE} />
+
+          <${StackTable}
+            title="🎯 Su-Specific Add-on (ตามเคส)"
+            color="amber"
+            columns=${["Product", "฿ member", "Qty", "Reason"]}
+            rows=${STACK_ADDON} />
+
+          <${StackTable}
+            title="🌐 External Pharmacy (Nutrilite ไม่ครอบ therapeutic)"
+            color="blue"
+            columns=${["Item", "Cost", "Reason"]}
+            rows=${STACK_EXTERNAL} />
+        </div>
+      </div>
+    </section>`;
+}
+
+/* ─── Section: Targets ────────────────────────────── */
+
+function TargetsSection() {
+  return html`
+    <section id="targets" className="bg-emerald-50/40 py-14 md:py-20 anim-in">
+      <div className="mx-auto max-w-6xl px-6">
+        <${SectionLabel} number="04" title="Targets" subtitle="4 สัปดาห์ · 8-12 สัปดาห์ · 6 เดือน" accent="green" />
+
+        <div className="grid md:grid-cols-2 gap-5">
+          <div className="rounded-3xl bg-white p-6 md:p-8 border border-emerald-100 glow-green">
+            <div className="font-mono text-xs uppercase tracking-widest text-emerald-700 font-bold mb-3">🎯 ภายใน 4 สัปดาห์</div>
+            <div className="space-y-2">
+              ${TARGETS_4WK.map((t, i) => html`
+                <div key=${i} className="flex items-center justify-between rounded-xl bg-emerald-50/50 px-4 py-2.5">
+                  <span className="font-thai font-semibold text-stone-700">${t[0]}</span>
+                  <span className="flex items-center gap-2">
+                    <span className="font-mono text-sm text-stone-400 line-through">${t[1]}</span>
+                    <span className="text-emerald-600">→</span>
+                    <span className="font-mono text-sm font-bold text-emerald-700">${t[2]}</span>
+                  </span>
+                </div>`)}
+            </div>
+          </div>
+
+          <div className="rounded-3xl bg-white p-6 md:p-8 border border-emerald-100 glow-green">
+            <div className="font-mono text-xs uppercase tracking-widest text-emerald-700 font-bold mb-3">📅 ภายใน 8-12 สัปดาห์</div>
+            <div className="space-y-2">
+              ${TARGETS_12WK.map((t, i) => html`
+                <div key=${i} className="flex items-center justify-between rounded-xl bg-emerald-50/50 px-4 py-2.5">
+                  <span className="font-thai font-semibold text-stone-700">${t[0]}</span>
+                  <span className="flex items-center gap-2">
+                    <span className="font-mono text-sm text-stone-400 line-through">${t[1]}</span>
+                    <span className="text-emerald-600">→</span>
+                    <span className="font-mono text-sm font-bold text-emerald-700">${t[2]}</span>
+                  </span>
+                </div>`)}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-5 rounded-3xl bg-gradient-to-br from-emerald-700 to-emerald-900 text-white p-6 md:p-8">
+          <div className="font-mono text-xs uppercase tracking-widest text-emerald-200 font-bold mb-3">🏆 ภายใน 6 เดือน</div>
+          <div className="grid sm:grid-cols-2 gap-3 text-sm font-thai">
+            <div className="rounded-xl bg-white/10 backdrop-blur p-4 border border-white/15">HbA1c &lt; 5.7 (out of pre-diabetes)</div>
+            <div className="rounded-xl bg-white/10 backdrop-blur p-4 border border-white/15">FibroScan CAP &lt; 248 (out of S1)</div>
+            <div className="rounded-xl bg-white/10 backdrop-blur p-4 border border-white/15">FibroScan E &lt; 7 (out of F1-F2)</div>
+            <div className="rounded-xl bg-white/10 backdrop-blur p-4 border border-white/15">BI-RADS Breast · follow-up confirmed benign</div>
+          </div>
+        </div>
+      </div>
+    </section>`;
+}
+
+/* ─── Section: Cost ────────────────────────────── */
+
+function CostSection() {
+  return html`
+    <section id="cost" className="py-14 md:py-20 anim-in">
+      <div className="mx-auto max-w-6xl px-6">
+        <${SectionLabel} number="05" title="Cost Estimate · 60-day Track" subtitle="Premium Anti-aging · diabetes prevention value" accent="amber" />
+
+        <div className="rounded-3xl bg-white border border-stone-200 shadow-sm overflow-hidden">
+          <div className="divide-y divide-stone-100">
+            ${[
+              ["Core Stack (Full Course + Su add-on)", "38,000 – 50,000"],
+              ["External Pharmacy 2 เดือน", "4,000 – 6,000"],
+              ["Lab follow-up (Ferritin · Apo B · 25-OH-D · Fasting Insulin · etc.)", "3,000 – 5,000"],
+              ["FibroScan repeat 6 mo + Mammogram", "4,500"],
+            ].map((row, i) => html`
+              <div key=${i} className="flex items-center justify-between p-5">
+                <span className="font-thai text-stone-700">${row[0]}</span>
+                <span className="font-mono text-base font-bold text-stone-900">฿${row[1]}</span>
+              </div>`)}
+          </div>
+          <div className="bg-rose-700 text-white px-5 py-5 flex items-center justify-between">
+            <span className="font-head text-lg font-extrabold">TOTAL · 60 วัน + initial lab</span>
+            <span className="font-head text-3xl font-extrabold">฿50,000 – 65,000</span>
+          </div>
+        </div>
+
+        <div className="mt-6 rounded-3xl bg-amber-50 border border-amber-200 p-5">
+          <div className="font-mono text-xs uppercase tracking-widest text-amber-700 font-bold mb-2">💡 Position</div>
+          <p className="font-thai text-stone-800">
+            Premium Anti-aging Program · diabetes prevention value · <b>คุ้มเทียบกับ T2DM ตลอดชีวิต</b> (ค่ายา + lab + complications ~20-40k/ปี ต่อเนื่อง)
+          </p>
+        </div>
+      </div>
+    </section>`;
+}
+
+/* ─── Section: Questions ─────────────────────────── */
+
+function QuestionsSection() {
+  const [checked, setChecked] = useState({});
+  return html`
+    <section id="questions" className="bg-stone-900 text-white py-14 md:py-20 anim-in">
+      <div className="mx-auto max-w-4xl px-6">
+        <div className="flex items-baseline gap-3 mb-2">
+          <span className="font-mono text-xs font-bold tracking-[0.2em] text-rose-300">06</span>
+        </div>
+        <h2 className="font-head text-3xl md:text-4xl font-extrabold tracking-tight text-white mb-3">ขอจิ้น Review 7 ข้อ</h2>
+        <p className="text-stone-300 text-lg font-thai mb-10">ก่อนนำไปคุยกับพี่สุ · ติ๊กเมื่อจิ้น confirm</p>
+
+        <div className="space-y-3">
+          ${QUESTIONS.map((q, i) => html`
+            <div key=${i} onClick=${() => setChecked((p) => ({ ...p, [i]: !p[i] }))}
+              className=${"cursor-pointer rounded-2xl p-5 transition-all border " +
+                (checked[i] ? "bg-emerald-900/30 border-emerald-400/40" : "bg-white/5 border-white/10 hover:bg-white/10")}>
+              <div className="flex items-start gap-4">
+                <div className=${"shrink-0 h-7 w-7 rounded-md flex items-center justify-center mt-0.5 " +
+                  (checked[i] ? "bg-emerald-500 text-white" : "bg-white/10 border border-white/30")}>
+                  ${checked[i] ? "✓" : html`<span className="font-mono text-xs text-white/60">${i + 1}</span>`}
+                </div>
+                <div className=${"font-head text-base md:text-lg font-bold flex-1 " + (checked[i] ? "line-through text-stone-400" : "text-white")}>${q}</div>
+              </div>
+            </div>`)}
+        </div>
+
+        <div className="mt-10 rounded-2xl bg-amber-500/15 border border-amber-400/30 p-6">
+          <div className="flex items-start gap-3">
+            <span className="text-2xl">⚠️</span>
+            <div>
+              <div className="font-head text-lg font-bold text-amber-200 mb-1">Pitch ที่จะ deliver พี่สุ</div>
+              <p className="text-stone-200 font-thai text-sm leading-relaxed">
+                "พี่สุครับ ตรงๆ ผลตอนนี้ห่างจากเบาหวาน 0.3 จุด · Jun 25 พิสูจน์แล้วว่าระบบ work · ตอนนี้ต้อง reset + lock 60 วัน + ตรวจ lab เพิ่ม 6 ค่า ราคารวม 50-65k · 6 เดือนข้างหน้าออกจาก pre-diabetes + NAFLD reverse + LDL กลับ normal · ที่ Nutrilite ไม่ครอบ (Vit D · Vit E · Berberine) ผมแนะนำ pharmacy ตรงไปตรงมา"
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>`;
+}
+
+/* ─── Footer ────────────────────────────────────── */
+
+function FooterBlock() {
+  return html`
+    <footer className="bg-stone-100 py-10">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div className="font-mono text-xs uppercase tracking-widest text-stone-500 font-bold">UP Wellness · UP Labs</div>
+            <div className="mt-1 font-head text-lg font-extrabold text-stone-900">พี่สุ · Care Plan v3</div>
+          </div>
+          <div className="text-right text-sm text-stone-500 font-thai">
+            <div>วิเคราะห์ BCA + CGM + Lab History 2024-2026</div>
+            <div className="mt-0.5">v1 (12) → v2 (13) → v3 (16) พ.ค. 2569</div>
+          </div>
+        </div>
+        <div className="mt-5 text-xs text-stone-400 font-thai">
+          เอกสารสำหรับ Pharmacist Review เท่านั้น · ห้ามแชร์ก่อนจิ้น confirm · UPLABS internal use
+        </div>
+      </div>
+    </footer>`;
+}
+
+/* ─── App ──────────────────────────────────────── */
+
+function App() {
+  const [active, setActive] = useState("snapshot");
+
+  useEffect(() => {
+    const opts = { rootMargin: "-30% 0% -60% 0%", threshold: 0 };
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id); });
+    }, opts);
+    SECTIONS.forEach((s) => {
+      const el = document.getElementById(s.id);
+      if (el) obs.observe(el);
+    });
+    return () => obs.disconnect();
+  }, []);
+
+  const onJump = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  return html`
+    <div className="min-h-screen">
+      <${Hero} />
+      <${StickyNav} active=${active} onJump=${onJump} />
+      <${SnapshotSection} />
+      <${PrioritiesSection} />
+      <${StackSection} />
+      <${TargetsSection} />
+      <${CostSection} />
+      <${QuestionsSection} />
+      <${FooterBlock} />
+    </div>`;
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(html`<${App} />`);
+</script>
+
+</body>
+</html>
