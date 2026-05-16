@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>พี่สุ · Care Plan v2 — Review Brief สำหรับจิ้น</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.min.js"></script>
+<script src="https://unpkg.com/prop-types@15.8.1/prop-types.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  :root {
+    --rose: #8C4C4C; --rose-light: #C4857E; --rose-soft: #F4E6E6; --rose-ultra: #FAF3F2;
+    --green: #396755; --green-light: #6AAF91; --green-soft: #E6EFEA;
+    --cream: #F5F0EB; --ink: #1F1F1F; --ink-60: #6B6B6B; --ink-40: #A8A5A0;
+    --amber: #B8860B; --amber-soft: #FEF3C7;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Sarabun', 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  .font-head { font-family: 'Inter', sans-serif; letter-spacing: -0.01em; }
+  .font-mono { font-family: 'JetBrains Mono', monospace; }
+  .font-thai { font-family: 'Sarabun', sans-serif; }
+
+  /* Hero gradient */
+  .hero-gradient {
+    background:
+      radial-gradient(at 80% 20%, rgba(140,76,76,0.95) 0%, transparent 50%),
+      radial-gradient(at 20% 80%, rgba(57,103,85,0.9) 0%, transparent 55%),
+      linear-gradient(135deg, #6B3535 0%, #8C4C4C 50%, #396755 100%);
+  }
+  .card-gradient-rose {
+    background: linear-gradient(135deg, #FAF3F2 0%, #F4E6E6 100%);
+  }
+  .card-gradient-green {
+    background: linear-gradient(135deg, #F0F8F4 0%, #E6EFEA 100%);
+  }
+  .card-gradient-amber {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+  }
+  .card-gradient-cream {
+    background: linear-gradient(135deg, #FFFDFA 0%, #F5F0EB 100%);
+  }
+  .glow-rose  { box-shadow: 0 8px 32px -8px rgba(140,76,76,0.35), 0 2px 8px rgba(140,76,76,0.1); }
+  .glow-green { box-shadow: 0 8px 32px -8px rgba(57,103,85,0.35), 0 2px 8px rgba(57,103,85,0.1); }
+  .glow-amber { box-shadow: 0 8px 32px -8px rgba(184,134,11,0.3), 0 2px 8px rgba(184,134,11,0.08); }
+
+  /* Animated counter on entry */
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .anim-in { animation: slide-up 0.6s ease-out backwards; }
+
+  /* Status pill */
+  .pill-good   { background: #DCFCE7; color: #166534; }
+  .pill-warn   { background: #FEF3C7; color: #92400E; }
+  .pill-bad    { background: #FEE2E2; color: #B91C1C; }
+  .pill-neutral{ background: #F1F5F9; color: #475569; }
+
+  /* Scroll-snap timeline */
+  .timeline-scroll {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .timeline-scroll > div {
+    scroll-snap-align: start;
+  }
+
+  /* Sticky nav */
+  .nav-pill {
+    transition: all 0.2s;
+  }
+  .nav-pill:hover { background: rgba(140,76,76,0.08); }
+  .nav-pill.active { background: var(--rose); color: white; }
+
+  /* Print */
+  @media print {
+    nav { display: none; }
+    .no-print { display: none; }
+    body { background: white; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="env,react">
+const { useState, useEffect, useMemo, useRef } = React;
+const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, ReferenceArea, Legend } = Recharts;
+
+/* ─── DATA ──────────────────────────────────────────── */
+
+const LAB_HISTORY = [
+  { date: "Feb 2024",  short: "02/24", hba1c: 7.3, fbs: 117, tg: 227, ldl: 94, hdl: null, uric: null,  source: "Baseline" },
+  { date: "May 2024",  short: "05/24", hba1c: 7.4, fbs: 144, tg: 191, ldl: 80, hdl: null, uric: null,  source: "Lab" },
+  { date: "Sep 2024",  short: "09/24", hba1c: 6.6, fbs: 136, tg: 243, ldl: 78, hdl: null, uric: null,  source: "Lab" },
+  { date: "Dec 2024",  short: "12/24", hba1c: 7.3, fbs: 161, tg: 250, ldl: 82, hdl: null, uric: 6.1,   source: "Lab" },
+  { date: "Mar 2025",  short: "03/25", hba1c: 6.7, fbs: 121, tg: 199, ldl: 50, hdl: null, uric: 6.0,   source: "ปทุมเวช" },
+  { date: "Jun 2025",  short: "06/25", hba1c: 5.8, fbs: 100, tg: 88,  ldl: 47, hdl: 38,   uric: 7.2,   source: "UP Labs ✨", best: true },
+  { date: "Sep 2025",  short: "09/25", hba1c: 6.0, fbs: 113, tg: 137, ldl: 42, hdl: 38,   uric: 6.3,   source: "ปทุมเวช" },
+  { date: "Nov 2025",  short: "11/25", hba1c: 6.0, fbs: 116, tg: 90,  ldl: 69, hdl: 46,   uric: 5.7,   source: "Paolo" },
+  { date: "Feb 2026",  short: "02/26", hba1c: 6.2, fbs: 116, tg: 132, ldl: 78, hdl: null, uric: 5.3,   source: "ล่าสุด" },
+];
+
+const CGM_STATS = [
+  { label: "Avg glucose",    value: "116",  unit: "mg/dL", target: "<110",  status: "warn",  note: "match HbA1c 6.0" },
+  { label: "GMI (est HbA1c)",value: "6.08%",unit: "",      target: "<5.7%", status: "warn" },
+  { label: "Time in Range",  value: "46.6%",unit: "70-110",target: "≥70%",  status: "bad",   note: "ห่างจากเป้ามาก" },
+  { label: "Hyperglycemia ≥30 min", value: "46", unit: "ครั้ง/30 วัน", target: "<10", status: "bad" },
+  { label: "Worst peak",     value: "234",  unit: "mg/dL", target: "—",     status: "bad",   note: "ขนมเปี๊ยะ+ขนมจีน" },
+  { label: "Coffee spike",   value: "+83",  unit: "mg/dL", target: "≤+30",  status: "bad",   note: "dawn cortisol effect" },
+];
+
+const SUPPLEMENT_PLAN = [
+  { rank: "🥇", level: 1, sku: "Calow", dose: "2 เม็ด ก่อนทั้ง 3 มื้อหลัก · 15-20 นาที", reason: "Glucose drift กลับ · CGM peak 234 จาก refined carb · ขยายจากเฉพาะมื้อ trigger เป็น 3 มื้อหลัก", change: "ขยาย dose", changeType: "expand" },
+  { rank: "🥇", level: 1, sku: "Berberine ⭐ ใหม่", dose: "500mg ก่อนมื้อใหญ่ 1-2 ครั้ง/วัน", reason: "HbA1c drift 5.8→6.2 · evidence A สำหรับ insulin sensitivity · ตรง issue ที่สุดตอนนี้", change: "เพิ่มใหม่", changeType: "new" },
+  { rank: "🥇", level: 1, sku: "Fiber Powder", dose: "1 ช้อนก่อนมื้อเช้า + ก่อนกาแฟ", reason: "กาแฟดำ +83 spike · fiber blunt morning glucose ตรงจุด · เลือก fiber > protein (พี่สุได้ protein พอจากอาหาร)", change: "ระบุชัด", changeType: "modify" },
+  { rank: "🥈", level: 2, sku: "Vitamin D3", dose: "2,000 IU/วัน (pharmacy)", reason: "ขาดอยู่ · D ต่ำ → insulin resistance · Nutrilite TH dose ต่ำเกิน → pharmacy แทน", change: "คงเดิม", changeType: "keep" },
+  { rank: "🥈", level: 2, sku: "Triple Omega", dose: "1-2 เม็ด/วัน · maintenance", reason: "TG normalized แล้ว (132) ไม่ใช่ priority · ใช้สำหรับ anti-inflammatory + HDL boost (HDL ยังต่ำ)", change: "ลด dose", changeType: "reduce" },
+  { rank: "🥉", level: 3, sku: "Vitamin B Plus + Bio C", dose: "1 เม็ดเช้า แต่ละตัว", reason: "Foundational stack · stress metabolism + antioxidant", change: "คงเดิม", changeType: "keep" },
+  { rank: "🥉", level: 3, sku: "CoQ10", dose: "เลื่อนเป็น Phase 2", reason: "ไม่ใช่ urgency · เพิ่มหลัง glucose นิ่งใน 2-3 เดือน", change: "เลื่อนทีหลัง", changeType: "delay" },
+];
+
+const WINS = [
+  { metric: "Triglyceride", from: 275, to: 88, suffix: "", trend: "Jun 25 → maintain <150 · 9 เดือนต่อเนื่อง" },
+  { metric: "HbA1c (best)", from: 7.4, to: 5.8, suffix: "%", trend: "Jun 25 · จาก diabetes zone → prediabetes" },
+  { metric: "LDL (best)",   from: 94,  to: 42,  suffix: "", trend: "Sep 25 · vascular protection สูง" },
+  { metric: "Uric acid",    from: 7.2, to: 5.3, suffix: "", trend: "Jun 25 peak → Feb 26 normalized" },
+];
+
+const DRIFTS = [
+  { metric: "HbA1c",       from: 5.8, to: 6.2, suffix: "%",     trend: "Jun 25 → Feb 26 · ไต่ขึ้น 0.4 ใน 9 เดือน" },
+  { metric: "FBS",         from: 100, to: 116, suffix: " mg/dL", trend: "Jun 25 → Feb 26 · +16 mg/dL" },
+  { metric: "LDL bounce",  from: 42,  to: 78,  suffix: "",       trend: "Sep 25 → Feb 26 · +36 ใน 5 เดือน — ต้องเช็คสาเหตุ" },
+  { metric: "CGM TIR",     from: 70,  to: 46.6,suffix: "%",      trend: "ห่างจากเป้า 70% · 46 hyperglycemia episodes" },
+];
+
+const TARGETS_4WK = [
+  { metric: "CGM Time in Range",  current: "46.6%",       target: "≥ 65%" },
+  { metric: "CGM Avg glucose",    current: "116 mg/dL",   target: "≤ 108" },
+  { metric: "Hyperglycemia episodes", current: "46/30d",  target: "≤ 20" },
+  { metric: "Morning coffee spike", current: "+83 mg/dL", target: "≤ +30" },
+  { metric: "HbA1c (รอบหน้า)",    current: "6.2%",        target: "≤ 5.9%" },
+  { metric: "LDL",                current: "78",          target: "เข้าใจสาเหตุ + ≤ 60" },
+  { metric: "น้ำหนัก",             current: "plateau",     target: "ลง 1-2 kg" },
+];
+
+const QUESTIONS_JIN = [
+  { q: "Jun 2025 protocol คืออะไรกันแน่", desc: "Nutrilite stack + dose + meal plan ตอนนั้นเป็นแบบไหน? ถ้า replicate ได้คือคำตอบหลัก · อย่าให้เราเริ่มจากศูนย์" },
+  { q: "LDL bounce 42 → 78 ระหว่าง Sep 25 → Feb 26", desc: "พี่สุหยุด statin? เปลี่ยน diet? · ก่อนเพิ่ม intervention อยากรู้ root cause" },
+  { q: "Berberine ปลอดภัยกับพี่สุไหม", desc: "ตรวจ drug interaction กับยาที่กินอยู่ · ถ้ามี metformin/statin/anti-coagulant ต้อง flag" },
+  { q: "Calow 3 มื้อ ขยายจาก trigger meal ปลอดภัยระยะยาวไหม", desc: "หรือควรเก็บ window ที่ใช้เฉพาะมื้อ refined carb" },
+  { q: "Fiber Powder ชนิดไหนเหมาะที่สุด", desc: "Psyllium-based / Glucomannan / Nutrilite Fiber Powder · ตัวไหนเหมาะกับ glucose control + ทานง่าย" },
+];
+
+const SECTIONS = [
+  { id: "overview",  label: "ภาพรวม" },
+  { id: "timeline",  label: "Timeline" },
+  { id: "cgm",       label: "CGM" },
+  { id: "plan",      label: "แผนปรับ" },
+  { id: "targets",   label: "เป้า 4 สัปดาห์" },
+  { id: "questions", label: "ถามจิ้น" },
+];
+
+/* ─── COMPONENTS ────────────────────────────────────── */
+
+function StatusPill({ status, children }) {
+  const cls = {
+    good: "pill-good",
+    warn: "pill-warn",
+    bad:  "pill-bad",
+    neutral: "pill-neutral",
+  }[status];
+  return <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold ${cls}`}>{children}</span>;
+}
+
+function Hero() {
+  return (
+    <header className="hero-gradient text-white">
+      <div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
+        <div className="flex flex-wrap items-center gap-2 mb-3">
+          <span className="rounded-full bg-white/15 backdrop-blur px-3 py-1 text-xs font-mono uppercase tracking-widest">UP Wellness · UP Labs</span>
+          <span className="rounded-full bg-amber-500/30 backdrop-blur px-3 py-1 text-xs font-bold">v2 — Updated</span>
+        </div>
+        <h1 className="font-head text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
+          สรุปแผนปรับ Supplement<br/>
+          <span className="text-white/85">พี่สุ (ขจิตสุข)</span>
+        </h1>
+        <p className="mt-6 max-w-2xl text-lg md:text-xl text-white/85 leading-relaxed font-thai">
+          Review Brief ส่งให้จิ้น — ฉบับปรับปรุงหลังเห็น Lab History 2024-2026 + CGM 30 วัน
+        </p>
+        <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl">
+          <HeroStat label="Lab Records" value="15" unit="จุดเวลา" />
+          <HeroStat label="CGM Readings" value="7,655" unit="ใน 30 วัน" />
+          <HeroStat label="BCA History" value="✓" unit="2 ปี+" />
+          <HeroStat label="Generated" value="16/05" unit="2569" />
+        </div>
+        <div className="mt-10 flex flex-wrap items-center gap-2 text-sm text-white/75 font-mono">
+          <span>HN R-62-031476</span>
+          <span>·</span>
+          <span>Paolo Hospital</span>
+          <span>·</span>
+          <span>Female · 50+</span>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+function HeroStat({ label, value, unit }) {
+  return (
+    <div className="rounded-2xl bg-white/10 backdrop-blur px-4 py-3 border border-white/15">
+      <div className="text-[10px] uppercase tracking-wider text-white/65 font-mono">{label}</div>
+      <div className="mt-0.5 font-head text-2xl md:text-3xl font-extrabold">{value}</div>
+      <div className="text-xs text-white/60 mt-0.5">{unit}</div>
+    </div>
+  );
+}
+
+function StickyNav({ active, onJump }) {
+  return (
+    <nav className="no-print sticky top-0 z-30 bg-white/80 backdrop-blur-lg border-b border-rose-100/60">
+      <div className="mx-auto max-w-6xl px-6 py-3 flex flex-wrap items-center gap-1.5">
+        {SECTIONS.map((s) => (
+          <button
+            key={s.id}
+            onClick={() => onJump(s.id)}
+            className={`nav-pill rounded-full px-4 py-1.5 text-sm font-semibold ${active === s.id ? "active text-white" : "text-stone-600"}`}
+            style={active === s.id ? { background: "var(--rose)" } : {}}
+          >
+            {s.label}
+          </button>
+        ))}
+      </div>
+    </nav>
+  );
+}
+
+function SectionLabel({ number, label, accent = "rose" }) {
+  const accentColor = { rose: "text-rose-700", green: "text-emerald-700", amber: "text-amber-700" }[accent];
+  return (
+    <div className="flex items-baseline gap-3 mb-6">
+      <span className={`font-mono text-xs font-bold tracking-widest ${accentColor}`}>{number}</span>
+      <h2 className="font-head text-3xl md:text-4xl font-extrabold tracking-tight text-stone-900">{label}</h2>
+    </div>
+  );
+}
+
+function Overview() {
+  return (
+    <section id="overview" className="mx-auto max-w-6xl px-6 py-14 anim-in">
+      <SectionLabel number="01" label="ภาพรวม — เห็นอะไรหลังย้อนดู 2 ปี" />
+
+      <div className="card-gradient-rose glow-rose rounded-3xl p-8 md:p-10 border border-rose-100">
+        <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <div className="font-mono text-xs uppercase tracking-widest text-rose-700 font-bold mb-2">
+              ⚡ Key Insight
+            </div>
+            <h3 className="font-head text-2xl md:text-3xl font-extrabold leading-tight text-stone-900 mb-4">
+              Jun 2025 ของจิ้น <span className="text-rose-700">ได้ผลจริง</span><br/>
+              ตอนนี้ปัญหาคือ <span className="text-amber-700">protocol หลุด</span>
+            </h3>
+            <p className="text-lg leading-relaxed text-stone-700 font-thai">
+              ไม่ใช่ "ต้องใส่ supplement ใหม่" · ความสำคัญคือ <b>กลับไปทำสิ่งที่เคยทำสำเร็จ</b> + เพิ่ม 2 ตัวสำหรับ glucose drift
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <BigStat label="HbA1c best ever" value="5.8" suffix="%" sub="Jun 2025 ✨" color="green" />
+            <BigStat label="ตอนนี้" value="6.2" suffix="%" sub="Feb 2026" color="amber" />
+            <BigStat label="TG best" value="88" sub="Jun 2025 ✨" color="green" />
+            <BigStat label="TG ตอนนี้" value="132" sub="✅ ยังต่ำกว่า 150" color="green" />
+          </div>
+        </div>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-6 mt-8">
+        {/* WINS */}
+        <div className="card-gradient-green rounded-3xl p-6 md:p-8 border border-emerald-100 glow-green">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="text-2xl">🟢</span>
+            <h3 className="font-head text-xl font-extrabold text-emerald-800">Wins · ของจริง</h3>
+          </div>
+          <div className="space-y-3">
+            {WINS.map((w, i) => (
+              <div key={i} className="bg-white/60 backdrop-blur rounded-xl p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="font-thai font-bold text-stone-900">{w.metric}</div>
+                  <div className="font-mono text-sm">
+                    <span className="text-stone-400 line-through">{w.from}{w.suffix}</span>
+                    <span className="text-stone-400 mx-1">→</span>
+                    <span className="font-bold text-emerald-700 text-base">{w.to}{w.suffix}</span>
+                  </div>
+                </div>
+                <div className="mt-1 text-xs text-stone-600 font-thai">{w.trend}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* DRIFTS */}
+        <div className="card-gradient-amber rounded-3xl p-6 md:p-8 border border-amber-100 glow-amber">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="text-2xl">🟠</span>
+            <h3 className="font-head text-xl font-extrabold text-amber-800">Drift · กำลังหลุด</h3>
+          </div>
+          <div className="space-y-3">
+            {DRIFTS.map((d, i) => (
+              <div key={i} className="bg-white/60 backdrop-blur rounded-xl p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="font-thai font-bold text-stone-900">{d.metric}</div>
+                  <div className="font-mono text-sm">
+                    <span className="text-emerald-700">{d.from}{d.suffix}</span>
+                    <span className="text-stone-400 mx-1">→</span>
+                    <span className="font-bold text-amber-700 text-base">{d.to}{d.suffix}</span>
+                  </div>
+                </div>
+                <div className="mt-1 text-xs text-stone-600 font-thai">{d.trend}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function BigStat({ label, value, suffix, sub, color }) {
+  const colorClass = {
+    green:  "text-emerald-700",
+    amber:  "text-amber-700",
+    rose:   "text-rose-700",
+  }[color];
+  return (
+    <div className="bg-white rounded-2xl p-4 shadow-sm">
+      <div className="font-mono text-[10px] uppercase tracking-wider text-stone-500 font-bold">{label}</div>
+      <div className={`mt-1 font-head text-3xl md:text-4xl font-extrabold leading-none ${colorClass}`}>
+        {value}<span className="text-base font-normal text-stone-400">{suffix}</span>
+      </div>
+      <div className="mt-1 text-xs text-stone-500 font-thai">{sub}</div>
+    </div>
+  );
+}
+
+/* ─── Timeline Chart ─────────────────────────────────── */
+
+function Timeline() {
+  const [metric, setMetric] = useState("hba1c");
+  const metricDef = {
+    hba1c: { label: "HbA1c", unit: "%",     color: "#8C4C4C", target: 5.7, targetLabel: "เป้า <5.7" },
+    fbs:   { label: "FBS",   unit: "mg/dL", color: "#B8860B", target: 99,  targetLabel: "เป้า <100" },
+    tg:    { label: "Triglyceride", unit: "mg/dL", color: "#396755", target: 150, targetLabel: "เป้า <150" },
+    ldl:   { label: "LDL",   unit: "mg/dL", color: "#3A9CB3", target: 100, targetLabel: "เป้า <100" },
+  }[metric];
+  const data = LAB_HISTORY
+    .filter((d) => d[metric] != null)
+    .map((d) => ({ ...d, value: d[metric] }));
+
+  return (
+    <section id="timeline" className="bg-white py-16">
+      <div className="mx-auto max-w-6xl px-6 anim-in">
+        <SectionLabel number="02" label="Timeline · 2 ปีย้อนหลัง" accent="rose" />
+
+        {/* Metric switcher */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          {Object.entries(metricDef && { hba1c:1, fbs:1, tg:1, ldl:1 }).map(([k]) => (
+            <button key={k}
+              onClick={() => setMetric(k)}
+              className={`rounded-full px-5 py-2 text-sm font-bold transition-all ${
+                metric === k
+                  ? "bg-stone-900 text-white shadow-md"
+                  : "bg-stone-100 text-stone-600 hover:bg-stone-200"
+              }`}>
+              {{hba1c:"HbA1c %", fbs:"FBS", tg:"Triglyceride", ldl:"LDL"}[k]}
+            </button>
+          ))}
+        </div>
+
+        <div className="rounded-3xl bg-stone-50 p-6 md:p-8 border border-stone-100">
+          <div className="flex items-baseline justify-between mb-4">
+            <div>
+              <div className="font-mono text-xs uppercase tracking-wider text-stone-500 font-bold">{metricDef.label}</div>
+              <div className="mt-1 font-head text-2xl font-extrabold text-stone-900">{metricDef.label} ({metricDef.unit})</div>
+            </div>
+            <div className="text-right">
+              <div className="text-xs text-stone-500 font-thai">{metricDef.targetLabel}</div>
+            </div>
+          </div>
+
+          <div style={{ height: 320 }}>
+            <ResponsiveContainer>
+              <LineChart data={data} margin={{ top: 16, right: 24, bottom: 8, left: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5E2DD" />
+                <XAxis dataKey="short" stroke="#A8A5A0" style={{ fontSize: 12 }} />
+                <YAxis stroke="#A8A5A0" style={{ fontSize: 12 }} />
+                <Tooltip
+                  contentStyle={{
+                    background: "white",
+                    border: "1px solid #E5E2DD",
+                    borderRadius: 12,
+                    padding: 12,
+                    fontFamily: "Sarabun, sans-serif",
+                  }}
+                  formatter={(v, n, p) => [`${v} ${metricDef.unit}`, metricDef.label]}
+                  labelFormatter={(l, payload) => payload?.[0]?.payload?.date ?? l}
+                />
+                <ReferenceLine y={metricDef.target} stroke="#16A34A" strokeDasharray="4 4" label={{ value: metricDef.targetLabel, position: "right", fill: "#16A34A", fontSize: 11 }} />
+                <Line
+                  type="monotone" dataKey="value"
+                  stroke={metricDef.color} strokeWidth={3}
+                  dot={(props) => {
+                    const { cx, cy, payload } = props;
+                    const isBest = payload.best;
+                    return (
+                      <g>
+                        <circle cx={cx} cy={cy} r={isBest ? 10 : 5} fill={isBest ? "#FBBF24" : metricDef.color} stroke="white" strokeWidth={2} />
+                        {isBest && <text x={cx} y={cy - 18} textAnchor="middle" fontSize="11" fontWeight="bold" fill="#92400E">✨ Best</text>}
+                      </g>
+                    );
+                  }}
+                  activeDot={{ r: 8 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Source legend */}
+        <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-2 text-xs">
+          {LAB_HISTORY.map((d, i) => (
+            <div key={i} className={`rounded-lg px-3 py-2 ${d.best ? "bg-amber-50 border border-amber-200" : "bg-stone-50"}`}>
+              <div className="font-mono font-bold text-stone-900">{d.date}</div>
+              <div className="text-stone-500">{d.source}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── CGM Section ─────────────────────────────────── */
+
+function CgmSection() {
+  return (
+    <section id="cgm" className="mx-auto max-w-6xl px-6 py-16 anim-in">
+      <SectionLabel number="03" label="CGM 30 วัน · ยืนยัน priority" accent="amber" />
+
+      <p className="text-lg text-stone-600 mb-8 font-thai">
+        ดึงข้อมูลตรงจาก Supabase · 7,655 readings · 30.4 วัน (21 ก.พ. – 23 มี.ค. 2569)
+      </p>
+
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {CGM_STATS.map((s, i) => (
+          <div key={i} className="bg-white rounded-2xl p-6 border border-stone-100 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between mb-3">
+              <div className="font-mono text-[10px] uppercase tracking-wider text-stone-500 font-bold">{s.label}</div>
+              <StatusPill status={s.status}>
+                {s.status === "good" ? "OK" : s.status === "warn" ? "เฝ้า" : "เกิน"}
+              </StatusPill>
+            </div>
+            <div className="flex items-baseline gap-1">
+              <span className="font-head text-3xl md:text-4xl font-extrabold text-stone-900">{s.value}</span>
+              <span className="text-sm text-stone-400 font-mono">{s.unit}</span>
+            </div>
+            <div className="mt-2 text-sm text-stone-500 font-thai">
+              {s.target && <span className="font-mono">เป้า {s.target}</span>}
+              {s.note && <div className="text-xs mt-1 text-stone-500">{s.note}</div>}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Worst meals */}
+      <div className="mt-8 rounded-3xl bg-gradient-to-br from-rose-50 to-amber-50 p-6 md:p-8 border border-rose-100">
+        <div className="font-mono text-xs uppercase tracking-widest text-rose-700 font-bold mb-4">
+          🍽️ Top trigger meals
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {[
+            { meal: "ขนมเปี๊ยะ + ขนมจีน", peak: 234, note: "refined carb stack" },
+            { meal: "Jonesalad", peak: 220, note: "dressing/croutons" },
+            { meal: "ขนมเปี๊ยะเดี่ยว", peak: 209, note: "flour + sugar" },
+            { meal: "กาแฟดำเปล่า", peak: 202, note: "dawn cortisol +83" },
+          ].map((m, i) => (
+            <div key={i} className="bg-white/80 backdrop-blur rounded-xl p-4">
+              <div className="font-thai font-bold text-sm text-stone-900">{m.meal}</div>
+              <div className="mt-1 flex items-baseline gap-1">
+                <span className="font-head text-2xl font-extrabold text-rose-700">{m.peak}</span>
+                <span className="text-xs text-stone-500 font-mono">mg/dL</span>
+              </div>
+              <div className="mt-1 text-xs text-stone-500 font-thai">{m.note}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Plan Section ─────────────────────────────────── */
+
+function PlanSection() {
+  const tierLabel = (level) => ({ 1: "Top Priority", 2: "Important", 3: "Maintenance" }[level]);
+  const changeColor = {
+    expand: "bg-amber-100 text-amber-800",
+    new: "bg-rose-100 text-rose-800 ring-2 ring-rose-300",
+    modify: "bg-blue-100 text-blue-800",
+    reduce: "bg-stone-100 text-stone-700",
+    keep: "bg-emerald-100 text-emerald-800",
+    delay: "bg-stone-100 text-stone-500",
+  };
+
+  return (
+    <section id="plan" className="bg-white py-16">
+      <div className="mx-auto max-w-6xl px-6 anim-in">
+        <SectionLabel number="04" label="ตารางปรับ Supplement v2" />
+
+        <p className="text-lg text-stone-600 mb-8 font-thai">
+          จัดลำดับใหม่ตาม priority ปัจจุบัน · เน้น glucose control · ลด TG-focused (TG แก้ได้แล้ว)
+        </p>
+
+        <div className="space-y-3">
+          {SUPPLEMENT_PLAN.map((p, i) => (
+            <div key={i} className={`rounded-2xl border p-5 md:p-6 transition-all hover:shadow-lg ${
+              p.level === 1 ? "card-gradient-rose border-rose-200" :
+              p.level === 2 ? "bg-white border-stone-200" :
+              "bg-stone-50 border-stone-100"
+            }`}>
+              <div className="flex flex-wrap items-start gap-4">
+                <div className="flex items-center gap-3 shrink-0">
+                  <span className="text-3xl md:text-4xl">{p.rank}</span>
+                  <div>
+                    <div className="font-mono text-[10px] uppercase tracking-wider text-stone-500 font-bold">{tierLabel(p.level)}</div>
+                    <div className="font-head text-xl md:text-2xl font-extrabold text-stone-900">{p.sku}</div>
+                  </div>
+                </div>
+                <div className="flex-1 min-w-[200px]">
+                  <div className="font-mono text-[10px] uppercase tracking-wider text-stone-500 font-bold mb-1">Dose · Timing</div>
+                  <div className="font-thai text-base text-stone-800 leading-snug">{p.dose}</div>
+                </div>
+                <span className={`shrink-0 self-start rounded-full px-3 py-1 text-xs font-bold ${changeColor[p.changeType]}`}>
+                  {p.change}
+                </span>
+              </div>
+              <div className="mt-4 pl-1 md:pl-16 font-thai text-stone-700 leading-relaxed">
+                {p.reason}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Targets ─────────────────────────────────────── */
+
+function Targets() {
+  return (
+    <section id="targets" className="mx-auto max-w-6xl px-6 py-16 anim-in">
+      <SectionLabel number="05" label="เป้า 4 สัปดาห์" accent="green" />
+
+      <div className="card-gradient-green rounded-3xl p-8 md:p-10 border border-emerald-100 glow-green">
+        <div className="font-mono text-xs uppercase tracking-widest text-emerald-700 font-bold mb-2">
+          🎯 หลัง start v2 protocol
+        </div>
+        <h3 className="font-head text-2xl md:text-3xl font-extrabold text-stone-900 mb-6">
+          ภายใน 28 วัน · ตัวเลขที่ควรเห็น
+        </h3>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {TARGETS_4WK.map((t, i) => (
+            <div key={i} className="bg-white/70 backdrop-blur rounded-2xl p-5">
+              <div className="font-thai text-sm font-semibold text-stone-600">{t.metric}</div>
+              <div className="mt-2 flex items-baseline justify-between">
+                <div>
+                  <div className="font-mono text-[10px] text-stone-400 uppercase tracking-wider">Now</div>
+                  <div className="font-head text-lg font-bold text-stone-500">{t.current}</div>
+                </div>
+                <div className="text-2xl text-emerald-600">→</div>
+                <div className="text-right">
+                  <div className="font-mono text-[10px] text-emerald-700 uppercase tracking-wider">Target</div>
+                  <div className="font-head text-lg font-extrabold text-emerald-700">{t.target}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Questions for Jin ──────────────────────────────── */
+
+function Questions() {
+  const [checked, setChecked] = useState({});
+
+  const toggle = (i) => setChecked((p) => ({ ...p, [i]: !p[i] }));
+
+  return (
+    <section id="questions" className="bg-stone-900 text-white py-16 anim-in">
+      <div className="mx-auto max-w-4xl px-6">
+        <div className="flex items-baseline gap-3 mb-6">
+          <span className="font-mono text-xs font-bold tracking-widest text-rose-300">06</span>
+          <h2 className="font-head text-3xl md:text-4xl font-extrabold tracking-tight text-white">
+            ขอจิ้น Review 5 ข้อ
+          </h2>
+        </div>
+        <p className="text-lg text-stone-300 mb-10 font-thai">
+          ก่อนนำไปคุยกับพี่สุ · ติ้กเช็คเมื่อจิ้น confirm แต่ละข้อ
+        </p>
+
+        <div className="space-y-3">
+          {QUESTIONS_JIN.map((q, i) => (
+            <div key={i}
+              onClick={() => toggle(i)}
+              className={`group cursor-pointer rounded-2xl p-5 md:p-6 transition-all border ${
+                checked[i] ? "bg-emerald-900/30 border-emerald-400/40" : "bg-white/5 border-white/10 hover:bg-white/10"
+              }`}>
+              <div className="flex items-start gap-4">
+                <div className={`shrink-0 h-7 w-7 rounded-md flex items-center justify-center mt-0.5 transition-all ${
+                  checked[i] ? "bg-emerald-500 text-white" : "bg-white/10 border border-white/30"
+                }`}>
+                  {checked[i] ? "✓" : <span className="font-mono text-xs text-white/60">{i + 1}</span>}
+                </div>
+                <div className="flex-1">
+                  <div className={`font-head text-lg md:text-xl font-extrabold ${checked[i] ? "line-through text-stone-400" : "text-white"}`}>
+                    {q.q}
+                  </div>
+                  <div className="mt-2 text-stone-300 font-thai leading-relaxed">{q.desc}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10 rounded-2xl bg-amber-500/15 border border-amber-400/30 p-6">
+          <div className="flex items-start gap-3">
+            <span className="text-2xl">⚠️</span>
+            <div>
+              <div className="font-head text-lg font-bold text-amber-200 mb-1">Disclaimer</div>
+              <div className="text-stone-300 font-thai text-sm leading-relaxed">
+                Berberine + ยาเบาหวาน/statin/anti-coagulant ต้องตรวจ drug-drug interaction · v3 final จะ render หลังจิ้น confirm ทั้ง 5 ข้อ
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Footer ─────────────────────────────────────────── */
+
+function FooterBlock() {
+  return (
+    <footer className="bg-stone-100 py-12">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div className="font-mono text-xs uppercase tracking-widest text-stone-500 font-bold">UP Wellness · UP Labs</div>
+            <div className="mt-1 font-head text-lg font-extrabold text-stone-900">Su Care Plan v2</div>
+          </div>
+          <div className="text-right text-sm text-stone-500 font-thai">
+            <div>วิเคราะห์โดย UP Labs (BCA + CGM + Lab History)</div>
+            <div className="mt-0.5">จัดทำ 13 พ.ค. 2569 · update 16 พ.ค. 2569</div>
+          </div>
+        </div>
+        <div className="mt-6 text-xs text-stone-400 font-thai">
+          เอกสารนี้สำหรับ Pharmacist Review เท่านั้น · ห้ามแชร์ก่อนจิ้น confirm · UPLABS internal use
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ─── App ────────────────────────────────────────────── */
+
+function App() {
+  const [active, setActive] = useState("overview");
+
+  useEffect(() => {
+    const opts = { rootMargin: "-30% 0% -60% 0%", threshold: 0 };
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id); });
+    }, opts);
+    SECTIONS.forEach((s) => {
+      const el = document.getElementById(s.id);
+      if (el) obs.observe(el);
+    });
+    return () => obs.disconnect();
+  }, []);
+
+  const onJump = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  return (
+    <div className="min-h-screen">
+      <Hero />
+      <StickyNav active={active} onJump={onJump} />
+      <Overview />
+      <Timeline />
+      <CgmSection />
+      <PlanSection />
+      <Targets />
+      <Questions />
+      <FooterBlock />
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+</script>
+
+</body>
+</html>
