@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TONI · Chaiwat Phuwanonjirakawin</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Bricolage+Grotesque:wght@400;600;700;800;900&family=DM+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #FF3DA8;
+    --cyan: #00E0FF;
+    --yellow: #FFE600;
+    --purple: #B026FF;
+    --orange: #FF6B35;
+    --lime: #C8FF00;
+    --ink: #0B0014;
+  }
+  html, body { background: var(--ink); }
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    color: white;
+    overflow-x: hidden;
+    cursor: none;
+  }
+  .display { font-family: 'Bricolage Grotesque', sans-serif; letter-spacing: -0.04em; }
+  .mono { font-family: 'DM Mono', monospace; }
+
+  /* Animated mesh gradient */
+  .mesh-bg {
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255, 61, 168, 0.55) 0%, transparent 40%),
+      radial-gradient(circle at 85% 15%, rgba(0, 224, 255, 0.45) 0%, transparent 42%),
+      radial-gradient(circle at 75% 85%, rgba(176, 38, 255, 0.5) 0%, transparent 45%),
+      radial-gradient(circle at 10% 80%, rgba(255, 230, 0, 0.35) 0%, transparent 38%),
+      radial-gradient(circle at 50% 50%, rgba(255, 107, 53, 0.25) 0%, transparent 60%),
+      var(--ink);
+    background-size: 200% 200%;
+    animation: meshShift 20s ease-in-out infinite;
+  }
+  @keyframes meshShift {
+    0%, 100% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+  }
+
+  /* Floating blob */
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+  @keyframes float1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(60px, -40px) scale(1.1); }
+    66% { transform: translate(-30px, 50px) scale(0.95); }
+  }
+  @keyframes float2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-80px, 60px) scale(1.15); }
+  }
+  @keyframes float3 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(70px, -70px) scale(0.9); }
+  }
+
+  /* Marquee */
+  .marquee-wrap { overflow: hidden; }
+  .marquee-track {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: scroll 35s linear infinite;
+  }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Wiggle */
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+  .wiggle { animation: wiggle 4s ease-in-out infinite; }
+
+  /* Big text outlined */
+  .text-outline {
+    -webkit-text-stroke: 2px white;
+    color: transparent;
+  }
+  .text-outline-pink {
+    -webkit-text-stroke: 2px var(--pink);
+    color: transparent;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 32px; height: 32px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: difference;
+    transition: transform 0.15s ease, width 0.2s ease, height 0.2s ease, background 0.2s ease;
+    transform: translate(-50%, -50%);
+  }
+  .cursor.hover {
+    width: 64px; height: 64px;
+    background: var(--yellow);
+    border-color: var(--yellow);
+  }
+
+  /* Card hover */
+  .pop-card {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+  }
+  .pop-card:hover {
+    transform: translateY(-12px) rotate(-1deg) scale(1.02);
+  }
+
+  /* Sticker */
+  .sticker {
+    box-shadow: 4px 4px 0 #0B0014, 8px 8px 0 rgba(255,255,255,0.1);
+    border: 3px solid #0B0014;
+  }
+
+  /* Grain */
+  .grain::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.4;
+  }
+
+  /* Tilt on scroll */
+  .tilt-r { transform: rotate(-2deg); }
+  .tilt-l { transform: rotate(2deg); }
+
+  /* Star burst */
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .spin-slow { animation: spin 14s linear infinite; }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #FF3DA8 0%, #FFE600 50%, #00E0FF 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .gradient-text-2 {
+    background: linear-gradient(120deg, #C8FF00 0%, #00E0FF 50%, #B026FF 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  @media (max-width: 768px) {
+    body { cursor: auto; }
+    .cursor { display: none; }
+  }
+</style>
+</head>
+<body class="mesh-bg grain">
+
+<div id="root"></div>
+<div class="cursor" id="cursor"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+function App() {
+  return (
+    <div className="relative min-h-screen">
+      <Blobs />
+      <Nav />
+      <Hero />
+      <Marquee />
+      <Ventures />
+      <BigStatement />
+      <Marquee reverse />
+      <Footer />
+    </div>
+  );
+}
+
+function Blobs() {
+  return (
+    <>
+      <div className="blob" style={{ background: '#FF3DA8', width: 500, height: 500, top: '5%', left: '-5%', animation: 'float1 18s ease-in-out infinite' }} />
+      <div className="blob" style={{ background: '#00E0FF', width: 420, height: 420, top: '40%', right: '-8%', animation: 'float2 22s ease-in-out infinite' }} />
+      <div className="blob" style={{ background: '#B026FF', width: 380, height: 380, bottom: '15%', left: '20%', animation: 'float3 25s ease-in-out infinite' }} />
+      <div className="blob" style={{ background: '#FFE600', width: 280, height: 280, top: '20%', right: '30%', opacity: 0.6, animation: 'float1 28s ease-in-out infinite reverse' }} />
+    </>
+  );
+}
+
+function Nav() {
+  return (
+    <nav className="relative z-20 flex justify-between items-center px-6 md:px-12 py-6">
+      <div className="flex items-center gap-2">
+        <div className="w-10 h-10 rounded-full bg-yellow-300 flex items-center justify-center text-black font-black text-lg sticker wiggle">T</div>
+        <span className="mono text-sm uppercase tracking-widest">/ toni.studio</span>
+      </div>
+      <div className="hidden md:flex gap-6 mono text-xs uppercase tracking-widest">
+        <a href="#work" data-hover className="hover:text-yellow-300 transition">/ work</a>
+        <a href="#vibes" data-hover className="hover:text-pink-400 transition">/ vibes</a>
+        <a href="#contact" data-hover className="hover:text-cyan-300 transition">/ ping me</a>
+      </div>
+      <div className="hidden md:block mono text-xs opacity-70">BKK · TH 🌏</div>
+    </nav>
+  );
+}
+
+function Hero() {
+  return (
+    <section className="relative z-10 px-6 md:px-12 pt-12 md:pt-24 pb-20">
+      <div className="max-w-7xl mx-auto">
+        {/* Status chip */}
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full sticker mb-8" style={{ background: '#C8FF00' }}>
+          <span className="w-2 h-2 rounded-full bg-black animate-pulse"></span>
+          <span className="mono text-xs text-black font-bold uppercase tracking-widest">building loudly · 2026</span>
+        </div>
+
+        <h1 className="display font-black leading-[0.85]" style={{ fontSize: 'clamp(4rem, 16vw, 14rem)' }}>
+          <span className="block">hi, i'm</span>
+          <span className="block gradient-text">TONI.</span>
+          <span className="block text-outline-pink">a builder.</span>
+        </h1>
+
+        <div className="grid md:grid-cols-3 gap-8 mt-16 max-w-5xl">
+          <div className="md:col-span-2">
+            <p className="text-2xl md:text-3xl font-medium leading-snug">
+              I make <span className="bg-yellow-300 text-black px-2 rounded">things</span> that
+              feel <span className="bg-pink-500 text-white px-2 rounded">alive</span> —
+              <span className="italic gradient-text-2">wellness, AI, and ideas that ship</span>.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3">
+            <a href="#work" data-hover className="block px-6 py-4 rounded-2xl sticker text-center font-bold text-black hover:translate-y-[-4px] transition" style={{ background: '#FFE600' }}>
+              see the work →
+            </a>
+            <a href="mailto:ckawin1184@gmail.com" data-hover className="block px-6 py-4 rounded-2xl sticker text-center font-bold hover:translate-y-[-4px] transition" style={{ background: '#FF3DA8' }}>
+              say hi ✨
+            </a>
+          </div>
+        </div>
+
+        {/* Decorative starburst */}
+        <div className="absolute top-32 right-12 hidden lg:block spin-slow">
+          <Starburst />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Starburst() {
+  return (
+    <svg width="120" height="120" viewBox="0 0 120 120">
+      <g transform="translate(60,60)">
+        {[...Array(12)].map((_, i) => (
+          <polygon
+            key={i}
+            points="0,-50 6,0 0,50 -6,0"
+            fill={i % 2 ? '#FFE600' : '#FF3DA8'}
+            transform={`rotate(${i * 30})`}
+          />
+        ))}
+        <circle r="14" fill="#0B0014" />
+        <circle r="10" fill="#00E0FF" />
+      </g>
+    </svg>
+  );
+}
+
+function Marquee({ reverse }) {
+  const items = ['★ BUILT WITH LOVE', '★ BANGKOK ↔ EVERYWHERE', '★ UP WELLNESS', '★ AI WHISPERER', '★ TOURLEAD', '★ COFFEE FIRST', '★ SHIP IT'];
+  const all = [...items, ...items];
+  return (
+    <div className="marquee-wrap py-6 border-y-2 border-white/20 backdrop-blur-sm" style={{ background: 'rgba(11,0,20,0.4)' }}>
+      <div className="marquee-track" style={{ animationDirection: reverse ? 'reverse' : 'normal' }}>
+        {all.map((t, i) => (
+          <span key={i} className="display font-black text-4xl md:text-6xl px-8" style={{ color: i % 3 === 0 ? '#FFE600' : i % 3 === 1 ? '#FF3DA8' : '#00E0FF' }}>
+            {t}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Ventures() {
+  const cards = [
+    { title: 'UP Wellness', tag: 'longevity · weight · health', emoji: '🌿', bg: '#FF3DA8', rot: 'tilt-r' },
+    { title: 'TonPalearn AI', tag: 'AI for everyone', emoji: '🤖', bg: '#00E0FF', rot: 'tilt-l' },
+    { title: 'TourLead', tag: 'one-stop tours', emoji: '🌅', bg: '#FFE600', rot: 'tilt-r' },
+    { title: 'Consulting', tag: 'strategy · execution', emoji: '🎯', bg: '#C8FF00', rot: 'tilt-l' },
+  ];
+  return (
+    <section id="work" className="relative z-10 px-6 md:px-12 py-20">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="display font-black text-5xl md:text-7xl mb-2">
+          <span className="text-outline">things</span> <span className="gradient-text">i make.</span>
+        </h2>
+        <p className="mono text-sm uppercase tracking-widest opacity-70 mb-12">// no boring stuff allowed</p>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {cards.map((c, i) => (
+            <div
+              key={i}
+              data-hover
+              className={`pop-card sticker rounded-3xl p-6 aspect-[3/4] flex flex-col justify-between cursor-pointer ${c.rot}`}
+              style={{ background: c.bg, color: c.bg === '#00E0FF' || c.bg === '#FFE600' || c.bg === '#C8FF00' ? '#0B0014' : 'white' }}
+            >
+              <div className="text-6xl wiggle" style={{ animationDelay: `${i * 0.3}s` }}>{c.emoji}</div>
+              <div>
+                <div className="display font-black text-2xl leading-none">{c.title}</div>
+                <div className="mono text-xs uppercase tracking-widest mt-2 opacity-80">{c.tag}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function BigStatement() {
+  return (
+    <section id="vibes" className="relative z-10 px-6 md:px-12 py-20 md:py-32">
+      <div className="max-w-6xl mx-auto text-center">
+        <div className="mono text-xs uppercase tracking-[0.4em] opacity-60 mb-6">/ a thing i believe</div>
+        <h3 className="display font-black leading-[0.95]" style={{ fontSize: 'clamp(2.5rem, 7vw, 6rem)' }}>
+          <span className="block">make stuff that's</span>
+          <span className="block gradient-text-2 italic">honestly fun</span>
+          <span className="block">— or don't make it at all.</span>
+        </h3>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  const [time, setTime] = useState('');
+  useEffect(() => {
+    const tick = () => {
+      const d = new Date();
+      const opts = { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Bangkok', hour12: false };
+      setTime(d.toLocaleTimeString('en-GB', opts) + ' ICT');
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <footer id="contact" className="relative z-10 px-6 md:px-12 pt-12 pb-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="rounded-3xl sticker p-8 md:p-14" style={{ background: 'linear-gradient(135deg, #B026FF 0%, #FF3DA8 50%, #FF6B35 100%)' }}>
+          <div className="grid md:grid-cols-2 gap-8 items-end">
+            <div>
+              <div className="mono text-xs uppercase tracking-widest opacity-80 mb-3">/ wanna build something?</div>
+              <h4 className="display font-black text-4xl md:text-6xl leading-[0.95]">
+                let's<br />
+                <span className="italic">make noise.</span>
+              </h4>
+            </div>
+            <div className="flex flex-col gap-3 md:items-end">
+              <a href="mailto:ckawin1184@gmail.com" data-hover className="px-6 py-3 rounded-full bg-black text-white font-bold inline-flex items-center gap-2 hover:scale-105 transition w-fit">
+                ckawin1184@gmail.com →
+              </a>
+              <div className="flex gap-3">
+                <a href="https://github.com/upwellness" data-hover className="px-4 py-2 rounded-full bg-white/20 backdrop-blur text-sm font-bold hover:bg-white/40 transition">github</a>
+                <a href="#" data-hover className="px-4 py-2 rounded-full bg-white/20 backdrop-blur text-sm font-bold hover:bg-white/40 transition">linkedin</a>
+                <a href="#" data-hover className="px-4 py-2 rounded-full bg-white/20 backdrop-blur text-sm font-bold hover:bg-white/40 transition">x</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col md:flex-row justify-between items-center mt-8 gap-3 mono text-xs uppercase tracking-widest opacity-60">
+          <div>© 2026 · chaiwat p. · all gradients reserved</div>
+          <div>{time}</div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// Custom cursor
+function initCursor() {
+  const cursor = document.getElementById('cursor');
+  if (!cursor) return;
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  document.addEventListener('mouseover', (e) => {
+    if (e.target.closest('[data-hover]')) cursor.classList.add('hover');
+  });
+  document.addEventListener('mouseout', (e) => {
+    if (e.target.closest('[data-hover]')) cursor.classList.remove('hover');
+  });
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+setTimeout(initCursor, 100);
+</script>
+</body>
+</html>
