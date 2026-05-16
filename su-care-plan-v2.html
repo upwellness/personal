@@ -93,7 +93,30 @@
 </style>
 </head>
 <body>
-<div id="root"></div>
+<div id="root">
+  <div style="padding: 60px 24px; max-width: 600px; margin: 0 auto; text-align: center; font-family: Sarabun, sans-serif;">
+    <div style="font-size: 14px; color: #8C4C4C; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;">UP Wellness · Loading</div>
+    <div style="margin-top: 16px; font-size: 24px; font-weight: 800; color: #1F1F1F;">กำลังโหลดรายงาน...</div>
+    <div id="error-pane" style="margin-top: 24px; padding: 16px; background: #FEE2E2; color: #991B1B; border-radius: 12px; font-family: monospace; font-size: 13px; text-align: left; white-space: pre-wrap; display: none;"></div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("error", function(e) {
+  var p = document.getElementById("error-pane");
+  if (p) {
+    p.style.display = "block";
+    p.textContent = "Error: " + e.message + "\nFile: " + (e.filename || "inline") + "\nLine: " + e.lineno;
+  }
+});
+window.addEventListener("unhandledrejection", function(e) {
+  var p = document.getElementById("error-pane");
+  if (p) {
+    p.style.display = "block";
+    p.textContent = "Promise rejection: " + (e.reason && e.reason.message || e.reason);
+  }
+});
+</script>
 
 <script type="text/babel" data-presets="react">
 const { useState, useEffect, useMemo, useRef } = React;
