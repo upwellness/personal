@@ -151,6 +151,182 @@ const TARGETS_4WK = [
   { metric: "น้ำหนัก",                 current: "plateau",     target: "ลง 1-2 kg" },
 ];
 
+const SYSTEM_REVIEW = [
+  { id: "glucose", system: "Glucose · Metabolic", icon: "🩸",
+    current: "HbA1c 6.2% · FBS 116 · CGM TIR 46.6%",
+    journey: "7.4 → 5.8 ✨ → 6.2 · drift กลับใน 9 เดือน",
+    status: "drift",
+    verdict: "ห่างจาก T2DM 0.3 จุด · priority #1 ตอนนี้",
+    upWellness: ["Full Course Phase 1 = replicate Jun 25 strict reset", "Calow 2 เม็ด · 3 มื้อหลัก", "Fiber Powder ก่อนกาแฟเช้า", "CGM-guided ระหว่าง program"],
+    external: [
+      { item: "Berberine HCl 500mg × 3/day", nutrilite: "❌ ไม่มีใน Nutrilite", note: "pharmacy · จิ้นต้อง clear drug interaction" },
+      { item: "OGTT 2hr · Fasting Insulin · HOMA-IR", nutrilite: "—", note: "lab test · ~2,500 บ" }
+    ],
+    observe: "ถ้า HbA1c > 6.5 หลัง 8 สัปดาห์ = ต้องคุยหมอเรื่อง metformin" },
+
+  { id: "tg", system: "Lipid · Triglyceride", icon: "💧",
+    current: "132 mg/dL (normal <150)",
+    journey: "275 → 88 ✨ → 132 · stable <150 มา 9 เดือน",
+    status: "win",
+    verdict: "ระบบเราพิสูจน์แล้ว · maintain mode พอ",
+    upWellness: ["Triple Omega 1-2 เม็ด/วัน (ลดจาก 3)", "ไม่ต้องลงทุน intervention ใหม่"],
+    external: [],
+    observe: "ถ้า TG > 150 หลัง 3 เดือน = adherence issue · review diet" },
+
+  { id: "ldl", system: "Lipid · LDL", icon: "🟡",
+    current: "78 mg/dL (acceptable แต่ bounce)",
+    journey: "94 → 42 ✨ → 78 · +36 ใน 5 เดือน",
+    status: "watch",
+    verdict: "Bounce shocking · ต้องรู้ root cause ก่อน",
+    upWellness: ["Customer Records review (track ของเก่า)", "Triple Omega · DoubleX support"],
+    external: [
+      { item: "คุยแพทย์เรื่อง statin", nutrilite: "—", note: "ถ้าเคยกินแล้วหยุด = ทำไม?" },
+      { item: "Apo B + Lp(a)", nutrilite: "—", note: "true CV risk · ~1,500 บ" }
+    ],
+    observe: "LDL goal สำหรับพี่สุ = <100 (มี NAFLD + pre-diabetes = risk เพิ่ม)" },
+
+  { id: "hdl", system: "Lipid · HDL", icon: "🩷",
+    current: "46 mg/dL (Nov 25 · ต่ำกว่าเกณฑ์หญิง ≥50)",
+    journey: "38 → 38 → 46 · กำลังขึ้น",
+    status: "watch",
+    verdict: "Improving · ต้องการ +4-6 อีก",
+    upWellness: ["Full Course standard stack (Triple Omega + DoubleX + protein)", "Strength training · UP Wellness coaching"],
+    external: [
+      { item: "Niacin (B3) 500mg", nutrilite: "🟡 Vitamin B Plus มี niacin · dose ต่ำ", note: "ปรึกษาแพทย์ · ถ้า dose สูงทำให้ flush" }
+    ],
+    observe: "HDL function test (HDL efflux) ถ้าอยากแม่นจริง · pharmacy lab" },
+
+  { id: "nafld", system: "Liver · NAFLD", icon: "🟫",
+    current: "FibroScan CAP 263.5 (S1) · E 7.1 (F1-F2)",
+    journey: "ตรวจครั้งแรก Nov 25 · ไม่มี trend",
+    status: "active",
+    verdict: "Active disease · มีพังผืดเริ่ม · reversible ใน 1-2 ปี",
+    upWellness: ["Full Course = NAFLD program (BodyKey + Triple Omega + DoubleX + Bio C)", "low fructose diet ใน meal plan", "Choline เป็น part ของ DoubleX phyto blend"],
+    external: [
+      { item: "Vitamin E 400 IU mixed tocopherol", nutrilite: "🟡 DoubleX มี Vit E · dose ต่ำ (PIVENS = 800 IU)", note: "pharmacy · ต้องตรวจ ALT baseline" },
+      { item: "Choline 500mg / Phosphatidylcholine", nutrilite: "❌ ไม่มีใน TH · DoubleX มีน้อย", note: "pharmacy" },
+      { item: "Silymarin (Milk Thistle) 140mg", nutrilite: "❌ ไม่มีใน TH", note: "optional · B-grade evidence" },
+      { item: "FibroScan ซ้ำ 6 เดือน", nutrilite: "—", note: "Paolo · ~2,000 บ" }
+    ],
+    observe: "ALT/AST baseline ก่อนเริ่ม Vit E · ถ้า ALT > 60 = ปรึกษา hepatologist" },
+
+  { id: "kidney", system: "Kidney · eGFR", icon: "🟧",
+    current: "89.51 (Stage 2 · borderline)",
+    journey: "ตรวจ Nov 25 ครั้งแรก",
+    status: "watch",
+    verdict: "Mild early CKD · associated กับ metabolic syndrome",
+    upWellness: ["Cal Mag D ก่อนนอน (electrolyte + insulin)", "CoQ10 Phase 2 (mitochondria)", "ห้าม Vit C > 500mg (oxalate stones)"],
+    external: [
+      { item: "Urine ACR (microalbumin)", nutrilite: "—", note: "Paolo · diabetic nephropathy screen" },
+      { item: "eGFR ซ้ำทุก 3 เดือน", nutrilite: "—", note: "" }
+    ],
+    observe: "ถ้า eGFR < 60 = หยุด supplement บางตัว · ปรึกษา nephrologist" },
+
+  { id: "cbc", system: "CBC · Mild Anemia", icon: "🔴",
+    current: "WBC 3.84 · Hb 11.7 · Hct 35.2 · Lymph 52% (high)",
+    journey: "ตรวจ Nov 25 ครั้งแรก",
+    status: "watch",
+    verdict: "Mild anemia + Lymph สูง · ต้อง workup ก่อน",
+    upWellness: ["Vitamin B Plus (B-complex)", "Bio C (iron absorption · เมื่อพร้อม)"],
+    external: [
+      { item: "Iron Folate", nutrilite: "✅ Nutrilite Iron Folate (Fe 18mg + Folate)", note: "ใช้ Nutrilite ได้ · แต่ตรวจ ferritin ก่อน" },
+      { item: "Ferritin · Serum Iron · TIBC · B12 · Folate", nutrilite: "—", note: "ก่อน supplement · ~1,500 บ" }
+    ],
+    observe: "⚠️ ถ้า ferritin สูง = NAFLD iron overload · ห้าม iron · ถ้า Lymph > 4,000 absolute = ปรึกษา hematologist" },
+
+  { id: "thyroid", system: "Thyroid", icon: "🦋",
+    current: "TSH 2.274 · FT3 2.49 · FT4 1.11 (all normal)",
+    journey: "Stable normal ตรวจ 2 ครั้ง",
+    status: "stable",
+    verdict: "ไม่ใช่ปัญหา · ไม่ต้องแตะ",
+    upWellness: [],
+    external: [{ item: "Re-check ปีละครั้ง", nutrilite: "—", note: "" }],
+    observe: "ถ้า TSH > 4 ในอนาคต = subclinical hypothyroidism · ส่ง Anti-TPO" },
+
+  { id: "uric", system: "Uric Acid", icon: "💎",
+    current: "5.3 (Feb 26 · normal <6.0 หญิง)",
+    journey: "6.1 → 7.2 ✨peak → 5.3 · normalized",
+    status: "resolved",
+    verdict: "ระบบลดได้ผล · maintain",
+    upWellness: [],
+    external: [],
+    observe: "ถ้า > 7 อีก = review purine diet · พิจารณา Allopurinol (rare ในเคสนี้)" },
+
+  { id: "hepb", system: "Hep B", icon: "🛡️",
+    current: "HBs-Ag negative · HBs-Ab > 1000",
+    journey: "Stable immune",
+    status: "stable",
+    verdict: "Vaccinated/recovered · ไม่ต้องดูแลเพิ่ม",
+    upWellness: [],
+    external: [],
+    observe: "—" },
+
+  { id: "cancer", system: "Cancer marker · CA-125", icon: "🎗️",
+    current: "14 U/mL (normal < 35)",
+    journey: "Stable",
+    status: "stable",
+    verdict: "OK · screen ปีละครั้ง",
+    upWellness: [],
+    external: [{ item: "ตรวจซ้ำปีละครั้ง", nutrilite: "—", note: "" }],
+    observe: "CA-125 ไม่ specific มาก · ถ้าขึ้น 2 เท่า = ส่ง GYN" },
+
+  { id: "breast", system: "Breast Screening", icon: "🎀",
+    current: "ซีสต์ขวา 4.3mm + microcalcifications 2 ข้าง",
+    journey: "Detected Nov 25 · BI-RADS ระบุไม่ชัด",
+    status: "watch",
+    verdict: "Likely benign · ต้อง surveillance",
+    upWellness: ["⚠️ ห้าม phytoestrogen (Dong Quai · don ขาว)", "ไม่ใช้ Nutrilite Twist Tube ใส่ herbs"],
+    external: [
+      { item: "Mammogram + Breast US 6 mo follow", nutrilite: "—", note: "Paolo · ~2,500 บ" },
+      { item: "BI-RADS reading", nutrilite: "—", note: "ขอ radiologist ระบุ BI-RADS 1-5" }
+    ],
+    observe: "ถ้า BI-RADS 3 = follow 6mo · ถ้า 4+ = biopsy · soy isoflavone OK ในขนาดทาน" },
+
+  { id: "cardio", system: "Cardiovascular · EKG", icon: "❤️",
+    current: "EKG borderline · Carotid Duplex ปกติ",
+    journey: "Detected Nov 25 · ไม่มี baseline",
+    status: "watch",
+    verdict: "ก้ำกึ่ง · ต้องตรวจซ้ำ + คุยหมอ",
+    upWellness: ["CoQ10 200mg (mitochondria + cardiac)", "Triple Omega (rhythm support)"],
+    external: [
+      { item: "EKG repeat + Echo + Stress test", nutrilite: "—", note: "ถ้ามีอาการเหนื่อย/แน่นหน้าอก · ~3,000 บ" },
+      { item: "ปรึกษาแพทย์โรคหัวใจ", nutrilite: "—", note: "Paolo มี" }
+    ],
+    observe: "ถ้ามี palpitation · chest pain · SOB = ตรวจทันที · ไม่รอ" },
+
+  { id: "chest", system: "Imaging · Chest X-ray", icon: "🫁",
+    current: "ปกติ",
+    journey: "ตรวจ Nov 25",
+    status: "stable",
+    verdict: "OK · ตรวจปีละครั้ง",
+    upWellness: [],
+    external: [],
+    observe: "—" },
+
+  { id: "weight", system: "Weight · BCA", icon: "⚖️",
+    current: "Plateau ~60-62 kg",
+    journey: "66 kg → ลดได้ → plateau 9 เดือน",
+    status: "watch",
+    verdict: "Stuck · Insulin resistance + NAFLD = metabolic block",
+    upWellness: ["Full Course 60 วัน (4 phases · BDK alternating)", "BCA Tracker monthly", "All Plant Protein (preserve muscle)"],
+    external: [
+      { item: "Strength training 2-3x/week", nutrilite: "—", note: "🌱 สำคัญที่สุดสำหรับหญิง 50+ · prevent sarcopenia" }
+    ],
+    observe: "ถ้า BMI > 30 + HbA1c > 6.5 = GLP-1 candidate · คุยแพทย์ endocrine" },
+
+  { id: "vitd", system: "Vitamin D", icon: "☀️",
+    current: "ขาด (ตามประวัติ · ไม่ได้ตรวจล่าสุด)",
+    journey: "ขาดเรื้อรัง",
+    status: "active",
+    verdict: "ต้องตรวจ + เสริมทันที",
+    upWellness: ["DoubleX มี Vit D แต่ dose ต่ำ"],
+    external: [
+      { item: "Vitamin D3 2,000 IU/วัน", nutrilite: "❌ Nutrilite TH dose ต่ำเกิน (400 IU)", note: "pharmacy · 300 บ/เดือน" },
+      { item: "25(OH)D test baseline", nutrilite: "—", note: "ตรวจก่อนเริ่ม · เป้าหมาย > 40 ng/mL" }
+    ],
+    observe: "ถ้า 25(OH)D < 20 = deficient · loading dose 50,000 IU/สัปดาห์ × 8 สัปดาห์" }
+];
+
 const QUESTIONS_JIN = [
   { q: "Jun 2025 protocol คืออะไรกันแน่", desc: "Nutrilite stack + dose + meal plan ตอนนั้นเป็นแบบไหน? ถ้า replicate ได้คือคำตอบหลัก · อย่าให้เราเริ่มจากศูนย์" },
   { q: "LDL bounce 42 → 78 ระหว่าง Sep 25 → Feb 26", desc: "พี่สุหยุด statin? เปลี่ยน diet? · ก่อนเพิ่ม intervention อยากรู้ root cause" },
@@ -160,13 +336,23 @@ const QUESTIONS_JIN = [
 ];
 
 const SECTIONS = [
-  { id: "overview",  label: "ภาพรวม" },
-  { id: "timeline",  label: "Timeline" },
-  { id: "cgm",       label: "CGM" },
-  { id: "plan",      label: "แผนปรับ" },
-  { id: "targets",   label: "เป้า 4 สัปดาห์" },
-  { id: "questions", label: "ถามจิ้น" },
+  { id: "overview",       label: "ภาพรวม" },
+  { id: "timeline",       label: "Timeline" },
+  { id: "cgm",            label: "CGM" },
+  { id: "system-review",  label: "16 ระบบ" },
+  { id: "plan",           label: "แผนปรับ" },
+  { id: "targets",        label: "เป้า 4 สัปดาห์" },
+  { id: "questions",      label: "ถามจิ้น" },
 ];
+
+const STATUS_THEME = {
+  active:   { label: "🔴 Active",    pill: "bg-red-100 text-red-800 ring-1 ring-red-300",       accent: "border-red-400" },
+  drift:    { label: "🟠 Drift",     pill: "bg-orange-100 text-orange-800 ring-1 ring-orange-300", accent: "border-orange-400" },
+  watch:    { label: "🟡 Watch",     pill: "bg-amber-100 text-amber-800 ring-1 ring-amber-300", accent: "border-amber-400" },
+  win:      { label: "🟢 Win",       pill: "bg-emerald-100 text-emerald-800 ring-1 ring-emerald-300", accent: "border-emerald-400" },
+  resolved: { label: "🟢 Resolved",  pill: "bg-emerald-100 text-emerald-800 ring-1 ring-emerald-300", accent: "border-emerald-400" },
+  stable:   { label: "🟢 Stable",    pill: "bg-stone-100 text-stone-700 ring-1 ring-stone-300", accent: "border-stone-200" },
+};
 
 /* ─── Components ─────────────────────────────────── */
 
@@ -370,10 +556,12 @@ function TimelineChart({ data, color, target, targetLabel, unit }) {
 function Timeline() {
   const [metric, setMetric] = useState("hba1c");
   const metricDefs = {
-    hba1c: { label: "HbA1c", unit: "%",     color: "#8C4C4C", target: 5.7, targetLabel: "เป้า <5.7" },
-    fbs:   { label: "FBS",   unit: "mg/dL", color: "#B8860B", target: 99,  targetLabel: "เป้า <100" },
-    tg:    { label: "Triglyceride", unit: "mg/dL", color: "#396755", target: 150, targetLabel: "เป้า <150" },
-    ldl:   { label: "LDL",   unit: "mg/dL", color: "#3A9CB3", target: 100, targetLabel: "เป้า <100" },
+    hba1c: { label: "HbA1c",        title: "HbA1c %",        unit: "%",     color: "#8C4C4C", target: 5.7, targetLabel: "เป้า <5.7" },
+    fbs:   { label: "FBS",          title: "FBS",            unit: "mg/dL", color: "#B8860B", target: 99,  targetLabel: "เป้า <100" },
+    tg:    { label: "Triglyceride", title: "Triglyceride",   unit: "mg/dL", color: "#396755", target: 150, targetLabel: "เป้า <150" },
+    ldl:   { label: "LDL",          title: "LDL",            unit: "mg/dL", color: "#3A9CB3", target: 100, targetLabel: "เป้า <100" },
+    hdl:   { label: "HDL",          title: "HDL (หญิง ≥50)",  unit: "mg/dL", color: "#DB2777", target: 50,  targetLabel: "เป้า ≥50" },
+    uric:  { label: "Uric Acid",    title: "Uric Acid",      unit: "mg/dL", color: "#7C3AED", target: 6,   targetLabel: "เป้า <6.0" },
   };
   const def = metricDefs[metric];
   const data = LAB_HISTORY.filter((d) => d[metric] != null).map((d) => ({ ...d, value: d[metric] }));
@@ -384,11 +572,11 @@ function Timeline() {
         <${SectionLabel} number="02" label="Timeline · 2 ปีย้อนหลัง" accent="rose" />
 
         <div className="flex flex-wrap gap-2 mb-6">
-          ${Object.keys(metricDefs).map((k) => html`
+          ${Object.entries(metricDefs).map(([k, m]) => html`
             <button key=${k}
               onClick=${() => setMetric(k)}
               className=${"rounded-full px-5 py-2 text-sm font-bold transition-all " + (metric === k ? "bg-stone-900 text-white shadow-md" : "bg-stone-100 text-stone-600 hover:bg-stone-200")}>
-              ${({ hba1c: "HbA1c %", fbs: "FBS", tg: "Triglyceride", ldl: "LDL" })[k]}
+              ${m.title}
             </button>`)}
         </div>
 
@@ -462,6 +650,163 @@ function CgmSection() {
       </div>
     </section>`;
 }
+
+/* ─── SystemReview · 16 systems for จิ้น review ────────────────── */
+
+function MiniTrend({ history, metric, color }) {
+  const W = 100, H = 24;
+  const data = history.filter((d) => d[metric] != null).map((d) => d[metric]);
+  if (data.length < 2) return null;
+  const min = Math.min(...data) * 0.95;
+  const max = Math.max(...data) * 1.05;
+  const points = data.map((v, i) => {
+    const x = (i / (data.length - 1)) * W;
+    const y = H - ((v - min) / (max - min)) * H;
+    return x + "," + y;
+  }).join(" ");
+  return html`
+    <svg viewBox=${"0 0 " + W + " " + H} style=${{ width: 100, height: 24 }} preserveAspectRatio="none">
+      <polyline points=${points} fill="none" stroke=${color} strokeWidth="2" />
+    </svg>`;
+}
+
+function SystemCard({ item }) {
+  const theme = STATUS_THEME[item.status];
+  return html`
+    <div className=${"bg-white rounded-3xl p-6 md:p-7 border-l-4 " + theme.accent + " border-y border-r border-stone-100 shadow-sm hover:shadow-md transition-shadow"}>
+      <div className="flex items-start gap-4 mb-4">
+        <div className="text-3xl shrink-0">${item.icon}</div>
+        <div className="flex-1 min-w-0">
+          <div className="flex flex-wrap items-center gap-2 mb-1">
+            <h3 className="font-head text-xl md:text-2xl font-extrabold text-stone-900">${item.system}</h3>
+            <span className=${"rounded-full px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider " + theme.pill}>${theme.label}</span>
+          </div>
+          <div className="font-mono text-sm text-stone-700 mb-1">${item.current}</div>
+          <div className="font-thai text-sm text-stone-500">${item.journey}</div>
+        </div>
+      </div>
+
+      <div className="rounded-xl bg-stone-50 px-4 py-3 mb-4 border-l-2 border-stone-300">
+        <div className="font-mono text-[10px] uppercase tracking-wider text-stone-500 font-bold mb-1">Verdict</div>
+        <div className="font-thai text-base font-semibold text-stone-900">${item.verdict}</div>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-3">
+        ${item.upWellness.length > 0 && html`
+          <div className="rounded-xl bg-rose-50 border border-rose-100 p-4">
+            <div className="font-mono text-[10px] uppercase tracking-wider text-rose-700 font-bold mb-2">🌿 UP Wellness · 70%</div>
+            <ul className="space-y-1.5">
+              ${item.upWellness.map((u, i) => html`
+                <li key=${i} className="font-thai text-sm text-stone-800 leading-snug flex gap-2">
+                  <span className="text-rose-600 shrink-0">•</span><span>${u}</span>
+                </li>`)}
+            </ul>
+          </div>`}
+        ${item.external.length > 0 && html`
+          <div className="rounded-xl bg-blue-50 border border-blue-100 p-4">
+            <div className="font-mono text-[10px] uppercase tracking-wider text-blue-700 font-bold mb-2">🌐 External · 30%</div>
+            <ul className="space-y-2">
+              ${item.external.map((e, i) => html`
+                <li key=${i} className="font-thai text-sm text-stone-800 leading-snug">
+                  <div className="flex gap-2 items-start">
+                    <span className="text-blue-600 shrink-0">→</span>
+                    <div className="flex-1">
+                      <div className="font-semibold">${e.item}</div>
+                      ${e.nutrilite && e.nutrilite !== "—" && html`<div className="text-xs mt-0.5 text-stone-600 italic">Nutrilite alt: ${e.nutrilite}</div>`}
+                      ${e.note && html`<div className="text-xs mt-0.5 text-stone-500">${e.note}</div>`}
+                    </div>
+                  </div>
+                </li>`)}
+            </ul>
+          </div>`}
+      </div>
+
+      ${item.observe && item.observe !== "—" && html`
+        <div className="mt-3 rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 flex gap-2 items-start">
+          <span className="text-lg shrink-0">👁️</span>
+          <div>
+            <div className="font-mono text-[10px] uppercase tracking-wider text-amber-700 font-bold">สิ่งที่ต้องสังเกต · สำหรับจิ้น</div>
+            <div className="mt-1 font-thai text-sm text-stone-800 leading-relaxed">${item.observe}</div>
+          </div>
+        </div>`}
+    </div>`;
+}
+
+function SystemReview() {
+  const [filter, setFilter] = useState("all");
+  const filterOptions = [
+    { id: "all",    label: "ทั้งหมด",    count: SYSTEM_REVIEW.length },
+    { id: "active", label: "🔴 Active",  count: SYSTEM_REVIEW.filter((x) => x.status === "active").length },
+    { id: "drift",  label: "🟠 Drift",   count: SYSTEM_REVIEW.filter((x) => x.status === "drift").length },
+    { id: "watch",  label: "🟡 Watch",   count: SYSTEM_REVIEW.filter((x) => x.status === "watch").length },
+    { id: "good",   label: "🟢 Good",    count: SYSTEM_REVIEW.filter((x) => ["win","resolved","stable"].includes(x.status)).length },
+  ];
+
+  const filtered = useMemo(() => {
+    if (filter === "all")  return SYSTEM_REVIEW;
+    if (filter === "good") return SYSTEM_REVIEW.filter((x) => ["win","resolved","stable"].includes(x.status));
+    return SYSTEM_REVIEW.filter((x) => x.status === filter);
+  }, [filter]);
+
+  return html`
+    <section id="system-review" className="bg-stone-50 py-16">
+      <div className="mx-auto max-w-6xl px-6 anim-in">
+        <${SectionLabel} number="04" label="16 ระบบ · ตีความ + คำถามให้จิ้น" accent="rose" />
+
+        <p className="text-lg text-stone-600 mb-4 font-thai max-w-3xl">
+          แต่ละระบบมี: ค่าตอนนี้ · journey 2 ปี · verdict · UP Wellness recommend (70%) + External add-on (30%) ·
+          <b className="text-amber-700">"สิ่งที่ต้องสังเกต"</b> สำหรับจิ้น review
+        </p>
+
+        <div className="rounded-2xl bg-rose-50 border border-rose-200 p-4 mb-6">
+          <div className="font-mono text-xs uppercase tracking-widest text-rose-700 font-bold mb-1">⚡ Goal ของ section นี้</div>
+          <div className="font-thai text-sm text-stone-700 leading-relaxed">
+            ขอจิ้นช่วยรีวิว 16 ระบบ · บอกว่าตัวไหนใช้ <b>Nutrilite แทน external ได้</b> · ตัวไหนต้อง external จริงๆ ·
+            มีตัวไหน drug interaction · ตัวไหนต้องตรวจเพิ่มก่อน
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-2 mb-6">
+          ${filterOptions.map((o) => html`
+            <button key=${o.id}
+              onClick=${() => setFilter(o.id)}
+              className=${"rounded-full px-4 py-2 text-sm font-bold transition-all " + (filter === o.id ? "bg-stone-900 text-white shadow-md" : "bg-white text-stone-600 hover:bg-stone-100 border border-stone-200")}>
+              ${o.label} <span className="opacity-60 ml-1">${o.count}</span>
+            </button>`)}
+        </div>
+
+        <div className="space-y-4">
+          ${filtered.map((item) => html`<${SystemCard} key=${item.id} item=${item} />`)}
+        </div>
+
+        <div className="mt-10 rounded-2xl bg-stone-900 text-white p-6 md:p-8">
+          <div className="font-mono text-xs uppercase tracking-widest text-rose-300 font-bold mb-3">📊 Summary</div>
+          <h3 className="font-head text-2xl font-extrabold mb-4">16 ระบบ · ตอนนี้ยืนตรงไหน</h3>
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+            ${Object.entries({
+              "🔴 Active": SYSTEM_REVIEW.filter((x) => x.status === "active").length,
+              "🟠 Drift":  SYSTEM_REVIEW.filter((x) => x.status === "drift").length,
+              "🟡 Watch":  SYSTEM_REVIEW.filter((x) => x.status === "watch").length,
+              "🟢 Win":    SYSTEM_REVIEW.filter((x) => x.status === "win").length,
+              "🟢 Resolved": SYSTEM_REVIEW.filter((x) => x.status === "resolved").length,
+              "🟢 Stable": SYSTEM_REVIEW.filter((x) => x.status === "stable").length,
+            }).map(([k, v]) => html`
+              <div key=${k} className="rounded-xl bg-white/10 backdrop-blur p-3 text-center">
+                <div className="text-xs text-white/70 font-thai">${k}</div>
+                <div className="mt-1 font-head text-2xl font-extrabold">${v}</div>
+              </div>`)}
+          </div>
+          <div className="mt-5 font-thai text-stone-300 leading-relaxed">
+            <b className="text-amber-300">Priority hierarchy:</b> Active (NAFLD · Vit D ขาด) · Drift (Glucose ใกล้ T2DM) → ต้องลงมือใน 1 เดือน ·
+            Watch (LDL bounce · HDL · CKD · CBC · Breast · EKG · Weight) → 3-6 เดือน ·
+            Good (TG · Uric · Thyroid · HepB · CA-125 · Chest) → maintain
+          </div>
+        </div>
+      </div>
+    </section>`;
+}
+
+/* ─── Plan Section ────────────────────────────── */
 
 function PlanSection() {
   const tierLabel = (level) => ({ 1: "Top Priority", 2: "Important", 3: "Maintenance" })[level];
@@ -634,6 +979,7 @@ function App() {
       <${Overview} />
       <${Timeline} />
       <${CgmSection} />
+      <${SystemReview} />
       <${PlanSection} />
       <${Targets} />
       <${Questions} />
