@@ -6,86 +6,129 @@
 <title>UP Wellness · Knowledge Bible</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   :root {
     --rose: #8C4C4C; --rose-deep: #6B3535; --rose-soft: #F4E6E6; --rose-ultra: #FAF3F2;
     --green: #396755; --green-deep: #2A4F40; --green-soft: #E6EFEA;
-    --cream: #F5F0EB; --ink: #1F1F1F; --ink-60: #6B6B6B; --ink-40: #A8A5A0;
-    --amber: #B8860B;
+    --amber: #B8860B; --amber-deep: #8B6608; --amber-soft: #FEF3C7;
+    --paper: #FBF8F3;  /* cream paper base */
+    --paper-deep: #F0EBE0;
+    --ink: #1A1714;
+    --ink-60: #6E6963;
+    --ink-30: #B5AFA5;
+    --line: #E5DFD2;
   }
   html { scroll-behavior: smooth; }
   body {
-    font-family: 'Sarabun', 'Inter', sans-serif;
-    background: var(--cream);
+    font-family: 'Sarabun', sans-serif;
+    background: var(--paper);
     color: var(--ink);
     font-size: 16px;
-    line-height: 1.7;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
   }
-  .font-head { font-family: 'Inter', sans-serif; letter-spacing: -0.02em; }
-  .font-mono { font-family: 'JetBrains Mono', monospace; }
-  .font-thai { font-family: 'Sarabun', sans-serif; }
+  .font-serif { font-family: 'Cormorant Garamond', 'Sarabun', serif; letter-spacing: -0.005em; }
+  .font-sans  { font-family: 'Inter', sans-serif; letter-spacing: -0.01em; }
+  .font-thai  { font-family: 'Sarabun', sans-serif; }
+  .font-mono  { font-family: 'JetBrains Mono', monospace; }
 
-  /* Animated mesh gradient hero */
-  .hero-mesh {
-    background:
-      radial-gradient(at 12% 20%, rgba(140, 76, 76, 0.85) 0%, transparent 50%),
-      radial-gradient(at 88% 25%, rgba(184, 134, 11, 0.45) 0%, transparent 50%),
-      radial-gradient(at 25% 88%, rgba(57, 103, 85, 0.85) 0%, transparent 55%),
-      radial-gradient(at 75% 75%, rgba(140, 76, 76, 0.4) 0%, transparent 55%),
-      linear-gradient(135deg, #6B3535 0%, #8C4C4C 35%, #B8860B 65%, #396755 100%);
-    background-size: 200% 200%;
-    animation: meshShift 25s ease-in-out infinite;
+  /* Smooth a11y */
+  button, a, [role="button"] { transition: all 220ms ease; cursor: pointer; }
+  button:focus-visible, a:focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; border-radius: 2px; }
+
+  /* Drop-cap on first paragraph of chapter */
+  .drop-cap::first-letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4.5rem;
+    line-height: 0.85;
+    float: left;
+    margin: 0.15rem 0.5rem -0.1rem 0;
+    color: var(--rose);
+    font-weight: 600;
   }
-  @keyframes meshShift {
-    0%, 100% { background-position: 0% 0%; }
-    50% { background-position: 100% 100%; }
+
+  /* Pull quote */
+  .pullquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.7rem;
+    line-height: 1.4;
+    color: var(--rose-deep);
+    border-left: 3px solid var(--rose);
+    padding-left: 1.5rem;
   }
 
-  /* Gradient overlays per section */
-  .grad-rose-soft  { background: linear-gradient(135deg, #FAF3F2 0%, #F4E6E6 60%, #fff 100%); }
-  .grad-green-soft { background: linear-gradient(135deg, #F0F8F4 0%, #E6EFEA 60%, #fff 100%); }
-  .grad-amber-soft { background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 60%, #fff 100%); }
-  .grad-cream-soft { background: linear-gradient(135deg, #FFFDFA 0%, #F5F0EB 60%, #fff 100%); }
-
-  .glow-rose  { box-shadow: 0 12px 40px -12px rgba(140,76,76,.4); }
-  .glow-green { box-shadow: 0 12px 40px -12px rgba(57,103,85,.4); }
-  .glow-amber { box-shadow: 0 12px 40px -12px rgba(184,134,11,.4); }
-
-  @keyframes slide-up {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  /* Section divider · ornament */
+  .ornament {
+    display: flex; align-items: center; gap: 1rem;
+    color: var(--ink-30);
   }
-  .anim-in { animation: slide-up 0.6s ease-out backwards; }
+  .ornament::before, .ornament::after {
+    content: ""; flex: 1; height: 1px; background: var(--line);
+  }
+
+  /* Side rail · book spine feel */
+  .side-rail {
+    border-right: 1px solid var(--line);
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 100%);
+  }
+  .side-rail::-webkit-scrollbar { width: 4px; }
+  .side-rail::-webkit-scrollbar-thumb { background: var(--ink-30); border-radius: 2px; }
+
+  /* Chapter number · roman numeral feel */
+  .chapter-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-feature-settings: "lnum";
+  }
 
   /* Status pills */
   .pill-ok       { background: #DCFCE7; color: #166534; }
-  .pill-revise   { background: #FEF3C7; color: #92400E; }
+  .pill-revise   { background: var(--amber-soft); color: var(--amber-deep); }
   .pill-unclear  { background: #DBEAFE; color: #1E40AF; }
   .pill-wrong    { background: #FEE2E2; color: #B91C1C; }
-  .pill-neutral  { background: #F1F5F9; color: #475569; }
+  .pill-neutral  { background: var(--paper-deep); color: var(--ink-60); }
 
-  /* Feedback panel slide */
+  /* Card · paper feel */
+  .paper-card {
+    background: white;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 0 var(--paper-deep), 0 2px 8px -3px rgba(26,23,20,0.05);
+  }
+
+  /* Panel slide */
   .panel-enter { animation: slide-in 0.3s ease-out; }
   @keyframes slide-in {
     from { transform: translateX(100%); }
-    to { transform: translateX(0); }
+    to   { transform: translateX(0); }
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .anim-in { animation: fade-up 0.5s ease-out backwards; }
+  @media (prefers-reduced-motion: reduce) {
+    .anim-in, .panel-enter { animation: none; }
+    * { transition: none !important; }
   }
 
   @media print {
     .no-print { display: none !important; }
-    body { background: white; font-size: 13px; }
+    body { background: white; font-size: 12px; }
     section { break-inside: avoid; }
   }
 </style>
 </head>
 <body>
 <div id="root">
-  <div style="padding: 60px 24px; max-width: 600px; margin: 0 auto; text-align: center; font-family: Sarabun, sans-serif;">
-    <div style="font-size: 14px; color: #8C4C4C; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;">UP Wellness · Bible Loading</div>
-    <div style="margin-top: 16px; font-size: 24px; font-weight: 800; color: #1F1F1F;">กำลังโหลด...</div>
-    <div id="error-pane" style="margin-top: 24px; padding: 16px; background: #FEE2E2; color: #991B1B; border-radius: 12px; font-family: monospace; font-size: 13px; text-align: left; white-space: pre-wrap; display: none;"></div>
+  <div style="padding: 80px 24px; max-width: 600px; margin: 0 auto; text-align: center;">
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8C4C4C; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;">UP Wellness</div>
+    <div style="margin-top: 16px; font-family: 'Cormorant Garamond', serif; font-size: 36px; font-style: italic; color: #1A1714;">Knowledge Bible</div>
+    <div style="margin-top: 8px; font-family: 'Sarabun', sans-serif; font-size: 14px; color: #6E6963;">กำลังเปิดเล่ม...</div>
+    <div id="error-pane" style="margin-top: 24px; padding: 16px; background: #FEE2E2; color: #991B1B; border-radius: 8px; font-family: monospace; font-size: 13px; text-align: left; white-space: pre-wrap; display: none;"></div>
   </div>
 </div>
 
@@ -101,1068 +144,906 @@ window.addEventListener("error", function(e) {
 <script src="https://unpkg.com/htm@3.1.1/dist/htm.umd.js"></script>
 
 <script>
-const { useState, useEffect, useMemo, useRef } = React;
+const { useState, useEffect, useMemo } = React;
 const html = htm.bind(React.createElement);
 
-const STORAGE_KEY = "up-wellness-bible-feedback-v1";
+const STORAGE_KEY = "up-wellness-bible-feedback-v2";
 
-/* ─── DATA ────────────────────────────────────────── */
-
-const SECTIONS = [
-  { id: "identity", label: "Identity", num: "01" },
-  { id: "voice", label: "Voice", num: "02" },
-  { id: "overview", label: "ภาพรวม 2 Tier", num: "03" },
-  { id: "uplabs", label: "UP Labs", num: "04" },
-  { id: "fullcourse", label: "Full Course", num: "05" },
-  { id: "decision", label: "Decision", num: "06" },
-  { id: "sales", label: "Sales", num: "07" },
-  { id: "products", label: "Products", num: "08" },
-  { id: "clinical", label: "Clinical", num: "09" },
-  { id: "ladder", label: "Pricing", num: "10" },
-  { id: "ops", label: "Operating", num: "11" },
+const CHAPTERS = [
+  { id: "identity",   roman: "I",    num: "01", title: "Identity",        thai: "ตัวตน · พันธกิจ" },
+  { id: "voice",      roman: "II",   num: "02", title: "Voice",           thai: "บุคลิก · เสียง" },
+  { id: "overview",   roman: "III",  num: "03", title: "Two Tiers",       thai: "สองคอร์ส" },
+  { id: "uplabs",     roman: "IV",   num: "04", title: "UP Labs",         thai: "Longevity 14 วัน" },
+  { id: "fullcourse", roman: "V",    num: "05", title: "Full Course",     thai: "Anti-aging 60 วัน" },
+  { id: "decision",   roman: "VI",   num: "06", title: "Decision",        thai: "การเลือกคอร์ส" },
+  { id: "sales",      roman: "VII",  num: "07", title: "Sales",           thai: "Funnel · Marketing" },
+  { id: "products",   roman: "VIII", num: "08", title: "Products",        thai: "Nutrilite TH catalog" },
+  { id: "clinical",   roman: "IX",   num: "09", title: "Clinical",        thai: "ความปลอดภัย" },
+  { id: "ladder",     roman: "X",    num: "10", title: "Pricing",         thai: "Service ladder" },
+  { id: "ops",        roman: "XI",   num: "11", title: "Operating",       thai: "มาตรฐานปฏิบัติ" },
 ];
 
 const STATUS_OPTIONS = [
-  { id: "ok",       label: "✓ ถูกต้อง",   color: "pill-ok" },
-  { id: "revise",   label: "✏️ ปรับปรุง", color: "pill-revise" },
-  { id: "unclear",  label: "❓ ไม่ชัด",    color: "pill-unclear" },
-  { id: "wrong",    label: "🚨 ผิด",      color: "pill-wrong" },
+  { id: "ok",      label: "✓ ถูกต้อง",   color: "pill-ok" },
+  { id: "revise",  label: "✏️ ปรับปรุง", color: "pill-revise" },
+  { id: "unclear", label: "❓ ไม่ชัด",    color: "pill-unclear" },
+  { id: "wrong",   label: "🚨 ผิด",      color: "pill-wrong" },
 ];
 
-/* ─── Top-level UI ────────────────────────────────── */
+/* ─── Components ─────────────────────────────── */
 
-function Hero({ feedbackCount }) {
+function Cover({ feedbackCount }) {
   return html`
-    <header className="hero-mesh text-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-black/15"></div>
-      <div className="relative mx-auto max-w-6xl px-6 py-20 md:py-28">
-        <div className="flex flex-wrap items-center gap-2 mb-4">
-          <span className="rounded-full bg-white/15 backdrop-blur px-3 py-1 text-xs font-mono uppercase tracking-widest border border-white/20">
-            Knowledge Bible
-          </span>
-          <span className="rounded-full bg-amber-500/30 backdrop-blur px-3 py-1 text-xs font-bold border border-amber-300/30">
-            v1 · 16 พ.ค. 2569
-          </span>
-          ${feedbackCount > 0 && html`
-            <span className="rounded-full bg-rose-500/40 backdrop-blur px-3 py-1 text-xs font-bold border border-white/20">
-              ✏️ Feedback ${feedbackCount}
-            </span>`}
-        </div>
-        <h1 className="font-head text-5xl md:text-7xl font-extrabold leading-[0.95] tracking-tight">
-          UP Wellness<br/>
-          <span className="bg-gradient-to-r from-amber-200 via-white to-rose-200 bg-clip-text text-transparent">
-            Knowledge Bible
-          </span>
-        </h1>
-        <p className="mt-7 max-w-3xl text-xl md:text-2xl text-white/90 leading-relaxed font-thai">
-          ฉบับสมบูรณ์ · Anti-aging + Longevity Practice<br/>
-          <span className="text-white/70 text-lg">Brand · Full Course · UP Labs · Decision · Sales · Product · Clinical</span>
-        </p>
-        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl">
-          <${HeroStat} label="Sections" value="11" sub="หัวข้อ" />
-          <${HeroStat} label="Products" value="20+" sub="Nutrilite TH" />
-          <${HeroStat} label="Two Tiers" value="2" sub="UP Labs + Full Course" />
-          <${HeroStat} label="Verified" value="✓" sub="amway.co.th 2026" />
-        </div>
-        <div className="mt-10 inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur px-4 py-2 text-sm text-white/80 border border-white/15">
-          <span>💡</span>
-          <span>Interactive review · กดปุ่ม "✏️ Feedback" ที่ section ใดเพื่อให้คอมเมนต์</span>
+    <section className="relative overflow-hidden" style=${{ background: "linear-gradient(180deg, #FBF8F3 0%, #F0EBE0 100%)" }}>
+      <div className="mx-auto max-w-7xl px-6 md:px-12 py-20 md:py-32">
+        <div className="grid md:grid-cols-12 gap-12 items-end">
+          <div className="md:col-span-7">
+            <div className="font-mono text-[11px] uppercase tracking-[0.3em] text-stone-500 mb-8">UP Wellness · Knowledge Bible</div>
+            <h1 className="font-serif text-6xl md:text-8xl leading-[0.95] text-stone-900 mb-6" style=${{ letterSpacing: "-0.02em" }}>
+              The <span className="italic" style=${{ color: "var(--rose)" }}>Knowledge</span><br/>
+              of <span className="italic" style=${{ color: "var(--green)" }}>UP Wellness</span>
+            </h1>
+            <p className="font-serif italic text-2xl md:text-3xl text-stone-700 mt-6 leading-snug">
+              "Anti-aging program ที่ลดน้ำหนักเป็นของแถม<br/>
+              ผ่านวิทยาศาสตร์ · ไม่ผ่านการขาย"
+            </p>
+            <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm font-thai text-stone-600">
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-xs uppercase tracking-widest text-stone-400">Version</span>
+                <span className="font-serif font-medium">II · ปรับปรุง</span>
+              </div>
+              <div className="h-3 w-px bg-stone-300"></div>
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-xs uppercase tracking-widest text-stone-400">Verified</span>
+                <span className="font-serif font-medium">17 พฤษภาคม 2569</span>
+              </div>
+              ${feedbackCount > 0 && html`
+                <div className="h-3 w-px bg-stone-300"></div>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-xs uppercase tracking-widest" style=${{ color: "var(--rose)" }}>Feedback</span>
+                  <span className="font-serif font-medium" style=${{ color: "var(--rose)" }}>${feedbackCount} marked</span>
+                </div>`}
+            </div>
+          </div>
+
+          <div className="md:col-span-5">
+            <div className="paper-card rounded-sm p-8">
+              <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-stone-400 mb-4">Table of Contents</div>
+              <ol className="space-y-2.5">
+                ${CHAPTERS.slice(0, 6).map((c) => html`
+                  <li key=${c.id} className="flex items-baseline gap-3 text-stone-700">
+                    <span className="chapter-num text-stone-400 w-6 text-sm">${c.roman}</span>
+                    <a href=${"#" + c.id} className="font-serif text-base flex-1 hover:text-rose-700 transition-colors">${c.title}</a>
+                    <span className="font-mono text-[10px] text-stone-300">${c.num}</span>
+                  </li>`)}
+              </ol>
+              <div className="ornament my-4"><span className="text-xs">⊹</span></div>
+              <ol className="space-y-2.5">
+                ${CHAPTERS.slice(6).map((c) => html`
+                  <li key=${c.id} className="flex items-baseline gap-3 text-stone-700">
+                    <span className="chapter-num text-stone-400 w-6 text-sm">${c.roman}</span>
+                    <a href=${"#" + c.id} className="font-serif text-base flex-1 hover:text-rose-700 transition-colors">${c.title}</a>
+                    <span className="font-mono text-[10px] text-stone-300">${c.num}</span>
+                  </li>`)}
+              </ol>
+            </div>
+          </div>
         </div>
       </div>
+    </section>`;
+}
+
+function ChapterHead({ chapter }) {
+  return html`
+    <header className="text-center mb-12 anim-in">
+      <div className="ornament mb-6"><span className="chapter-num text-2xl text-stone-400">${chapter.roman}</span></div>
+      <div className="font-mono text-[11px] uppercase tracking-[0.3em] text-stone-400 mb-3">Chapter ${chapter.num}</div>
+      <h2 className="font-serif text-5xl md:text-6xl text-stone-900 mb-3" style=${{ letterSpacing: "-0.02em" }}>${chapter.title}</h2>
+      <p className="font-thai text-lg text-stone-600">${chapter.thai}</p>
+      <div className="ornament mt-6"><span className="text-stone-300">⊹</span></div>
     </header>`;
 }
 
-function HeroStat({ label, value, sub }) {
+function StickyNav({ active, onJump, feedback, onOpenPanel, panelOpen }) {
   return html`
-    <div className="rounded-2xl bg-white/10 backdrop-blur px-5 py-4 border border-white/15">
-      <div className="text-[10px] uppercase tracking-wider text-white/65 font-mono">${label}</div>
-      <div className="mt-1 font-head text-3xl md:text-4xl font-extrabold leading-none">${value}</div>
-      <div className="text-xs text-white/65 mt-1.5">${sub}</div>
-    </div>`;
-}
-
-function StickyNav({ active, onJump, feedback, onOpenPanel }) {
-  return html`
-    <nav className="no-print sticky top-0 z-30 bg-white/85 backdrop-blur-lg border-b border-rose-100/60">
-      <div className="mx-auto max-w-7xl px-4 py-3 flex flex-wrap items-center gap-1">
-        ${SECTIONS.map((s) => {
-          const hasFeedback = feedback[s.id] && (feedback[s.id].status || feedback[s.id].note);
-          const isActive = active === s.id;
-          return html`
-            <button key=${s.id}
-              onClick=${() => onJump(s.id)}
-              className=${"rounded-full px-3 py-1.5 text-xs font-bold transition-all flex items-center gap-1.5 " +
-                (isActive ? "bg-stone-900 text-white shadow-md" : "text-stone-600 hover:bg-stone-100")}>
-              <span className="opacity-60 font-mono">${s.num}</span>
-              <span>${s.label}</span>
-              ${hasFeedback && html`<span className="h-1.5 w-1.5 rounded-full bg-rose-500"></span>`}
-            </button>`;
-        })}
-        <div className="ml-auto flex items-center gap-2">
-          <button onClick=${onOpenPanel}
-            className="rounded-full bg-rose-700 text-white px-4 py-1.5 text-xs font-bold hover:bg-rose-800 transition-colors flex items-center gap-1.5">
-            📋 ดู Feedback (${Object.values(feedback).filter(f => f.status || f.note).length})
-          </button>
+    <nav className="no-print sticky top-0 z-30 bg-stone-50/85 backdrop-blur-md border-b" style=${{ borderColor: "var(--line)" }}>
+      <div className="mx-auto max-w-7xl px-4 md:px-6 py-2.5 flex items-center gap-3">
+        <a href="#cover" className="font-serif italic text-lg text-stone-900 mr-2">Bible</a>
+        <div className="flex-1 overflow-x-auto flex items-center gap-1 no-scrollbar">
+          ${CHAPTERS.map((c) => {
+            const hasFb = feedback[c.id] && (feedback[c.id].status || feedback[c.id].note);
+            const isActive = active === c.id;
+            return html`
+              <button key=${c.id} onClick=${() => onJump(c.id)}
+                className=${"shrink-0 rounded-sm px-3 py-1.5 text-xs font-mono uppercase tracking-wider " +
+                  (isActive ? "bg-stone-900 text-white" : "text-stone-500 hover:bg-stone-100")}>
+                ${c.num}
+                ${hasFb && html`<span className="ml-1 inline-block h-1.5 w-1.5 rounded-full" style=${{ background: "var(--rose)" }}></span>`}
+              </button>`;
+          })}
         </div>
+        <button onClick=${onOpenPanel}
+          className=${"shrink-0 rounded-sm px-3 py-1.5 text-xs font-mono uppercase tracking-wider font-bold " +
+            (panelOpen ? "bg-rose-700 text-white" : "border hover:bg-stone-100")}
+          style=${panelOpen ? {} : { borderColor: "var(--rose)", color: "var(--rose)" }}>
+          Marginalia · ${Object.values(feedback).filter(f => f.status || f.note).length}
+        </button>
       </div>
     </nav>`;
 }
 
-function SectionLabel({ number, title, accent = "rose", subtitle }) {
-  const accentColor = {
-    rose: "text-rose-700", green: "text-emerald-700", amber: "text-amber-700",
-    purple: "text-purple-700", blue: "text-blue-700", ink: "text-stone-700"
-  }[accent];
-  return html`
-    <div className="mb-8">
-      <div className="flex items-baseline gap-3 mb-2">
-        <span className=${"font-mono text-xs font-bold tracking-[0.2em] " + accentColor}>${number}</span>
-        <h2 className="font-head text-3xl md:text-5xl font-extrabold tracking-tight text-stone-900">${title}</h2>
-      </div>
-      ${subtitle && html`<p className="font-thai text-lg text-stone-600 leading-relaxed">${subtitle}</p>`}
-    </div>`;
-}
-
-function FeedbackWidget({ sectionId, feedback, onUpdate }) {
+function FeedbackWidget({ chapterId, feedback, onUpdate }) {
   const [open, setOpen] = useState(false);
-  const current = feedback[sectionId] || {};
+  const current = feedback[chapterId] || {};
 
-  const setStatus = (status) => {
-    onUpdate(sectionId, { ...current, status });
-  };
-  const setNote = (note) => {
-    onUpdate(sectionId, { ...current, note });
-  };
+  const setStatus = (status) => onUpdate(chapterId, { ...current, status });
+  const setNote = (note) => onUpdate(chapterId, { ...current, note });
 
   const hasContent = current.status || current.note;
-  const pillClass = current.status ?
-    STATUS_OPTIONS.find(s => s.id === current.status)?.color : "pill-neutral";
+  const pillClass = current.status ? STATUS_OPTIONS.find(s => s.id === current.status)?.color : "pill-neutral";
 
   return html`
-    <div className="no-print mt-8 rounded-2xl border border-stone-200 bg-white/70 backdrop-blur p-4 md:p-5">
-      <button onClick=${() => setOpen(!open)}
-        className="w-full flex items-center justify-between gap-3 text-left">
-        <div className="flex items-center gap-2">
-          <span className="text-lg">✏️</span>
-          <span className="font-mono text-[11px] uppercase tracking-widest text-stone-500 font-bold">Feedback</span>
+    <div className="no-print mt-10 rounded-sm border-l-2 pl-5 pr-4 py-3" style=${{ borderColor: "var(--rose)", background: "rgba(140,76,76,0.025)" }}>
+      <button onClick=${() => setOpen(!open)} className="w-full flex items-center justify-between gap-3 text-left">
+        <div className="flex items-center gap-3">
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-stone-500 font-bold">Marginalia · feedback</span>
           ${hasContent && html`
-            <span className=${"rounded-full px-2 py-0.5 text-[10px] font-bold " + pillClass}>
-              ${current.status ? STATUS_OPTIONS.find(s => s.id === current.status)?.label : "มี note"}
+            <span className=${"rounded-sm px-2 py-0.5 text-[10px] font-mono " + pillClass}>
+              ${current.status ? STATUS_OPTIONS.find(s => s.id === current.status)?.label : "noted"}
             </span>`}
         </div>
-        <span className="text-stone-400 text-sm">${open ? "▲" : "▼"}</span>
+        <span className="text-stone-400 font-mono text-xs">${open ? "−" : "+"}</span>
       </button>
 
       ${open && html`
-        <div className="mt-4 space-y-3">
+        <div className="mt-4 space-y-3 pb-2">
           <div className="flex flex-wrap gap-2">
             ${STATUS_OPTIONS.map((s) => html`
-              <button key=${s.id}
-                onClick=${() => setStatus(current.status === s.id ? null : s.id)}
-                className=${"rounded-full px-3 py-1.5 text-xs font-bold transition-all " +
-                  (current.status === s.id ? s.color + " ring-2 ring-offset-1 ring-stone-400" : "bg-stone-100 text-stone-500 hover:bg-stone-200")}>
+              <button key=${s.id} onClick=${() => setStatus(current.status === s.id ? null : s.id)}
+                className=${"rounded-sm px-3 py-1.5 text-xs font-mono " +
+                  (current.status === s.id ? s.color + " font-bold" : "border hover:bg-stone-100 text-stone-500")}
+                style=${current.status === s.id ? {} : { borderColor: "var(--line)" }}>
                 ${s.label}
               </button>`)}
           </div>
-          <textarea
-            value=${current.note || ""}
-            onChange=${(e) => setNote(e.target.value)}
+          <textarea value=${current.note || ""} onChange=${(e) => setNote(e.target.value)}
             placeholder="คอมเมนต์ · ที่อยากแก้ · ที่ขัด · ข้อมูลเพิ่ม..."
             rows="3"
-            className="w-full rounded-xl border border-stone-200 bg-white px-4 py-3 text-sm font-thai placeholder:text-stone-300 focus:border-rose-400 focus:outline-none focus:ring-2 focus:ring-rose-100"
+            className="w-full rounded-sm border px-3 py-2.5 text-sm font-thai placeholder:text-stone-400 focus:outline-none focus:border-stone-900"
+            style=${{ borderColor: "var(--line)", background: "white" }}
           />
         </div>`}
     </div>`;
 }
 
-/* ─── SECTIONS ──────────────────────────────────── */
+/* ─── Chapters ────────────────────────────────── */
 
-function S1_Identity({ feedback, onUpdate }) {
+function Ch1_Identity({ feedback, onUpdate }) {
   return html`
-    <section id="identity" className="grad-rose-soft py-16 md:py-24 anim-in">
-      <div className="mx-auto max-w-6xl px-6">
-        <${SectionLabel} number="SECTION 01" title="Identity & Mission"
-          subtitle="ที่ปรึกษาสุขภาพมืออาชีพ ไม่ใช่ chatbot ขายของ · เป็นที่ปรึกษาก่อน นักขายทีหลัง"/>
+    <section id="identity" className="py-20 md:py-28">
+      <div className="mx-auto max-w-3xl px-6">
+        <${ChapterHead} chapter=${CHAPTERS[0]} />
+        <p className="drop-cap font-thai text-lg leading-[1.85] text-stone-800 mb-8">
+          UP Wellness คือ <strong>ที่ปรึกษาสุขภาพมืออาชีพ</strong> ที่ทำธุรกิจ Amway/Nutrilite อย่างมืออาชีพ · ไม่ใช่ chatbot ขายของ · ไม่ใช่ Amway ทั่วไป · เป็นที่ปรึกษาก่อน นักขายทีหลัง
+        </p>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="rounded-3xl bg-white p-6 md:p-8 glow-rose border border-rose-100">
-            <div className="font-mono text-xs uppercase tracking-widest text-rose-700 font-bold mb-3">🎯 Mission · 4 ภารกิจ</div>
-            <ul className="space-y-3 font-thai text-stone-700">
-              <li className="flex gap-3"><span className="font-bold text-rose-700 shrink-0">01</span><span>ให้ข้อมูลสุขภาพถูกต้อง · อ้างอิงงานวิจัย · ไม่มั่ว ไม่เดา</span></li>
-              <li className="flex gap-3"><span className="font-bold text-rose-700 shrink-0">02</span><span>ออกแบบแนวทาง weight loss / longevity เฉพาะบุคคล</span></li>
-              <li className="flex gap-3"><span className="font-bold text-rose-700 shrink-0">03</span><span>สร้างความน่าเชื่อถือในฐานะผู้เชี่ยวชาญ · ไม่ใช่นักขาย</span></li>
-              <li className="flex gap-3"><span className="font-bold text-rose-700 shrink-0">04</span><span>แนะนำ Nutrilite / Partner Program อย่างเนียน · ในบริบทเหมาะสม</span></li>
+        <div className="pullquote mb-12">
+          ที่ปรึกษาสุขภาพก่อน · นักขายทีหลัง<br/>
+          ให้ความรู้ก่อน · ทำให้อยากซื้อทีหลัง
+        </div>
+
+        <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-6">Mission · พันธกิจ 4 ข้อ</h3>
+        <ol className="space-y-4">
+          ${[
+            "ให้ข้อมูลสุขภาพถูกต้อง อ้างอิงงานวิจัย ไม่มั่ว ไม่เดา",
+            "ออกแบบแนวทาง weight loss / longevity เฉพาะบุคคล",
+            "สร้างความน่าเชื่อถือในฐานะผู้เชี่ยวชาญ ไม่ใช่นักขาย",
+            "แนะนำ Nutrilite / Partner Program อย่างเนียน ในบริบทเหมาะสม",
+          ].map((m, i) => html`
+            <li key=${i} className="flex gap-4 font-thai text-base text-stone-700">
+              <span className="font-serif text-2xl shrink-0 w-8" style=${{ color: "var(--rose)" }}>${String(i + 1).padStart(2, "0")}</span>
+              <span>${m}</span>
+            </li>`)}
+        </ol>
+
+        <h3 className="font-serif text-3xl text-stone-900 mt-16 mb-6">Positioning · ที่ต่างจาก Amway ทั่วไป</h3>
+        <div className="grid md:grid-cols-2 gap-px paper-card rounded-sm overflow-hidden">
+          <div className="p-6 bg-stone-50">
+            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-stone-400 mb-3">Amway ทั่วไป</div>
+            <ul className="space-y-2 font-thai text-stone-600">
+              <li>· ขายของก่อน</li>
+              <li>· Testimonial เดี่ยวๆ</li>
+              <li>· Close deal ระยะสั้น</li>
+              <li>· ทำให้อยากซื้อก่อน</li>
             </ul>
           </div>
-
-          <div className="rounded-3xl bg-white p-6 md:p-8 border border-stone-100">
-            <div className="font-mono text-xs uppercase tracking-widest text-stone-500 font-bold mb-3">📊 บริการหลัก</div>
-            <ul className="space-y-2 font-thai text-stone-700 text-sm">
-              <li className="flex items-center gap-2"><span>🩺</span>โปรแกรมลดน้ำหนัก (Science-based)</li>
-              <li className="flex items-center gap-2"><span>🌱</span>Longevity Care · ชะลอวัย</li>
-              <li className="flex items-center gap-2"><span>💊</span>NCDs Management (DM/HTN/Lipid)</li>
-              <li className="flex items-center gap-2"><span>🧘</span>Holistic Wellness · กาย ใจ ชีวิต</li>
-              <li className="flex items-center gap-2"><span>🤝</span>Partner Program · สร้างธุรกิจสุขภาพ</li>
+          <div className="p-6" style=${{ background: "var(--rose-ultra)" }}>
+            <div className="font-mono text-[10px] uppercase tracking-[0.2em] font-bold mb-3" style=${{ color: "var(--rose)" }}>UP Wellness</div>
+            <ul className="space-y-2 font-thai text-stone-800 font-semibold">
+              <li>· ที่ปรึกษาก่อน · ขายทีหลัง</li>
+              <li>· Evidence-based · peer-reviewed</li>
+              <li>· Trust ระยะยาว</li>
+              <li>· ให้ความรู้ก่อน</li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-6 rounded-3xl bg-gradient-to-br from-rose-700 to-stone-900 text-white p-6 md:p-8">
-          <div className="font-mono text-xs uppercase tracking-widest text-rose-200 font-bold mb-4">🚀 Positioning · ต่างจาก Amway ทั่วไป</div>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="rounded-2xl bg-white/10 backdrop-blur p-4">
-              <div className="text-xs text-white/60 font-mono uppercase mb-2">Amway ทั่วไป</div>
-              <ul className="space-y-1.5 text-sm font-thai">
-                <li>ขายของก่อน</li>
-                <li>Testimonial เดี่ยวๆ</li>
-                <li>Close deal ระยะสั้น</li>
-                <li>ทำให้อยากซื้อก่อน</li>
-              </ul>
-            </div>
-            <div className="rounded-2xl bg-amber-500/20 backdrop-blur p-4 border border-amber-300/30">
-              <div className="text-xs text-amber-100 font-mono uppercase mb-2">UP Wellness</div>
-              <ul className="space-y-1.5 text-sm font-thai font-semibold">
-                <li>ที่ปรึกษาก่อน · ขายทีหลัง</li>
-                <li>Evidence-based · peer-reviewed</li>
-                <li>Trust ระยะยาว</li>
-                <li>ให้ความรู้ก่อน</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <${FeedbackWidget} sectionId="identity" feedback=${feedback} onUpdate=${onUpdate} />
+        <${FeedbackWidget} chapterId="identity" feedback=${feedback} onUpdate=${onUpdate} />
       </div>
     </section>`;
 }
 
-function S2_Voice({ feedback, onUpdate }) {
+function Ch2_Voice({ feedback, onUpdate }) {
   return html`
-    <section id="voice" className="bg-white py-16 md:py-24 anim-in">
-      <div className="mx-auto max-w-6xl px-6">
-        <${SectionLabel} number="SECTION 02" title="Brand Personality & Voice" accent="amber"
-          subtitle="DISC C+S · Sage+Everyman+Caregiver · 'หมอที่เป็นเพื่อน'"/>
+    <section id="voice" className="py-20 md:py-28" style=${{ background: "white" }}>
+      <div className="mx-auto max-w-3xl px-6">
+        <${ChapterHead} chapter=${CHAPTERS[1]} />
+        <p className="drop-cap font-thai text-lg leading-[1.85] text-stone-800 mb-8">
+          DISC ของ UP Wellness = <strong>C + S</strong> (Conscientious + Steady) · ผู้เชี่ยวชาญที่ละเอียดรอบคอบ · ใจเย็น · ฟังก่อนแนะนำ · พูดเหมือนหมอที่เป็นเพื่อน · มีความรู้แต่ไม่ทางการจนเกิน
+        </p>
 
-        <div className="grid md:grid-cols-3 gap-4 mb-8">
-          <div className="rounded-2xl bg-gradient-to-br from-amber-50 to-stone-50 p-5 border border-amber-100">
-            <div className="text-3xl mb-2">🦉</div>
-            <div className="font-mono text-[10px] uppercase text-amber-700 font-bold">Primary</div>
-            <div className="font-head text-xl font-extrabold mt-1">The Sage</div>
-            <div className="text-sm text-stone-600 mt-1">รู้จริง · ให้ความรู้ · น่าเชื่อถือ</div>
-          </div>
-          <div className="rounded-2xl bg-gradient-to-br from-rose-50 to-stone-50 p-5 border border-rose-100">
-            <div className="text-3xl mb-2">👥</div>
-            <div className="font-mono text-[10px] uppercase text-rose-700 font-bold">Secondary</div>
-            <div className="font-head text-xl font-extrabold mt-1">The Everyman</div>
-            <div className="text-sm text-stone-600 mt-1">พูดง่าย · เข้าถึง · จริงใจ</div>
-          </div>
-          <div className="rounded-2xl bg-gradient-to-br from-emerald-50 to-stone-50 p-5 border border-emerald-100">
-            <div className="text-3xl mb-2">💚</div>
-            <div className="font-mono text-[10px] uppercase text-emerald-700 font-bold">Tertiary</div>
-            <div className="font-head text-xl font-extrabold mt-1">The Caregiver</div>
-            <div className="text-sm text-stone-600 mt-1">ใส่ใจ · ไม่ทำให้รู้สึกโง่</div>
-          </div>
+        <div className="grid md:grid-cols-3 gap-px paper-card rounded-sm overflow-hidden mb-12">
+          ${[
+            { roman: "I",   name: "The Sage",      desc: "รู้จริง · ให้ความรู้ · น่าเชื่อถือ", color: "var(--amber)" },
+            { roman: "II",  name: "The Everyman",  desc: "พูดง่าย · เข้าถึง · จริงใจ", color: "var(--rose)" },
+            { roman: "III", name: "The Caregiver", desc: "ใส่ใจ · ไม่ทำให้รู้สึกโง่", color: "var(--green)" },
+          ].map((a, i) => html`
+            <div key=${i} className="p-6 bg-white">
+              <div className="chapter-num text-xl mb-2" style=${{ color: a.color }}>${a.roman}</div>
+              <div className="font-serif text-xl text-stone-900 mb-1">${a.name}</div>
+              <div className="font-thai text-sm text-stone-600">${a.desc}</div>
+            </div>`)}
         </div>
 
-        <div className="grid md:grid-cols-2 gap-5">
-          <div className="rounded-3xl bg-amber-50 p-6 border border-amber-100">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-3xl">🧔</span>
-              <div>
-                <div className="font-head text-xl font-extrabold">ตัน (ckawin)</div>
-                <div className="text-xs text-stone-500 font-mono">Owner Voice</div>
-              </div>
+        <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-6">เสียงคู่ · Two Voices</h3>
+        <div className="space-y-px paper-card rounded-sm overflow-hidden">
+          <div className="p-6 bg-stone-50">
+            <div className="flex items-baseline gap-3 mb-4">
+              <span className="font-serif italic text-3xl text-stone-900">ตัน</span>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-stone-400">Owner Voice</span>
             </div>
-            <ul className="space-y-2 text-sm font-thai">
-              <li>• First-person <b>"ผม"</b></li>
-              <li>• <b>ไม่ต้องเกริ่น · เข้าประเด็นเลย</b></li>
-              <li>• ไม่ใช้: "พูดตรงๆ นะครับ..." · "ผมเคย..." · "ผมว่า..."</li>
-              <li>• Warm friend reading papers · แต่ตรงประเด็น</li>
-              <li>• ขึ้นด้วย insight/fact · ไม่ใช่ filler</li>
-              <li>• 🌿 bullets · #UPwellness 🌸 #UPLabs 🧪</li>
+            <ul className="space-y-1.5 font-thai text-sm text-stone-700">
+              <li>· First-person <strong>"ผม"</strong> · ไม่เกริ่น · เข้าประเด็น</li>
+              <li>· <strong className="text-rose-700">❌ ไม่ใช้เป็น opener:</strong> "พูดตรงๆ นะครับ..." · "ผมเคย..." · "ผมว่า..."</li>
+              <li>· <strong className="text-emerald-700">✅ เปิดด้วย</strong> insight · fact · observation · position</li>
+              <li>· Warm friend reading papers · ไม่ rambling</li>
+              <li>· Emoji: 🌿 · #UPwellness 🌸 #UPLabs 🧪</li>
             </ul>
           </div>
-          <div className="rounded-3xl bg-rose-50 p-6 border border-rose-100">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-3xl">👩‍⚕️</span>
-              <div>
-                <div className="font-head text-xl font-extrabold">จิ้น (Mutita Jin)</div>
-                <div className="text-xs text-stone-500 font-mono">Pharmacist Voice</div>
-              </div>
+          <div className="p-6" style=${{ background: "var(--rose-ultra)" }}>
+            <div className="flex items-baseline gap-3 mb-4">
+              <span className="font-serif italic text-3xl text-stone-900">จิ้น</span>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-stone-400">Pharmacist Voice</span>
             </div>
-            <ul className="space-y-2 text-sm font-thai">
-              <li>• <b>"เรา / พี่"</b> · "นะคะ / ค่ะ"</li>
-              <li>• "ตามข้อมูลที่มี..." (เปิดด้วยคำตอบ)</li>
-              <li>• "ตรงนี้ขอตรวจสอบก่อนนะคะ"</li>
-              <li>• DISC D+C · Sage+Ruler+Caregiver</li>
-              <li>• Calm precise helpful</li>
-              <li>• 💊 · 🌿 · 📊 · ⚠️ (น้อยกว่าตัน)</li>
+            <ul className="space-y-1.5 font-thai text-sm text-stone-700">
+              <li>· <strong>"เรา / พี่"</strong> · "นะคะ / ค่ะ"</li>
+              <li>· "ตามข้อมูลที่มี..." (เปิดด้วยคำตอบ)</li>
+              <li>· "ตรงนี้ขอตรวจสอบก่อนนะคะ"</li>
+              <li>· DISC D+C · Calm precise helpful</li>
+              <li>· Emoji: 💊 · 🌿 · 📊 · ⚠️</li>
             </ul>
           </div>
         </div>
 
-        <${FeedbackWidget} sectionId="voice" feedback=${feedback} onUpdate=${onUpdate} />
+        <${FeedbackWidget} chapterId="voice" feedback=${feedback} onUpdate=${onUpdate} />
       </div>
     </section>`;
 }
 
-function S3_Overview({ feedback, onUpdate }) {
+function Ch3_Overview({ feedback, onUpdate }) {
   return html`
-    <section id="overview" className="grad-cream-soft py-16 md:py-24 anim-in">
-      <div className="mx-auto max-w-6xl px-6">
-        <${SectionLabel} number="SECTION 03" title="Two-Tier Practice" accent="ink"
-          subtitle="กระสุนปืนใหญ่ (Full Course) vs พลปืนหน้าราบ (UP Labs)"/>
+    <section id="overview" className="py-20 md:py-28">
+      <div className="mx-auto max-w-3xl px-6">
+        <${ChapterHead} chapter=${CHAPTERS[2]} />
+        <p className="drop-cap font-thai text-lg leading-[1.85] text-stone-800 mb-12">
+          UP Wellness มีสองคอร์สที่ไม่ใช่ tier ของกันและกัน · เป็น <strong>คนละหลักการ · คนละเป้าหมาย · คนละลูกค้า</strong> · เปรียบเหมือนกระสุนปืนใหญ่กับพลปืนหน้าราบ · เครื่องมือคนละแบบ · ใช้ในสนามคนละแบบ
+        </p>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="relative rounded-3xl bg-gradient-to-br from-rose-700 to-rose-900 text-white p-8 glow-rose overflow-hidden">
-            <div className="absolute top-0 right-0 text-9xl opacity-10 -mt-4 -mr-4">💥</div>
-            <div className="relative">
-              <div className="font-mono text-xs uppercase tracking-widest text-rose-200 font-bold">🅰️ Premium Tier</div>
-              <h3 className="font-head text-3xl md:text-4xl font-extrabold mt-2">Full Course</h3>
-              <div className="font-thai text-rose-100 mt-1">Anti-aging Program</div>
-              <div className="mt-6 space-y-2 text-sm">
-                <div className="flex items-center gap-2"><span className="text-2xl">⏱️</span><span>60 วัน · 4 phases × 14d</span></div>
-                <div className="flex items-center gap-2"><span className="text-2xl">💰</span><span>38,000 – 50,000 บาท</span></div>
-                <div className="flex items-center gap-2"><span className="text-2xl">🎯</span><span>Catch-all · multi-system</span></div>
-                <div className="flex items-center gap-2"><span className="text-2xl">📦</span><span>100% supplement</span></div>
-              </div>
-              <div className="mt-6 inline-block bg-white/15 backdrop-blur rounded-full px-4 py-1.5 text-xs font-bold border border-white/20">
-                "กระสุนปืนใหญ่"
-              </div>
-            </div>
+        <div className="grid md:grid-cols-2 gap-6 mb-12">
+          <div className="paper-card rounded-sm p-8 relative overflow-hidden">
+            <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-stone-400 mb-2">Tier I · Premium</div>
+            <h3 className="font-serif text-4xl text-stone-900 mb-3">Full Course</h3>
+            <p className="font-serif italic text-lg mb-6" style=${{ color: "var(--rose)" }}>"กระสุนปืนใหญ่"</p>
+            <dl className="space-y-2 text-sm">
+              <div className="flex justify-between border-b pb-2" style=${{ borderColor: "var(--line)" }}><dt className="font-mono text-stone-500">ระยะเวลา</dt><dd className="font-thai">60 วัน · 4 phases</dd></div>
+              <div className="flex justify-between border-b pb-2" style=${{ borderColor: "var(--line)" }}><dt className="font-mono text-stone-500">งบ</dt><dd className="font-thai font-bold">38-50k บาท</dd></div>
+              <div className="flex justify-between border-b pb-2" style=${{ borderColor: "var(--line)" }}><dt className="font-mono text-stone-500">เป้าหมาย</dt><dd className="font-thai">Anti-aging · catch-all</dd></div>
+              <div className="flex justify-between"><dt className="font-mono text-stone-500">น้ำหนัก</dt><dd className="font-thai">8-20+ kg (byproduct)</dd></div>
+            </dl>
           </div>
 
-          <div className="relative rounded-3xl bg-gradient-to-br from-emerald-700 to-emerald-900 text-white p-8 glow-green overflow-hidden">
-            <div className="absolute top-0 right-0 text-9xl opacity-10 -mt-4 -mr-4">📱</div>
-            <div className="relative">
-              <div className="font-mono text-xs uppercase tracking-widest text-emerald-200 font-bold">🅱️ Entry Tier</div>
-              <h3 className="font-head text-3xl md:text-4xl font-extrabold mt-2">UP Labs</h3>
-              <div className="font-thai text-emerald-100 mt-1">Longevity · Metabolic Reset</div>
-              <div className="mt-6 space-y-2 text-sm">
-                <div className="flex items-center gap-2"><span className="text-2xl">⏱️</span><span>14 วัน · 3 phases</span></div>
-                <div className="flex items-center gap-2"><span className="text-2xl">💰</span><span>5,000 – 10,000 บาท</span></div>
-                <div className="flex items-center gap-2"><span className="text-2xl">🎯</span><span>Low-carb · High Protein · IF</span></div>
-                <div className="flex items-center gap-2"><span className="text-2xl">🔥</span><span>Fat Adaptation · Metabolic Flex · Autophagy</span></div>
-                <div className="flex items-center gap-2"><span className="text-2xl">🔁</span><span>ปีละ 2-3 รอบ</span></div>
-              </div>
-              <div className="mt-6 inline-block bg-white/15 backdrop-blur rounded-full px-4 py-1.5 text-xs font-bold border border-white/20">
-                "พลปืนหน้าราบเก็บทุกเม็ด"
-              </div>
-            </div>
+          <div className="paper-card rounded-sm p-8 relative overflow-hidden" style=${{ background: "var(--green-soft)" }}>
+            <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-stone-400 mb-2">Tier II · Entry</div>
+            <h3 className="font-serif text-4xl text-stone-900 mb-3">UP Labs</h3>
+            <p className="font-serif italic text-lg mb-6" style=${{ color: "var(--green)" }}>"พลปืนหน้าราบ"</p>
+            <dl className="space-y-2 text-sm">
+              <div className="flex justify-between border-b pb-2" style=${{ borderColor: "var(--line)" }}><dt className="font-mono text-stone-500">ระยะเวลา</dt><dd className="font-thai">14 วัน · 3 phases</dd></div>
+              <div className="flex justify-between border-b pb-2" style=${{ borderColor: "var(--line)" }}><dt className="font-mono text-stone-500">งบ</dt><dd className="font-thai font-bold">5-10k บาท</dd></div>
+              <div className="flex justify-between border-b pb-2" style=${{ borderColor: "var(--line)" }}><dt className="font-mono text-stone-500">เป้าหมาย</dt><dd className="font-thai">Longevity · single-system</dd></div>
+              <div className="flex justify-between"><dt className="font-mono text-stone-500">น้ำหนัก</dt><dd className="font-thai">3-5 kg (byproduct)</dd></div>
+            </dl>
           </div>
         </div>
 
-        <div className="mt-6 overflow-hidden rounded-3xl border border-stone-200 bg-white">
+        <div className="overflow-x-auto paper-card rounded-sm">
           <table className="w-full text-sm">
-            <thead className="bg-stone-50 border-b border-stone-200">
-              <tr className="text-left font-mono text-[10px] uppercase tracking-widest text-stone-500">
-                <th className="px-4 py-3">มิติ</th>
-                <th className="px-4 py-3 text-emerald-700">UP Labs</th>
-                <th className="px-4 py-3 text-rose-700">Full Course</th>
+            <thead className="border-b" style=${{ borderColor: "var(--line)" }}>
+              <tr className="text-left">
+                <th className="px-5 py-3 font-mono text-[10px] uppercase tracking-widest text-stone-500">มิติ</th>
+                <th className="px-5 py-3 font-mono text-[10px] uppercase tracking-widest" style=${{ color: "var(--rose)" }}>Full Course</th>
+                <th className="px-5 py-3 font-mono text-[10px] uppercase tracking-widest" style=${{ color: "var(--green)" }}>UP Labs</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-stone-100 font-thai">
+            <tbody className="divide-y" style=${{ borderColor: "var(--line)" }}>
               ${[
-                ["Mechanism", "Low-carb + IF (bottom-up)", "Vitamin saturation + Hormone (top-down)"],
-                ["เน้น", "Single-system fix · Metabolic flex", "All-system saturation · Catch-all"],
-                ["น้ำหนัก", "Byproduct · 3-5 kg", "Byproduct · 8-20+ kg"],
-                ["Lifetime", "Recurring · ปีละ 2-3 รอบ", "One-shot deep program"],
-                ["Pain quote", '"ฉันอยากแก่อย่างมีคุณภาพ"', '"ฉันไม่ไหวแล้ว ต้องเปลี่ยน"'],
-                ["Content จริต", "Scientific · biohacking", "Emotional · transformation"],
+                ["Mechanism", "Vitamin saturation + Hormone (top-down)", "Low-carb + IF (bottom-up)"],
+                ["เน้น", "All-system saturation · Catch-all", "Single-system fix · Metabolic flex"],
+                ["Pain quote", '"ฉันไม่ไหวแล้ว ต้องเปลี่ยน"', '"ฉันอยากแก่อย่างมีคุณภาพ"'],
+                ["Content จริต", "Emotional · transformation", "Scientific · biohacking"],
+                ["Lifetime", "One-shot deep", "Recurring · ปีละ 2-3 รอบ"],
               ].map((r, i) => html`
-                <tr key=${i} className="hover:bg-stone-50/50">
-                  <td className="px-4 py-3 font-semibold text-stone-700">${r[0]}</td>
-                  <td className="px-4 py-3 text-emerald-700">${r[1]}</td>
-                  <td className="px-4 py-3 text-rose-700">${r[2]}</td>
+                <tr key=${i} className="font-thai">
+                  <td className="px-5 py-3 font-semibold text-stone-700">${r[0]}</td>
+                  <td className="px-5 py-3 text-stone-600">${r[1]}</td>
+                  <td className="px-5 py-3 text-stone-600">${r[2]}</td>
                 </tr>`)}
             </tbody>
           </table>
         </div>
 
-        <${FeedbackWidget} sectionId="overview" feedback=${feedback} onUpdate=${onUpdate} />
+        <${FeedbackWidget} chapterId="overview" feedback=${feedback} onUpdate=${onUpdate} />
       </div>
     </section>`;
 }
 
-function S4_UPLabs({ feedback, onUpdate }) {
+function Ch4_UPLabs({ feedback, onUpdate }) {
   return html`
-    <section id="uplabs" className="grad-green-soft py-16 md:py-24 anim-in">
-      <div className="mx-auto max-w-6xl px-6">
-        <${SectionLabel} number="SECTION 04" title="UP Labs · Longevity Tier" accent="green"
-          subtitle='"โปรแกรมดูแลสุขภาพระยะยาว น้ำหนักลดเป็นของแถม"' />
+    <section id="uplabs" className="py-20 md:py-28" style=${{ background: "white" }}>
+      <div className="mx-auto max-w-3xl px-6">
+        <${ChapterHead} chapter=${CHAPTERS[3]} />
+        <p className="drop-cap font-thai text-lg leading-[1.85] text-stone-800 mb-8">
+          UP Labs คือ <strong>โปรแกรมดูแลสุขภาพระยะยาว 14 วัน</strong> ที่ใช้ low-carb + IF + fat adaptation เพื่อพาร่างกายเข้าสู่ <em>metabolic flexibility</em> · น้ำหนักลดเป็นของแถม
+        </p>
 
-        <div className="rounded-3xl bg-gradient-to-br from-emerald-700 to-emerald-900 text-white p-8 mb-6 glow-green">
-          <div className="font-mono text-xs uppercase tracking-widest text-emerald-200 font-bold mb-2">⚡ Healthspan Solution</div>
-          <div className="font-head text-2xl md:text-3xl font-extrabold mb-4">"แก่ช้า · ไม่ป่วย · ตายเลย" (compress morbidity)</div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
-            ${[
-              { n: "1", t: "ลด Insulin Load", s: "low-carb → insulin ต่ำ" },
-              { n: "2", t: "เปลี่ยน Fuel", s: "glucose → fat" },
-              { n: "3", t: "Fat Adaptation", s: "ฝึก 2-4 สัปดาห์" },
-              { n: "4", t: "Metabolic Flexibility", s: "สลับใช้คล่อง" },
-            ].map((m, i) => html`
-              <div key=${i} className="rounded-2xl bg-white/10 backdrop-blur p-4 border border-white/15">
-                <div className="font-mono text-xs text-emerald-200">${m.n}</div>
-                <div className="font-head font-bold text-base mt-1">${m.t}</div>
-                <div className="text-xs text-emerald-100 mt-1">${m.s}</div>
-              </div>`)}
-          </div>
-        </div>
+        <div className="pullquote mb-12">"แก่ช้า · ไม่ป่วย · ตายเลย"</div>
 
-        <div className="mb-6">
-          <div className="font-mono text-xs uppercase tracking-widest text-emerald-700 font-bold mb-4">🔬 Deep Science · ใช้สื่อสาร</div>
-          <div className="flex flex-wrap gap-2">
-            ${["Fasting · Autophagy", "mTOR · AMPK · Sirtuins", "NOVA classification (UPF avoid)", "Eat your Age (Mark Hyman)", "Preload/Volumetric", "Hallmark of Aging", "Mitochondria & Lysosome", "Stress · Sleep · Life Purpose", "Wellness Community", "Low Carb · High Protein"].map((tag, i) => html`
-              <span key=${i} className="rounded-full bg-white border border-emerald-200 px-3 py-1.5 text-xs font-mono text-emerald-800">${tag}</span>`)}
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-4 mb-6">
+        <h3 className="font-serif text-3xl text-stone-900 mb-6">4 Mechanism · กลไก</h3>
+        <ol className="space-y-3 mb-12">
           ${[
-            { phase: "Phase 1", days: "D1-3", title: "Strict Reset",
-              items: ["โปรตีนเชค 4 มื้อ", "BodyKey ครึ่งซอง + Protein", "งดน้ำหวาน · ผลไม้", "เดิน 1 ชม./วัน"], color: "rose" },
-            { phase: "Phase 2", days: "D4-7", title: "Transition + IF",
-              items: ["เช้าเชค · เที่ยงอาหาร low-carb", "เย็นเชค หรือผัก", "IF 24 ชม. 1 ครั้ง", "Probiotic + Omega ท้องว่าง"], color: "amber" },
-            { phase: "Phase 3", days: "D8-14", title: "Flexible Maintain",
-              items: ["Carb 50-70g/วัน", "IF 16/8 ทุกวัน", "IF 24 ชม. 2 ครั้ง/สัปดาห์", "Fat-adapted state"], color: "green" },
-          ].map((p, i) => {
-            const c = { rose: "bg-rose-100 text-rose-700 border-rose-200",
-                       amber: "bg-amber-100 text-amber-700 border-amber-200",
-                       green: "bg-emerald-100 text-emerald-700 border-emerald-200" }[p.color];
-            return html`
-              <div key=${i} className=${"rounded-2xl border-2 p-5 bg-white " + c.replace(/text-\w+-700/g, '').replace(/bg-\w+-100/g, 'bg-white')}>
-                <div className=${"inline-block rounded-full px-2.5 py-0.5 text-[10px] font-mono font-bold " + c}>${p.phase} · ${p.days}</div>
-                <div className="font-head text-xl font-extrabold text-stone-900 mt-3">${p.title}</div>
-                <ul className="mt-3 space-y-1.5 text-sm font-thai text-stone-700">
-                  ${p.items.map((item, j) => html`<li key=${j} className="flex gap-2"><span className="text-stone-400">•</span><span>${item}</span></li>`)}
-                </ul>
-              </div>`;
-          })}
+            { t: "ลด Insulin Load", d: "กินคาร์บน้อย → insulin ลด → เข้าถึงไขมันสะสมได้ดี" },
+            { t: "เปลี่ยน Fuel Source", d: "Glucose-dependent → ใช้ไขมันเป็นพลังงานหลัก" },
+            { t: "Fat Adaptation", d: "ฝึกใช้ไขมัน · 2-4 สัปดาห์" },
+            { t: "Metabolic Flexibility", d: "สลับใช้ glucose/fat ได้คล่อง · เป้าหมายสุดท้าย" },
+          ].map((m, i) => html`
+            <li key=${i} className="flex gap-5 items-baseline">
+              <span className="font-serif text-3xl shrink-0 w-10" style=${{ color: "var(--green)" }}>${i + 1}</span>
+              <div>
+                <div className="font-serif text-xl text-stone-900">${m.t}</div>
+                <div className="font-thai text-sm text-stone-600 mt-1">${m.d}</div>
+              </div>
+            </li>`)}
+        </ol>
+
+        <h3 className="font-serif text-3xl text-stone-900 mb-6">3 Phases · 14 วัน</h3>
+        <div className="space-y-px paper-card rounded-sm overflow-hidden mb-12">
+          ${[
+            { p: "Phase 1", days: "D1-3", title: "Strict Reset", body: "เชค 4 มื้อ · BDK ครึ่งซอง + Protein · งดน้ำหวาน/ผลไม้ · เดิน 1 ชม." },
+            { p: "Phase 2", days: "D4-7", title: "Transition + IF", body: "เช้าเชค · เที่ยง low-carb · เย็นเชค หรือผัก · IF 24 ชม. × 1" },
+            { p: "Phase 3", days: "D8-14", title: "Flexible Maintain", body: "Carb 50-70g/วัน · IF 16/8 · IF 24h × 2/สัปดาห์" },
+          ].map((p, i) => html`
+            <div key=${i} className="p-6 bg-white">
+              <div className="flex items-baseline gap-3 mb-2">
+                <span className="font-mono text-[10px] uppercase tracking-widest text-stone-400">${p.p} · ${p.days}</span>
+              </div>
+              <div className="font-serif text-xl text-stone-900 mb-1">${p.title}</div>
+              <div className="font-thai text-sm text-stone-600">${p.body}</div>
+            </div>`)}
         </div>
 
-        <div className="rounded-3xl bg-white p-6 md:p-8 border border-stone-200">
-          <div className="font-mono text-xs uppercase tracking-widest text-stone-500 font-bold mb-4">💰 Base Package · UP Labs Stack</div>
-          <div className="grid sm:grid-cols-2 gap-2">
+        <h3 className="font-serif text-3xl text-stone-900 mb-6">Base Package · ~7,200 บาท</h3>
+        <table className="w-full text-sm paper-card rounded-sm overflow-hidden">
+          <tbody className="divide-y" style=${{ borderColor: "var(--line)" }}>
             ${[
               ["BodyKey · 14 ซอง", "1,700"],
               ["All Plant Protein 450g", "1,209"],
-              ["Triple Omega 30 caps · 2/day", "975"],
-              ["Probiotic ธรรมดา หรือ Probiotic W", "1,650"],
-            ].map((p, i) => html`
-              <div key=${i} className="flex justify-between items-center rounded-xl bg-stone-50 px-4 py-2">
-                <span className="font-thai text-sm font-semibold">${p[0]}</span>
-                <span className="font-mono text-sm text-stone-600">฿${p[1]}</span>
-              </div>`)}
-          </div>
-          <div className="mt-4 pt-4 border-t border-stone-100 space-y-2 text-xs text-stone-600 font-thai">
-            <div>• <b>ใช้ All Plant Protein 1,209</b> เป็นตัวหลัก · All Plant Protein Plus (1,500) = optional add ถ้าต้องการเสริมกระดูก · ไม่ต้องคู่ Green Tea Protein (ซ้ำซ้อน)</div>
-            <div>• <b>Probiotic ธรรมดา หรือ W ก็ได้</b> · default ธรรมดา · ทั้งคู่ราคา 1,650</div>
-            <div>• <b>On-top:</b> + Double X PhytoBlend 2,364 · + DX Refill 4,468</div>
-          </div>
-        </div>
-
-        <div className="mt-6 rounded-3xl bg-emerald-50 border border-emerald-200 p-6">
-          <div className="font-mono text-xs uppercase tracking-widest text-emerald-700 font-bold mb-3">📊 Outcomes ที่คาด (14 วัน)</div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
-            ${[
-              ["HbA1c", "↓ 1.0-1.6% ถ้าเริ่มสูง"],
-              ["Triglyceride", "↓ ~50%"],
-              ["Fasting glucose", "↓ 20-40 mg/dL"],
-              ["น้ำหนัก", "-3 to -5 kg (byproduct)"],
-              ["Energy", "นิ่งขึ้น · craving ↓"],
-              ["Fat-adapted", "ใน 2-4 สัปดาห์"],
-            ].map((o, i) => html`
-              <div key=${i} className="rounded-xl bg-white p-3 border border-emerald-100">
-                <div className="font-mono text-[10px] text-emerald-700 uppercase font-bold">${o[0]}</div>
-                <div className="font-thai text-sm font-semibold mt-1">${o[1]}</div>
-              </div>`)}
-          </div>
-          <div className="mt-4 text-xs font-thai text-emerald-800 italic">
-            ตัวอย่างจริง · พี่สุ (Jun 2025): HbA1c 7.4 → 5.8 · TG 275 → 88 · FBS 161 → 100
-          </div>
-        </div>
-
-        <${FeedbackWidget} sectionId="uplabs" feedback=${feedback} onUpdate=${onUpdate} />
-      </div>
-    </section>`;
-}
-
-function S5_FullCourse({ feedback, onUpdate }) {
-  return html`
-    <section id="fullcourse" className="grad-rose-soft py-16 md:py-24 anim-in">
-      <div className="mx-auto max-w-6xl px-6">
-        <${SectionLabel} number="SECTION 05" title="Full Course · Anti-aging Tier" accent="rose"
-          subtitle='"โปรแกรมลดน้ำหนัก ฟื้นฟูสุขภาพ" (จริงๆ คือ Anti-aging)' />
-
-        <div className="rounded-3xl bg-gradient-to-br from-rose-700 to-rose-900 text-white p-8 mb-6 glow-rose">
-          <div className="font-mono text-xs uppercase tracking-widest text-rose-200 font-bold mb-2">⚡ Anti-Aging Program</div>
-          <div className="font-head text-2xl md:text-3xl font-extrabold mb-6">"ย้อนวัย · ย้อนอายุเซลล์ · ยกเครื่องใหม่"</div>
-
-          <div className="font-mono text-xs uppercase text-rose-200 font-bold mb-3">3 หลักการลดน้ำหนัก</div>
-          <div className="grid md:grid-cols-3 gap-3">
-            ${[
-              { n: "01", t: "สารอาหารพอ", e: "Nutrients", d: "ไม่โทรม ไม่เหี่ยว ไม่ห้อย ไม่ย้อย · Vitamin saturation" },
-              { n: "02", t: "ติดลบพลังงาน", e: "Calories In-Out", d: "BDK shake · calorie deficit · ดึงไขมันสะสม" },
-              { n: "03", t: "สมดุล Hormone", e: "Hormone Balance", d: "Fiber + Probiotic · 3 มื้อ balance insulin · ป้องกัน yo-yo" },
-            ].map((p, i) => html`
-              <div key=${i} className="rounded-2xl bg-white/10 backdrop-blur p-4 border border-white/15">
-                <div className="font-mono text-xs text-rose-200">${p.n}</div>
-                <div className="font-head font-bold text-lg mt-1">${p.t}</div>
-                <div className="text-xs text-rose-100 font-mono uppercase tracking-wide mt-0.5">${p.e}</div>
-                <div className="text-xs text-rose-100 mt-2 leading-relaxed">${p.d}</div>
-              </div>`)}
-          </div>
-        </div>
-
-        <div className="rounded-3xl bg-white p-6 border border-stone-200 mb-6">
-          <div className="font-mono text-xs uppercase tracking-widest text-rose-700 font-bold mb-4">📅 4 Phases × 14 วัน · สลับ BDK 2x ↔ 1x</div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            ${[
-              { p: "Phase 1", d: "D1-14", pat: "BDK 2x", g: "Reset เข้มข้น", c: "rose" },
-              { p: "Phase 2", d: "D15-28", pat: "BDK 1x", g: "ปรับตัว", c: "amber" },
-              { p: "Phase 3", d: "D29-42", pat: "BDK 2x", g: "Reset รอบ 2", c: "rose" },
-              { p: "Phase 4", d: "D43-60", pat: "BDK 1x", g: "Lock + ระยะยาว", c: "green" },
-            ].map((p, i) => {
-              const c = { rose: "border-rose-300 bg-rose-50",
-                          amber: "border-amber-300 bg-amber-50",
-                          green: "border-emerald-300 bg-emerald-50" }[p.c];
-              return html`
-                <div key=${i} className=${"rounded-xl border-2 " + c + " p-4"}>
-                  <div className="font-mono text-[10px] uppercase text-stone-500 font-bold">${p.p}</div>
-                  <div className="font-head text-lg font-extrabold text-stone-900 mt-1">${p.d}</div>
-                  <div className="font-thai text-sm font-semibold mt-2">${p.pat}</div>
-                  <div className="text-xs text-stone-600 mt-1">${p.g}</div>
-                </div>`;
-            })}
-          </div>
-          <div className="mt-4 text-xs italic font-thai text-stone-600">
-            💡 ทำไมสลับ? → ระบบไม่ adapt เกินไป · ไม่ทรมาน · maintain ผลในระยะยาว
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-5 mb-6">
-          <div className="rounded-3xl bg-rose-50 border border-rose-200 p-6">
-            <div className="font-mono text-xs uppercase tracking-widest text-rose-700 font-bold mb-3">💊 Standard Stack (ทุกคนได้)</div>
-            <div className="grid grid-cols-2 gap-2 text-sm">
-              ${["BodyKey", "All Plant Protein 450g", "DoubleX ⭐", "Vitamin B Plus", "Triple Omega", "Bio C Plus", "Fiber Powder", "Probiotic", "Green Tea Plus ⭐"].map((p, i) => html`
-                <div key=${i} className="rounded-lg bg-white px-3 py-2 font-thai font-semibold text-stone-800">${p}</div>`)}
-            </div>
-            <div className="mt-3 text-xs italic font-thai text-rose-700">
-              ⭐ Green Tea Plus = ใส่เป็น standard ปกติ (thermogenic + Phase 2 boost) · review สูตรปัจจุบันจาก app Program Designer
-            </div>
-          </div>
-          <div className="rounded-3xl bg-amber-50 border border-amber-200 p-6">
-            <div className="font-mono text-xs uppercase tracking-widest text-amber-700 font-bold mb-3">🎯 Optional Add-on (ตามเคส)</div>
-            <ul className="space-y-1.5 text-sm font-thai">
-              <li>• <b>Cal-Mag-D</b> — bone · keto flu electrolyte</li>
-              <li>• <b>Ginseng</b> — plateau breaker · M-W-F</li>
-              <li>• <b>Calow</b> — carb blocker pre-meal</li>
-              <li>• <b>Garlic</b> — BP/lipid (evidence B)</li>
-              <li>• <b>Lecithin E</b> — partial NAFLD</li>
-              <li>• <b>Spinach Plus</b> — iron+folate (mild anemia)</li>
-              <li>• <b>CoQ10 Plus</b> — heart · 50+</li>
-              <li>• <b>Concentrated F&V / CVF</b> — phyto boost</li>
-              <li>• <b>All Plant Protein Plus</b> — เสริมกระดูก</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="rounded-3xl bg-white p-6 border border-stone-200">
-          <div className="font-mono text-xs uppercase tracking-widest text-stone-500 font-bold mb-4">🎯 เหมาะกับใคร</div>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <div className="font-thai font-bold text-emerald-700 mb-2">✅ ตรงเป๊ะ</div>
-              <ul className="space-y-1 text-sm font-thai text-stone-700">
-                <li>• น้ำหนักเกินมาก (10-30 kg)</li>
-                <li>• NCDs 2+ ตัว พร้อมกัน</li>
-                <li>• 40-60 ปี · "ไม่ไหวแล้ว ต้องเปลี่ยน"</li>
-                <li>• เคสซับซ้อนที่ personalize ลำบาก</li>
-                <li>• มีงบ · commit 60 วัน</li>
-              </ul>
-            </div>
-            <div>
-              <div className="font-thai font-bold text-rose-700 mb-2">⚠️ ไม่ตรง</div>
-              <ul className="space-y-1 text-sm font-thai text-stone-700">
-                <li>• สุขภาพดี · งบจำกัด → UP Labs</li>
-                <li>• ปัญหาเดียว · mechanism ชัด → UP Labs</li>
-                <li>• ตั้งครรภ์ · ให้นม · มะเร็งรักษาอยู่ → 🚫</li>
-                <li>• เด็ก · เปราะบาง → 🚫</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <${FeedbackWidget} sectionId="fullcourse" feedback=${feedback} onUpdate=${onUpdate} />
-      </div>
-    </section>`;
-}
-
-function S6_Decision({ feedback, onUpdate }) {
-  return html`
-    <section id="decision" className="bg-stone-900 text-white py-16 md:py-24 anim-in">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="flex items-baseline gap-3 mb-2">
-          <span className="font-mono text-xs font-bold tracking-[0.2em] text-amber-300">SECTION 06</span>
-        </div>
-        <h2 className="font-head text-4xl md:text-5xl font-extrabold tracking-tight mb-3">Decision Framework</h2>
-        <p className="text-stone-300 text-lg font-thai mb-10">ใครเหมาะกับ UP Labs · ใครเหมาะกับ Full Course</p>
-
-        <div className="rounded-3xl bg-white/5 backdrop-blur p-6 md:p-8 border border-white/10 mb-6">
-          <div className="font-mono text-xs uppercase tracking-widest text-amber-300 font-bold mb-4">🎯 6 Decision Rules</div>
-          <div className="space-y-3">
-            ${[
-              "ปัญหาเดียว · mechanism ชัด → UP Labs",
-              "ปัญหา 2+ ตัว / multi-system / aging-related → Full Course",
-              "มีโรคประจำตัว + กินยา → แพทย์ก่อนเสมอ",
-              "งบจำกัด → UP Labs ก่อน · ลองได้",
-              '"ไม่ไหวแล้ว ต้องเปลี่ยน" emotional state → Full Course pitch ตรง',
-              '"อยากแก่อย่างมีคุณภาพ" reflective → UP Labs pitch ตรง',
+              ["Triple Omega · 2 caps/day", "975"],
+              ["Probiotic หรือ Probiotic W", "1,650"],
             ].map((r, i) => html`
-              <div key=${i} className="flex gap-3 items-start">
-                <span className="font-mono text-amber-300 font-bold shrink-0 mt-0.5">${String(i + 1).padStart(2, "0")}</span>
-                <span className="font-thai text-stone-200">${r}</span>
-              </div>`)}
-          </div>
+              <tr key=${i} className="font-thai">
+                <td className="px-5 py-3 text-stone-700">${r[0]}</td>
+                <td className="px-5 py-3 text-right font-mono font-bold">฿${r[1]}</td>
+              </tr>`)}
+          </tbody>
+        </table>
+
+        <p className="font-thai text-sm text-stone-500 italic mt-4">
+          On-top: + DoubleX = +2,364 · + DX Refill = +4,468 · ไม่ต้องคู่ All Plant Protein Plus หรือ Green Tea Protein (ซ้ำซ้อน)
+        </p>
+
+        <${FeedbackWidget} chapterId="uplabs" feedback=${feedback} onUpdate=${onUpdate} />
+      </div>
+    </section>`;
+}
+
+function Ch5_FullCourse({ feedback, onUpdate }) {
+  return html`
+    <section id="fullcourse" className="py-20 md:py-28">
+      <div className="mx-auto max-w-3xl px-6">
+        <${ChapterHead} chapter=${CHAPTERS[4]} />
+        <p className="drop-cap font-thai text-lg leading-[1.85] text-stone-800 mb-8">
+          Full Course คือ <strong>Anti-aging program 60 วัน</strong> ที่ใช้ vitamin saturation + hormone balance + meal replacement เพื่อฟื้นฟู cellular · ดูแลทุกระบบพร้อมกัน · น้ำหนักลดเป็นของแถม
+        </p>
+
+        <div className="pullquote mb-12">"ย้อนวัย · ย้อนอายุเซลล์ · ยกเครื่องใหม่"</div>
+
+        <h3 className="font-serif text-3xl text-stone-900 mb-6">3 หลักการ · Mechanism</h3>
+        <ol className="space-y-4 mb-12">
+          ${[
+            { e: "Nutrients", t: "สารอาหารที่มากพอ", d: "ไม่โทรม ไม่เหี่ยว ไม่ห้อย ไม่ย้อย · Vitamin saturation" },
+            { e: "Calories In-Out", t: "ติดลบพลังงาน", d: "BDK shake meal replacement · ดึงไขมันสะสม" },
+            { e: "Hormone Balance", t: "สมดุล Hormone", d: "Fiber + Probiotic + 3 มื้อ · ป้องกัน yo-yo" },
+          ].map((p, i) => html`
+            <li key=${i} className="flex gap-5 items-baseline">
+              <span className="font-serif text-3xl shrink-0 w-10" style=${{ color: "var(--rose)" }}>${String(i + 1).padStart(2, "0")}</span>
+              <div>
+                <div className="font-mono text-[10px] uppercase tracking-widest text-stone-400 mb-1">${p.e}</div>
+                <div className="font-serif text-xl text-stone-900">${p.t}</div>
+                <div className="font-thai text-sm text-stone-600 mt-1">${p.d}</div>
+              </div>
+            </li>`)}
+        </ol>
+
+        <h3 className="font-serif text-3xl text-stone-900 mb-6">4 Phases × 14 วัน</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px paper-card rounded-sm overflow-hidden mb-4">
+          ${[
+            { p: "I",   d: "D1-14",  bdk: "BDK 2×" },
+            { p: "II",  d: "D15-28", bdk: "BDK 1×" },
+            { p: "III", d: "D29-42", bdk: "BDK 2×" },
+            { p: "IV",  d: "D43-60", bdk: "BDK 1×" },
+          ].map((ph, i) => html`
+            <div key=${i} className="p-5 bg-white text-center">
+              <div className="chapter-num text-3xl text-stone-900 mb-1">${ph.p}</div>
+              <div className="font-mono text-[10px] uppercase text-stone-400">${ph.d}</div>
+              <div className="font-thai text-sm font-semibold mt-2">${ph.bdk}</div>
+            </div>`)}
+        </div>
+        <p className="font-thai text-sm text-stone-500 italic mb-12">
+          ทำไมสลับ? · ระบบไม่ adapt เกินไป · ไม่ทรมาน · maintain ผลในระยะยาว
+        </p>
+
+        <h3 className="font-serif text-3xl text-stone-900 mb-6">Standard Stack</h3>
+        <div className="grid grid-cols-2 gap-2 mb-12">
+          ${["BodyKey", "All Plant Protein 450g", "DoubleX", "Vitamin B Plus", "Triple Omega", "Bio C Plus", "Fiber Powder", "Probiotic", "Green Tea Plus"].map((s, i) => html`
+            <div key=${i} className="paper-card rounded-sm p-3 text-center font-thai text-sm font-semibold">${s}</div>`)}
         </div>
 
-        <div className="overflow-hidden rounded-3xl border border-white/10">
+        <h3 className="font-serif text-3xl text-stone-900 mb-6">Optional Add-on (ตามเคส)</h3>
+        <ul className="space-y-2 mb-8">
+          ${[
+            ["Cal-Mag-D", "Bone · electrolyte (esp. keto flu)"],
+            ["Ginseng", "Plateau breaker · M-W-F"],
+            ["Calow", "Carb blocker · 2 ก่อนอาหาร 15-20 นาที"],
+            ["Garlic", "BP/lipid · 1×3 เวลา · evidence B"],
+            ["Lecithin E", "NAFLD partial · Vit E + PC"],
+            ["Spinach Plus", "Iron 17mg + Folate 170mcg"],
+            ["CoQ10 Plus", "Heart · 50+ · statin co-therapy"],
+            ["Concentrated F&V", "Phyto + immune"],
+          ].map((a, i) => html`
+            <li key=${i} className="flex items-baseline gap-4 border-b py-2" style=${{ borderColor: "var(--line)" }}>
+              <span className="font-serif font-bold text-stone-900 w-44 shrink-0">${a[0]}</span>
+              <span className="font-thai text-sm text-stone-600">${a[1]}</span>
+            </li>`)}
+        </ul>
+
+        <${FeedbackWidget} chapterId="fullcourse" feedback=${feedback} onUpdate=${onUpdate} />
+      </div>
+    </section>`;
+}
+
+function Ch6_Decision({ feedback, onUpdate }) {
+  return html`
+    <section id="decision" className="py-20 md:py-28" style=${{ background: "var(--ink)" }}>
+      <div className="mx-auto max-w-3xl px-6 text-white">
+        <header className="text-center mb-12">
+          <div className="ornament mb-6"><span className="chapter-num text-2xl text-stone-500">${CHAPTERS[5].roman}</span></div>
+          <div className="font-mono text-[11px] uppercase tracking-[0.3em] text-stone-500 mb-3">Chapter ${CHAPTERS[5].num}</div>
+          <h2 className="font-serif text-5xl md:text-6xl text-white mb-3">${CHAPTERS[5].title}</h2>
+          <p className="font-thai text-lg text-stone-400">${CHAPTERS[5].thai}</p>
+          <div className="ornament mt-6"><span className="text-stone-600">⊹</span></div>
+        </header>
+
+        <p className="drop-cap font-thai text-lg leading-[1.85] text-stone-200 mb-12" style=${{ "--rose": "#C4857E" }}>
+          เลือกคอร์สจาก <strong>ลักษณะปัญหา</strong> ไม่ใช่จาก <em>"อยากลดเท่าไหร่"</em> · ปัญหาเดียว + mechanism ชัด = UP Labs · ปัญหาหลายระบบ + aging = Full Course · มีโรคประจำตัว = แพทย์ก่อนเสมอ
+        </p>
+
+        <h3 className="font-serif text-3xl text-amber-200 mb-6">6 Decision Rules</h3>
+        <ol className="space-y-4 mb-12">
+          ${[
+            "ปัญหาเดียว · mechanism ชัด → UP Labs",
+            "ปัญหา 2+ ตัว / multi-system / aging-related → Full Course",
+            "มีโรคประจำตัว + กินยา → แพทย์ก่อนเสมอ",
+            "งบจำกัด → UP Labs ก่อน · ลองได้",
+            '"ไม่ไหวแล้ว ต้องเปลี่ยน" emotional → Full Course pitch ตรง',
+            '"อยากแก่อย่างมีคุณภาพ" reflective → UP Labs pitch ตรง',
+          ].map((r, i) => html`
+            <li key=${i} className="flex gap-5 items-baseline border-b border-white/10 pb-3">
+              <span className="font-serif text-2xl text-amber-300 shrink-0 w-8">${String(i + 1).padStart(2, "0")}</span>
+              <span className="font-thai text-stone-200">${r}</span>
+            </li>`)}
+        </ol>
+
+        <h3 className="font-serif text-3xl text-amber-200 mb-6">Quick Reference</h3>
+        <div className="rounded-sm border border-white/10 overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-white/5">
-              <tr className="font-mono text-[10px] uppercase tracking-widest text-amber-200 text-left">
-                <th className="px-4 py-3">สถานการณ์</th>
-                <th className="px-4 py-3">แนะนำ</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5 font-thai">
+            <tbody className="divide-y divide-white/10">
               ${[
                 ["น้ำหนัก 100+ kg ต้องลด 30+ kg", "Full Course", "rose"],
                 ["NCDs ตัวเดียว · งบจำกัด", "UP Labs", "green"],
                 ["NCDs ซับซ้อน · 2+ ตัว", "Full Course", "rose"],
-                ["มะเร็ง / รักษาโรคร้ายแรง", "🚫 ไม่เหมาะ · พบแพทย์", "amber"],
+                ["มะเร็ง / รักษาโรคร้ายแรง", "พบแพทย์", "amber"],
                 ["Fit routine · maintenance", "UP Labs", "green"],
                 ["Yo-yo dieter · ลดมาหลายรอบ", "UP Labs ก่อน", "green"],
                 ["Pre-diabetes / HbA1c 5.7-6.4", "UP Labs", "green"],
-                ["50+ · Anti-aging · ฟื้นฟูทั้งระบบ", "Full Course", "rose"],
-                ["เบาหวาน · อยากลดยาเร็ว · งบจำกัด", "UP Labs + แพทย์", "green"],
-                ["เบาหวาน + ความดัน + ไขมัน · งบพร้อม", "Full Course + แพทย์", "rose"],
-                ["ตั้งครรภ์ / ให้นม", "⚠️ ได้ · ปรึกษาเภสัชก่อน", "amber"],
-              ].map((row, i) => {
-                const c = { rose: "text-rose-300", green: "text-emerald-300", amber: "text-amber-300" }[row[2]];
+                ["50+ · Anti-aging multi-system", "Full Course", "rose"],
+                ["เบาหวาน + ลดยาเร็ว · งบจำกัด", "UP Labs + แพทย์", "green"],
+                ["ตั้งครรภ์ / ให้นม", "ปรึกษาเภสัช", "amber"],
+              ].map((r, i) => {
+                const c = { rose: "text-rose-300", green: "text-emerald-300", amber: "text-amber-300" }[r[2]];
                 return html`
-                  <tr key=${i} className="hover:bg-white/5">
-                    <td className="px-4 py-3 text-stone-200">${row[0]}</td>
-                    <td className=${"px-4 py-3 font-bold " + c}>${row[1]}</td>
+                  <tr key=${i} className="font-thai">
+                    <td className="px-5 py-3 text-stone-200">${r[0]}</td>
+                    <td className=${"px-5 py-3 font-bold text-right " + c}>${r[1]}</td>
                   </tr>`;
               })}
             </tbody>
           </table>
         </div>
 
-        <div className="mt-6 rounded-3xl bg-gradient-to-br from-amber-500/20 to-emerald-500/10 backdrop-blur p-6 border border-white/15">
-          <div className="font-mono text-xs uppercase tracking-widest text-amber-300 font-bold mb-3">🚀 Sequencing · Combo ที่ดีที่สุด</div>
-          <div className="flex flex-wrap items-center gap-3 font-thai">
-            <span className="bg-emerald-500/30 px-3 py-1.5 rounded-full text-sm font-semibold">UP Labs 14 วัน (พิสูจน์ระบบ)</span>
-            <span className="text-amber-300">→</span>
-            <span className="bg-rose-500/30 px-3 py-1.5 rounded-full text-sm font-semibold">Full Course 60 วัน (lock + ฟื้นฟู)</span>
-            <span className="text-amber-300">→</span>
-            <span className="bg-emerald-500/30 px-3 py-1.5 rounded-full text-sm font-semibold">UP Labs maintenance ปีละ 2-3 รอบ</span>
-          </div>
+        <div className="mt-10 text-center">
+          <div className="ornament mb-4"><span className="text-amber-300 text-xl">⊹</span></div>
+          <p className="font-serif italic text-2xl text-amber-200">Sequencing · Combo</p>
+          <p className="font-thai text-stone-300 mt-3 leading-relaxed">
+            UP Labs 14 วัน (พิสูจน์ระบบ) → Full Course 60 วัน (lock + ฟื้นฟู) → UP Labs ปีละ 2-3 รอบ (maintenance)
+          </p>
         </div>
 
-        <${FeedbackWidget} sectionId="decision" feedback=${feedback} onUpdate=${onUpdate} />
+        <${FeedbackWidget} chapterId="decision" feedback=${feedback} onUpdate=${onUpdate} />
       </div>
     </section>`;
 }
 
-function S7_Sales({ feedback, onUpdate }) {
+function Ch7_Sales({ feedback, onUpdate }) {
   return html`
-    <section id="sales" className="grad-amber-soft py-16 md:py-24 anim-in">
-      <div className="mx-auto max-w-6xl px-6">
-        <${SectionLabel} number="SECTION 07" title="Sales Funnel & Marketing" accent="amber"
-          subtitle="ลำดับ funnel 5 ขั้น · scripts สำหรับ Full Course vs UP Labs" />
+    <section id="sales" className="py-20 md:py-28" style=${{ background: "white" }}>
+      <div className="mx-auto max-w-3xl px-6">
+        <${ChapterHead} chapter=${CHAPTERS[6]} />
+        <p className="drop-cap font-thai text-lg leading-[1.85] text-stone-800 mb-12">
+          Sales ของ UP Wellness เริ่มต้นจาก <strong>การให้ความรู้ฟรี</strong> · ลูกค้าเห็นว่าเรารู้จริง · จึงอยากลองโปรแกรม · พอประทับใจค่อยขยับเป็นแนะนำสินค้า · สุดท้ายเปิดโอกาสธุรกิจ · ไม่บังคับ · ไม่ขายตรง
+        </p>
 
-        <div className="space-y-3 mb-8">
+        <h3 className="font-serif text-3xl text-stone-900 mb-6">5-Step Funnel</h3>
+        <ol className="space-y-3 mb-12">
           ${[
-            { n: "01", t: "แบ่งปันข้อมูล ความรู้", d: 'ให้คำปรึกษาฟรี · ลูกค้าเห็น "ของจริง"' },
-            { n: "02", t: "ชวนเข้าโปรแกรม", d: "Low commit 5-10k · UP Labs 14 วัน → ถ้า bundle ร่าง = Full Course" },
-            { n: "03", t: "ติดตามให้ประทับใจ", d: "คอร์ส · โค้ช · ผลลัพธ์ชัดเจน" },
-            { n: "04", t: "แนะนำสินค้า / บอกต่อ", d: "product + รักเรา → ซื้อต่อเอง + แนะนำต่อ" },
-            { n: "05", t: "Sponsor โอกาสทางธุรกิจ", d: '"เปลี่ยนไขมันเป็นทรัพย์สิน" · เปิดโอกาส ไม่บังคับ' },
+            { t: "แบ่งปันข้อมูล ความรู้", d: 'ให้คำปรึกษาฟรี · ลูกค้าเห็น "ของจริง"' },
+            { t: "ชวนเข้าโปรแกรม", d: "Low commit 5-10k · UP Labs 14 วัน → ถ้า bundle ร่าง = Full Course" },
+            { t: "ติดตามให้ประทับใจ", d: "คอร์ส · โค้ช · ผลลัพธ์ชัดเจน" },
+            { t: "แนะนำสินค้า · บอกต่อ", d: "product + รักเรา → ซื้อต่อเอง + แนะนำต่อ" },
+            { t: "Sponsor โอกาสธุรกิจ", d: '"เปลี่ยนไขมันเป็นทรัพย์สิน" · ไม่บังคับ' },
           ].map((s, i) => html`
-            <div key=${i} className="rounded-2xl bg-white p-5 border border-amber-100 flex items-start gap-4">
-              <div className="rounded-xl bg-amber-500 text-white font-mono font-bold text-lg px-3 py-2 shrink-0">${s.n}</div>
+            <li key=${i} className="flex gap-5 items-baseline border-b py-3" style=${{ borderColor: "var(--line)" }}>
+              <span className="font-serif text-3xl shrink-0 w-12" style=${{ color: "var(--amber)" }}>${String(i + 1).padStart(2, "0")}</span>
               <div>
-                <div className="font-head text-xl font-extrabold">${s.t}</div>
+                <div className="font-serif text-xl text-stone-900">${s.t}</div>
                 <div className="font-thai text-sm text-stone-600 mt-1">${s.d}</div>
               </div>
-            </div>`)}
-        </div>
+            </li>`)}
+        </ol>
 
-        <div className="grid md:grid-cols-2 gap-5">
-          <div className="rounded-3xl bg-white p-6 border-2 border-rose-200">
-            <div className="font-mono text-xs uppercase tracking-widest text-rose-700 font-bold mb-3">🅰️ Full Course · "นวด" 5 คำถาม</div>
-            <ol className="space-y-2 text-sm font-thai text-stone-700 list-decimal pl-5">
+        <h3 className="font-serif text-3xl text-stone-900 mb-6">Marketing "นวด" Scripts</h3>
+        <div className="grid md:grid-cols-2 gap-px paper-card rounded-sm overflow-hidden">
+          <div className="p-6 bg-white">
+            <div className="font-mono text-[10px] uppercase tracking-widest font-bold mb-3" style=${{ color: "var(--rose)" }}>Full Course · 5 คำถาม</div>
+            <ol className="space-y-1.5 font-thai text-sm text-stone-700 list-decimal pl-5">
               <li>อยากลดกี่โล?</li>
               <li>มีแผนลดน้ำหนักไหม?</li>
               <li>ทำไมถึงอยากลด?</li>
               <li>เคยลดวิธีไหนมาบ้าง?</li>
-              <li>มีโรคประจำตัว / ความกังวลอะไรไหม?</li>
+              <li>มีโรคประจำตัว / ความกังวลไหม?</li>
             </ol>
-            <div className="mt-4 rounded-xl bg-rose-50 p-3 text-xs font-thai italic text-stone-700">
-              <b>Pitch:</b> "โปรแกรมลดน้ำหนัก 60 วัน · ออกแบบเฉพาะบุคคล · 1:1 · ยกเครื่องร่างกาย · ลด 8-20 kg · สุขภาพดีขึ้น"
-            </div>
           </div>
-
-          <div className="rounded-3xl bg-white p-6 border-2 border-emerald-200">
-            <div className="font-mono text-xs uppercase tracking-widest text-emerald-700 font-bold mb-3">🅱️ UP Labs · "นวด" 3 คำถาม</div>
-            <ol className="space-y-2 text-sm font-thai text-stone-700 list-decimal pl-5">
-              <li>ตอนนี้ดูแลตัวเองยังไง? / สุขภาพเป็นไงบ้าง?</li>
+          <div className="p-6" style=${{ background: "var(--green-soft)" }}>
+            <div className="font-mono text-[10px] uppercase tracking-widest font-bold mb-3" style=${{ color: "var(--green)" }}>UP Labs · 3 คำถาม</div>
+            <ol className="space-y-1.5 font-thai text-sm text-stone-700 list-decimal pl-5">
+              <li>ตอนนี้ดูแลตัวเองยังไง?</li>
               <li>เคยทำ IF ไหม?</li>
               <li>รู้จัก Fat Adaptation หรือเปล่า?</li>
             </ol>
-            <div className="mt-4 rounded-xl bg-emerald-50 p-3 text-xs font-thai italic text-stone-700">
-              <b>Pitch:</b> "โปรแกรมดูแลสุขภาพ · ผลพลอยได้น้ำหนักลง 3-5 kg · 14 วัน Challenge · ให้วิธีทาน ไปทำเอง · ถามได้ตลอด"
+          </div>
+        </div>
+
+        <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-6">คำที่ห้าม · คำใช้แทน</h3>
+        <div className="grid md:grid-cols-2 gap-5">
+          <div className="paper-card rounded-sm p-5" style=${{ background: "#FEF2F2" }}>
+            <div className="font-mono text-[10px] uppercase tracking-widest font-bold text-rose-700 mb-3">❌ ห้ามใช้</div>
+            <div className="font-thai text-sm text-stone-700 leading-relaxed">
+              "ซื้อเลย" · "โปรพิเศษ" · "รักษา" · "ป้องกัน" · "100%" · "รับประกัน" · "มหัศจรรย์" · "ปาฏิหาริย์"
+            </div>
+          </div>
+          <div className="paper-card rounded-sm p-5" style=${{ background: "#F0FDF4" }}>
+            <div className="font-mono text-[10px] uppercase tracking-widest font-bold text-emerald-700 mb-3">✓ ใช้แทน</div>
+            <div className="font-thai text-sm text-stone-700 leading-relaxed">
+              "associated with" · "งานวิจัยพบว่า" · "สนับสนุน" · "ช่วยให้" · "อาจช่วย" · "ในบาง subgroup" · "trend ชี้ว่า"
             </div>
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-5 mt-5">
-          <div className="rounded-2xl bg-stone-900 text-white p-5">
-            <div className="font-mono text-xs uppercase tracking-widest text-rose-300 font-bold mb-3">❌ คำที่ห้ามใช้</div>
-            <div className="flex flex-wrap gap-1.5">
-              ${['"ซื้อเลย!"', '"โปรพิเศษ!"', '"รักษา"', '"ป้องกัน"', '"100%"', '"รับประกัน"', '"มหัศจรรย์"', '"ปาฏิหาริย์"', '"miracle"', 'Emotional pressure'].map((w, i) => html`
-                <span key=${i} className="rounded-full bg-rose-500/20 px-2.5 py-1 text-xs border border-rose-400/30">${w}</span>`)}
-            </div>
-          </div>
-          <div className="rounded-2xl bg-stone-900 text-white p-5">
-            <div className="font-mono text-xs uppercase tracking-widest text-emerald-300 font-bold mb-3">✅ คำใช้แทน</div>
-            <div className="flex flex-wrap gap-1.5">
-              ${['"associated with"', '"งานวิจัยพบว่า..."', '"สนับสนุน"', '"ช่วยให้..."', '"อาจช่วย"', '"ในบาง subgroup"', '"trend ชี้ว่า..."', '"งานวิจัยล่าสุด..."'].map((w, i) => html`
-                <span key=${i} className="rounded-full bg-emerald-500/20 px-2.5 py-1 text-xs border border-emerald-400/30">${w}</span>`)}
-            </div>
-          </div>
-        </div>
-
-        <${FeedbackWidget} sectionId="sales" feedback=${feedback} onUpdate=${onUpdate} />
+        <${FeedbackWidget} chapterId="sales" feedback=${feedback} onUpdate=${onUpdate} />
       </div>
     </section>`;
 }
 
-function S8_Products({ feedback, onUpdate }) {
+function Ch8_Products({ feedback, onUpdate }) {
   const groups = [
-    { title: "🥤 Meal Replacement & Protein", color: "rose", items: [
-      ["BodyKey", "0124489+", "14 ซอง/กล่อง · 51g", "1,700", "200 kcal · 14g protein · 5 flavors"],
-      ["All Plant Protein 450g", "110415TH", "450g · 45 scoops", "1,209", "ตัวหลัก · Soy + Wheat + Pea = 8-16g protein/scoop"],
-      ["All Plant Protein 900g", "122594TH", "900g", "2,300", "ขนาดใหญ่"],
-      ["All Plant Protein Plus 450g", "(new)", "450g · 45 scoops", "1,500", "Optional · Soy + Wheat + Lentil · เสริมกระดูก"],
-      ["Green Tea Protein", "—", "450g", "1,500", "Protein + green tea extract"],
+    { title: "Meal Replacement & Protein", items: [
+      ["BodyKey · 14 ซอง", "1,700", "Meal replacement หลัก"],
+      ["All Plant Protein 450g", "1,209", "ตัวหลัก · preserve muscle"],
+      ["All Plant Protein 900g", "2,300", "ขนาดใหญ่"],
+      ["All Plant Protein Plus 450g", "1,500", "Optional · เสริมกระดูก"],
+      ["Green Tea Protein", "1,500", "Alternative"],
     ]},
-    { title: "💊 Foundation Vitamins", color: "amber", items: [
-      ["DoubleX PhytoBlend ⭐", "121574", "186 tabs · 6/day", "2,364", "12 vit + 9 min + 17 phyto"],
-      ["DoubleX Refill", "121575TH", "372 tabs", "4,468", "Refill pack · save vs box"],
-      ["Vitamin B Plus", "122304TH", "60 tabs · 2/วัน", "527", "8 B-vitamins · Dual-Action 8hr"],
-      ["Bio C Plus", "109745TH", "60 tabs · 2/วัน", "990", "Vit C 500mg · slow-release · acerola"],
-      ["Cal-Mag-D", "117147TH", "250 tabs · 2/day", "1,077", "Ca 234 + Mg 118 + D 164 IU/tab"],
-      ["Triple Omega", "126132TH", "30 caps · 2/วัน", "975", "EPA 286 + DHA 214/cap · AquaCelle"],
-      ["Concentrated F&V (CVF)", "102992TH", "60 tabs", "1,468", "17 phyto · 5-color · ภูมิคุ้มกัน"],
+    { title: "Foundation Vitamins", items: [
+      ["DoubleX PhytoBlend", "2,364", "Multi-vit เรือธง · 6 tabs/day"],
+      ["DoubleX Refill", "4,468", "372 tabs refill"],
+      ["Vitamin B Plus", "527", "2 tabs/day · Dual-Action 8hr"],
+      ["Bio C Plus", "990", "2 tabs/day · slow-release 500mg"],
+      ["Cal Mag D", "1,077", "250 tabs · 2/day"],
+      ["Triple Omega", "975", "2 caps/day · EPA+DHA"],
+      ["Concentrated F&V (CVF)", "1,468", "2 tabs/day · phyto + immune"],
     ]},
-    { title: "🫀 Heart · Vascular", color: "rose", items: [
-      ["Garlic ⭐ ACTIVE", "A5923TH", "150 tabs · 1 × 3 เวลา", "1,195", "Garlic 333mg + parsley + watercress + licorice"],
-      ["CoQ10 Plus", "101156TH", "60 caps", "2,209", "CoQ10 29.5 + L-carnitine 100 + Taurine"],
-      ["Lecithin E ⭐ ACTIVE", "A4445TH", "110 tabs chew", "659", "Lecithin 260 + PC 72 + Vit E 5 IU/tab"],
+    { title: "Heart · Vascular", items: [
+      ["Garlic", "1,195", "150 tabs · 1 × 3 เวลา"],
+      ["CoQ10 Plus", "2,209", "60 caps · heart · 50+"],
+      ["Lecithin E", "659", "1-3 เคี้ยว/day · Vit E + PC"],
     ]},
-    { title: "🫁 Gut · Fiber", color: "green", items: [
-      ["Probiotic", "—", "30 sachets", "1,650", "Default · ปรับสมดุลลำไส้"],
-      ["Probiotic W", "120571TH", "30 sachets", "1,650", "NCFM + La-14 + HN001 · 10.4×10⁹ CFU"],
-      ["Fiber Powder ⭐", "102736TH", "30 sachets × 4.5g", "1,627", "Resistant Maltodextrin + Inulin + PHGG"],
-      ["Fiber Blend (Chewable)", "104402TH", "60 tabs · 2 เม็ดเคี้ยว + น้ำ 300cc", "1,168", "13 plant fibers"],
+    { title: "Gut · Fiber", items: [
+      ["Probiotic", "1,650", "30 sachets · default"],
+      ["Probiotic W", "1,650", "30 sachets · 3 strains identified"],
+      ["Fiber Powder", "1,627", "30 ซอง × 4.5g"],
+      ["Fiber Blend (Chewable)", "1,168", "60 tabs · 2 เคี้ยว + 300cc"],
     ]},
-    { title: "🩸 Blood / Weight / Beauty", color: "amber", items: [
-      ["Spinach Plus ⭐", "A5924TH", "120 tabs · 1/day", "636", "Fe fumarate 17mg + Folate 170mcg + Ca · de-facto Iron Folic ของไทย"],
-      ["Calow", "100193TH", "90 tabs · 2 เม็ดก่อนอาหาร 15-20 นาที", "1,314", "White bean + Soy α-amylase inhibitor"],
-      ["Nutrilite Collagen ⭐ NEW", "119293TH", "30 sticks × 5g", "1,650", "Marine collagen + soybean peptide + chrysanthemum"],
-      ["SHN", "101812TH", "60 tabs", "1,127", "Hydrolyzed collagen 250mg (sub-clinical)"],
+    { title: "Weight / Blood / Beauty", items: [
+      ["Calow", "1,314", "90 tabs · 2 ก่อนอาหาร 15-20 นาที"],
+      ["Spinach Plus", "636", "120 tabs · Fe 17mg + Folate 170mcg"],
+      ["Nutrilite Collagen", "1,650", "30 sticks × 5g · marine"],
+      ["SHN", "1,127", "60 tabs · hydrolyzed collagen"],
     ]},
   ];
 
   return html`
-    <section id="products" className="grad-cream-soft py-16 md:py-24 anim-in">
-      <div className="mx-auto max-w-6xl px-6">
-        <${SectionLabel} number="SECTION 08" title="Product Knowledge · Nutrilite TH" accent="ink"
-          subtitle="Verified จาก amway.co.th 16 พ.ค. 2569 · 20+ active SKUs · cross-reference catalog xlsx" />
+    <section id="products" className="py-20 md:py-28">
+      <div className="mx-auto max-w-3xl px-6">
+        <${ChapterHead} chapter=${CHAPTERS[7]} />
+        <p className="drop-cap font-thai text-lg leading-[1.85] text-stone-800 mb-8">
+          Nutrilite Thailand catalog · verified กับ amway.co.th และ owner เมื่อ 16-17 พ.ค. 2569 · 20+ active SKUs · ราคาสมาชิก · ใช้เป็น source of truth
+        </p>
 
-        <div className="space-y-6 mb-6">
-          ${groups.map((g, gi) => {
-            const headerColor = { rose: "bg-rose-100 text-rose-700",
-                                  amber: "bg-amber-100 text-amber-700",
-                                  green: "bg-emerald-100 text-emerald-700" }[g.color];
-            return html`
-              <div key=${gi} className="rounded-3xl bg-white border border-stone-200 overflow-hidden">
-                <div className=${"px-5 py-3 font-mono text-xs uppercase tracking-widest font-bold " + headerColor}>${g.title}</div>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead className="bg-stone-50 border-y border-stone-100">
-                      <tr className="text-left text-[10px] uppercase tracking-wider text-stone-500 font-mono">
-                        <th className="px-4 py-2">Product</th>
-                        <th className="px-4 py-2">SKU</th>
-                        <th className="px-4 py-2">Pack</th>
-                        <th className="px-4 py-2 text-right">฿ member</th>
-                        <th className="px-4 py-2">Spec</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-stone-100">
-                      ${g.items.map((it, i) => html`
-                        <tr key=${i} className="hover:bg-stone-50/50 font-thai">
-                          <td className="px-4 py-3 font-bold text-stone-900">${it[0]}</td>
-                          <td className="px-4 py-3 font-mono text-xs text-stone-500">${it[1]}</td>
-                          <td className="px-4 py-3 text-stone-600 text-xs">${it[2]}</td>
-                          <td className="px-4 py-3 font-mono text-right font-bold text-stone-900">${it[3]}</td>
-                          <td className="px-4 py-3 text-xs text-stone-600">${it[4]}</td>
-                        </tr>`)}
-                    </tbody>
-                  </table>
-                </div>
-              </div>`;
-          })}
+        <div className="space-y-8 mb-8">
+          ${groups.map((g, gi) => html`
+            <div key=${gi}>
+              <h3 className="font-serif text-2xl text-stone-900 mb-3 flex items-baseline gap-3">
+                <span>${g.title}</span>
+                <span className="flex-1 border-b" style=${{ borderColor: "var(--line)" }}></span>
+              </h3>
+              <table className="w-full text-sm">
+                <tbody className="divide-y" style=${{ borderColor: "var(--line)" }}>
+                  ${g.items.map((it, i) => html`
+                    <tr key=${i} className="font-thai">
+                      <td className="py-2.5 pr-3 font-semibold text-stone-900">${it[0]}</td>
+                      <td className="py-2.5 px-3 font-mono text-right font-bold whitespace-nowrap">฿${it[1]}</td>
+                      <td className="py-2.5 pl-3 text-stone-500 text-xs">${it[2]}</td>
+                    </tr>`)}
+                </tbody>
+              </table>
+            </div>`)}
         </div>
 
-        <div className="grid md:grid-cols-2 gap-5">
-          <div className="rounded-3xl bg-stone-900 text-white p-6">
-            <div className="font-mono text-xs uppercase tracking-widest text-rose-300 font-bold mb-3">🚫 Discontinued · Use Replacement</div>
-            <ul className="space-y-2 text-sm font-thai">
-              <li>• Vitamin D standalone → <b>Cal-Mag-D + Pharmacy D3</b></li>
-              <li>• Iron Folic → <b>Spinach Plus</b></li>
-              <li>• Daily Multivitamin → <b>DoubleX</b></li>
-              <li>• Saw Palmetto · Glucosamine · Memory Builder → pharmacy</li>
-              <li>• Tribulus / Maca → not in TH</li>
-            </ul>
-          </div>
-          <div className="rounded-3xl bg-amber-50 border border-amber-200 p-6">
-            <div className="font-mono text-xs uppercase tracking-widest text-amber-700 font-bold mb-3">⚠️ External Pharmacy (Nutrilite ไม่ครอบ therapeutic)</div>
-            <ul className="space-y-1.5 text-sm font-thai text-stone-700">
-              <li>• <b>Vit D3 2,000 IU</b> (Cal-Mag-D max 330 IU/day)</li>
-              <li>• <b>Vit E 400-800 IU NAFLD</b> (Lecithin E 15 IU)</li>
-              <li>• <b>Choline 500mg</b> (Lecithin E 216mg PC)</li>
-              <li>• <b>Silymarin</b> (ไม่มี)</li>
-              <li>• <b>Iron 60-100mg IDA</b> (Spinach Plus 5.6mg)</li>
-              <li>• <b>Berberine · Niacin therapy</b> (ไม่มี/ต่ำเกิน)</li>
-              <li>• <b>Metformin · GLP-1</b> (pharmaceutical)</li>
-            </ul>
-          </div>
-        </div>
-
-        <${FeedbackWidget} sectionId="products" feedback=${feedback} onUpdate=${onUpdate} />
-      </div>
-    </section>`;
-}
-
-function S9_Clinical({ feedback, onUpdate }) {
-  return html`
-    <section id="clinical" className="bg-stone-900 text-white py-16 md:py-24 anim-in">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="flex items-baseline gap-3 mb-2">
-          <span className="font-mono text-xs font-bold tracking-[0.2em] text-rose-300">SECTION 09</span>
-        </div>
-        <h2 className="font-head text-4xl md:text-5xl font-extrabold tracking-tight mb-3">Clinical Rules & Safety</h2>
-        <p className="text-stone-300 text-lg font-thai mb-10">Do's / Don'ts · escalation · banned per condition · drug interactions</p>
-
-        <div className="grid md:grid-cols-2 gap-5 mb-6">
-          <div className="rounded-3xl bg-emerald-900/40 backdrop-blur p-6 border border-emerald-400/30">
-            <div className="font-mono text-xs uppercase tracking-widest text-emerald-200 font-bold mb-3">✅ DO</div>
-            <ul className="space-y-2 text-sm font-thai">
-              <li>• Peer-reviewed · meta-analysis · systematic review</li>
-              <li>• ระบุแหล่ง · ปี · institution</li>
-              <li>• อธิบาย mechanism (ไม่แค่บอกว่ามันดี)</li>
-              <li>• แนะนำพบแพทย์เมื่อเกินขอบเขต wellness</li>
-              <li>• Match Nutrilite ในบริบทคำแนะนำ</li>
-            </ul>
-          </div>
-          <div className="rounded-3xl bg-rose-900/40 backdrop-blur p-6 border border-rose-400/30">
-            <div className="font-mono text-xs uppercase tracking-widest text-rose-200 font-bold mb-3">🚫 DON'T</div>
-            <ul className="space-y-2 text-sm font-thai">
-              <li>• อ้างประโยชน์ไม่มีหลักฐาน</li>
-              <li>• วินิจฉัยโรค · สั่งยา</li>
-              <li>• Hard sell · "ซื้อเลย!"</li>
-              <li>• Copy-paste product catalog ดิบ</li>
-              <li>• ราคาก่อนลูกค้าพร้อม</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="rounded-3xl bg-amber-500/15 border border-amber-400/30 p-6 mb-6">
-          <div className="font-mono text-xs uppercase tracking-widest text-amber-200 font-bold mb-3">🚨 Escalation · แนะนำพบแพทย์ทันที</div>
-          <ul className="space-y-2 text-sm font-thai text-stone-100">
-            <li>• อาการเฉพาะ (ปวดหน้าอก · หายใจลำบาก · เวียนหัวรุนแรง)</li>
-            <li>• ตั้งครรภ์ · ให้นมบุตร · ถามเรื่อง supplement</li>
-            <li>• กินยาประจำ · ถามเรื่อง drug-nutrient interaction</li>
-            <li>• ตัวเลขผิดปกติมาก (น้ำหนักลดเร็วผิดปกติ · น้ำตาลสูงมาก)</li>
+        <div className="paper-card rounded-sm p-6 mb-6" style=${{ background: "var(--rose-ultra)" }}>
+          <div className="font-mono text-[10px] uppercase tracking-widest font-bold mb-3" style=${{ color: "var(--rose)" }}>Discontinued · Use Replacement</div>
+          <ul className="space-y-1.5 font-thai text-sm text-stone-700">
+            <li>· Vitamin D standalone → Cal-Mag-D + Pharmacy D3</li>
+            <li>· Iron Folic → <strong>Spinach Plus</strong></li>
+            <li>· Daily Multivitamin → <strong>DoubleX</strong></li>
+            <li>· Saw Palmetto · Glucosamine · Memory Builder → pharmacy if needed</li>
           </ul>
         </div>
 
-        <div className="rounded-3xl bg-white/5 backdrop-blur p-6 border border-white/10">
-          <div className="font-mono text-xs uppercase tracking-widest text-amber-300 font-bold mb-4">⚠️ Banned per Specific Condition</div>
-          <div className="grid md:grid-cols-2 gap-4">
-            ${[
-              { c: "NAFLD", items: ["Cassia cinnamon (coumarin)", "High-dose iron pre-ferritin", "Alcohol"] },
-              { c: "CKD Stage 2+ (eGFR <90)", items: ["Vit C >500mg (oxalate)", "High-dose curcumin", "NSAIDs", "Hi-K supplement (stage 3+)"] },
-              { c: "Breast Cyst / Microcalc", items: ["Dong Quai · Black Cohosh (phytoestrogen)", "Soy isoflavone supplement (food OK)"] },
-              { c: "Diabetes กินยา", items: ["ลดยาเอง", "IF 24h ถ้ากิน sulfonylurea/insulin", "Berberine ต้อง drug check"] },
-              { c: "Pregnancy / Lactation", items: ["IF · calorie restriction", "Low-carb เข้ม", "Calow · Green Tea Plus hi-dose"] },
-              { c: "Cancer / รักษาอยู่", items: ["ทั้ง UP Labs และ Full Course", "หลังหาย → supportive supplement OK"] },
-            ].map((cond, i) => html`
-              <div key=${i} className="rounded-2xl bg-stone-900/50 p-4 border border-white/5">
-                <div className="font-bold text-amber-200 mb-2">${cond.c}</div>
-                <ul className="space-y-1 text-xs font-thai text-stone-200">
-                  ${cond.items.map((it, j) => html`<li key=${j}>🚫 ${it}</li>`)}
-                </ul>
-              </div>`)}
-          </div>
+        <div className="paper-card rounded-sm p-6" style=${{ background: "var(--amber-soft)" }}>
+          <div className="font-mono text-[10px] uppercase tracking-widest font-bold mb-3" style=${{ color: "var(--amber-deep)" }}>External Pharmacy (Nutrilite ไม่ครอบ therapeutic)</div>
+          <ul className="space-y-1.5 font-thai text-sm text-stone-700">
+            <li>· <strong>Vit D3 2,000 IU</strong> (Cal-Mag-D max 330 IU)</li>
+            <li>· <strong>Vit E 400-800 IU</strong> NAFLD (Lecithin E 15 IU)</li>
+            <li>· <strong>Choline 500mg</strong> (Lecithin E 216mg PC)</li>
+            <li>· <strong>Silymarin · Berberine · Niacin therapy</strong></li>
+            <li>· <strong>Metformin · GLP-1</strong> (pharmaceutical)</li>
+          </ul>
         </div>
 
-        <div className="mt-6 rounded-3xl bg-white/5 backdrop-blur p-6 border border-white/10">
-          <div className="font-mono text-xs uppercase tracking-widest text-rose-300 font-bold mb-3">💊 Drug Interaction Flags</div>
-          <div className="grid sm:grid-cols-2 gap-2 text-sm font-thai text-stone-200">
-            ${[
-              ["Berberine + Metformin", "↑ hypo risk"],
-              ["Berberine + Warfarin", "↑ bleeding"],
-              ["Berberine + Cyclosporine", "↑ levels"],
-              ["Niacin + Statin", "↑ myopathy"],
-              ["Vit E hi + Anticoagulant", "↑ bleeding"],
-              ["Iron + Levothyroxine", "↓ absorption (เว้น 4 ชม.)"],
-              ["Garlic + Anticoagulant", "↑ bleeding"],
-              ["Ginseng + Warfarin", "↑ INR variability"],
-            ].map((dr, i) => html`
-              <div key=${i} className="flex justify-between gap-3 rounded-lg bg-stone-900/50 px-3 py-2 border border-white/5">
-                <span className="font-semibold">${dr[0]}</span>
-                <span className="text-rose-200 text-xs">${dr[1]}</span>
-              </div>`)}
-          </div>
-        </div>
-
-        <${FeedbackWidget} sectionId="clinical" feedback=${feedback} onUpdate=${onUpdate} />
+        <${FeedbackWidget} chapterId="products" feedback=${feedback} onUpdate=${onUpdate} />
       </div>
     </section>`;
 }
 
-function S10_Ladder({ feedback, onUpdate }) {
+function Ch9_Clinical({ feedback, onUpdate }) {
   return html`
-    <section id="ladder" className="grad-green-soft py-16 md:py-24 anim-in">
-      <div className="mx-auto max-w-6xl px-6">
-        <${SectionLabel} number="SECTION 10" title="Service Ladder & Pricing" accent="green"
-          subtitle="ลำดับ tier ที่เสนอลูกค้า · Lead → Try → Commit → Maintain" />
+    <section id="clinical" className="py-20 md:py-28" style=${{ background: "white" }}>
+      <div className="mx-auto max-w-3xl px-6">
+        <${ChapterHead} chapter=${CHAPTERS[8]} />
+        <p className="drop-cap font-thai text-lg leading-[1.85] text-stone-800 mb-12">
+          ความปลอดภัยมาก่อนทุกอย่าง · ใช้ peer-reviewed evidence · ระบุแหล่ง · ไม่วินิจฉัยโรค · ไม่สั่งยา · มี escalation clause พบแพทย์เมื่อเกินขอบเขต wellness
+        </p>
 
-        <div className="space-y-4 mb-8">
+        <div className="grid md:grid-cols-2 gap-5 mb-12">
+          <div className="paper-card rounded-sm p-6">
+            <div className="font-mono text-[10px] uppercase tracking-widest font-bold text-emerald-700 mb-3">✓ Do</div>
+            <ul className="space-y-1.5 font-thai text-sm text-stone-700">
+              <li>· Peer-reviewed · meta-analysis</li>
+              <li>· ระบุแหล่ง · ปี · institution</li>
+              <li>· อธิบาย mechanism</li>
+              <li>· แนะนำพบแพทย์เมื่อเกินขอบเขต</li>
+            </ul>
+          </div>
+          <div className="paper-card rounded-sm p-6">
+            <div className="font-mono text-[10px] uppercase tracking-widest font-bold text-rose-700 mb-3">✗ Don't</div>
+            <ul className="space-y-1.5 font-thai text-sm text-stone-700">
+              <li>· อ้างประโยชน์ไม่มีหลักฐาน</li>
+              <li>· วินิจฉัยโรค / สั่งยา</li>
+              <li>· Hard sell · "ซื้อเลย"</li>
+              <li>· ราคาก่อนลูกค้าพร้อม</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 className="font-serif text-3xl text-stone-900 mb-6">Banned per Condition</h3>
+        <div className="space-y-3 mb-12">
           ${[
-            { tier: "Lead Capture", price: "FREE", desc: "Health Check · MetaFlex Quiz · BCA scan · Body Map", color: "stone" },
-            { tier: "Try Us", price: "5,000 – 10,000", desc: "UP Labs 14 วัน · Self-guided + coach Q&A", color: "emerald" },
-            { tier: "Commit", price: "38,000 – 50,000", desc: "Full Course 60 วัน · Premium 1:1 weekly · Vitamin saturation", color: "rose" },
-            { tier: "Maintain", price: "5-10k × 2-3/year", desc: "UP Labs ปีละ 2-3 รอบ + Nutrilite subscription + Quarterly lab", color: "amber" },
-          ].map((t, i) => {
-            const c = { stone: "from-stone-700 to-stone-900",
-                       emerald: "from-emerald-700 to-emerald-900",
-                       rose: "from-rose-700 to-rose-900",
-                       amber: "from-amber-700 to-amber-900" }[t.color];
-            return html`
-              <div key=${i} className=${"rounded-3xl bg-gradient-to-br " + c + " text-white p-6 md:p-8 flex flex-wrap items-center gap-5"}>
-                <div className="rounded-full bg-white/15 backdrop-blur w-14 h-14 flex items-center justify-center font-head font-extrabold text-2xl border border-white/20 shrink-0">
-                  ${String(i + 1)}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="font-mono text-xs uppercase tracking-widest text-white/70">Tier ${i + 1}</div>
-                  <div className="font-head text-2xl md:text-3xl font-extrabold mt-1">${t.tier}</div>
-                  <div className="text-sm text-white/80 font-thai mt-1">${t.desc}</div>
-                </div>
-                <div className="text-right">
-                  <div className="text-xs text-white/60 font-mono uppercase">Price</div>
-                  <div className="font-head font-extrabold text-2xl">${t.price}</div>
-                  <div className="text-xs text-white/60">บาท</div>
-                </div>
-              </div>`;
-          })}
+            { c: "NAFLD", l: ["Cassia cinnamon (coumarin)", "High-dose iron pre-ferritin", "Alcohol"] },
+            { c: "CKD Stage 2+ (eGFR <90)", l: ["Vit C >500mg (oxalate)", "Curcumin hi-dose", "NSAIDs"] },
+            { c: "Breast Cyst", l: ["Dong Quai · Black Cohosh (phytoestrogen)"] },
+            { c: "DM กินยา (insulin/sulfonylurea)", l: ["ลดยาเอง", "IF 24h", "Berberine ต้องตรวจ"] },
+            { c: "Pregnancy / Lactation", l: ["IF · calorie restriction", "Low-carb เข้ม", "ปรึกษาเภสัช ก่อน"] },
+            { c: "Cancer (รักษาอยู่)", l: ["ทั้ง UP Labs · Full Course"] },
+          ].map((cond, i) => html`
+            <div key=${i} className="paper-card rounded-sm p-4 flex flex-wrap items-baseline gap-3">
+              <span className="font-serif font-bold text-stone-900 w-48 shrink-0">${cond.c}</span>
+              <span className="font-thai text-sm text-stone-600">${cond.l.map((x) => "✗ " + x).join("  ·  ")}</span>
+            </div>`)}
         </div>
 
-        <div className="rounded-3xl bg-white p-6 md:p-8 border border-stone-200">
-          <div className="font-mono text-xs uppercase tracking-widest text-stone-500 font-bold mb-4">🌐 Platform Apps · uplabs-sys.vercel.app</div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
-            ${[
-              ["🏥 Health Check", "Customer-facing · Lead capture"],
-              ["🔥 MetaFlex Quiz", "Customer-facing · Metabolic flex"],
-              ["👥 Customer Profiles", "Master profile + Records"],
-              ["📊 BCA Tracker", "Body composition trend"],
-              ["📈 CGM Analyzer", "Glucose monitoring"],
-              ["📱 UP Pulse", "Wearable → AI → Nutrient"],
-              ["🥗 NutriScan AI", "Image/text food → macros"],
-              ["📅 Food Log", "Daily diary · C:P:F pie"],
-              ["🎨 Program Designer", "Customize Full Course"],
-            ].map((app, i) => html`
-              <div key=${i} className="rounded-xl bg-stone-50 p-3 border border-stone-100">
-                <div className="font-thai font-bold text-sm">${app[0]}</div>
-                <div className="text-xs text-stone-500 mt-0.5">${app[1]}</div>
-              </div>`)}
-          </div>
+        <h3 className="font-serif text-3xl text-stone-900 mb-6">Drug Interaction</h3>
+        <div className="paper-card rounded-sm overflow-hidden">
+          <table className="w-full text-sm">
+            <tbody className="divide-y" style=${{ borderColor: "var(--line)" }}>
+              ${[
+                ["Berberine + Metformin", "↑ hypo risk"],
+                ["Berberine + Warfarin", "↑ bleeding"],
+                ["Niacin + Statin", "↑ myopathy"],
+                ["Vit E hi + Anticoagulant", "↑ bleeding"],
+                ["Iron + Levothyroxine", "↓ absorption · เว้น 4 ชม."],
+                ["Garlic + Anticoagulant", "↑ bleeding"],
+                ["Ginseng + Warfarin", "↑ INR variability"],
+              ].map((dr, i) => html`
+                <tr key=${i} className="font-thai">
+                  <td className="px-5 py-2.5 font-semibold text-stone-900">${dr[0]}</td>
+                  <td className="px-5 py-2.5 text-right text-rose-700 text-xs">${dr[1]}</td>
+                </tr>`)}
+            </tbody>
+          </table>
         </div>
 
-        <div className="mt-6 rounded-3xl bg-amber-50 border border-amber-200 p-5">
-          <div className="font-mono text-xs uppercase tracking-widest text-amber-700 font-bold mb-2">⚠️ Hard Constraints</div>
-          <div className="grid sm:grid-cols-2 gap-2 text-sm font-thai">
-            <div>🚫 No paid ads (Amway compliance)</div>
-            <div>🚫 No storefront (online only)</div>
-            <div>🚫 No cross-line recruitment</div>
-            <div>🚫 No "รักษา/ป้องกัน" claims</div>
-          </div>
-        </div>
-
-        <${FeedbackWidget} sectionId="ladder" feedback=${feedback} onUpdate=${onUpdate} />
+        <${FeedbackWidget} chapterId="clinical" feedback=${feedback} onUpdate=${onUpdate} />
       </div>
     </section>`;
 }
 
-function S11_Ops({ feedback, onUpdate }) {
+function Ch10_Ladder({ feedback, onUpdate }) {
   return html`
-    <section id="ops" className="bg-white py-16 md:py-24 anim-in">
-      <div className="mx-auto max-w-6xl px-6">
-        <${SectionLabel} number="SECTION 11" title="Operating Standards" accent="ink"
-          subtitle="Voice per context · response format · maintenance workflow" />
+    <section id="ladder" className="py-20 md:py-28">
+      <div className="mx-auto max-w-3xl px-6">
+        <${ChapterHead} chapter=${CHAPTERS[9]} />
+        <p className="drop-cap font-thai text-lg leading-[1.85] text-stone-800 mb-12">
+          Service Ladder ของเราสร้าง trust ทีละขั้น · เริ่มจาก Free Lead Capture · Try ลองชิม · Commit จริงจัง · สุดท้าย Maintain ระยะยาว · ลูกค้าค่อยๆ ไต่ขึ้นไปตามที่พร้อม
+        </p>
 
-        <div className="grid md:grid-cols-2 gap-5 mb-6">
-          <div className="rounded-3xl bg-stone-50 p-6 border border-stone-200">
-            <div className="font-mono text-xs uppercase tracking-widest text-stone-500 font-bold mb-3">🎙️ Voice per Context</div>
-            <ul className="space-y-2 text-sm font-thai">
-              <li>• <b>คำถามง่าย:</b> 2-4 ประโยค ตรงประเด็น</li>
-              <li>• <b>คำถามซับซ้อน:</b> Structured (บริบท → evidence → แนะนำ → caveat)</li>
-              <li>• <b>Supplement/Product:</b> Mechanism → match Nutrilite อย่างเนียน</li>
-              <li>• <b>ลูกค้าใหม่:</b> เริ่ม assessment ก่อน (เป้าหมาย/สุขภาพ/ข้อจำกัด)</li>
-              <li>• <b>Partner Program:</b> Positioning · ไม่ชวนแบบ MLM</li>
+        <div className="space-y-3 mb-12">
+          ${[
+            { tier: "Lead Capture", price: "FREE", desc: "Health Check · MetaFlex Quiz · BCA scan" },
+            { tier: "Try Us", price: "5-10k", desc: "UP Labs 14 วัน · ลองชิม" },
+            { tier: "Commit", price: "38-50k", desc: "Full Course 60 วัน · transformation" },
+            { tier: "Maintain", price: "5-10k × n", desc: "UP Labs ปีละ 2-3 รอบ + subscription" },
+          ].map((t, i) => html`
+            <div key=${i} className="paper-card rounded-sm p-6 flex flex-wrap items-baseline gap-5">
+              <span className="chapter-num text-4xl shrink-0 w-14" style=${{ color: "var(--rose)" }}>${String(i + 1).padStart(2, "0")}</span>
+              <div className="flex-1 min-w-[200px]">
+                <div className="font-serif text-2xl text-stone-900">${t.tier}</div>
+                <div className="font-thai text-sm text-stone-600 mt-0.5">${t.desc}</div>
+              </div>
+              <div className="text-right">
+                <div className="font-mono text-[10px] uppercase tracking-widest text-stone-400">Price</div>
+                <div className="font-serif text-2xl font-bold text-stone-900">฿${t.price}</div>
+              </div>
+            </div>`)}
+        </div>
+
+        <h3 className="font-serif text-3xl text-stone-900 mb-6">Platform Apps</h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-8">
+          ${["Health Check", "MetaFlex Quiz", "Customer Profiles", "BCA Tracker", "CGM Analyzer", "UP Pulse", "NutriScan AI", "Food Log", "Program Designer"].map((app, i) => html`
+            <div key=${i} className="paper-card rounded-sm p-3 text-center font-thai text-sm font-semibold">${app}</div>`)}
+        </div>
+        <p className="font-mono text-xs text-stone-500 text-center">https://uplabs-sys.vercel.app</p>
+
+        <div className="mt-12 paper-card rounded-sm p-6" style=${{ background: "var(--amber-soft)" }}>
+          <div className="font-mono text-[10px] uppercase tracking-widest font-bold mb-3" style=${{ color: "var(--amber-deep)" }}>Hard Constraints</div>
+          <ul className="grid sm:grid-cols-2 gap-1.5 font-thai text-sm text-stone-700">
+            <li>· No paid ads (Amway compliance)</li>
+            <li>· No storefront (online only)</li>
+            <li>· No cross-line recruitment</li>
+            <li>· No "รักษา/ป้องกัน" claims</li>
+          </ul>
+        </div>
+
+        <${FeedbackWidget} chapterId="ladder" feedback=${feedback} onUpdate=${onUpdate} />
+      </div>
+    </section>`;
+}
+
+function Ch11_Ops({ feedback, onUpdate }) {
+  return html`
+    <section id="ops" className="py-20 md:py-28" style=${{ background: "white" }}>
+      <div className="mx-auto max-w-3xl px-6">
+        <${ChapterHead} chapter=${CHAPTERS[10]} />
+        <p className="drop-cap font-thai text-lg leading-[1.85] text-stone-800 mb-12">
+          มาตรฐานปฏิบัติของ UP Wellness · voice per context · response format · maintenance workflow · signature trust moves ที่ทำให้ต่างจาก Amway ทั่วไป
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-5 mb-12">
+          <div className="paper-card rounded-sm p-6">
+            <div className="font-mono text-[10px] uppercase tracking-widest text-stone-400 mb-3">Voice per Context</div>
+            <ul className="space-y-2 font-thai text-sm text-stone-700">
+              <li>· คำถามง่าย: 2-4 ประโยค</li>
+              <li>· คำถามซับซ้อน: บริบท → evidence → แนะนำ → caveat</li>
+              <li>· Supplement: mechanism → match Nutrilite</li>
+              <li>· ลูกค้าใหม่: assessment ก่อน</li>
+              <li>· Partner: positioning · ไม่ MLM</li>
             </ul>
           </div>
-          <div className="rounded-3xl bg-stone-50 p-6 border border-stone-200">
-            <div className="font-mono text-xs uppercase tracking-widest text-stone-500 font-bold mb-3">📝 Response Format</div>
-            <ul className="space-y-2 text-sm font-thai">
-              <li>• <b>ภาษา:</b> ไทย + ศัพท์วิทยาศาสตร์ EN ควบ</li>
-              <li>• <b>โทน:</b> อบอุ่น + มีความรู้ + ตรงประเด็น</li>
-              <li>• <b>เปิดด้วยโครงสร้าง</b> (ถ้าซับซ้อน) · ไม่ filler</li>
-              <li>• <b>ไม่แน่ใจ → บอกตรงๆ</b> "ขอตรวจสอบก่อนนะคะ"</li>
-              <li>• <b>Emoji น้อย</b> · เฉพาะที่ทำให้เข้าใจง่าย (📊 🌿 ✅)</li>
+          <div className="paper-card rounded-sm p-6">
+            <div className="font-mono text-[10px] uppercase tracking-widest text-stone-400 mb-3">Response Format</div>
+            <ul className="space-y-2 font-thai text-sm text-stone-700">
+              <li>· ไทย + ศัพท์วิทย์ EN ควบ</li>
+              <li>· อบอุ่น + มีความรู้ + ตรงประเด็น</li>
+              <li>· เปิดด้วยโครงสร้าง · ไม่ filler</li>
+              <li>· ไม่แน่ใจ → บอกตรงๆ</li>
+              <li>· Emoji น้อย · เฉพาะที่จำเป็น</li>
             </ul>
           </div>
         </div>
 
-        <div className="rounded-3xl bg-gradient-to-br from-amber-100 to-rose-50 p-6 md:p-8 border border-amber-200">
-          <div className="font-mono text-xs uppercase tracking-widest text-amber-700 font-bold mb-3">💎 Vitamin D Honesty Play (Signature)</div>
-          <p className="font-thai text-lg leading-relaxed text-stone-800 italic">
+        <div className="paper-card rounded-sm p-8" style=${{ background: "linear-gradient(135deg, var(--amber-soft) 0%, var(--rose-ultra) 100%)" }}>
+          <div className="font-mono text-[10px] uppercase tracking-widest text-stone-500 mb-3">Signature Trust Move</div>
+          <p className="pullquote">
             "Nutrilite TH Vit D dose ต่ำเกิน · ผมแนะนำ pharmacy D3 2,000 IU ดีกว่า · ไม่ใช่ทุกอย่างต้องซื้อจากเรา"
           </p>
-          <div className="mt-3 text-sm font-thai text-stone-600">
-            → บอกความจริงเมื่อ Nutrilite ไม่ครอบ · สร้าง trust จริงๆ · differentiate จาก Amway ทั่วไป
-          </div>
+          <p className="font-thai text-sm text-stone-600 mt-4">
+            บอกความจริงเมื่อ Nutrilite ไม่ครอบ · สร้าง trust จริงๆ · differentiate จาก Amway ทั่วไป
+          </p>
         </div>
 
-        <${FeedbackWidget} sectionId="ops" feedback=${feedback} onUpdate=${onUpdate} />
+        <${FeedbackWidget} chapterId="ops" feedback=${feedback} onUpdate=${onUpdate} />
       </div>
     </section>`;
 }
 
-/* ─── Feedback Panel (sliding right) ────────────────── */
+/* ─── Feedback Panel ──────────────────────────── */
 
 function FeedbackPanel({ open, onClose, feedback, onClear, onExport }) {
   if (!open) return null;
@@ -1172,59 +1053,54 @@ function FeedbackPanel({ open, onClose, feedback, onClear, onExport }) {
     <div className="no-print fixed inset-0 z-50 flex" onClick=${onClose}>
       <div className="flex-1 bg-black/40 backdrop-blur-sm"></div>
       <div className="w-full max-w-md bg-white shadow-2xl panel-enter overflow-y-auto" onClick=${(e) => e.stopPropagation()}>
-        <div className="sticky top-0 bg-white border-b border-stone-200 p-5 flex items-center justify-between">
+        <div className="sticky top-0 bg-white border-b p-5 flex items-center justify-between" style=${{ borderColor: "var(--line)" }}>
           <div>
-            <div className="font-mono text-xs uppercase tracking-widest text-stone-500 font-bold">Review Feedback</div>
-            <div className="font-head text-xl font-extrabold">${entries.length} sections</div>
+            <div className="font-mono text-[10px] uppercase tracking-widest text-stone-500 font-bold">Marginalia</div>
+            <div className="font-serif text-2xl font-bold mt-0.5">${entries.length} notes</div>
           </div>
-          <button onClick=${onClose} className="rounded-full bg-stone-100 hover:bg-stone-200 w-9 h-9 flex items-center justify-center text-stone-600">✕</button>
+          <button onClick=${onClose} className="rounded-sm border w-9 h-9 flex items-center justify-center text-stone-600" style=${{ borderColor: "var(--line)" }}>×</button>
         </div>
 
         ${entries.length === 0 ? html`
-          <div className="p-8 text-center text-stone-400 font-thai">
-            <div className="text-5xl mb-3">📝</div>
-            ยังไม่มี feedback · เลื่อนอ่านแต่ละ section แล้วกด ✏️ Feedback
+          <div className="p-10 text-center text-stone-400 font-thai">
+            <div className="font-serif text-5xl text-stone-300 mb-4">⊹</div>
+            ยังไม่มี marginalia · เลื่อนอ่านแต่ละ chapter แล้วกด feedback
           </div>` : html`
           <div className="p-5 space-y-3">
-            ${entries.map(([sid, f]) => {
-              const sec = SECTIONS.find(s => s.id === sid);
+            ${entries.map(([cid, f]) => {
+              const ch = CHAPTERS.find(c => c.id === cid);
               const status = STATUS_OPTIONS.find(s => s.id === f.status);
               return html`
-                <div key=${sid} className="rounded-2xl border border-stone-200 p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs text-stone-400">${sec?.num}</span>
-                      <span className="font-head font-bold">${sec?.label}</span>
-                    </div>
-                    ${status && html`<span className=${"rounded-full px-2.5 py-0.5 text-[10px] font-bold " + status.color}>${status.label}</span>`}
+                <div key=${cid} className="rounded-sm border p-4" style=${{ borderColor: "var(--line)" }}>
+                  <div className="flex items-baseline gap-3 mb-2">
+                    <span className="chapter-num text-stone-400">${ch?.roman}</span>
+                    <span className="font-serif font-bold text-stone-900">${ch?.title}</span>
+                    ${status && html`<span className=${"ml-auto rounded-sm px-2 py-0.5 text-[10px] font-mono " + status.color}>${status.label}</span>`}
                   </div>
-                  ${f.note && html`<div className="text-sm font-thai text-stone-700 mt-2 leading-relaxed whitespace-pre-wrap">${f.note}</div>`}
+                  ${f.note && html`<div className="text-sm font-thai text-stone-700 leading-relaxed whitespace-pre-wrap">${f.note}</div>`}
                 </div>`;
             })}
           </div>
 
-          <div className="sticky bottom-0 bg-white border-t border-stone-200 p-5 space-y-2">
-            <button onClick=${onExport}
-              className="w-full rounded-2xl bg-rose-700 text-white py-3 font-bold text-sm hover:bg-rose-800 transition-colors">
-              📥 Export Feedback (Markdown)
+          <div className="sticky bottom-0 bg-white border-t p-5 space-y-2" style=${{ borderColor: "var(--line)" }}>
+            <button onClick=${onExport} className="w-full rounded-sm py-3 font-bold text-sm text-white" style=${{ background: "var(--rose)" }}>
+              ↓ Export · Markdown
             </button>
-            <button onClick=${onClear}
-              className="w-full rounded-2xl bg-stone-100 text-stone-600 py-3 font-bold text-sm hover:bg-stone-200 transition-colors">
-              🗑️ Clear All
+            <button onClick=${onClear} className="w-full rounded-sm py-3 font-bold text-sm text-stone-600 border" style=${{ borderColor: "var(--line)" }}>
+              Clear All
             </button>
           </div>`}
       </div>
     </div>`;
 }
 
-/* ─── App ─────────────────────────────────────────── */
+/* ─── App ─────────────────────────────────────── */
 
 function App() {
   const [active, setActive] = useState("identity");
   const [feedback, setFeedback] = useState({});
   const [panelOpen, setPanelOpen] = useState(false);
 
-  // Load feedback from localStorage
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -1232,19 +1108,17 @@ function App() {
     } catch {}
   }, []);
 
-  // Save feedback to localStorage
   useEffect(() => {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(feedback)); } catch {}
   }, [feedback]);
 
-  // IntersectionObserver for active section
   useEffect(() => {
     const opts = { rootMargin: "-30% 0% -60% 0%", threshold: 0 };
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id); });
     }, opts);
-    SECTIONS.forEach((s) => {
-      const el = document.getElementById(s.id);
+    CHAPTERS.forEach((c) => {
+      const el = document.getElementById(c.id);
       if (el) obs.observe(el);
     });
     return () => obs.disconnect();
@@ -1254,28 +1128,20 @@ function App() {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-
-  const onUpdate = (sectionId, data) => {
-    setFeedback((p) => ({ ...p, [sectionId]: data }));
-  };
-
+  const onUpdate = (cid, data) => setFeedback((p) => ({ ...p, [cid]: data }));
   const onClear = () => {
-    if (confirm("ลบ feedback ทั้งหมด?")) {
-      setFeedback({});
-      setPanelOpen(false);
-    }
+    if (confirm("ลบ marginalia ทั้งหมด?")) { setFeedback({}); setPanelOpen(false); }
   };
-
   const onExport = () => {
     const entries = Object.entries(feedback).filter(([, f]) => f && (f.status || f.note));
-    if (entries.length === 0) { alert("ยังไม่มี feedback"); return; }
-    let md = "# UP Wellness Bible · Review Feedback\n\n";
+    if (entries.length === 0) { alert("ยังไม่มี marginalia"); return; }
+    let md = "# UP Wellness Bible · Marginalia\n\n";
     md += `Date: ${new Date().toLocaleString("th-TH")}\n\n`;
-    md += `Total sections with feedback: ${entries.length}\n\n---\n\n`;
-    entries.forEach(([sid, f]) => {
-      const sec = SECTIONS.find(s => s.id === sid);
+    md += `Total notes: ${entries.length}\n\n---\n\n`;
+    entries.forEach(([cid, f]) => {
+      const ch = CHAPTERS.find(c => c.id === cid);
       const status = STATUS_OPTIONS.find(s => s.id === f.status);
-      md += `## ${sec?.num} · ${sec?.label}\n\n`;
+      md += `## ${ch?.num} · ${ch?.title}\n\n`;
       if (status) md += `**Status:** ${status.label}\n\n`;
       if (f.note) md += `**Note:**\n${f.note}\n\n`;
       md += "---\n\n";
@@ -1284,7 +1150,7 @@ function App() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `UP-Wellness-Bible-Feedback-${new Date().toISOString().slice(0,10)}.md`;
+    a.download = `UP-Wellness-Bible-Marginalia-${new Date().toISOString().slice(0,10)}.md`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -1293,30 +1159,30 @@ function App() {
 
   return html`
     <div className="min-h-screen">
-      <${Hero} feedbackCount=${feedbackCount} />
-      <${StickyNav} active=${active} onJump=${onJump} feedback=${feedback} onOpenPanel=${() => setPanelOpen(true)} />
-      <${S1_Identity} feedback=${feedback} onUpdate=${onUpdate} />
-      <${S2_Voice} feedback=${feedback} onUpdate=${onUpdate} />
-      <${S3_Overview} feedback=${feedback} onUpdate=${onUpdate} />
-      <${S4_UPLabs} feedback=${feedback} onUpdate=${onUpdate} />
-      <${S5_FullCourse} feedback=${feedback} onUpdate=${onUpdate} />
-      <${S6_Decision} feedback=${feedback} onUpdate=${onUpdate} />
-      <${S7_Sales} feedback=${feedback} onUpdate=${onUpdate} />
-      <${S8_Products} feedback=${feedback} onUpdate=${onUpdate} />
-      <${S9_Clinical} feedback=${feedback} onUpdate=${onUpdate} />
-      <${S10_Ladder} feedback=${feedback} onUpdate=${onUpdate} />
-      <${S11_Ops} feedback=${feedback} onUpdate=${onUpdate} />
+      <div id="cover"><${Cover} feedbackCount=${feedbackCount} /></div>
+      <${StickyNav} active=${active} onJump=${onJump} feedback=${feedback} onOpenPanel=${() => setPanelOpen(true)} panelOpen=${panelOpen} />
+      <${Ch1_Identity}   feedback=${feedback} onUpdate=${onUpdate} />
+      <${Ch2_Voice}      feedback=${feedback} onUpdate=${onUpdate} />
+      <${Ch3_Overview}   feedback=${feedback} onUpdate=${onUpdate} />
+      <${Ch4_UPLabs}     feedback=${feedback} onUpdate=${onUpdate} />
+      <${Ch5_FullCourse} feedback=${feedback} onUpdate=${onUpdate} />
+      <${Ch6_Decision}   feedback=${feedback} onUpdate=${onUpdate} />
+      <${Ch7_Sales}      feedback=${feedback} onUpdate=${onUpdate} />
+      <${Ch8_Products}   feedback=${feedback} onUpdate=${onUpdate} />
+      <${Ch9_Clinical}   feedback=${feedback} onUpdate=${onUpdate} />
+      <${Ch10_Ladder}    feedback=${feedback} onUpdate=${onUpdate} />
+      <${Ch11_Ops}       feedback=${feedback} onUpdate=${onUpdate} />
 
-      <footer className="bg-stone-900 text-stone-300 py-12">
-        <div className="mx-auto max-w-6xl px-6 text-center">
-          <div className="font-head text-xl font-extrabold text-white">UP Wellness · Knowledge Bible</div>
-          <div className="mt-2 font-thai text-sm">v1 · 16 พ.ค. 2569 · Living Document</div>
-          <div className="mt-1 text-xs text-stone-400">Cross-ref: BRAND.md · CLAUDE.md · 06_Product-Knowledge/nutrilite_thailand_catalog.xlsx</div>
+      <footer className="py-12 border-t" style=${{ borderColor: "var(--line)", background: "var(--paper-deep)" }}>
+        <div className="mx-auto max-w-3xl px-6 text-center">
+          <div className="ornament mb-4"><span className="text-stone-400 text-xl">⊹</span></div>
+          <div className="font-serif italic text-2xl text-stone-700">UP Wellness · Knowledge Bible</div>
+          <div className="mt-3 font-mono text-xs uppercase tracking-widest text-stone-500">Version II · 17 พ.ค. 2569</div>
+          <div className="mt-1 font-thai text-xs text-stone-500">Living document · ปรับปรุงเมื่อ catalog เปลี่ยน · protocol ใหม่ · feedback rounds</div>
         </div>
       </footer>
 
-      <${FeedbackPanel} open=${panelOpen} onClose=${() => setPanelOpen(false)}
-        feedback=${feedback} onClear=${onClear} onExport=${onExport} />
+      <${FeedbackPanel} open=${panelOpen} onClose=${() => setPanelOpen(false)} feedback=${feedback} onClear=${onClear} onExport=${onExport} />
     </div>`;
 }
 
