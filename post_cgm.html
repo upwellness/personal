@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CGM Content Pitch · UP Wellness — 5 หัวข้อโพสต์ที่ผ่าน Panel Review</title>
+<meta name="description" content="5 ประเด็น CGM แบบ evidence-based พร้อม caption เต็ม + image prompts สำหรับโพสต์ Facebook · UP Wellness" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  /* ─── Reset & Base ─────────────────────────── */
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* Brand */
+    --rose:        #8C4C4C;
+    --rose-deep:   #6E3838;
+    --rose-soft:   #B57878;
+    --rose-mist:   #F4ECEC;
+    --green:       #396755;
+    --green-deep:  #2A4D40;
+    --green-mist:  #E5EDEA;
+    --cream:       #F5F0EB;
+    --cream-deep:  #EDE6DF;
+    --ink:         #1F1E1B;
+    --ink-60:      #5C5A56;
+    --ink-40:      #8B8884;
+    --ink-20:      #C9C6C0;
+    --ink-10:      #E5E2DD;
+    --white:       #FFFFFF;
+    --gold:        #B8965A;
+
+    /* Status badges */
+    --rank-1: #B8965A; /* gold */
+    --rank-2: #8B8884; /* silver */
+    --rank-3: #8C4C4C; /* bronze (rose) */
+
+    --shadow-sm: 0 1px 2px rgba(31, 30, 27, 0.04);
+    --shadow:    0 4px 12px rgba(31, 30, 27, 0.06);
+    --shadow-lg: 0 12px 32px rgba(31, 30, 27, 0.08);
+
+    --font-serif: 'Cormorant Garamond', 'Sarabun', Georgia, serif;
+    --font-thai:  'Sarabun', system-ui, -apple-system, sans-serif;
+    --font-mono:  'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-thai);
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.65;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* ─── Layout ───────────────────────────────── */
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+  .wrap-narrow { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  /* ─── Hero ─────────────────────────────────── */
+  .hero {
+    background: linear-gradient(180deg, var(--cream) 0%, var(--cream-deep) 100%);
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--ink-10);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 30px; right: 60px;
+    width: 180px; height: 180px;
+    border: 1px solid var(--rose);
+    border-radius: 50%;
+    opacity: 0.08;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: 20px; left: 40px;
+    width: 80px; height: 80px;
+    border: 1px solid var(--green);
+    border-radius: 50%;
+    opacity: 0.08;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 16px;
+  }
+  .hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(36px, 5.5vw, 56px);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--rose);
+    font-weight: 500;
+  }
+  .hero-sub {
+    font-size: 17px;
+    color: var(--ink-60);
+    max-width: 620px;
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding-top: 24px;
+    border-top: 1px solid var(--ink-10);
+  }
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .meta-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-40);
+  }
+  .meta-value {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* ─── Section Divider ──────────────────────── */
+  .ornament {
+    text-align: center;
+    margin: 60px 0 40px;
+    color: var(--rose);
+    font-size: 20px;
+    letter-spacing: 0.4em;
+  }
+  .ornament::before, .ornament::after {
+    content: '';
+    display: inline-block;
+    width: 50px;
+    height: 1px;
+    background: var(--rose);
+    vertical-align: middle;
+    margin: 0 16px;
+    opacity: 0.4;
+  }
+
+  /* ─── Section header ───────────────────────── */
+  .section-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .section-sub {
+    margin-top: 12px;
+    color: var(--ink-60);
+    font-size: 15px;
+  }
+
+  /* ─── Nav strip ────────────────────────────── */
+  .nav-strip {
+    background: var(--white);
+    border: 1px solid var(--ink-10);
+    border-radius: 16px;
+    padding: 14px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 40px 0 24px;
+    box-shadow: var(--shadow-sm);
+  }
+  .nav-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--cream);
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 200ms ease;
+    border: 1px solid transparent;
+  }
+  .nav-chip:hover {
+    background: var(--rose-mist);
+    border-color: var(--rose-soft);
+    transform: translateY(-1px);
+  }
+  .nav-chip-rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--cream);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .nav-chip:nth-child(1) .nav-chip-rank { background: var(--rank-1); }
+  .nav-chip:nth-child(2) .nav-chip-rank { background: var(--rank-1); }
+  .nav-chip:nth-child(3) .nav-chip-rank { background: var(--rank-2); }
+  .nav-chip:nth-child(4) .nav-chip-rank { background: var(--rank-2); }
+  .nav-chip:nth-child(5) .nav-chip-rank { background: var(--rank-3); }
+
+  /* ─── Post Card ────────────────────────────── */
+  .post {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 48px 48px 40px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--ink-10);
+    position: relative;
+    overflow: hidden;
+  }
+  .post::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 4px;
+    background: linear-gradient(90deg, var(--rose) 0%, var(--green) 100%);
+  }
+
+  .post-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--ink-10);
+  }
+  .rank-badge {
+    flex-shrink: 0;
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--cream);
+    border: 2px solid var(--ink-10);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .rank-badge.gold   { border-color: var(--gold); background: linear-gradient(135deg, #F5E6CC 0%, #E8D29E 100%); }
+  .rank-badge.silver { border-color: var(--ink-40); background: linear-gradient(135deg, #F0EDE8 0%, #DAD6D0 100%); }
+  .rank-badge.bronze { border-color: var(--rose); background: linear-gradient(135deg, #F4ECEC 0%, #E5D0D0 100%); }
+  .rank-num {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .rank-label {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    color: var(--ink-60);
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .post-titles { flex: 1; min-width: 0; }
+  .post-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 8px;
+  }
+  .post-title {
+    font-family: var(--font-serif);
+    font-size: clamp(24px, 3vw, 30px);
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .post-score {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .score-num {
+    font-family: var(--font-serif);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--rose);
+    line-height: 1;
+  }
+  .score-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--ink-40);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* Hook quote */
+  .hook {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 21px;
+    line-height: 1.45;
+    color: var(--rose-deep);
+    padding: 0 0 0 24px;
+    margin: 28px 0 24px;
+    border-left: 3px solid var(--rose);
+  }
+
+  /* Mechanism box */
+  .mechanism {
+    background: var(--green-mist);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin: 24px 0;
+  }
+  .mechanism-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green-deep);
+    margin-bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .mechanism-label::before {
+    content: '◆';
+    color: var(--green);
+  }
+  .mechanism p {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .mechanism strong { color: var(--green-deep); font-weight: 600; }
+
+  /* Citation pill */
+  .citation {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: var(--cream);
+    border: 1px solid var(--ink-10);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-60);
+    margin-top: 12px;
+  }
+  .citation::before {
+    content: '📑';
+    font-size: 11px;
+  }
+
+  /* Caption block */
+  .block-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 32px 0 12px;
+  }
+  .block-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-60);
+  }
+  .copy-btn {
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 200ms ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .copy-btn:hover {
+    background: var(--rose);
+    transform: translateY(-1px);
+  }
+  .copy-btn.copied {
+    background: var(--green);
+  }
+  .copy-btn::before {
+    content: '⎘';
+    font-size: 12px;
+  }
+  .copy-btn.copied::before {
+    content: '✓';
+  }
+
+  .caption-box {
+    background: var(--cream);
+    border-radius: 16px;
+    padding: 28px 32px;
+    border: 1px dashed var(--ink-20);
+    position: relative;
+  }
+  .caption-box pre {
+    font-family: var(--font-thai);
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--ink);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Image prompts grid */
+  .prompts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 768px) {
+    .prompts-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .prompt-card {
+    background: var(--cream);
+    border: 1px solid var(--ink-10);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .prompt-style {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 10px;
+    background: var(--white);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rose);
+    border: 1px solid var(--ink-10);
+    width: fit-content;
+  }
+  .prompt-style.editorial { color: var(--rose); }
+  .prompt-style.typography { color: var(--green-deep); }
+  .prompt-style.dataviz { color: var(--gold); }
+  .prompt-text {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--ink-60);
+    font-family: var(--font-thai);
+    flex: 1;
+  }
+  .prompt-copy {
+    background: transparent;
+    border: 1px solid var(--ink-20);
+    color: var(--ink);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: all 200ms ease;
+  }
+  .prompt-copy:hover {
+    background: var(--ink);
+    color: var(--cream);
+    border-color: var(--ink);
+  }
+  .prompt-copy.copied {
+    background: var(--green);
+    color: var(--white);
+    border-color: var(--green);
+  }
+
+  /* Panel notes */
+  .panel-notes {
+    background: var(--rose-mist);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-top: 24px;
+    border-left: 3px solid var(--rose);
+  }
+  .panel-notes-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--rose-deep);
+    margin-bottom: 8px;
+  }
+  .panel-notes p {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  /* CTA strip in post */
+  .cta-strip {
+    background: linear-gradient(135deg, var(--rose-mist) 0%, var(--cream) 100%);
+    border-radius: 14px;
+    padding: 18px 24px;
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .cta-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--rose);
+    text-transform: uppercase;
+  }
+  .cta-text {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink);
+    flex: 1;
+    min-width: 200px;
+  }
+
+  /* ─── Scoring Matrix ──────────────────────── */
+  .score-section {
+    margin: 60px 0;
+    background: var(--white);
+    border-radius: 24px;
+    padding: 48px;
+    border: 1px solid var(--ink-10);
+    box-shadow: var(--shadow);
+  }
+  .matrix-wrap { overflow-x: auto; margin-top: 24px; }
+  .matrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 600px;
+  }
+  .matrix th, .matrix td {
+    padding: 14px 12px;
+    text-align: center;
+    border-bottom: 1px solid var(--ink-10);
+  }
+  .matrix th {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-60);
+    background: var(--cream);
+  }
+  .matrix th:first-child, .matrix td:first-child {
+    text-align: left;
+    padding-left: 18px;
+  }
+  .matrix tbody tr:hover {
+    background: var(--cream);
+  }
+  .matrix .topic-name {
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .matrix .topic-name.selected::after {
+    content: ' ★';
+    color: var(--gold);
+    font-size: 12px;
+  }
+  .matrix .score-cell { font-family: var(--font-mono); font-size: 13px; color: var(--ink-60); }
+  .matrix .total {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .matrix .total.selected { color: var(--rose); }
+  .matrix tr.selected { background: var(--rose-mist) !important; }
+
+  /* ─── Reject Section ─────────────────────── */
+  .reject-section {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 48px;
+    margin-bottom: 32px;
+    border: 1px solid var(--ink-10);
+    box-shadow: var(--shadow-sm);
+  }
+  .reject-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  @media (min-width: 768px) {
+    .reject-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .reject-card {
+    background: var(--cream);
+    border-radius: 14px;
+    padding: 20px;
+    border-left: 3px solid var(--ink-20);
+  }
+  .reject-title {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink-60);
+    margin-bottom: 6px;
+  }
+  .reject-reason {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink-40);
+  }
+
+  /* Personas panel */
+  .personas-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 24px;
+  }
+  @media (min-width: 768px) {
+    .personas-grid { grid-template-columns: repeat(5, 1fr); }
+  }
+  .persona {
+    background: var(--cream);
+    border-radius: 14px;
+    padding: 18px 16px;
+    text-align: center;
+    border: 1px solid var(--ink-10);
+  }
+  .persona-icon { font-size: 28px; margin-bottom: 8px; }
+  .persona-name {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .persona-role {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--ink-40);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .persona-criteria {
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--ink-60);
+  }
+
+  /* ─── Footer ───────────────────────────────── */
+  footer {
+    margin-top: 80px;
+    padding: 48px 0;
+    background: var(--ink);
+    color: var(--cream);
+    text-align: center;
+  }
+  .footer-brand {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .footer-tagline {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose-soft);
+    margin-bottom: 24px;
+  }
+  .footer-disclaimer {
+    font-size: 12px;
+    color: var(--ink-40);
+    max-width: 580px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* Floating "back to top" */
+  .back-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: var(--ink);
+    color: var(--cream);
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 300ms ease, transform 300ms ease;
+    z-index: 100;
+  }
+  .back-top.visible { opacity: 1; pointer-events: auto; }
+  .back-top:hover { transform: translateY(-4px); background: var(--rose); }
+
+  /* ─── Toast ───────────────────────────────── */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--green);
+    color: var(--white);
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    transition: all 300ms ease;
+    z-index: 1000;
+    pointer-events: none;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ─── Print ────────────────────────────────── */
+  @media print {
+    body { background: white; }
+    .nav-strip, .back-top, .copy-btn, .prompt-copy { display: none !important; }
+    .post { page-break-inside: avoid; box-shadow: none; }
+  }
+
+  /* ─── Mobile ───────────────────────────────── */
+  @media (max-width: 640px) {
+    .post { padding: 32px 24px; border-radius: 16px; }
+    .post-header { flex-direction: column; align-items: flex-start; }
+    .post-score { text-align: left; }
+    .score-section, .reject-section { padding: 28px 20px; }
+    .hero { padding: 60px 0 40px; }
+    .caption-box { padding: 20px 22px; }
+    .mechanism { padding: 18px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══════════════════════════════════ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-eyebrow">UP Wellness · Content Pitch · 17 พ.ค. 2569</div>
+    <h1 class="hero-title">5 ประเด็น <em>CGM</em><br/>ที่ผ่าน Panel Review</h1>
+    <p class="hero-sub">
+      จาก 10 ประเด็นที่ระดมสมอง — Panel of 5 personas ให้คะแนนตามเกณฑ์ evidence · empathy · shareability · compliance · relatability
+      <br/>เหลือ <strong>5 หัวข้อ</strong> ที่พร้อมเอาไปโพสต์ได้เลย · มี caption เต็ม + image prompt 3 style ต่อโพสต์
+    </p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Posts ready</span>
+        <span class="meta-value">5 หัวข้อ</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Image prompts</span>
+        <span class="meta-value">15 prompts</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Citations</span>
+        <span class="meta-value">peer-reviewed</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Voice</span>
+        <span class="meta-value">Sage + Everyman</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ NAV STRIP ═══════════════════════════════ -->
+<div class="wrap">
+  <nav class="nav-strip">
+    <a class="nav-chip" href="#post-1"><span class="nav-chip-rank">1</span>กินผัก/โปรตีนก่อน</a>
+    <a class="nav-chip" href="#post-2"><span class="nav-chip-rank">2</span>เดิน 2-5 นาที</a>
+    <a class="nav-chip" href="#post-3"><span class="nav-chip-rank">3</span>กาแฟดำ spike</a>
+    <a class="nav-chip" href="#post-4"><span class="nav-chip-rank">4</span>คนเดียวกัน spike ต่าง</a>
+    <a class="nav-chip" href="#post-5"><span class="nav-chip-rank">5</span>นอนน้อย = pre-diabetes</a>
+    <a class="nav-chip" href="#scoring"><span class="nav-chip-rank">📊</span>Scoring Matrix</a>
+    <a class="nav-chip" href="#rejected"><span class="nav-chip-rank">✗</span>5 ที่ตัดออก</a>
+  </nav>
+</div>
+
+<!-- ═══ MAIN ═══════════════════════════════════ -->
+<main class="wrap">
+
+<div class="ornament">·  ·  ·</div>
+
+<!-- POST 1 ─────────────────────────────────── -->
+<article class="post" id="post-1">
+  <div class="post-header">
+    <div class="rank-badge gold">
+      <div class="rank-num">1</div>
+      <div class="rank-label">Top</div>
+    </div>
+    <div class="post-titles">
+      <div class="post-eyebrow">🍽️ Food Behavior · Meal Sequencing</div>
+      <h2 class="post-title">กินผัก/โปรตีน ก่อนข้าว ลด spike 30%</h2>
+    </div>
+    <div class="post-score">
+      <div class="score-num">48</div>
+      <div class="score-label">/ 50 pts</div>
+    </div>
+  </div>
+
+  <div class="hook">
+    "เปลี่ยนแค่ลำดับการกิน — น้ำตาลพุ่งน้อยลง 30% โดยไม่ต้องลดของโปรด"
+  </div>
+
+  <div class="mechanism">
+    <div class="mechanism-label">Mechanism</div>
+    <p>ผัก/โปรตีนกระตุ้นฮอร์โมน <strong>GLP-1</strong> ในลำไส้ → ชะลอ <strong>gastric emptying</strong> → น้ำตาลค่อยๆ ดูดซึมเข้าเลือดแทนการถาโถมในทีเดียว · กลไกนี้คือพื้นฐานของยา GLP-1 agonist (Ozempic, Wegovy) ที่ฮอตที่สุดในวงการเบาหวานตอนนี้</p>
+    <div class="citation">Shukla A et al. · Diabetes Care · 2015 · n=11 T2DM</div>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Caption Full · Facebook</div>
+    <button class="copy-btn" data-copy="cap1">Copy</button>
+  </div>
+  <div class="caption-box">
+<pre id="cap1">🍚 ก่อนจะคุมน้ำตาล — ลองสลับลำดับการกินก่อน
+
+ข้าวสวย 1 ถ้วย เพื่อนกินก่อน — น้ำตาลพุ่ง 180
+ผัก/โปรตีนก่อน ค่อยกินข้าว — น้ำตาลพุ่งแค่ 130
+เมนูเดิม แค่สลับลำดับ ลดยอดน้ำตาลได้ 30%
+
+นี่ไม่ใช่ทฤษฎี — เป็นผลจากงานวิจัยที่ Cornell ตีพิมพ์ใน Diabetes Care ปี 2015
+กลุ่มเบาหวาน type 2 จำนวน 11 คน · กินมื้อเดียวกัน 2 รอบ
+รอบที่ 1: ข้าว + เนื้อ + ผัก พร้อมกัน
+รอบที่ 2: ผัก 10 นาที → โปรตีน 10 นาที → ข้าว
+ผล: น้ำตาลหลังกินลดลง 28-37% · insulin ก็ทำงานน้อยลง
+
+ทำไมถึงเป็นแบบนี้?
+ผัก/โปรตีนกระตุ้นฮอร์โมน GLP-1 → ชะลอการย่อยอาหารในกระเพาะ → น้ำตาลค่อยๆ ดูดซึม
+แทนที่จะถาโถมเข้ากระแสเลือดในทีเดียว
+
+ไม่ต้องเปลี่ยนเมนู ไม่ต้องลดของโปรด แค่จัดลำดับใหม่
+ลองเริ่ม 3 มื้อถัดไป — ถ้ามี CGM ติดอยู่จะเห็นกราฟเปลี่ยนทันที
+
+#UPWellness #ลดน้ำตาล #CGM #Longevity #MealSequencing</pre>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Image Prompts · 3 Styles</div>
+  </div>
+  <div class="prompts-grid">
+    <div class="prompt-card">
+      <span class="prompt-style editorial">A · Editorial</span>
+      <p class="prompt-text" id="img1a">Overhead flatlay on cream linen tablecloth: bowl of brown rice, grilled chicken slices, stir-fried bok choy. Wooden chopsticks. Small numbered labels "1", "2", "3" in calligraphy ink on vegetables/chicken/rice respectively. Soft morning window light, low contrast, magazine editorial style. Palette: cream, sage green, terracotta. Shallow DOF, no people. Mood: calm, deliberate, sophisticated. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img1a">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style typography">B · Typography</span>
+      <p class="prompt-text" id="img1b">Large Thai script "ลำดับการกิน" in elegant Cormorant Garamond serif, centered on cream paper texture. Below: small subscript "−30% glucose spike" in olive green. Single sage leaf botanical ornament bottom-right. Ink black on cream #F5F0EB with old rose #8C4C4C accents. Editorial magazine cover style. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img1b">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style dataviz">C · Data Viz</span>
+      <p class="prompt-text" id="img1c">Clean medical infographic: two CGM line graphs side by side. Left graph (terracotta red): peak at 180 mg/dL labeled "ข้าวก่อน". Right graph (sage green): peak at 130 mg/dL labeled "ผักก่อน". White background, minimal Inter typography. Subtle dotted grid. Small "UP Wellness" mark bottom-right. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img1c">Copy</button>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <span class="cta-label">CTA suggested</span>
+    <span class="cta-text">"ลองดูใน 3 มื้อถัดไป · ไม่ต้องเปลี่ยนเมนู"</span>
+  </div>
+
+  <div class="panel-notes">
+    <div class="panel-notes-label">📋 Panel Notes</div>
+    <p><strong>Sage 9 · Care 10 · Mkt 9 · Comp 10 · Cust 10</strong> — Caregiver บอกว่า "positive + actionable มาก ไม่ทำให้กลัวอาหาร" · Marketing บอก "ไม่ shocking แต่ save-worthy สูง" · Compliance 10 เต็มเพราะ evidence แน่นและไม่ใช่ disease claim</p>
+  </div>
+</article>
+
+<!-- POST 2 ─────────────────────────────────── -->
+<article class="post" id="post-2">
+  <div class="post-header">
+    <div class="rank-badge gold">
+      <div class="rank-num">2</div>
+      <div class="rank-label">Top</div>
+    </div>
+    <div class="post-titles">
+      <div class="post-eyebrow">🚶 Movement · Post-Meal Walk</div>
+      <h2 class="post-title">เดินแค่ 2-5 นาที หลังกิน ตัดยอด spike 30-50%</h2>
+    </div>
+    <div class="post-score">
+      <div class="score-num">47</div>
+      <div class="score-label">/ 50 pts</div>
+    </div>
+  </div>
+
+  <div class="hook">
+    "ไม่ต้องวิ่ง ไม่ต้องเข้ายิม — แค่เดินเก็บจาน 5 นาที หลังกินทุกมื้อ"
+  </div>
+
+  <div class="mechanism">
+    <div class="mechanism-label">Mechanism</div>
+    <p>Skeletal muscle ดูดกลูโคสได้แม้ไม่มี insulin ผ่านตัวรับ <strong>GLUT4</strong> (insulin-independent glucose uptake) · นี่คือเหตุผลที่กล้ามเนื้อขา = "ตับอ่อนสำรอง" ตามธรรมชาติของร่างกาย</p>
+    <div class="citation">Buffey AJ et al. · Sports Medicine · 2022 · meta-analysis 7 trials</div>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Caption Full · Facebook</div>
+    <button class="copy-btn" data-copy="cap2">Copy</button>
+  </div>
+  <div class="caption-box">
+<pre id="cap2">🚶‍♀️ เคล็ดลับลดน้ำตาลหลังกิน — ไม่ต้องเข้ายิม
+
+เดินแค่ 2-5 นาที หลังกินเสร็จ — ตัดยอดน้ำตาลในเลือดได้ 30-50%
+
+ฟังดูง่ายเกินไป? ไม่ใช่ — มีงานวิจัย meta-analysis ปี 2022
+รวม 7 การทดลอง · พบว่าเดินเบาๆ 2-5 นาทีหลังมื้ออาหาร
+ลด post-meal glucose spike อย่างมีนัยสำคัญ
+เมื่อเทียบกับ "นั่งเฉยๆ" หรือ "ยืนเฉยๆ"
+
+ทำไมแค่เดิน 5 นาทีถึงพอ?
+กล้ามเนื้อขา (เป็นกล้ามเนื้อใหญ่ที่สุดในร่างกาย) มีตัวรับชื่อ GLUT4
+เมื่อกล้ามเนื้อทำงาน — GLUT4 ดึงกลูโคสจากเลือดเข้าไปใช้ทันที
+โดยไม่ต้องรอ insulin จากตับอ่อน
+นี่คือ insulin-independent glucose uptake — กลไกธรรมชาติของร่างกาย
+
+วิธีลอง:
+✅ กินข้าวเสร็จ → ลุกขึ้นเดินรอบบ้าน 5 นาที
+✅ ที่ทำงาน → เดินไปห้องน้ำ-กลับ 2-3 รอบ
+✅ ออกไปกินข้าวข้างนอก → จอดรถไกลขึ้น เดินกลับ
+ไม่ต้องเหนื่อย ไม่ต้องเหงื่อ — แค่ไม่นั่งทันทีหลังกิน
+
+หลายคนใส่ CGM แล้วเห็นความต่างใน 7 วันแรกเลย
+ลองดูสิ — ร่างกายไม่โกหก กราฟไม่โกหก
+
+#UPWellness #AfterMealWalk #ลดน้ำตาล #CGM #Longevity</pre>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Image Prompts · 3 Styles</div>
+  </div>
+  <div class="prompts-grid">
+    <div class="prompt-card">
+      <span class="prompt-style editorial">A · Editorial</span>
+      <p class="prompt-text" id="img2a">Mid-shot of a Thai woman in her 50s, comfortable linen casual wear, walking slowly along a tree-lined garden path. Soft afternoon dappled light. Her expression: relaxed, contemplative. Realistic documentary style. Warm earth tones, sage green foliage. Sense of "just-finished-meal" calm. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img2a">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style typography">B · Typography</span>
+      <p class="prompt-text" id="img2b">Massive numerical "5" in extra-bold serif (Cormorant) dominant left side, "นาที" in elegant Thai handwritten script beside it. Below: "ลดน้ำตาลพุ่งได้ 30-50%" in clean Sarabun. Cream background, ink black + old rose accents. Subtle walking footstep illustration bottom edge. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img2b">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style dataviz">C · Data Viz</span>
+      <p class="prompt-text" id="img2c">Split-screen: top half shows steep red glucose curve (sitting after meal, peak 175 mg/dL), bottom half shows flatter green curve (walking after meal, peak 125 mg/dL). Center vertical divider with text "แค่เดิน 5 นาที". Watercolor texture cream background, sage palette. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img2c">Copy</button>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <span class="cta-label">CTA suggested</span>
+    <span class="cta-text">"ลอง 7 วัน · ดูกราฟตัวเองเปลี่ยน"</span>
+  </div>
+
+  <div class="panel-notes">
+    <div class="panel-notes-label">📋 Panel Notes</div>
+    <p><strong>Sage 9 · Care 10 · Mkt 8 · Comp 10 · Cust 10</strong> — เหมาะมากเป็นโพสต์ "useful, do-today" · Caregiver: "ใจดี กระทำได้ทันที ไม่ทำให้รู้สึก guilty" · Compliance ผ่านง่ายเพราะเดินคือ universal safe behavior</p>
+  </div>
+</article>
+
+<!-- POST 3 ─────────────────────────────────── -->
+<article class="post" id="post-3">
+  <div class="post-header">
+    <div class="rank-badge silver">
+      <div class="rank-num">3</div>
+      <div class="rank-label">Tied</div>
+    </div>
+    <div class="post-titles">
+      <div class="post-eyebrow">☕ Beverage · Coffee Glucose Spike</div>
+      <h2 class="post-title">กาแฟดำ ไม่ใส่น้ำตาล ก็ทำน้ำตาลขึ้นได้</h2>
+    </div>
+    <div class="post-score">
+      <div class="score-num">45</div>
+      <div class="score-label">/ 50 pts</div>
+    </div>
+  </div>
+
+  <div class="hook">
+    "กาแฟดำมื้อเช้า = น้ำตาลขึ้น 20-40 mg/dL ทั้งที่ไม่ได้ใส่น้ำตาล · นี่คือเหตุผล"
+  </div>
+
+  <div class="mechanism">
+    <div class="mechanism-label">Mechanism</div>
+    <p>Caffeine → กระตุ้น <strong>adrenaline + cortisol</strong> → ตับสั่ง gluconeogenesis (สร้างกลูโคสใหม่) + ลด <strong>insulin sensitivity</strong> ชั่วคราว 15-30% · นี่คือ acute effect ของ caffeine ที่หลายคนไม่รู้</p>
+    <div class="citation">Petrie HJ et al. · Diabetes Care · 2004 · n=12 healthy</div>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Caption Full · Facebook</div>
+    <button class="copy-btn" data-copy="cap3">Copy</button>
+  </div>
+  <div class="caption-box">
+<pre id="cap3">☕ ดื่มกาแฟดำไม่ใส่น้ำตาล — น้ำตาลในเลือดยังขึ้นได้
+
+ใครเชื่อว่ากาแฟดำ = zero calorie = ไม่ขึ้นน้ำตาล?
+ผิดค่ะ — งานวิจัยปี 2004 ใน Diabetes Care
+ให้คนสุขภาพดี 12 คนกินคาเฟอีน 200 mg ตอนเช้า
+ผล: น้ำตาลในเลือดขึ้น 20-40 mg/dL · insulin sensitivity ลดลง 15-30%
+
+กลไก: คาเฟอีนกระตุ้น adrenaline + cortisol
+ตับสั่ง "ปล่อยกลูโคสสำรอง" ออกมาในเลือด (gluconeogenesis)
+ขณะเดียวกัน insulin ก็ทำงานยากขึ้นชั่วคราว
+นี่คือเหตุผลที่บางคนใส่ CGM แล้วงงว่า
+"ตอนเช้ายังไม่กินข้าวเลย ทำไมน้ำตาลขึ้น?"
+
+ไม่ได้แปลว่ากาแฟไม่ดีนะคะ
+กาแฟดำมี polyphenol สูง · ลดความเสี่ยง type 2 diabetes ในระยะยาว (Nurses' Health Study 28 ปี)
+แต่ผลในระยะสั้นต่อกลูโคสมีจริง
+
+สิ่งที่อยากบอก:
+สุขภาพไม่ใช่ "ของนี้ดี/ไม่ดี" สรุปเดียวจบ
+ของอย่างเดียวกัน — กระทบแต่ละคนต่างกัน · ระยะสั้นกับยาวก็ต่างกัน
+วิธีรู้ว่ากาแฟส่งผลกับ "คุณ" ยังไง = วัด ไม่ใช่เดา
+
+#UPWellness #Coffee #CGM #BloodSugar #Personalized</pre>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Image Prompts · 3 Styles</div>
+  </div>
+  <div class="prompts-grid">
+    <div class="prompt-card">
+      <span class="prompt-style editorial">A · Editorial</span>
+      <p class="prompt-text" id="img3a">Close-up: ceramic mug of black coffee on a wooden desk, morning sunlight streaming in. A CGM patch barely visible on someone's upper arm (out-of-frame partial). Open notebook with handwritten glucose chart beside the mug. Warm browns, cream, hint of indoor-plant green. Shallow DOF, documentary photography. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img3a">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style typography">B · Typography</span>
+      <p class="prompt-text" id="img3b">Headline "ดำไม่ใส่น้ำตาล... แต่น้ำตาลยังขึ้น" in Thai Sarabun serif weight, with question mark dot replaced by tiny coffee bean illustration. Cream backdrop with subtle coffee ring stain texture. Old rose + ink black palette. Editorial magazine feel. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img3b">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style dataviz">C · Data Viz</span>
+      <p class="prompt-text" id="img3c">Minimalist scientific illustration flow: cup of coffee → arrow → cortisol molecule icon → arrow → liver organ silhouette → arrow → rising glucose chart. Hand-drawn medical illustration style on cream background. Subtle label "gluconeogenesis" below. UP Wellness logo bottom-left. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img3c">Copy</button>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <span class="cta-label">CTA suggested</span>
+    <span class="cta-text">"วัดด้วย CGM ของตัวเองว่ากาแฟส่งผลกับคุณยังไง"</span>
+  </div>
+
+  <div class="panel-notes">
+    <div class="panel-notes-label">📋 Panel Notes</div>
+    <p><strong>Sage 7 · Care 9 · Mkt 10 · Comp 9 · Cust 10</strong> — Marketing คะแนน 10 เต็ม "คนไทยกินกาแฟ 80% ทุกเช้า · stop-scroll factor สูงสุด" · Compliance เน้น: ห้ามใช้คำว่า "กาแฟทำให้เป็นเบาหวาน" — แค่เห็นในกราฟจริง</p>
+  </div>
+</article>
+
+<!-- POST 4 ─────────────────────────────────── -->
+<article class="post" id="post-4">
+  <div class="post-header">
+    <div class="rank-badge silver">
+      <div class="rank-num">4</div>
+      <div class="rank-label">Tied</div>
+    </div>
+    <div class="post-titles">
+      <div class="post-eyebrow">🧬 Philosophy · Personalized Nutrition</div>
+      <h2 class="post-title">อาหารเดียวกัน · แต่ละคน spike ไม่เท่ากัน</h2>
+    </div>
+    <div class="post-score">
+      <div class="score-num">45</div>
+      <div class="score-label">/ 50 pts</div>
+    </div>
+  </div>
+
+  <div class="hook">
+    "ข้าวสวย 1 ถ้วย — เพื่อนคุณ spike 50 / คุณ spike 130 · เพราะอะไร?"
+  </div>
+
+  <div class="mechanism">
+    <div class="mechanism-label">Mechanism</div>
+    <p><strong>Microbiome</strong> แต่ละคนต่างกัน → ย่อย metabolize อาหารเดียวกันต่างกัน → glycemic response ต่างกัน 2-5 เท่า · งานวิจัย landmark นี้คือต้นกำเนิดของบริษัท <strong>ZOE</strong> (UK) ที่ระดมทุนได้ $90M</p>
+    <div class="citation">Zeevi D et al. · Cell · 2015 · n=800 · Weizmann Institute</div>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Caption Full · Facebook</div>
+    <button class="copy-btn" data-copy="cap4">Copy</button>
+  </div>
+  <div class="caption-box">
+<pre id="cap4">🧬 อาหารเดียวกัน — แต่ละคนน้ำตาลขึ้นไม่เหมือนกัน
+
+ข้าวสวย 1 ถ้วย
+คน A · น้ำตาลขึ้น 50 mg/dL
+คน B · น้ำตาลขึ้น 130 mg/dL
+สามเท่าของกัน — แต่กินอย่างเดียวกันเลย
+
+นี่ไม่ใช่เรื่องบังเอิญ
+ปี 2015 ทีมวิจัยจาก Weizmann Institute ในอิสราเอล
+ติด CGM ใส่คน 800 คน · ให้กินอาหารมาตรฐาน 46,898 มื้อ
+แล้ว map ความสัมพันธ์กับ microbiome ในลำไส้
+ผลตีพิมพ์ใน Cell — "Personalized Nutrition by Prediction of Glycemic Responses"
+
+ข้อค้นพบที่เปลี่ยนวงการ:
+✦ glycemic index ในตารางมาตรฐาน อธิบายได้แค่ 30%
+✦ ส่วนที่เหลือ — ขึ้นกับ microbiome ของแต่ละคน
+✦ คนหนึ่งกินมะเขือเทศแล้ว spike · อีกคนกินไม่ spike
+✦ "อาหาร healthy ทั่วไป" อาจไม่ healthy สำหรับ "คุณ"
+
+นี่คือเหตุผลที่บริษัทอย่าง ZOE ในสหราชอาณาจักร
+ระดมทุนได้ 90 ล้านดอลลาร์ — เพื่อสร้าง personalized nutrition
+
+และเป็นเหตุผลที่เราเสนอ CGM ให้ลูกค้าทุกคน
+เพราะ "ตารางมาตรฐาน" ไม่ได้บอกว่าอะไรเหมาะกับคุณ
+ตัวคุณเองและกราฟของคุณ — ต่างหากที่บอก
+
+อยากรู้ว่าอาหารแต่ละชนิดส่งผลกับคุณยังไง? ทักมาคุยกันได้ค่ะ
+
+#UPWellness #PersonalizedNutrition #CGM #Weizmann #Longevity</pre>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Image Prompts · 3 Styles</div>
+  </div>
+  <div class="prompts-grid">
+    <div class="prompt-card">
+      <span class="prompt-style editorial">A · Editorial</span>
+      <p class="prompt-text" id="img4a">Two Thai people (woman 40s + man 40s) sitting at the same dining table, each eating identical bowls of steamed jasmine rice. Both have visible CGM sensors on upper arms. Overhead symmetrical composition. Above each person: small floating data-card showing different glucose curves (50 vs 130). Documentary photography blended with subtle infographic. Soft natural light. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img4a">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style typography">B · Typography</span>
+      <p class="prompt-text" id="img4b">Bold Thai phrase "ข้าวเดียวกัน — กราฟไม่เหมือนกัน" set in oversized Cormorant Garamond serif, breaking onto multiple lines for emphasis. Background: cream paper with very faint DNA helix watermark. Old rose accent dot. Editorial book-cover aesthetic. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img4b">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style dataviz">C · Data Viz</span>
+      <p class="prompt-text" id="img4c">Side-by-side abstract glucose curve illustrations — left: gentle wave peaking at 50 labeled "Person A · diverse microbiome"; right: steep spike peaking at 130 labeled "Person B · low diversity". Connecting subtitle "Weizmann Cell 2015". Sage green + terracotta on cream. Minimal grid, magazine infographic style. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img4c">Copy</button>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <span class="cta-label">CTA suggested</span>
+    <span class="cta-text">"การจะรู้ว่าอาหารใดเหมาะกับ คุณ — ต้องวัด ไม่ใช่เดา"</span>
+  </div>
+
+  <div class="panel-notes">
+    <div class="panel-notes-label">📋 Panel Notes · Strategic Value ⭐</div>
+    <p><strong>Sage 10 · Care 8 · Mkt 9 · Comp 10 · Cust 8</strong> — Sage 10 เต็ม "Zeevi 2015 คือ landmark study ที่เปลี่ยนวงการ" · โพสต์นี้ position UP Wellness = personalized medicine ได้สมบูรณ์แบบ · ใช้เป็น cornerstone content ที่อธิบาย "ทำไมต้องใช้ CGM" ที่ดีที่สุด</p>
+  </div>
+</article>
+
+<!-- POST 5 ─────────────────────────────────── -->
+<article class="post" id="post-5">
+  <div class="post-header">
+    <div class="rank-badge bronze">
+      <div class="rank-num">5</div>
+      <div class="rank-label">Top 5</div>
+    </div>
+    <div class="post-titles">
+      <div class="post-eyebrow">😴 Lifestyle · Sleep & Insulin</div>
+      <h2 class="post-title">นอนน้อย 1 คืน = pre-diabetes ชั่วคราว</h2>
+    </div>
+    <div class="post-score">
+      <div class="score-num">42</div>
+      <div class="score-label">/ 50 pts</div>
+    </div>
+  </div>
+
+  <div class="hook">
+    "นอน 4 ชม. คืนเดียว — Insulin sensitivity ลด 30% เท่ากับคน pre-diabetes"
+  </div>
+
+  <div class="mechanism">
+    <div class="mechanism-label">Mechanism</div>
+    <p>Sleep deprivation → <strong>cortisol</strong> สูง + ลด GLUT4 expression + เพิ่ม inflammation → ขัดขวาง insulin action ในเซลล์กล้ามเนื้อ · <strong>Reversible</strong> เมื่อนอนพอ 2 คืน · ไม่ใช่ permanent damage</p>
+    <div class="citation">Spiegel K et al. · Lancet · 1999 · Van Cauter · PNAS 2010</div>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Caption Full · Facebook</div>
+    <button class="copy-btn" data-copy="cap5">Copy</button>
+  </div>
+  <div class="caption-box">
+<pre id="cap5">😴 นอน 4 ชั่วโมง 1 คืน = pre-diabetes ชั่วคราว
+
+ฟังดูเกินจริงไหม? ไม่เลยค่ะ — มีงานวิจัยรองรับมา 25 ปีแล้ว
+
+ปี 1999 ทีมจาก University of Chicago นำโดย Dr. Eve Van Cauter
+ให้ชายหนุ่มสุขภาพดี 11 คนนอนแค่ 4 ชั่วโมง/คืน เป็นเวลา 6 คืน
+ผล: insulin sensitivity ลดลง 30%
+glucose tolerance แย่ลงระดับเทียบเท่าคน pre-diabetic
+ตีพิมพ์ใน Lancet — ยังถูกอ้างถึงจนถึงทุกวันนี้
+
+กลไก (ทำไมนอนน้อยถึงทำให้น้ำตาลผิดปกติ):
+✦ Cortisol สูงต่อเนื่อง — ตับปล่อยกลูโคสมากขึ้น
+✦ ลด GLUT4 expression ในกล้ามเนื้อ — เซลล์ดูดกลูโคสได้น้อยลง
+✦ Inflammation เพิ่มขึ้น — insulin receptor ทำงานติดขัด
+✦ Ghrelin (ฮอร์โมนหิว) สูงขึ้น · Leptin (อิ่ม) ต่ำลง — กินเยอะขึ้น
+
+ข่าวดี: กลับมาปกติเมื่อนอนพอ
+Van Cauter ทำซ้ำในกลุ่ม recovery sleep — 8-9 ชั่วโมง/คืน 2 คืน
+glucose tolerance กลับมา baseline เลย
+
+ก่อนจะ blame อาหาร เครียด หรือฮอร์โมน
+ลองตรวจคุณภาพการนอนของตัวเองก่อน
+ถ้านอน 6 ชั่วโมงทุกคืนเป็นเดือนๆ — อย่าแปลกใจที่ HbA1c ขึ้น
+
+#UPWellness #Sleep #CGM #InsulinResistance #Longevity</pre>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Image Prompts · 3 Styles</div>
+  </div>
+  <div class="prompts-grid">
+    <div class="prompt-card">
+      <span class="prompt-style editorial">A · Editorial</span>
+      <p class="prompt-text" id="img5a">Pre-dawn bedroom scene: Thai woman in her 50s sitting upright in bed, holding a glass of water, looking at window where soft blue 5am light appears. Crumpled sheets, dim lamp. Mood: tired but contemplative. Realistic documentary photo. Muted blues, cream sheets. Wabi-sabi feel. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img5a">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style typography">B · Typography</span>
+      <p class="prompt-text" id="img5b">Bold sleep statistic "4 ชั่วโมง = −30% Insulin Sensitivity" mixing Thai serif + numerical Cormorant. Background: deep midnight blue gradient with subtle constellation pattern. Cream text on midnight blue with old rose highlight on "−30%". Editorial poster style. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img5b">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style dataviz">C · Data Viz</span>
+      <p class="prompt-text" id="img5c">Side-by-side bar charts: left "After 8hr sleep" with stable glucose line peak 110; right "After 4hr sleep" with erratic spikes peak 165. Small bottom credit "Van Cauter · Lancet 1999". Cream background, sage green for stable side, terracotta for unstable. Minimal medical journal aesthetic. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img5c">Copy</button>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <span class="cta-label">CTA suggested</span>
+    <span class="cta-text">"ก่อนจะ blame อาหาร · ลอง audit การนอนก่อน"</span>
+  </div>
+
+  <div class="panel-notes">
+    <div class="panel-notes-label">📋 Panel Notes</div>
+    <p><strong>Sage 9 · Care 7 · Mkt 9 · Comp 8 · Cust 9</strong> — Caregiver เตือน: "ระวังทำให้คน panic ที่นอนน้อยอยู่" — ต้องใส่ "ข่าวดี: กลับมาปกติเมื่อนอนพอ" เพื่อ balance · Customer 9 เพราะคนส่วนใหญ่นอนน้อยและรู้สึก relatable มาก</p>
+  </div>
+</article>
+
+<div class="ornament">·  ·  ·</div>
+
+<!-- ═══ PANEL & SCORING ═════════════════════════ -->
+<section class="score-section" id="scoring">
+  <div class="section-header">
+    <div class="section-eyebrow">Panel Review · Methodology</div>
+    <h2 class="section-title">5 Personas · 10 Topics · Total Scoring</h2>
+    <p class="section-sub">แต่ละ topic ผ่าน panel of 5 personas — ให้คะแนน 1-10 ตามเกณฑ์ของตัวเอง</p>
+  </div>
+
+  <div class="personas-grid">
+    <div class="persona">
+      <div class="persona-icon">🦉</div>
+      <div class="persona-name">Dr. Sage</div>
+      <div class="persona-role">Clinical Scientist</div>
+      <div class="persona-criteria">คุณภาพ evidence · RCT/meta · mechanism</div>
+    </div>
+    <div class="persona">
+      <div class="persona-icon">💚</div>
+      <div class="persona-name">พี่หมอ</div>
+      <div class="persona-role">Caregiver</div>
+      <div class="persona-criteria">empathy · empower · ไม่ทำให้กลัว</div>
+    </div>
+    <div class="persona">
+      <div class="persona-icon">📊</div>
+      <div class="persona-name">Jin Mkt</div>
+      <div class="persona-role">Strategist</div>
+      <div class="persona-criteria">shareable · save-worthy · stop-scroll</div>
+    </div>
+    <div class="persona">
+      <div class="persona-icon">🛡️</div>
+      <div class="persona-name">Compliance</div>
+      <div class="persona-role">เภสัช / ทนาย</div>
+      <div class="persona-criteria">ไม่ทำ medical claim เกินขอบเขต</div>
+    </div>
+    <div class="persona">
+      <div class="persona-icon">🎯</div>
+      <div class="persona-name">คุณป้า 50</div>
+      <div class="persona-role">Target Customer</div>
+      <div class="persona-criteria">เข้าใจไหม · ใกล้ตัวไหม · ใช้ได้จริงไหม</div>
+    </div>
+  </div>
+
+  <div class="matrix-wrap">
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th>Topic</th>
+          <th>🦉 Sage</th>
+          <th>💚 Care</th>
+          <th>📊 Mkt</th>
+          <th>🛡️ Comp</th>
+          <th>🎯 Cust</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="selected"><td class="topic-name selected">Meal sequencing</td><td class="score-cell">9</td><td class="score-cell">10</td><td class="score-cell">9</td><td class="score-cell">10</td><td class="score-cell">10</td><td class="total selected">48</td></tr>
+        <tr class="selected"><td class="topic-name selected">Walk after meal</td><td class="score-cell">9</td><td class="score-cell">10</td><td class="score-cell">8</td><td class="score-cell">10</td><td class="score-cell">10</td><td class="total selected">47</td></tr>
+        <tr class="selected"><td class="topic-name selected">Coffee spike</td><td class="score-cell">7</td><td class="score-cell">9</td><td class="score-cell">10</td><td class="score-cell">9</td><td class="score-cell">10</td><td class="total selected">45</td></tr>
+        <tr class="selected"><td class="topic-name selected">Personalized response (Weizmann)</td><td class="score-cell">10</td><td class="score-cell">8</td><td class="score-cell">9</td><td class="score-cell">10</td><td class="score-cell">8</td><td class="total selected">45</td></tr>
+        <tr class="selected"><td class="topic-name selected">Sleep deprivation</td><td class="score-cell">9</td><td class="score-cell">7</td><td class="score-cell">9</td><td class="score-cell">8</td><td class="score-cell">9</td><td class="total selected">42</td></tr>
+        <tr><td class="topic-name">Fruit "healthy" spike</td><td class="score-cell">8</td><td class="score-cell">7</td><td class="score-cell">10</td><td class="score-cell">7</td><td class="score-cell">9</td><td class="total">41</td></tr>
+        <tr><td class="topic-name">CGM early warning (5-10 ปีก่อน HbA1c)</td><td class="score-cell">7</td><td class="score-cell">8</td><td class="score-cell">10</td><td class="score-cell">7</td><td class="score-cell">8</td><td class="total">40</td></tr>
+        <tr><td class="topic-name">Glucose variability &gt; HbA1c</td><td class="score-cell">9</td><td class="score-cell">7</td><td class="score-cell">8</td><td class="score-cell">9</td><td class="score-cell">6</td><td class="total">39</td></tr>
+        <tr><td class="topic-name">ตื่นตี 3 จากน้ำตาลตก</td><td class="score-cell">7</td><td class="score-cell">7</td><td class="score-cell">9</td><td class="score-cell">7</td><td class="score-cell">9</td><td class="total">39</td></tr>
+        <tr><td class="topic-name">Dawn phenomenon (ตี 4-6)</td><td class="score-cell">8</td><td class="score-cell">7</td><td class="score-cell">6</td><td class="score-cell">9</td><td class="score-cell">5</td><td class="total">35</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ REJECTED ═══════════════════════════════ -->
+<section class="reject-section" id="rejected">
+  <div class="section-header">
+    <div class="section-eyebrow">Rejected · ทิ้งไว้รอบนี้</div>
+    <h2 class="section-title">5 หัวข้อที่ยังไม่ผ่าน Panel</h2>
+    <p class="section-sub">ไม่ได้แปลว่าหัวข้อแย่ · แค่ต้อง rewrite หรือเก็บไว้ทำ deep-dive content ทีหลัง</p>
+  </div>
+
+  <div class="reject-grid">
+    <div class="reject-card">
+      <div class="reject-title">ผลไม้ "healthy" ที่ spike แรงกว่าข้าวสวย</div>
+      <div class="reject-reason">เสี่ยงทำให้คน fruit-phobic — ผลไม้โดยรวม มี fiber + polyphenol ดีมาก · ต้องเขียน carefully · เก็บไว้รอบ educational deep-dive</div>
+    </div>
+    <div class="reject-card">
+      <div class="reject-title">CGM เห็น insulin resistance ก่อน HbA1c 5-10 ปี</div>
+      <div class="reject-reason">Compliance risk สูง — ห้ามใช้คำว่า "prevent diabetes" โดยไม่มี RCT · ต้อง rewrite ใช้ "early signal" แทน</div>
+    </div>
+    <div class="reject-card">
+      <div class="reject-title">Glucose variability สำคัญกว่า HbA1c สูง</div>
+      <div class="reject-reason">เทคนิคไป · ลูกค้าทั่วไปยังไม่ relate · เหมาะกับ deep-dive series หลังจาก audience รู้พื้นฐาน CGM แล้ว</div>
+    </div>
+    <div class="reject-card">
+      <div class="reject-title">ตื่นตี 3 จากน้ำตาลตก</div>
+      <div class="reject-reason">Mechanism จริงแต่ underpowered evidence · ตื่นตี 3 มี cause อื่นเยอะ (sleep apnea, perimenopause) · เสี่ยง misattribution</div>
+    </div>
+    <div class="reject-card">
+      <div class="reject-title">Dawn phenomenon (น้ำตาลพุ่งตอนตี 4)</div>
+      <div class="reject-reason">Not relatable — คนไม่รู้สึกว่ามันกระทบ · เป็น signal ที่เห็นใน CGM แต่ไม่ "actionable" ตรงๆ</div>
+    </div>
+    <div class="reject-card" style="background:var(--green-mist); border-left-color:var(--green);">
+      <div class="reject-title" style="color:var(--green-deep);">💡 Future Content Pipeline</div>
+      <div class="reject-reason" style="color:var(--ink);">หัวข้อเหล่านี้เหมาะเป็น <strong>deep-dive series</strong> หรือ <strong>premium content</strong> สำหรับ subscriber level — ไม่ใช่ public post · เก็บไว้ทำ educational ebook หรือ workshop</div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ FOOTER ═════════════════════════════════ -->
+<footer>
+  <div class="wrap-narrow">
+    <div class="footer-brand">UP Wellness · UPLABS</div>
+    <div class="footer-tagline">Science-based · Personalized · Longevity-first</div>
+    <p class="footer-disclaimer">
+      ทุกประเด็นในเอกสารนี้อ้างอิงจากงานวิจัย peer-reviewed · ไม่ใช่คำแนะนำทางการแพทย์
+      <br/>เนื้อหาสำหรับการศึกษาและสร้าง awareness · ก่อนเริ่มเปลี่ยนแปลงพฤติกรรมสุขภาพ ควรปรึกษาแพทย์
+      <br/><br/>
+      Compiled · พ.ค. 2569 · v1.0
+    </p>
+  </div>
+</footer>
+
+<button class="back-top" id="backTop" aria-label="กลับด้านบน">↑</button>
+<div class="toast" id="toast">คัดลอกแล้ว ✓</div>
+
+<script>
+  // Copy-to-clipboard for all blocks
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-copy]');
+    if (!btn) return;
+    const id = btn.dataset.copy;
+    const el = document.getElementById(id);
+    if (!el) return;
+    const text = el.innerText || el.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.classList.add('copied');
+      const original = btn.textContent;
+      btn.textContent = 'Copied ✓';
+      showToast();
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.textContent = original;
+      }, 2000);
+    });
+  });
+
+  // Toast
+  function showToast() {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => t.classList.remove('show'), 2000);
+  }
+
+  // Back-to-top
+  const backTop = document.getElementById('backTop');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 600) backTop.classList.add('visible');
+    else backTop.classList.remove('visible');
+  });
+  backTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>
