@@ -281,6 +281,50 @@
   .rank-badge.gold   { border-color: var(--gold); background: linear-gradient(135deg, #F5E6CC 0%, #E8D29E 100%); }
   .rank-badge.silver { border-color: var(--ink-40); background: linear-gradient(135deg, #F0EDE8 0%, #DAD6D0 100%); }
   .rank-badge.bronze { border-color: var(--rose); background: linear-gradient(135deg, #F4ECEC 0%, #E5D0D0 100%); }
+  .rank-badge.pending { border-color: var(--green); border-style: dashed; background: var(--green-mist); }
+  .rank-badge.pending .rank-num { color: var(--green-deep); }
+  .nav-chip-rank.pending { background: var(--green) !important; }
+  .nav-divider {
+    display: inline-block;
+    width: 1px;
+    height: 24px;
+    background: var(--ink-10);
+    margin: 6px 6px 0;
+  }
+  /* Round 2 section divider */
+  .round2-header {
+    text-align: center;
+    margin: 24px 0 32px;
+    padding: 32px 24px;
+    background: linear-gradient(180deg, var(--green-mist) 0%, var(--cream) 100%);
+    border-radius: 20px;
+    border: 1px dashed var(--green);
+  }
+  .round2-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green-deep);
+    margin-bottom: 8px;
+  }
+  .round2-title {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3.4vw, 32px);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .round2-sub {
+    color: var(--ink-60);
+    font-size: 14.5px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .score-pending { color: var(--ink-40); }
   .rank-num {
     font-family: var(--font-display);
     font-size: 26px;
@@ -815,20 +859,20 @@
 <!-- ═══ HERO ═══════════════════════════════════ -->
 <header class="hero">
   <div class="wrap">
-    <div class="hero-eyebrow">UP Wellness · Content Pitch · 17 พ.ค. 2569</div>
-    <h1 class="hero-title">5 ประเด็น <em>CGM</em><br/>ที่ผ่าน Panel Review</h1>
+    <div class="hero-eyebrow">UP Wellness · Content Pitch · 17 พ.ค. 2569 · v2 (Round 2 added)</div>
+    <h1 class="hero-title">10 ประเด็น <em>CGM</em><br/>พร้อมโพสต์</h1>
     <p class="hero-sub">
-      จาก 10 ประเด็นที่ระดมสมอง — Panel of 5 personas ให้คะแนนตามเกณฑ์ evidence · empathy · shareability · compliance · relatability
-      <br/>เหลือ <strong>5 หัวข้อ</strong> ที่พร้อมเอาไปโพสต์ได้เลย · มี caption เต็ม + image prompt 3 style ต่อโพสต์
+      <strong>Round 1</strong> · 5 หัวข้อที่ผ่าน Panel Review (5 personas) คัดจาก 10 ประเด็นที่ระดมสมอง
+      <br/><strong>Round 2</strong> · 5 หัวข้อใหม่ที่ pre-screen ผ่าน (รอ panel review) — ขยาย domain ใหม่: stress · vinegar · rebound hunger · strength training · chrono-nutrition
     </p>
     <div class="hero-meta">
       <div class="meta-item">
         <span class="meta-label">Posts ready</span>
-        <span class="meta-value">5 หัวข้อ</span>
+        <span class="meta-value">10 หัวข้อ</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">Image prompts</span>
-        <span class="meta-value">15 prompts</span>
+        <span class="meta-value">30 prompts</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">Citations</span>
@@ -850,6 +894,13 @@
     <a class="nav-chip" href="#post-3"><span class="nav-chip-rank">3</span>กาแฟดำ spike</a>
     <a class="nav-chip" href="#post-4"><span class="nav-chip-rank">4</span>คนเดียวกัน spike ต่าง</a>
     <a class="nav-chip" href="#post-5"><span class="nav-chip-rank">5</span>นอนน้อย = pre-diabetes</a>
+    <span class="nav-divider"></span>
+    <a class="nav-chip" href="#post-6"><span class="nav-chip-rank pending">6</span>เครียด → spike</a>
+    <a class="nav-chip" href="#post-7"><span class="nav-chip-rank pending">7</span>น้ำส้มสายชู −20%</a>
+    <a class="nav-chip" href="#post-8"><span class="nav-chip-rank pending">8</span>หิวขนมบ่าย 3</a>
+    <a class="nav-chip" href="#post-9"><span class="nav-chip-rank pending">9</span>เวท 48 ชม.</a>
+    <a class="nav-chip" href="#post-10"><span class="nav-chip-rank pending">10</span>มื้อเช้า &gt; เย็น</a>
+    <span class="nav-divider"></span>
     <a class="nav-chip" href="#scoring"><span class="nav-chip-rank">📊</span>Scoring Matrix</a>
     <a class="nav-chip" href="#rejected"><span class="nav-chip-rank">✗</span>5 ที่ตัดออก</a>
   </nav>
@@ -1309,6 +1360,514 @@ glucose tolerance กลับมา baseline เลย
   <div class="panel-notes">
     <div class="panel-notes-label">📋 Panel Notes</div>
     <p><strong>Sage 9 · Care 7 · Mkt 9 · Comp 8 · Cust 9</strong> — Caregiver เตือน: "ระวังทำให้คน panic ที่นอนน้อยอยู่" — ต้องใส่ "ข่าวดี: กลับมาปกติเมื่อนอนพอ" เพื่อ balance · Customer 9 เพราะคนส่วนใหญ่นอนน้อยและรู้สึก relatable มาก</p>
+  </div>
+</article>
+
+<div class="ornament">·  ·  ·</div>
+
+<!-- ═══ ROUND 2 HEADER ═════════════════════════ -->
+<div class="round2-header">
+  <div class="round2-label">Round 2 · Pending Panel Review</div>
+  <h2 class="round2-title">5 ประเด็นใหม่ · ขยาย domain ที่ Round 1 ยังไม่แตะ</h2>
+  <p class="round2-sub">หัวข้อต่อไปนี้ผ่าน pre-screen (evidence + compliance + relatability) แต่ยังไม่ได้ run full 5-persona panel review · ลองอ่านดูก่อน แล้วเลือกตามความเหมาะสมได้</p>
+</div>
+
+<!-- POST 6 ─────────────────────────────────── -->
+<article class="post" id="post-6">
+  <div class="post-header">
+    <div class="rank-badge pending">
+      <div class="rank-num">6</div>
+      <div class="rank-label">R2</div>
+    </div>
+    <div class="post-titles">
+      <div class="post-eyebrow">🧠 Mind-Body · Stress Glucose Spike</div>
+      <h2 class="post-title">เครียดอย่างเดียว ไม่ได้กิน · น้ำตาลก็ขึ้น 30-50 mg/dL</h2>
+    </div>
+    <div class="post-score">
+      <div class="score-num score-pending">—</div>
+      <div class="score-label">Pending</div>
+    </div>
+  </div>
+
+  <div class="hook">
+    "ประชุมหิน 2 ชั่วโมง · ไม่ได้กิน · กราฟ CGM พุ่ง 40 mg/dL · นี่คือ silent killer ที่หลายคนมองข้าม"
+  </div>
+
+  <div class="mechanism">
+    <div class="mechanism-label">Mechanism</div>
+    <p>ความเครียด → <strong>HPA axis</strong> ปล่อย cortisol + catecholamines → ตับสั่ง gluconeogenesis (สร้างกลูโคสใหม่จากโปรตีน) → glucose ขึ้นแม้กระเพาะว่าง · เกิดได้ทั้งจากเครียดเฉียบพลัน (ทะเลาะ · งานด่วน) และเรื้อรัง (ปัญหาครอบครัว · หนี้)</p>
+    <div class="citation">Hackett RA et al. · Diabetes Care · 2014 · n=140 · ตามนาน 3 ปี</div>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Caption Full · Facebook</div>
+    <button class="copy-btn" data-copy="cap6">Copy</button>
+  </div>
+  <div class="caption-box">
+<pre id="cap6">🧠 เครียดอย่างเดียว — ไม่ได้กินอะไร — น้ำตาลก็ขึ้น 30-50 mg/dL
+
+หลายคนคิดว่าน้ำตาลในเลือดขึ้น = กินอะไรไป
+แต่จริงๆ แล้ว — กราฟ CGM พุ่งได้ทั้งที่ท้องว่าง
+
+ยกตัวอย่าง:
+✦ ประชุมที่เครียด 2 ชั่วโมง → น้ำตาลขึ้น 30-50 mg/dL
+✦ ทะเลาะกับคนในครอบครัว → spike 40
+✦ คิดเรื่องงานก่อนนอน → night-time glucose สูง
+
+กลไก: ร่างกายมีระบบ "fight or flight"
+สมองส่งสัญญาณ → ต่อมหมวกไตปล่อย cortisol + adrenaline
+ตับได้รับคำสั่ง "เตรียมพลังงาน!" → สลายไกลโคเจน + สร้างกลูโคสใหม่จากโปรตีน (gluconeogenesis)
+ผลคือ — กลูโคสไหลออกสู่กระแสเลือดทันที
+แม้คุณจะไม่ได้กินอะไร
+
+งานวิจัยจาก University College London ปี 2014
+ติดตาม 140 คน · นาน 3 ปี
+พบว่า chronic stress เพิ่มความเสี่ยง insulin resistance + type 2 diabetes
+แม้ในคนที่กินดี · ออกกำลังกาย · BMI ปกติ
+
+นี่คือเหตุผลที่ longevity research ยุคใหม่ — ไม่พูดแค่อาหารและออกกำลังกาย
+แต่รวม sleep · stress management · meditation เป็นแกนหลักด้วย
+
+วิธีลด stress-glucose spike ที่มีหลักฐาน:
+✅ Box breathing 5 นาที (หายใจ 4-4-4-4) — ลด cortisol ทันที
+✅ เดินในธรรมชาติ 20 นาที (forest bathing · Park 2010)
+✅ Meditation 10 นาที/วัน (Headspace, Calm, MS app)
+✅ นอน 7-8 ชั่วโมง — sleep deprivation = cortisol สูงขึ้น
+
+ก่อนจะ blame อาหาร · ลอง check ความเครียดของตัวเองก่อน
+ตัวเลขในกราฟ — บอกเรื่องราวมากกว่าที่คิด
+
+#UPWellness #Stress #CGM #Cortisol #MindBody #Longevity</pre>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Image Prompts · 3 Styles</div>
+  </div>
+  <div class="prompts-grid">
+    <div class="prompt-card">
+      <span class="prompt-style editorial">A · Editorial</span>
+      <p class="prompt-text" id="img6a">Mid-shot of a Thai woman in her 40s sitting at a desk with laptop open, hands pressed against temples, eyes closed, late afternoon office lighting. CGM patch barely visible on upper arm. Mood: contained tension, not exaggerated. Documentary realism. Cream walls, warm desk lamp, scattered paperwork. Subdued color palette, slight muted warmth. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img6a">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style typography">B · Typography</span>
+      <p class="prompt-text" id="img6b">Bold Thai phrase "เครียด ≠ ไม่กิน · แต่น้ำตาลขึ้น" set in mixed Cormorant Garamond + Sarabun. Background: subtle EKG-like wavy line in old rose color across cream paper. Ink black text with rose accent on the equation symbol. Editorial magazine cover style. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img6b">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style dataviz">C · Data Viz</span>
+      <p class="prompt-text" id="img6c">Single CGM line graph showing 8 hours timeline: morning baseline 95, spike to 145 labeled "งานเครียด · ไม่ได้กิน", return to 100, second spike 135 labeled "ทะเลาะกับลูก". Cream background, sage green for baseline, terracotta red for spike segments. Clean annotations in Inter font. Subtle "UP Wellness" mark bottom-right. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img6c">Copy</button>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <span class="cta-label">CTA suggested</span>
+    <span class="cta-text">"ก่อนจะ blame อาหาร · ลอง check ความเครียดก่อน"</span>
+  </div>
+</article>
+
+<!-- POST 7 ─────────────────────────────────── -->
+<article class="post" id="post-7">
+  <div class="post-header">
+    <div class="rank-badge pending">
+      <div class="rank-num">7</div>
+      <div class="rank-label">R2</div>
+    </div>
+    <div class="post-titles">
+      <div class="post-eyebrow">🍶 Cheap Hack · Apple Cider Vinegar</div>
+      <h2 class="post-title">น้ำส้มสายชู 1 ช้อนก่อนกิน · ลด post-meal spike 20%</h2>
+    </div>
+    <div class="post-score">
+      <div class="score-num score-pending">—</div>
+      <div class="score-label">Pending</div>
+    </div>
+  </div>
+
+  <div class="hook">
+    "งานวิจัย Arizona State · 10 ปี · น้ำส้มสายชู 1 ช้อนโต๊ะก่อนมื้ออาหารคาร์บสูง · ลด glucose spike 20-30%"
+  </div>
+
+  <div class="mechanism">
+    <div class="mechanism-label">Mechanism</div>
+    <p>Acetic acid ใน vinegar → ยับยั้ง <strong>alpha-amylase + alpha-glucosidase</strong> (เอนไซม์ย่อยแป้ง) → ดูดซึมกลูโคสช้าลง · นอกจากนี้ยัง slow gastric emptying ด้วย · กลไกใกล้ acarbose (ยาเบาหวาน)</p>
+    <div class="citation">Johnston CS et al. · Diabetes Care · 2004 · n=29 · J Functional Foods 2017 meta-analysis</div>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Caption Full · Facebook</div>
+    <button class="copy-btn" data-copy="cap7">Copy</button>
+  </div>
+  <div class="caption-box">
+<pre id="cap7">🍶 เทคนิคโบราณที่วิทยาศาสตร์ยืนยัน — น้ำส้มสายชู 1 ช้อนก่อนกิน
+
+ก่อนมื้อข้าว/เส้น/ขนมปัง — ดื่มน้ำส้มสายชู 1 ช้อนโต๊ะ ผสมน้ำเปล่า 200 ml
+ผลใน CGM: post-meal spike ลดลง 20-30%
+ฟังดูเหลือเชื่อ? นี่คืองานวิจัยที่ Arizona State University ทำตั้งแต่ปี 2004
+
+Carol Johnston และทีม
+ติดตามคน 29 คน — แบ่งเป็น 3 กลุ่ม: healthy · insulin resistant · type 2 diabetes
+ให้กินอาหาร bagel + น้ำผลไม้ (สูง carb มาก)
+รอบที่ 1: ไม่มี vinegar
+รอบที่ 2: 20 ml apple cider vinegar ก่อนกิน
+
+ผล (ตีพิมพ์ใน Diabetes Care):
+✦ Insulin resistant กลุ่ม: post-meal glucose ลด 34%
+✦ Type 2 diabetes กลุ่ม: ลด 19%
+✦ Healthy กลุ่ม: ลด 30%
+✦ ทุกกลุ่มดีขึ้น ไม่มีกลุ่มไหนไม่เปลี่ยน
+
+กลไก:
+✦ Acetic acid ยับยั้ง alpha-amylase + alpha-glucosidase (เอนไซม์ย่อยแป้ง)
+✦ ชะลอ gastric emptying — น้ำตาลค่อยๆ ดูดซึม
+✦ กลไกคล้ายยา Acarbose (ที่หมอจ่ายให้คนเบาหวาน)
+
+วิธีกินที่ปลอดภัย:
+✅ 1 ช้อนโต๊ะ (15 ml) ผสมน้ำเปล่า 200 ml
+✅ ดื่ม 10-15 นาทีก่อนมื้อใหญ่
+✅ ใช้หลอดดูด (ลด tooth erosion)
+✅ Apple cider vinegar ที่มี "mother" (ขุ่นๆ ลอย) — มี probiotic เพิ่ม
+
+⚠️ ระวัง:
+✗ คนเป็นกระเพาะ/กรดไหลย้อน — งดเด็ดขาด
+✗ คนกิน insulin หรือยาขับปัสสาวะ — ปรึกษาหมอก่อน (อาจ interact)
+✗ ห้ามดื่ม undiluted — กัดฟัน + เยื่อบุหลอดอาหาร
+
+ไม่ได้จะแทนยา — แต่เป็น "tool" หนึ่งที่ใช้ร่วมกับการกินดี + ออกกำลังกาย
+ใส่ CGM ทดลองดูเอง — ในกราฟของคุณ ได้ผลแค่ไหน?
+
+#UPWellness #ACV #CGM #BloodSugar #DiabetesNaturalSupport</pre>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Image Prompts · 3 Styles</div>
+  </div>
+  <div class="prompts-grid">
+    <div class="prompt-card">
+      <span class="prompt-style editorial">A · Editorial</span>
+      <p class="prompt-text" id="img7a">Close-up: clear glass tumbler half-filled with diluted apple cider vinegar in water, lemon slice on rim. Wooden cutting board with whole apples, mason jar of mother-vinegar visible in soft-focus background. Morning kitchen light streaming from side. Warm browns and creams. Magazine food photography style. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img7a">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style typography">B · Typography</span>
+      <p class="prompt-text" id="img7b">Headline "น้ำส้มสายชู 1 ช้อน · ก่อนกิน" in elegant Thai serif with measurement-line illustration. Below: "−20% post-meal spike" in cleaner sans. Background: cream with subtle apple silhouette watermark. Ink black + sage green accents. Editorial magazine feel. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img7b">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style dataviz">C · Data Viz</span>
+      <p class="prompt-text" id="img7c">Two glucose curves overlaid on cream chart background. Curve 1 (red dashed): "มื้อปกติ" peaking at 175. Curve 2 (sage green solid): "ก่อนกิน + ACV 1 ช้อน" peaking at 138. Both start from baseline 90, time axis 0-3 hours. Citation "Arizona State 2004" bottom-right. Minimal Inter typography. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img7c">Copy</button>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <span class="cta-label">CTA suggested</span>
+    <span class="cta-text">"ใส่ CGM ทดลองดูเอง · ในกราฟของคุณ ได้ผลแค่ไหน?"</span>
+  </div>
+</article>
+
+<!-- POST 8 ─────────────────────────────────── -->
+<article class="post" id="post-8">
+  <div class="post-header">
+    <div class="rank-badge pending">
+      <div class="rank-num">8</div>
+      <div class="rank-label">R2</div>
+    </div>
+    <div class="post-titles">
+      <div class="post-eyebrow">🎢 Diet Psychology · Rebound Hunger</div>
+      <h2 class="post-title">หิวขนมบ่าย 3 ทุกวัน · ไม่ใช่ใจอ่อน · เป็นชีววิทยา</h2>
+    </div>
+    <div class="post-score">
+      <div class="score-num score-pending">—</div>
+      <div class="score-label">Pending</div>
+    </div>
+  </div>
+
+  <div class="hook">
+    "นี่คือเหตุผลที่คุณกินขนมตอนบ่าย 3 ทุกวัน · ไม่ใช่เพราะใจอ่อน — น้ำตาลตกของจริง"
+  </div>
+
+  <div class="mechanism">
+    <div class="mechanism-label">Mechanism</div>
+    <p>Spike แรงตอนเที่ยง → insulin surge → glucose ตกต่ำกว่า baseline (rebound) → สมองสั่ง "หิวจัด หาคาร์บด่วน" → กินเค้ก/ขนม → spike ใหม่ → loop · เรียกว่า <strong>glucose roller coaster</strong></p>
+    <div class="citation">Wyatt P et al. · Nature Metabolism · 2021 · PREDICT study · n=1,070</div>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Caption Full · Facebook</div>
+    <button class="copy-btn" data-copy="cap8">Copy</button>
+  </div>
+  <div class="caption-box">
+<pre id="cap8">🎢 ทำไมคุณหิวขนมตอนบ่าย 3 ทุกวัน — ไม่ใช่ใจอ่อน · เป็นชีววิทยา
+
+เคยสังเกตไหมว่า:
+✦ กินข้าวเที่ยงเต็มมื้อ
+✦ พอบ่าย 2-3 หิวจนขมขื่น
+✦ คว้าขนม/เค้ก/ชานม
+✦ "วันนี้ก็พังอีกแล้ว..."
+
+นี่ไม่ใช่ปัญหาใจอ่อน — เป็น glucose roller coaster
+
+ลำดับเหตุการณ์:
+1. มื้อเที่ยง carb สูง → glucose พุ่งขึ้น 180 mg/dL
+2. ตับอ่อนปล่อย insulin มากเพื่อดึงน้ำตาลเข้าเซลล์
+3. Insulin แรงเกิน → glucose ตกลงต่ำกว่า baseline (เช่น 70 mg/dL)
+4. สมองตื่นตระหนก "พลังงานไม่พอ — กิน carb ด่วน!"
+5. หิวจัด · กินขนม · spike ใหม่ · loop ต่อ
+
+ปี 2021 ทีม Tim Spector จาก King's College London
+ตีพิมพ์ PREDICT study ใน Nature Metabolism
+ติด CGM ใส่คน 1,070 คน · บันทึก 8,624 มื้ออาหาร
+พบว่า:
+✦ คนที่มี "glucose dip" หลังมื้อใหญ่ — รู้สึกหิวเร็วขึ้น 1-1.5 ชม.
+✦ กินแคลอรี่มื้อถัดไป มากขึ้น 300+ kcal
+✦ คน 2 คนกินมื้อเดียวกัน — dip ต่างกัน 5 เท่า
+
+ข้อความสำคัญ:
+ไม่ใช่ทุกคนล้มเหลวเพราะใจอ่อน
+หลายคนล้มเหลวเพราะ pattern กลูโคสในร่างกายไม่ stable
+"diet ที่ดีที่สุด" คือ diet ที่ make น้ำตาลคุณ stable
+
+วิธีลด glucose dip (และตัด rebound hunger):
+✦ เพิ่ม protein + fiber ในมื้อหลัก → ลด spike → ลด dip
+✦ Meal sequencing (ผักก่อน) — ลด initial peak
+✦ เดินหลังกิน 5 นาที — flatten curve
+✦ Strength training 2-3 ครั้ง/สัปดาห์ — เพิ่ม insulin sensitivity
+
+CGM เปลี่ยน mindset:
+"ฉันใจอ่อน" → "ร่างกายฉันต้องการการดูแลที่เหมาะกับมัน"
+นี่คือเหตุผลที่เราเชื่อใน data-driven wellness
+
+#UPWellness #CGM #ReboundHunger #DietPsychology #PREDICT</pre>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Image Prompts · 3 Styles</div>
+  </div>
+  <div class="prompts-grid">
+    <div class="prompt-card">
+      <span class="prompt-style editorial">A · Editorial</span>
+      <p class="prompt-text" id="img8a">Conceptual photo: Thai woman sitting at a kitchen table, staring at a piece of cake on a plate with conflicted expression. Empty rice bowl from previous meal visible. Afternoon golden hour light streaming through window. CGM sensor visible on arm. Documentary realism, not posed. Warm tones, slightly desaturated. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img8a">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style typography">B · Typography</span>
+      <p class="prompt-text" id="img8b">Bold Thai statement "ไม่ใช่ใจอ่อน — เป็นชีววิทยา" in oversized Cormorant Garamond serif breaking onto multiple lines. Background: cream with subtle wavy glucose roller-coaster line as decoration. Old rose accent on "ไม่ใช่". Editorial book-cover aesthetic. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img8b">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style dataviz">C · Data Viz</span>
+      <p class="prompt-text" id="img8c">Single glucose curve showing classic roller coaster: baseline 90 → meal at hour 0 → peak 180 at hour 1 → crash to 70 at hour 2.5 (labeled "dip · หิว craving zone") → snack at hour 3 → second peak 165 → second crash. Cream background, red line. "Rebound hunger zone" highlighted in old rose. Citation "PREDICT · Nature 2021" subtle bottom-right. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img8c">Copy</button>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <span class="cta-label">CTA suggested</span>
+    <span class="cta-text">"'ฉันใจอ่อน' → 'ร่างกายต้องการการดูแลที่เหมาะกับมัน'"</span>
+  </div>
+</article>
+
+<!-- POST 9 ─────────────────────────────────── -->
+<article class="post" id="post-9">
+  <div class="post-header">
+    <div class="rank-badge pending">
+      <div class="rank-num">9</div>
+      <div class="rank-label">R2</div>
+    </div>
+    <div class="post-titles">
+      <div class="post-eyebrow">💪 Strength · 48-hour Glucose Effect</div>
+      <h2 class="post-title">ออกกำลังกายแรงสูง 1 ครั้ง · ลดน้ำตาลได้ 48 ชั่วโมง</h2>
+    </div>
+    <div class="post-score">
+      <div class="score-num score-pending">—</div>
+      <div class="score-label">Pending</div>
+    </div>
+  </div>
+
+  <div class="hook">
+    "เวทเทรนนิ่ง 30 นาที วันจันทร์ · ทำให้น้ำตาลคุณดีขึ้นจนวันพุธ · ไม่ต้องออกทุกวัน"
+  </div>
+
+  <div class="mechanism">
+    <div class="mechanism-label">Mechanism</div>
+    <p>Resistance exercise → <strong>GLUT4 translocation</strong> ในกล้ามเนื้อ → muscle ดึง glucose เก็บเป็น glycogen · effect ยาว 24-72 ชม. · กล้ามเนื้อเป็น "glucose sink" ใหญ่ที่สุดในร่างกาย (~70% ของ glucose uptake)</p>
+    <div class="citation">Holten MK et al. · Diabetes · 2004 · T2DM · 6 weeks strength training</div>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Caption Full · Facebook</div>
+    <button class="copy-btn" data-copy="cap9">Copy</button>
+  </div>
+  <div class="caption-box">
+<pre id="cap9">💪 เวทเทรนนิ่ง 30 นาที วันจันทร์ — น้ำตาลคุณดีขึ้นจนวันพุธ
+
+ใครคิดว่าออกกำลังต้อง "ทุกวัน" ถึงจะได้ผล?
+งานวิจัยปี 2004 ที่ตีพิมพ์ใน Diabetes (journal)
+นำโดย Dr. Mette Holten · University of Copenhagen
+พบว่า — strength training ครั้งเดียว → effect คงอยู่ 24-72 ชั่วโมง
+
+การทดลอง:
+✦ ผู้ป่วย type 2 diabetes 10 คน
+✦ ทำ resistance training (squat + leg press + leg curl) 3 ครั้ง/สัปดาห์ × 6 weeks
+✦ เปรียบเทียบ glucose response ก่อน-หลัง
+ผล:
+✦ Insulin sensitivity ↑ 48% (เกือบเท่าตัว!)
+✦ Glucose uptake ในกล้ามเนื้อ ↑ 30%
+✦ Effect ยังอยู่ 48 ชม. หลัง session สุดท้าย
+
+ทำไมเวทถึงทรงพลังขนาดนี้?
+กล้ามเนื้อเป็น glucose sink ที่ใหญ่ที่สุดในร่างกาย
+~70% ของกลูโคสในเลือดถูกดูดซึมโดยกล้ามเนื้อ (เมื่อร่างกายปกติ)
+เวทเทรนนิ่ง → กระตุ้น GLUT4 expression
+เซลล์กล้ามเนื้อ "เปิดประตู" ดูดน้ำตาลเข้าใช้
+ทั้งระหว่างออกกำลัง และ 24-72 ชม.หลังจากนั้น
+
+อายุ 50+ ก็ทำได้:
+✦ ไม่ต้องยกหนัก — body weight squat 3 set × 10 reps พอ
+✦ ดัมเบล 2-5 kg ทำที่บ้านได้
+✦ Push-up (ใช้เก้าอี้พิงถ้ายังไม่ไหว)
+✦ 30 นาที / 3 ครั้ง/สัปดาห์ = พื้นฐาน
+
+โบนัส: ป้องกัน sarcopenia (กล้ามเนื้อหายตามอายุ)
+หลัง 30 ปี — กล้ามเนื้อหาย 3-8% ทุก 10 ปี
+ถ้าไม่ฝึก = กลูโคสควบคุมยากขึ้นทุกปี + เสี่ยงล้ม + เสี่ยงเสียชีวิตเร็ว
+
+คำเดียวจะบอก: เวท ไม่ใช่ของหนุ่มสาว
+เป็น longevity practice ของผู้ใหญ่ 40+ ทุกคน
+
+#UPWellness #Strength #CGM #Longevity #Sarcopenia</pre>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Image Prompts · 3 Styles</div>
+  </div>
+  <div class="prompts-grid">
+    <div class="prompt-card">
+      <span class="prompt-style editorial">A · Editorial</span>
+      <p class="prompt-text" id="img9a">Mid-shot of Thai woman in her 50s in comfortable workout wear, holding light dumbbells in mid-rep position. Home setting, natural window light, exercise mat on floor. CGM sensor visible on upper arm. Mood: calm focus, not strained or extreme. Sage green and cream tones. Documentary realism. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img9a">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style typography">B · Typography</span>
+      <p class="prompt-text" id="img9b">Bold numerical statement "30 min = 48 hours" with massive serif numerals dominating the canvas. Thai subscript "เวท 1 ครั้ง = น้ำตาลดี 2 วัน" below. Cream background with subtle barbell silhouette decoration. Old rose + sage green palette. Editorial poster style. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img9b">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style dataviz">C · Data Viz</span>
+      <p class="prompt-text" id="img9c">Timeline chart spanning 72 hours horizontal axis. Vertical line at hour 0 labeled "Resistance training · Monday 6pm". Glucose baseline curves below — sage green band (post-exercise improved baseline ~85-110), gray band above (pre-exercise baseline ~95-130). Annotation "Insulin sensitivity ↑ 48%" at peak effect zone. Citation "Holten · Diabetes 2004" subtle bottom-right. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img9c">Copy</button>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <span class="cta-label">CTA suggested</span>
+    <span class="cta-text">"เวท ไม่ใช่ของหนุ่มสาว · เป็น longevity practice ของผู้ใหญ่ 40+"</span>
+  </div>
+</article>
+
+<!-- POST 10 ─────────────────────────────────── -->
+<article class="post" id="post-10">
+  <div class="post-header">
+    <div class="rank-badge pending">
+      <div class="rank-num">10</div>
+      <div class="rank-label">R2</div>
+    </div>
+    <div class="post-titles">
+      <div class="post-eyebrow">🌅 Chrono-nutrition · Meal Timing</div>
+      <h2 class="post-title">มื้อใหญ่ตอนเช้า ดีกว่ามื้อใหญ่ตอนเย็น · แคลอรี่เท่ากัน</h2>
+    </div>
+    <div class="post-score">
+      <div class="score-num score-pending">—</div>
+      <div class="score-label">Pending</div>
+    </div>
+  </div>
+
+  <div class="hook">
+    "ข้าวมื้อใหญ่ 700 cal · กินตอนเช้า vs ตอนเย็น · กราฟ glucose ต่างกันเป็น 2 เท่า"
+  </div>
+
+  <div class="mechanism">
+    <div class="mechanism-label">Mechanism</div>
+    <p>ร่างกายมี <strong>circadian insulin sensitivity</strong> — ตอนเช้า insulin ทำงาน 25-50% ดีกว่าตอนเย็น · เพราะ pancreatic β-cells มี clock gene ของตัวเอง · กินดึก = "metabolic jet lag" → glucose pattern แย่กว่าทันที</p>
+    <div class="citation">Jakubowicz D et al. · Diabetologia · 2015 · n=18 T2DM · 3 months</div>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Caption Full · Facebook</div>
+    <button class="copy-btn" data-copy="cap10">Copy</button>
+  </div>
+  <div class="caption-box">
+<pre id="cap10">🌅 มื้อใหญ่ตอนเช้า — ดีกว่ามื้อใหญ่ตอนเย็น · แคลอรี่เท่ากัน
+
+"กินดึกแล้วอ้วน" — folk wisdom ที่จริงๆ มีวิทยาศาสตร์รองรับ
+แต่ที่น่าสนใจกว่า — มันมีผลกับ glucose มากกว่าน้ำหนักด้วยซ้ำ
+
+ปี 2015 Dr. Daniela Jakubowicz จาก Tel Aviv University
+ตีพิมพ์ใน Diabetologia
+ทดลองในคน type 2 diabetes 18 คน · 3 เดือน
+2 กลุ่ม กินแคลอรี่เท่ากัน (1,700 kcal/วัน) แค่กระจายต่างกัน:
+✦ กลุ่ม A: Breakfast 700 + Lunch 600 + Dinner 200 kcal
+✦ กลุ่ม B: Breakfast 200 + Lunch 600 + Dinner 700 kcal
+
+ผลหลัง 3 เดือน — กลุ่ม A (breakfast-heavy):
+✦ HbA1c ลด 0.6% (มากเทียบเท่ายาบางชนิด!)
+✦ Post-meal glucose ลด 20%
+✦ Insulin ต่ำลง ตับอ่อนทำงานน้อยลง
+✦ น้ำหนักลด 2.5 kg มากกว่ากลุ่ม B
+
+กลไก: Circadian Rhythm of Insulin
+ร่างกายมี "นาฬิกาภายใน" — pancreatic β-cells มี clock gene ของตัวเอง
+ตอนเช้า (6-10 โมง): insulin ทำงานดีที่สุด · sensitivity สูง 25-50%
+ตอนกลางคืน (หลัง 8 โมงเย็น): insulin sensitivity ลดลง
+อาหารเดียวกัน · เวลาต่างกัน · response ต่างกัน
+
+นี่คือเหตุผลที่:
+✦ คน Mediterranean กินมื้อใหญ่ตอนเที่ยง · เย็นเบา
+✦ Time-restricted eating (TRE) มักให้ "early window" (8am-4pm)
+✦ คนทำงานกะกลางคืน — เสี่ยงเบาหวาน + อ้วน มากกว่าคนทำงานกลางวัน
+
+แต่ใน context Thai — ความท้าทาย:
+✗ ครอบครัวทานข้าวเย็นรวมกัน
+✗ คนทำงานยุ่ง · มื้อเช้าไม่มีเวลา
+✗ Social events ส่วนใหญ่ตอนเย็น
+
+แนะนำแบบ realistic:
+✅ ถ้าเปลี่ยนได้ — มื้อเช้าเต็ม · มื้อเย็นเบา
+✅ ถ้าเปลี่ยนไม่ได้ — กินเย็นเสร็จเร็ว (ไม่ดึกกว่า 19:30)
+✅ ลด carb ในมื้อเย็น แม้ปริมาณเท่าเดิม
+✅ เดินหลังมื้อเย็น 10 นาที (compensate insulin sensitivity ที่ต่ำ)
+
+ใส่ CGM 14 วัน — ลองสลับ pattern ดูสัก 1 สัปดาห์
+จะเห็นกราฟต่างกันอย่างชัดเจน
+
+#UPWellness #ChronoNutrition #CGM #IntermittentFasting #CircadianRhythm</pre>
+  </div>
+
+  <div class="block-label">
+    <div class="block-title">Image Prompts · 3 Styles</div>
+  </div>
+  <div class="prompts-grid">
+    <div class="prompt-card">
+      <span class="prompt-style editorial">A · Editorial</span>
+      <p class="prompt-text" id="img10a">Symmetric overhead split-frame: left side shows breakfast spread (jasmine rice porridge, eggs, vegetables) bathed in morning golden light. Right side shows same meal at dinner under warm evening lamp light. Identical food, different time. Cream tablecloth on both. Documentary food photography style. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img10a">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style typography">B · Typography</span>
+      <p class="prompt-text" id="img10b">Bold Thai phrase "มื้อเช้า ≠ มื้อเย็น · แคลอรี่เท่ากันก็ตาม" in Thai serif weights breaking into multiple lines. Background: gradient from sunrise warm orange (top) to sunset deep navy blue (bottom) on cream paper. Sun + moon icons subtle on each end. Editorial poster style. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img10b">Copy</button>
+    </div>
+    <div class="prompt-card">
+      <span class="prompt-style dataviz">C · Data Viz</span>
+      <p class="prompt-text" id="img10c">Two CGM 24-hour curves overlaid on cream chart. Curve A (sage green): "Breakfast-heavy day" with smaller well-spaced spikes, peaks under 140. Curve B (terracotta): "Dinner-heavy day" with one massive late-evening spike to 180 sustained into night. Annotation "HbA1c −0.6% in 3 months" with arrow pointing to curve A. Citation "Jakubowicz · Diabetologia 2015" subtle bottom-right. 4:5 aspect.</p>
+      <button class="prompt-copy" data-copy="img10c">Copy</button>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <span class="cta-label">CTA suggested</span>
+    <span class="cta-text">"ใส่ CGM 14 วัน · สลับ pattern ดูสัก 1 สัปดาห์ จะเห็นต่าง"</span>
   </div>
 </article>
 
