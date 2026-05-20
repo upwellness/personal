@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>คุณพิมพ์ปวีณ์ · Care Plan v1 — Food Sensitivity Protocol</title>
+<meta name="description" content="แผนการจัดการ Food Sensitivity (IgG) · UP Wellness · 17 พ.ค. 2569" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,500&family=Sarabun:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rose:        #8C4C4C;
+    --rose-deep:   #6E3838;
+    --rose-soft:   #B57878;
+    --rose-mist:   #F4ECEC;
+    --green:       #396755;
+    --green-deep:  #2A4D40;
+    --green-mist:  #E5EDEA;
+    --cream:       #F5F0EB;
+    --cream-deep:  #EDE6DF;
+    --ink:         #1F1E1B;
+    --ink-60:      #5C5A56;
+    --ink-40:      #8B8884;
+    --ink-20:      #C9C6C0;
+    --ink-10:      #E5E2DD;
+    --gold:        #B8965A;
+    --bronze:      #A67849;
+    --avoid:       #DC2626;
+    --reduce:      #EA580C;
+    --caution:     #CA8A04;
+    --safe:        #16A34A;
+
+    --shadow-sm: 0 1px 2px rgba(31,30,27,.04);
+    --shadow:    0 4px 12px rgba(31,30,27,.06);
+    --shadow-lg: 0 12px 32px rgba(31,30,27,.08);
+
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-thai:  'Sarabun', system-ui, sans-serif;
+    --font-mono:  'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-thai);
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  .wrap-narrow { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  /* ─── Hero ─── */
+  .hero {
+    background: linear-gradient(180deg, var(--cream) 0%, var(--cream-deep) 100%);
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--ink-10);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 30px; right: 60px;
+    width: 180px; height: 180px;
+    border: 1px solid var(--rose);
+    border-radius: 50%;
+    opacity: 0.08;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 16px;
+  }
+  .hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--rose);
+    font-weight: 500;
+  }
+  .hero-sub {
+    font-size: 17px;
+    color: var(--ink-60);
+    max-width: 620px;
+    line-height: 1.65;
+    margin-bottom: 32px;
+  }
+  .hero-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    padding-top: 28px;
+    border-top: 1px solid var(--ink-10);
+  }
+  .meta-item { }
+  .meta-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-40);
+    margin-bottom: 4px;
+  }
+  .meta-value {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* ─── Section ─── */
+  .section {
+    padding: 60px 0;
+    border-bottom: 1px solid var(--ink-10);
+  }
+  .section:last-of-type { border-bottom: none; }
+
+  .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: clamp(28px, 3.6vw, 38px);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+  .section-intro {
+    font-size: 16px;
+    color: var(--ink-60);
+    margin-bottom: 32px;
+    max-width: 720px;
+  }
+
+  /* ─── Cards ─── */
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 28px 32px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 16px;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  /* Disclaimer */
+  .disclaimer {
+    background: var(--rose-mist);
+    border-left: 3px solid var(--rose);
+    padding: 16px 22px;
+    border-radius: 8px;
+    margin: 24px 0;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--ink-60);
+  }
+  .disclaimer strong { color: var(--rose-deep); }
+
+  /* Allergen pills */
+  .allergen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    margin: 20px 0;
+  }
+  .allergen-pill {
+    background: white;
+    border: 1px solid var(--ink-10);
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .allergen-pill.eliminate { border-left: 3px solid var(--avoid); }
+  .allergen-pill.reduce    { border-left: 3px solid var(--reduce); }
+  .allergen-name {
+    font-family: var(--font-thai);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .allergen-en {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-40);
+    margin-top: 2px;
+  }
+  .allergen-score {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--avoid);
+  }
+  .allergen-pill.reduce .allergen-score { color: var(--reduce); }
+
+  /* Status badges */
+  .status-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .status-badge.avoid    { background: #FEE2E2; color: #991B1B; }
+  .status-badge.reduce   { background: #FED7AA; color: #9A3412; }
+  .status-badge.caution  { background: #FEF3C7; color: #92400E; }
+  .status-badge.safe     { background: #DCFCE7; color: #14532D; }
+
+  /* Supplement table */
+  .supp-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    font-size: 13.5px;
+  }
+  .supp-table th {
+    text-align: left;
+    padding: 8px 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-60);
+  }
+  .supp-table td {
+    background: white;
+    padding: 14px 12px;
+    vertical-align: top;
+  }
+  .supp-table td:first-child { border-radius: 8px 0 0 8px; }
+  .supp-table td:last-child  { border-radius: 0 8px 8px 0; }
+  .supp-row-avoid td    { background: #FFF5F5; }
+  .supp-row-reduce td   { background: #FFF8F0; }
+  .supp-row-caution td  { background: #FFFBEB; }
+  .supp-row-safe td     { background: #F0FDF4; }
+  .supp-product {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 13.5px;
+  }
+  .supp-en {
+    color: var(--ink-40);
+    font-size: 11px;
+    font-family: var(--font-mono);
+    margin-top: 2px;
+  }
+  .supp-reason {
+    color: var(--ink-60);
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+  .supp-alt {
+    background: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--green-deep);
+    border: 1px dashed var(--green);
+    margin-top: 6px;
+    display: inline-block;
+  }
+  .supp-conflict {
+    display: inline-block;
+    padding: 2px 8px;
+    background: white;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--avoid);
+    margin: 2px 4px 0 0;
+  }
+
+  /* Protocol timeline */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 0;
+    width: 2px; height: 100%;
+    background: linear-gradient(180deg, var(--avoid) 0%, var(--reduce) 30%, var(--caution) 60%, var(--safe) 100%);
+    border-radius: 1px;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 32px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -32px; top: 6px;
+    width: 18px; height: 18px;
+    background: white;
+    border: 3px solid var(--rose);
+    border-radius: 50%;
+  }
+  .timeline-item.month-1::before { border-color: var(--avoid); }
+  .timeline-item.month-2::before { border-color: var(--reduce); }
+  .timeline-item.month-3::before { border-color: var(--caution); }
+  .timeline-item.month-4::before { border-color: var(--safe); }
+  .timeline-phase {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rose);
+    font-weight: 700;
+  }
+  .timeline-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 4px 0 8px;
+  }
+  .timeline-actions {
+    list-style: none;
+    padding: 0;
+  }
+  .timeline-actions li {
+    padding-left: 20px;
+    position: relative;
+    margin: 4px 0;
+    font-size: 14px;
+    color: var(--ink-60);
+  }
+  .timeline-actions li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--rose);
+    font-weight: 700;
+  }
+
+  /* Journal template */
+  .journal {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 16px 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.85;
+    color: var(--ink-60);
+    border: 1px dashed var(--ink-20);
+    white-space: pre-wrap;
+  }
+
+  /* Print */
+  @media print {
+    body { background: white; }
+    .hero { background: white; padding: 20px 0; }
+    .section { padding: 30px 0; page-break-inside: avoid; }
+    .card, .supp-table td { box-shadow: none; }
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    .hero { padding: 40px 0; }
+    .section { padding: 40px 0; }
+    .card { padding: 20px 22px; }
+    .supp-table { font-size: 12px; }
+    .supp-table th, .supp-table td { padding: 10px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-eyebrow">UP Wellness · Care Plan v1 · 17 พ.ค. 2569</div>
+    <h1 class="hero-title">คุณพิมพ์ปวีณ์ · <em>Food Sensitivity</em><br/>แผนการจัดการ 6 เดือน</h1>
+    <p class="hero-sub">
+      จากผลตรวจ N Health Food Sensitivity (IgG · 220 อาหาร) วันที่ 17/5/2569
+      พบอาหารที่ระบบภูมิคุ้มกัน "จำได้" 26 รายการ — เป็นแนวทาง elimination + reintroduction protocol ส่วนตัว
+      ไม่ใช่การวินิจฉัยโรค · ไม่ทดแทนแพทย์
+    </p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <div class="meta-label">Test Type</div>
+        <div class="meta-value">IgG · 220 panel</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Tested at</div>
+        <div class="meta-value">N Health · 17/5/2569</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Foods Flagged</div>
+        <div class="meta-value">26 รายการ</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Protocol</div>
+        <div class="meta-value">3-6 เดือน</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══ Section 1: Quick Understanding ═══ -->
+<section class="section">
+  <div class="wrap-narrow">
+    <div class="section-eyebrow">Section 1 · เริ่มต้นเข้าใจก่อน</div>
+    <h2 class="section-title">IgG ≠ "แพ้จริง"</h2>
+    <p class="section-intro">
+      ก่อนเริ่มแผน — สิ่งที่อยากให้พิมพ์ปวีณ์เข้าใจ 3 ข้อ
+    </p>
+
+    <div class="card">
+      <h3 style="font-family:var(--font-serif); font-size:20px; margin-bottom:12px; color:var(--ink);">1. IgG = "ร่างกายเคยเจออาหารบ่อย"</h3>
+      <p style="color:var(--ink-60); line-height:1.75;">
+        IgG เป็น antibody ที่ร่างกายผลิตเมื่อเจออาหารซ้ำๆ — ค่าสูง <strong>ไม่ได้แปลว่า "แพ้จริง"</strong> เสมอ
+        แต่ใช้เป็น guide สำหรับ <strong>elimination diet</strong> ได้
+        เพื่อดูว่าถ้าตัดอาหารเหล่านี้ออก 3-6 เดือน อาการดีขึ้นไหม
+      </p>
+    </div>
+
+    <div class="card">
+      <h3 style="font-family:var(--font-serif); font-size:20px; margin-bottom:12px; color:var(--ink);">2. ถ้าเคยกินแล้วมีอาการเฉียบพลัน (ลมพิษ · บวม · หายใจไม่ออก) = IgE</h3>
+      <p style="color:var(--ink-60); line-height:1.75;">
+        นั่นคนละเรื่อง · ต้องตรวจเพิ่มที่ allergist · IgE = แพ้จริง · หลีกเลี่ยงตลอดชีวิต
+        Report ที่มี = IgG อย่างเดียว
+      </p>
+    </div>
+
+    <div class="card">
+      <h3 style="font-family:var(--font-serif); font-size:20px; margin-bottom:12px; color:var(--ink);">3. Protocol นี้ = Elimination 3-6 เดือน → Reintroduce ทีละตัว</h3>
+      <p style="color:var(--ink-60); line-height:1.75;">
+        ไม่ใช่ "เลิกตลอดชีวิต" · เราจะหลีกเลี่ยงก่อน 3-6 เดือน
+        แล้วค่อย reintroduce ทีละ 1 อย่าง · ดูว่าตัวไหนจริงๆ ที่ทำให้รู้สึกแย่
+      </p>
+    </div>
+
+    <div class="disclaimer">
+      <strong>⚠️ Caveat สำคัญ:</strong> องค์กรการแพทย์หลัก (AAAAI สหรัฐ · EAACI ยุโรป · ASCIA ออสเตรเลีย)
+      <strong>ไม่รับรอง IgG test ว่าเป็น diagnostic tool</strong> ทางการแพทย์ ·
+      แต่ functional medicine practitioner ใช้เป็น clinical guide สำหรับ elimination protocol
+      <br/><br/>
+      แผนนี้ออกแบบบนสมมติฐานว่าใช้เป็น <strong>guide</strong> — ก่อน eliminate รายการยาว ควรปรึกษา <strong>dietitian หรือ functional medicine MD</strong> เพื่อ design plan + monitor nutritional intake
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Section 2: Allergens to Avoid ═══ -->
+<section class="section" style="background:var(--cream-deep);">
+  <div class="wrap">
+    <div class="section-eyebrow">Section 2 · อาหารที่ต้องหลีกเลี่ยง</div>
+    <h2 class="section-title">21 รายการ · <em>Eliminate</em> 3-6 เดือน</h2>
+    <p class="section-intro">
+      IgG score ≥ 30 — ระบบภูมิคุ้มกันมี antibody ระดับสูงต่ออาหารเหล่านี้
+      <br/>หลีกเลี่ยงให้สมบูรณ์ 12-24 สัปดาห์ก่อน reintroduce
+    </p>
+
+    <div class="allergen-grid">
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">ยีสต์สำหรับทำขนมปัง</div>
+          <div class="allergen-en">Yeast (Baker's)</div>
+        </div>
+        <div class="allergen-score">81</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">แปะก๊วย</div>
+          <div class="allergen-en">Ginkgo</div>
+        </div>
+        <div class="allergen-score">73</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">มันฝรั่ง</div>
+          <div class="allergen-en">Potato</div>
+        </div>
+        <div class="allergen-score">56</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">บรูเวอร์ยีสต์</div>
+          <div class="allergen-en">Yeast (Brewer's)</div>
+        </div>
+        <div class="allergen-score">55</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">กั่วโคล่า</div>
+          <div class="allergen-en">Cola Nut</div>
+        </div>
+        <div class="allergen-score">52</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">กั่วพิสตาชิโอ</div>
+          <div class="allergen-en">Pistachio</div>
+        </div>
+        <div class="allergen-score">50</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">อมารันท์</div>
+          <div class="allergen-en">Amaranth</div>
+        </div>
+        <div class="allergen-score">45</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">มะม่วงหิมพานต์</div>
+          <div class="allergen-en">Cashew Nut</div>
+        </div>
+        <div class="allergen-score">44</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">นมวัว</div>
+          <div class="allergen-en">Milk (Cow)</div>
+        </div>
+        <div class="allergen-score">43</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">แป้งไกลอะดิน (Gluten)</div>
+          <div class="allergen-en">Gliadin</div>
+        </div>
+        <div class="allergen-score">42</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">ผงวุ้น</div>
+          <div class="allergen-en">Agar Agar</div>
+        </div>
+        <div class="allergen-score">42</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">ข้าวโอ๊ต</div>
+          <div class="allergen-en">Oat</div>
+        </div>
+        <div class="allergen-score">41</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">กั่วลันเตา</div>
+          <div class="allergen-en">Pea</div>
+        </div>
+        <div class="allergen-score">41</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">หอยโข่ง</div>
+          <div class="allergen-en">Winkle</div>
+        </div>
+        <div class="allergen-score">40</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">ไข่ขาว</div>
+          <div class="allergen-en">Egg White</div>
+        </div>
+        <div class="allergen-score">39</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">ข้าวโพด</div>
+          <div class="allergen-en">Corn (Maize)</div>
+        </div>
+        <div class="allergen-score">38</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">ผักคื่นช่ายฝรั่ง</div>
+          <div class="allergen-en">Celery</div>
+        </div>
+        <div class="allergen-score">33</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">ลูกพลัม</div>
+          <div class="allergen-en">Plum</div>
+        </div>
+        <div class="allergen-score">33</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">ข้าวมอลต์</div>
+          <div class="allergen-en">Malt</div>
+        </div>
+        <div class="allergen-score">32</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">กั่วขาว</div>
+          <div class="allergen-en">Bean (White Haricot)</div>
+        </div>
+        <div class="allergen-score">30</div>
+      </div>
+      <div class="allergen-pill eliminate">
+        <div>
+          <div class="allergen-name">สควอช</div>
+          <div class="allergen-en">Squash</div>
+        </div>
+        <div class="allergen-score">30</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--font-serif); font-size:24px; font-weight:600; margin:32px 0 16px; color:var(--ink);">
+      <em>Reduce</em> · 5 รายการ — ≤ 1 ครั้ง/สัปดาห์
+    </h3>
+
+    <div class="allergen-grid">
+      <div class="allergen-pill reduce">
+        <div>
+          <div class="allergen-name">ข้าวบาร์เลย์</div>
+          <div class="allergen-en">Barley</div>
+        </div>
+        <div class="allergen-score">29</div>
+      </div>
+      <div class="allergen-pill reduce">
+        <div>
+          <div class="allergen-name">แครนเบอร์รี่</div>
+          <div class="allergen-en">Cranberry</div>
+        </div>
+        <div class="allergen-score">29</div>
+      </div>
+      <div class="allergen-pill reduce">
+        <div>
+          <div class="allergen-name">ส้ม</div>
+          <div class="allergen-en">Orange</div>
+        </div>
+        <div class="allergen-score">27</div>
+      </div>
+      <div class="allergen-pill reduce">
+        <div>
+          <div class="allergen-name">กั่วลิสง</div>
+          <div class="allergen-en">Peanut</div>
+        </div>
+        <div class="allergen-score">25</div>
+      </div>
+      <div class="allergen-pill reduce">
+        <div>
+          <div class="allergen-name">หอยแมลงภู่</div>
+          <div class="allergen-en">Mussel</div>
+        </div>
+        <div class="allergen-score">25</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Section 3: Supplement Safety ═══ -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-eyebrow">Section 3 · ผลิตภัณฑ์เสริมอาหาร</div>
+    <h2 class="section-title">16 SKUs · <em>Nutrilite/XS</em> ที่ตรวจครบแล้ว</h2>
+    <p class="section-intro">
+      Cross-reference กับ allergy list ของพิมพ์ปวีณ์ทุก ingredient ทั้ง main + hidden source
+    </p>
+
+    <h3 style="font-family:var(--font-serif); font-size:22px; font-weight:600; margin:24px 0 16px; color:var(--ink); display:flex; align-items:center; gap:12px;">
+      <span class="status-badge avoid">🔴 AVOID · หลีกเลี่ยง</span>
+      <span>5 SKUs</span>
+    </h3>
+
+    <table class="supp-table">
+      <thead>
+        <tr>
+          <th style="width:30%;">Product</th>
+          <th style="width:25%;">Conflict</th>
+          <th>เหตุผล + ทางเลือก</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="supp-row-avoid">
+          <td>
+            <div class="supp-product">All Plant Protein (Original)</div>
+            <div class="supp-en">110415TH</div>
+          </td>
+          <td>
+            <span class="supp-conflict">⚠ wheat</span>
+            <span class="supp-conflict">⚠ pea</span>
+          </td>
+          <td>
+            <div class="supp-reason">Wheat 2g + Pea 1.5g/scoop · 2 ตัวอยู่ใน eliminate list</div>
+            <div class="supp-alt">💡 Hemp/Rice/Pumpkin seed protein</div>
+          </td>
+        </tr>
+        <tr class="supp-row-avoid">
+          <td>
+            <div class="supp-product">All Plant Protein Plus (NEW)</div>
+            <div class="supp-en">new SKU</div>
+          </td>
+          <td>
+            <span class="supp-conflict">⚠ wheat</span>
+          </td>
+          <td>
+            <div class="supp-reason">Wheat 1g/scoop ยังอยู่ใน formula ใหม่</div>
+            <div class="supp-alt">💡 Hemp/Rice protein · BodyKey (verify chia)</div>
+          </td>
+        </tr>
+        <tr class="supp-row-avoid">
+          <td>
+            <div class="supp-product">Chewable Fiber Blend</div>
+            <div class="supp-en">104402TH</div>
+          </td>
+          <td>
+            <span class="supp-conflict">⚠ oat</span>
+            <span class="supp-conflict">⚠ wheat</span>
+            <span class="supp-conflict">⚠ pea</span>
+            <span class="supp-conflict">⚠ barley</span>
+          </td>
+          <td>
+            <div class="supp-reason">Multi-fiber: oat + wheat + pea + barley bran + soybean — ทุกตัวมีปัญหา</div>
+            <div class="supp-alt">💡 Psyllium husk (Metamucil / Plantago ovata)</div>
+          </td>
+        </tr>
+        <tr class="supp-row-avoid">
+          <td>
+            <div class="supp-product">Calow (Carb Blocker)</div>
+            <div class="supp-en">100193TH</div>
+          </td>
+          <td>
+            <span class="supp-conflict">⚠ bean</span>
+          </td>
+          <td>
+            <div class="supp-reason">White bean extract 183mg · score 30 eliminate</div>
+            <div class="supp-alt">💡 ACV 1 ช้อนก่อนกิน · Berberine 500mg × 3</div>
+          </td>
+        </tr>
+        <tr class="supp-row-avoid">
+          <td>
+            <div class="supp-product">Vitamin B Plus</div>
+            <div class="supp-en">122304TH</div>
+          </td>
+          <td>
+            <span class="supp-conflict">⚠ yeast</span>
+          </td>
+          <td>
+            <div class="supp-reason">Yeast powder 75mg/tab · ของพิมพ์ปวีณ์ score 81 (สูงสุดในรายการ!)</div>
+            <div class="supp-alt">💡 Methylated B-complex (Thorne, Pure Encapsulations) ที่ไม่ใช่ yeast-derived</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-family:var(--font-serif); font-size:22px; font-weight:600; margin:32px 0 16px; color:var(--ink); display:flex; align-items:center; gap:12px;">
+      <span class="status-badge reduce">🟠 REDUCE · ลดความถี่</span>
+      <span>3 SKUs</span>
+    </h3>
+
+    <table class="supp-table">
+      <tbody>
+        <tr class="supp-row-reduce">
+          <td>
+            <div class="supp-product">Probiotic W</div>
+            <div class="supp-en">120571TH</div>
+          </td>
+          <td><span class="supp-conflict">⚠ cranberry</span></td>
+          <td>
+            <div class="supp-reason">Cranberry 60mg/sachet · daily ใช้เกิน 1×/week limit</div>
+            <div class="supp-alt">💡 จำกัด 1-2 ซอง/สัปดาห์ · หรือ Bio-Kult/Yakult (verify)</div>
+          </td>
+        </tr>
+        <tr class="supp-row-reduce">
+          <td>
+            <div class="supp-product">Concentrated F&V</div>
+            <div class="supp-en">102992TH</div>
+          </td>
+          <td><span class="supp-conflict">⚠ orange</span></td>
+          <td>
+            <div class="supp-reason">Orange + lemon ใน blend · daily ใช้เกิน 1×/week</div>
+            <div class="supp-alt">💡 สลับวัน · กิน 2-3 วัน/สัปดาห์</div>
+          </td>
+        </tr>
+        <tr class="supp-row-reduce">
+          <td>
+            <div class="supp-product">Bio C Plus</div>
+            <div class="supp-en">109745TH</div>
+          </td>
+          <td><span class="supp-conflict">⚠ orange</span></td>
+          <td>
+            <div class="supp-reason">Citrus bioflavonoids · daily เกิน limit</div>
+            <div class="supp-alt">💡 Liposomal Vit C จากเภสัช</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-family:var(--font-serif); font-size:22px; font-weight:600; margin:32px 0 16px; color:var(--ink); display:flex; align-items:center; gap:12px;">
+      <span class="status-badge caution">🟡 CAUTION · ตรวจ label ก่อน</span>
+      <span>3 SKUs</span>
+    </h3>
+
+    <table class="supp-table">
+      <tbody>
+        <tr class="supp-row-caution">
+          <td>
+            <div class="supp-product">XS Essential Amino Acid Plus</div>
+            <div class="supp-en">new SKU</div>
+          </td>
+          <td><span class="supp-conflict">⚠ corn?</span></td>
+          <td>
+            <div class="supp-reason">Maltodextrin source ไม่ระบุ — มัก corn-derived (38 eliminate) · Soy isolate 250mg (soy not on list)</div>
+            <div class="supp-alt">💡 Verify maltodextrin source กับ Amway TH ก่อน</div>
+          </td>
+        </tr>
+        <tr class="supp-row-caution">
+          <td>
+            <div class="supp-product">Lecithin E</div>
+            <div class="supp-en">A4445TH</div>
+          </td>
+          <td><span class="supp-conflict">⚠ walnut flavor</span></td>
+          <td>
+            <div class="supp-reason">Maple walnut flavor — walnut ไม่อยู่ใน report · verify ว่า panel test walnut หรือไม่</div>
+            <div class="supp-alt">💡 Sunflower lecithin (non-Nutrilite) · trial dose ครึ่งเม็ดก่อน</div>
+          </td>
+        </tr>
+        <tr class="supp-row-caution">
+          <td>
+            <div class="supp-product">BodyKey Meal Replacement</div>
+            <div class="supp-en">multi SKU</div>
+          </td>
+          <td><span class="supp-conflict">⚠ chia</span></td>
+          <td>
+            <div class="supp-reason">มี chia (Lamiaceae · ไม่อยู่ใน list) · verify ว่า panel test chia + check fortified vitamins source</div>
+            <div class="supp-alt">💡 ถามว่าเคยกิน chia แล้วไม่มีอาการไหม</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-family:var(--font-serif); font-size:22px; font-weight:600; margin:32px 0 16px; color:var(--ink); display:flex; align-items:center; gap:12px;">
+      <span class="status-badge safe">✅ SAFE · ใช้ได้ตามฉลาก</span>
+      <span>5 SKUs</span>
+    </h3>
+
+    <table class="supp-table">
+      <tbody>
+        <tr class="supp-row-safe">
+          <td>
+            <div class="supp-product">Triple Omega</div>
+            <div class="supp-en">126132TH</div>
+          </td>
+          <td>—</td>
+          <td>
+            <div class="supp-reason">Fish oil (salmon/anchovy/sardine/mackerel) + chia oil refined · ไม่มีของใน list</div>
+          </td>
+        </tr>
+        <tr class="supp-row-safe">
+          <td>
+            <div class="supp-product">Garlic</div>
+            <div class="supp-en">A5923TH</div>
+          </td>
+          <td>—</td>
+          <td>
+            <div class="supp-reason">Garlic + Parsley + Watercress + Licorice · ไม่มีของใน list</div>
+          </td>
+        </tr>
+        <tr class="supp-row-safe">
+          <td>
+            <div class="supp-product">Spinach Plus</div>
+            <div class="supp-en">A5924TH</div>
+          </td>
+          <td>—</td>
+          <td>
+            <div class="supp-reason">Oyster shell + Spinach + Iron + Folate · ไม่มีของใน list</div>
+          </td>
+        </tr>
+        <tr class="supp-row-safe">
+          <td>
+            <div class="supp-product">Mixed Collagen Peptide</div>
+            <div class="supp-en">119293TH</div>
+          </td>
+          <td>—</td>
+          <td>
+            <div class="supp-reason">Marine collagen + Soybean peptide + Chrysanthemum · ไม่มีของใน list</div>
+          </td>
+        </tr>
+        <tr class="supp-row-safe">
+          <td>
+            <div class="supp-product">CLA 500</div>
+            <div class="supp-en">102178TH</div>
+          </td>
+          <td>—</td>
+          <td>
+            <div class="supp-reason">Safflower oil-derived CLA + gelatin · Asteraceae family · ไม่อยู่ใน list</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ Section 4: Reintroduction Protocol ═══ -->
+<section class="section" style="background:var(--cream-deep);">
+  <div class="wrap-narrow">
+    <div class="section-eyebrow">Section 4 · Timeline</div>
+    <h2 class="section-title">Reintroduction <em>Protocol</em> · 16 สัปดาห์</h2>
+    <p class="section-intro">
+      ไม่ต้องตัดสนิทตลอดชีวิต · ตัด 12 สัปดาห์ → reintroduce ทีละตัว
+    </p>
+
+    <div class="timeline">
+
+      <div class="timeline-item month-1">
+        <div class="timeline-phase">Month 1 · Strict Elimination</div>
+        <h3 class="timeline-title">Week 1-4 · เริ่มหลีกเลี่ยงเต็มที่</h3>
+        <ul class="timeline-actions">
+          <li>หลีกเลี่ยง 21 รายการ eliminate list ทั้งหมด</li>
+          <li>5 รายการ reduce list · กิน ≤ 1 ครั้ง/สัปดาห์</li>
+          <li>เปลี่ยน Vitamin B Plus → methylated B-complex (เภสัช)</li>
+          <li>หยุด Probiotic W · ใช้สลับ probiotic อื่นที่ไม่มี cranberry</li>
+          <li>เริ่ม journal บันทึกอาการรายวัน (template ด้านล่าง)</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item month-2">
+        <div class="timeline-phase">Month 2 · Steady State</div>
+        <h3 class="timeline-title">Week 5-8 · สังเกตการเปลี่ยนแปลง</h3>
+        <ul class="timeline-actions">
+          <li>ดูว่าอาการที่ทำให้ตรวจตั้งแต่แรก ดีขึ้นไหม?</li>
+          <li>อาการที่ใส่ใจ: ท้องอืด · เพลีย · ปวดหัว · ผื่น · brain fog · ตื่นกลางดึก</li>
+          <li>ถ้าอาการดีขึ้น = elimination ได้ผล · ทำต่อ</li>
+          <li>ถ้าไม่ดีขึ้น = อาจไม่ใช่อาหารกลุ่มนี้ · ปรึกษาแพทย์/dietitian</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item month-3">
+        <div class="timeline-phase">Month 3 · Final Elimination</div>
+        <h3 class="timeline-title">Week 9-12 · เก็บผลลัพธ์</h3>
+        <ul class="timeline-actions">
+          <li>ถ้า Month 1-2 ดีขึ้นจริง → continue 4 สัปดาห์เพื่อ stable</li>
+          <li>เริ่มเตรียม reintroduction list · เรียงลำดับจาก "อยากกินที่สุด" → "น้อยที่สุด"</li>
+          <li>นัด follow-up กับ UP Wellness (Week 12) เพื่อ review พร้อมข้อมูล journal</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item month-4">
+        <div class="timeline-phase">Month 4 · Reintroduce ทีละตัว</div>
+        <h3 class="timeline-title">Week 13-16 · ทดสอบทีละอาหาร</h3>
+        <ul class="timeline-actions">
+          <li><strong>1 อาหารใหม่ทุก 3-5 วัน</strong> — เริ่มจากอาหารที่อยากกินก่อน</li>
+          <li>กินปริมาณ "ปกติ" (ไม่ใช่นิดเดียว) · บันทึกอาการ 48-72 ชม.</li>
+          <li>ถ้ามีอาการกลับมา (ท้องอืด · ผื่น · เพลีย · ปวดหัว) → ตัวนั้นคือ "trigger จริง"</li>
+          <li>ถ้าไม่มีอาการ → ใส่กลับเข้า diet ได้ปกติ</li>
+          <li>ห้าม reintroduce 2 อาหารพร้อมกัน — แยกตัวไม่ออกถ้ามีอาการ</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="disclaimer" style="background:var(--green-mist); border-left-color:var(--green);">
+      <strong style="color:var(--green-deep);">💡 Important:</strong> ระหว่าง protocol นี้ ถ้ามีอาการรุนแรง · ลมพิษ · บวม · หายใจไม่ออก → ไปโรงพยาบาลทันที (อาจเป็น IgE allergy ที่ test ไม่จับ)
+      <br/><br/>
+      ผู้ที่กินยาประจำ · มีโรคประจำตัว · ตั้งครรภ์ → ห้ามเริ่ม elimination protocol โดยไม่ปรึกษาแพทย์ก่อน
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Section 5: Journal Template ═══ -->
+<section class="section">
+  <div class="wrap-narrow">
+    <div class="section-eyebrow">Section 5 · Tracking Tool</div>
+    <h2 class="section-title">Daily Journal <em>Template</em></h2>
+    <p class="section-intro">
+      บันทึกทุกวันใน 16 สัปดาห์ · ใช้เป็นข้อมูลตอน follow-up
+    </p>
+
+    <div class="journal">
+📅 วันที่: ___________  สัปดาห์ที่: ___________
+
+🍽️ มื้อเช้า: ________________________________________________
+🍽️ มื้อกลางวัน: _____________________________________________
+🍽️ มื้อเย็น: ________________________________________________
+🍽️ ของว่าง: ________________________________________________
+
+📊 อาการวันนี้ (0-10 · 0=ไม่มี · 10=หนักมาก):
+   ท้องอืด/แน่นท้อง:     ___
+   ผื่น/คัน:               ___
+   เพลีย/ง่วงหลังกิน:    ___
+   ปวดหัว:                ___
+   Brain fog:               ___
+   ตื่นกลางดึก:           ___
+
+😴 นอน:        ___ ชั่วโมง  คุณภาพ ___/10
+💧 น้ำเปล่า:    ___ ลิตร
+🚶 เคลื่อนไหว:  ___ นาที
+😰 ความเครียดวันนี้:  ___/10
+
+📝 อื่นๆ:
+______________________________________________________________
+______________________________________________________________
+    </div>
+
+    <p style="margin-top:24px; color:var(--ink-60); font-size:14px;">
+      💡 Tip: ใช้แอป Bear / Day One / Notion / สมุดบันทึกธรรมดา — เลือกที่ใช้ทุกวันได้สม่ำเสมอที่สุด
+    </p>
+  </div>
+</section>
+
+<!-- ═══ Section 6: Follow-up Plan ═══ -->
+<section class="section" style="background:var(--cream-deep);">
+  <div class="wrap-narrow">
+    <div class="section-eyebrow">Section 6 · Touch Points</div>
+    <h2 class="section-title">แผนการ <em>ติดตาม</em></h2>
+    <p class="section-intro">
+      เพื่อให้ protocol สำเร็จ — ตารางนัดและจุด check-in
+    </p>
+
+    <div class="card">
+      <h3 style="font-family:var(--font-serif); font-size:20px; margin-bottom:12px; color:var(--rose);">Week 2 · First Check-in (15 นาที · LINE)</h3>
+      <p style="color:var(--ink-60); line-height:1.7;">
+        ถามว่าหา substitute ของ wheat/yeast/dairy/egg ได้ครบไหม? · มีปัญหากับ Vitamin B Plus replacement ไหม? · ยังเครียดเรื่องไหนเป็นพิเศษ?
+      </p>
+    </div>
+
+    <div class="card">
+      <h3 style="font-family:var(--font-serif); font-size:20px; margin-bottom:12px; color:var(--rose);">Week 6 · Mid-point Review (30 นาที · clinic หรือ LINE call)</h3>
+      <p style="color:var(--ink-60); line-height:1.7;">
+        Review journal · เช็คอาการที่ดีขึ้น/เปลี่ยน · ตัดสินใจร่วมว่าจะ continue หรือปรับ
+      </p>
+    </div>
+
+    <div class="card">
+      <h3 style="font-family:var(--font-serif); font-size:20px; margin-bottom:12px; color:var(--rose);">Week 12 · Pre-reintroduction Planning (45 นาที · clinic)</h3>
+      <p style="color:var(--ink-60); line-height:1.7;">
+        Review ผล 12 สัปดาห์ · ออกแบบ reintroduction order ส่วนตัว · ทบทวน supplement stack
+      </p>
+    </div>
+
+    <div class="card">
+      <h3 style="font-family:var(--font-serif); font-size:20px; margin-bottom:12px; color:var(--rose);">Week 16 · End-of-protocol Debrief (45 นาที · clinic)</h3>
+      <p style="color:var(--ink-60); line-height:1.7;">
+        สรุป "อาหารที่เป็น trigger จริงๆ" · ออกแบบ long-term eating strategy · ถ้าต้องการ — ส่ง refer ไปหา functional medicine MD
+      </p>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ Footer ═══ -->
+<footer style="background:var(--ink); color:var(--cream); padding:48px 0; text-align:center;">
+  <div class="wrap-narrow">
+    <div style="font-family:var(--font-serif); font-size:22px; font-weight:600; margin-bottom:8px;">UP Wellness</div>
+    <div style="font-family:var(--font-mono); font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--rose-soft); margin-bottom:20px;">
+      Science-based · Personalized · Longevity-first
+    </div>
+    <p style="font-size:12px; line-height:1.7; color:var(--ink-40); max-width:580px; margin:0 auto;">
+      Care Plan นี้สำหรับคุณพิมพ์ปวีณ์ นิลสุพรรณ · จัดทำ 17 พ.ค. 2569 · v1.0
+      <br/>อ้างอิงผล N Health Food Sensitivity (IgG · 220 panel) · ไม่ใช่คำแนะนำทางการแพทย์
+      <br/>ก่อนเริ่มเปลี่ยนแปลงพฤติกรรมสุขภาพ ควรปรึกษาแพทย์ที่ดูแลประจำ
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
