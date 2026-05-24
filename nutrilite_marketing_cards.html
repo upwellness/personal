@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nutrilite · Marketing Cards · UP Wellness</title>
+<meta name="description" content="รายการสินค้า Nutrilite พร้อมประโยคเปิดใจ — สำหรับใช้คุยกับลูกค้า" />
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+          thai: ['"Sarabun"', 'system-ui', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        },
+        colors: {
+          rose:    { DEFAULT: '#8C4C4C', deep: '#6E3838', soft: '#B57878', mist: '#F4ECEC' },
+          green:   { DEFAULT: '#396755', deep: '#2A4D40', mist: '#E5EDEA' },
+          cream:   { DEFAULT: '#F5F0EB', deep: '#EDE6DF' },
+          ink:     { DEFAULT: '#1F1E1B', 60: '#5C5A56', 40: '#8B8884', 20: '#C9C6C0', 10: '#E5E2DD' },
+          gold:    '#B8965A',
+        },
+      },
+    },
+  };
+</script>
+<style>
+  :root {
+    --rose-rgb: 140, 76, 76;
+    --green-rgb: 57, 103, 85;
+    --gold-rgb: 184, 150, 90;
+    --cream-rgb: 245, 240, 235;
+  }
+  * { -webkit-font-smoothing: antialiased; }
+  body { font-family: 'Sarabun', sans-serif; }
+  .font-display { font-family: 'Cormorant Garamond', serif; }
+
+  /* ─── Aurora background ─── */
+  .aurora {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: -1;
+    background: linear-gradient(180deg, #FAF6F1 0%, #F5F0EB 100%);
+  }
+  .aurora::before, .aurora::after, .aurora-3 {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.45;
+    will-change: transform;
+  }
+  .aurora::before {
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(var(--rose-rgb), 0.65), transparent 60%);
+    top: -200px; left: -100px;
+    animation: float-1 22s ease-in-out infinite;
+  }
+  .aurora::after {
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(var(--green-rgb), 0.55), transparent 60%);
+    bottom: -200px; right: -100px;
+    animation: float-2 28s ease-in-out infinite;
+  }
+  .aurora-3 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(var(--gold-rgb), 0.5), transparent 60%);
+    top: 40%; left: 50%; transform: translateX(-50%);
+    animation: float-3 24s ease-in-out infinite;
+  }
+  @keyframes float-1 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50%      { transform: translate(80px, 60px) rotate(180deg); }
+  }
+  @keyframes float-2 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50%      { transform: translate(-80px, -60px) rotate(-180deg); }
+  }
+  @keyframes float-3 {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%      { transform: translateX(-30%) translateY(40px); }
+  }
+
+  /* ─── Liquid glass card ─── */
+  .glass {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow:
+      0 8px 32px rgba(31, 30, 27, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      inset 0 -1px 0 rgba(31, 30, 27, 0.05);
+    transition: all 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .glass:hover {
+    background: rgba(255, 255, 255, 0.7);
+    transform: translateY(-3px);
+    box-shadow:
+      0 16px 48px rgba(31, 30, 27, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+  .glass-dark {
+    background: rgba(31, 30, 27, 0.85);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #F5F0EB;
+  }
+  .glass-rose {
+    background: rgba(140, 76, 76, 0.12);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(140, 76, 76, 0.2);
+  }
+
+  /* ─── Reflective highlight ─── */
+  .glass-shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .glass-shine::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.4), transparent);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  /* ─── Category badge dots ─── */
+  .cat-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    box-shadow: 0 0 12px currentColor;
+  }
+
+  /* ─── Custom scrollbar ─── */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(140, 76, 76, 0.3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(140, 76, 76, 0.5); }
+
+  /* ─── Toast ─── */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    transition: transform 300ms ease;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ─── Print ─── */
+  @media print {
+    .aurora { display: none; }
+    body { background: white; }
+    .glass { background: white; box-shadow: none; border: 1px solid #E5E2DD; }
+    .no-print { display: none !important; }
+  }
+</style>
+</head>
+<body class="font-thai text-ink">
+
+<!-- Aurora background layers -->
+<div class="aurora">
+  <div class="aurora-3"></div>
+</div>
+
+<div id="root"></div>
+
+<script type="module">
+import React, { useState, useMemo, useEffect } from "https://esm.sh/react@18";
+import { createRoot } from "https://esm.sh/react-dom@18/client";
+import htm from "https://esm.sh/htm";
+const html = htm.bind(React.createElement);
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* DATA · 24 Nutrilite products with marketing scripts              */
+/* ═══════════════════════════════════════════════════════════════ */
+
+const CATEGORIES = {
+  weight:       { label: 'Weight',       color: '#8C4C4C', glow: 'rgba(140, 76, 76, 0.4)' },
+  protein:      { label: 'Protein',      color: '#A6633F', glow: 'rgba(166, 99, 63, 0.4)' },
+  heart_brain:  { label: 'Heart · Brain', color: '#6E3838', glow: 'rgba(110, 56, 56, 0.4)' },
+  vitamin:      { label: 'Vitamin',      color: '#B8965A', glow: 'rgba(184, 150, 90, 0.4)' },
+  mineral:      { label: 'Mineral',      color: '#8B7355', glow: 'rgba(139, 115, 85, 0.4)' },
+  gut:          { label: 'Gut Health',   color: '#396755', glow: 'rgba(57, 103, 85, 0.4)' },
+  antioxidant:  { label: 'Antioxidant',  color: '#2A4D40', glow: 'rgba(42, 77, 64, 0.4)' },
+  beauty:       { label: 'Beauty',       color: '#B57878', glow: 'rgba(181, 120, 120, 0.4)' },
+  bundle:       { label: 'Bundle',       color: '#5C5A56', glow: 'rgba(92, 90, 86, 0.4)' },
+};
+
+const PRODUCTS = [
+  {
+    name: 'BodyKey by Nutrilite',
+    name_th: 'บอดี้คีย์ ผลิตภัณฑ์ทดแทนมื้ออาหาร',
+    cat: 'weight',
+    price: 1700,
+    sku: '0124489-93',
+    desc: 'ผงทดแทนมื้ออาหาร · โปรตีนถั่วเหลือง + เจีย + ใยอาหาร + วิตามิน 200 kcal/ซอง',
+    benefits: 'ควบคุมน้ำหนัก · อิ่มนาน · สารอาหารครบ · 5 รสชาติ',
+    target: 'คนอยากลดน้ำหนัก · ไม่มีเวลากินเช้า · คนนัดหลายที่ · นักวิ่ง',
+    opener: 'เช้านี้มีเวลากินข้าวไหม รู้สึกพออิ่มแต่ไม่อ้วนมั้ย',
+  },
+  {
+    name: 'All Plant Protein Plus',
+    name_th: 'ออล แพลนท์ โปรตีน พลัส (สูตรใหม่)',
+    cat: 'protein',
+    price: 1500,
+    sku: '110415TH+',
+    desc: 'โปรตีนพืช 3 แหล่ง · ถั่วเหลือง 80% + ข้าวสาลี 10% + lentil 7.5% · 8g/scoop',
+    benefits: '9 amino acid ครบ · 0% lactose · 0% cholesterol · ดูดซึมง่าย',
+    target: 'วีแกน · คนแพ้นมวัว · นักกีฬา · ผู้สูงอายุที่กล้ามเนื้อหาย · คนผอม',
+    opener: 'วันนี้ได้โปรตีนพอไหม รู้สึกกล้ามเนื้อหายกว่าตอนเด็กๆ ไหม',
+  },
+  {
+    name: 'Green Tea Protein',
+    name_th: 'กรีนที โปรตีน',
+    cat: 'protein',
+    price: 1500,
+    sku: 'check',
+    desc: 'โปรตีนพืชผสมสารสกัดชาเขียว · ~8g protein/scoop',
+    benefits: 'โปรตีน + antioxidant · ช่วย metabolism · ฟื้นกล้ามเนื้อ',
+    target: 'คนคุมน้ำหนัก · นักเล่นเวท · เน้นเผาผลาญ + ฟื้นตัว',
+    opener: 'ออกกำลังแล้วฟื้นกล้ามเนื้อด้วยอะไรเหรอ',
+  },
+  {
+    name: 'XS Essential Amino Acid Plus',
+    name_th: 'XS เอสเซนเชียล อะมิโน แอซิด พลัส+',
+    cat: 'protein',
+    price: 1640,
+    sku: 'new',
+    desc: '9 EAAs + arginine + glutamine แบบ free-form · ดูดซึมเร็ว 15-30 นาที',
+    benefits: 'ฟื้นกล้ามเนื้อเร็ว · ลดเมื่อยล้า · เพิ่มพลังงาน · hypoallergenic',
+    target: 'นักกีฬา · เวทเทรนเนอร์ · ผู้สูงอายุ sarcopenia · คนพักฟื้น',
+    opener: 'ออกกำลังเสร็จเมื่อยไหม หายช้ากว่าเดิมหรือเปล่า',
+  },
+  {
+    name: 'Triple Omega',
+    name_th: 'ทริปเปิล โอเมก้า',
+    cat: 'heart_brain',
+    price: 975,
+    sku: '126132TH',
+    desc: 'น้ำมันปลา EPA 286 + DHA 214 mg + chia oil ALA · AquaCelle ดูดซึมดี',
+    benefits: 'หัวใจ · สมอง · ลดไตรกลีเซอไรด์ · ต้านอักเสบ · บำรุงสมอง',
+    target: 'ผู้สูงอายุ · ไขมันในเลือดสูง · ปวดข้อ · เด็กสมาธิสั้น · หญิงตั้งครรภ์',
+    opener: 'ตรวจสุขภาพปีนี้ไตรกลีเซอไรด์เป็นไง ปวดข้อบ่อยไหม',
+  },
+  {
+    name: 'Double X PhytoBlend',
+    name_th: 'ดับเบิ้ลเอ็กซ์ ไฟโตเบลนด์',
+    cat: 'vitamin',
+    price: 4468,
+    sku: '121575TH',
+    desc: 'วิตามินรวมพรีเมียม 12 vit + 9 minerals + 17 phytonutrients · 3 ฟอยล์',
+    benefits: 'เสริมสารอาหารครบ · ต้านอนุมูลอิสระ · พลังงานเซลล์ · longevity',
+    target: 'ผู้ใหญ่ 40+ · ทุกคนต้องการ multivitamin คุณภาพ · คนทานผักไม่พอ',
+    opener: 'วันนึงทานผัก-ผลไม้ครบ 5 สีจริงๆ บ้างไหม',
+  },
+  {
+    name: 'Concentrated F&V',
+    name_th: 'คอนเซ็นเทรต ผักผลไม้เข้มข้น',
+    cat: 'antioxidant',
+    price: 1468,
+    sku: '102992TH',
+    desc: 'ไฟโตนิวเทรียนต์เข้มข้นจาก 12 ผัก-ผลไม้ 5 สี · 2 เม็ด/วัน',
+    benefits: 'antioxidant · ภูมิคุ้มกัน · ผิวพรรณ · ชะลอวัย · ดวงตา',
+    target: 'คนไม่ค่อยทานผัก · ทำงานหนัก · เครียด · ผิวหมอง · ผู้สูงอายุ',
+    opener: 'ช่วงนี้ทานผักผลไม้ครบไหม เหนื่อยง่ายกว่าเดิมหรือเปล่า',
+  },
+  {
+    name: 'Vitamin B Plus',
+    name_th: 'วิตามินบี พลัส',
+    cat: 'vitamin',
+    price: 527,
+    sku: '122304TH',
+    desc: 'บีรวม 8 ชนิด · Dual-Action ปลดปล่อยต่อเนื่อง 8 ชั่วโมง',
+    benefits: 'พลังงาน · เผาผลาญ · ลดเหนื่อย · บำรุงประสาท · ลด homocysteine',
+    target: 'คนทำงานหนัก · เครียด · นอนน้อย · ดื่มเหล้า · ผู้สูงอายุ',
+    opener: 'ช่วงนี้เพลียบ่อยไหม ตื่นมาแล้วไม่สดชื่นใช่ไหม',
+  },
+  {
+    name: 'Bio C Plus',
+    name_th: 'ไบโอซี พลัส',
+    cat: 'vitamin',
+    price: 990,
+    sku: '109745TH',
+    desc: 'Vit C 500mg จาก acerola cherry + citrus bioflavonoids · slow-release',
+    benefits: 'ภูมิคุ้มกัน · ผิวพรรณ · collagen · ต้านอนุมูลอิสระ · ลดหวัด',
+    target: 'คนเป็นหวัดบ่อย · นักสูบบุหรี่ · ผิวหมอง · นักกีฬา · ผู้สูงอายุ',
+    opener: 'ช่วงนี้ภูมิคุ้มกันเป็นไง เป็นหวัดบ่อยกว่าเดิมไหม',
+  },
+  {
+    name: 'Cal Mag D',
+    name_th: 'แคล แมก ดี',
+    cat: 'mineral',
+    price: 1077,
+    sku: '117147TH',
+    desc: 'Ca 234 + Mg 118 + Vit D + alfalfa · 250 เม็ด/ขวด · 4 เดือน',
+    benefits: 'กระดูก · ฟัน · กล้ามเนื้อ · ระบบประสาท · ป้องกันกระดูกพรุน',
+    target: 'หญิง 40+ · ผู้สูงอายุ · กระดูกพรุน · แพ้นมวัว · เป็นตะคริว',
+    opener: 'ปวดเข่า ปวดหลังบ่อยไหม ตะคริวมาก็ตอนตื่นมาเช้าหรือเปล่า',
+  },
+  {
+    name: 'Garlic (กระเทียมอัดเม็ด)',
+    name_th: 'การ์ลิค',
+    cat: 'heart_brain',
+    price: 1195,
+    sku: 'A5923TH',
+    desc: 'กระเทียมอัดเม็ด 333mg + parsley + watercress + licorice · กลิ่นมิ้น',
+    benefits: 'ดูแลความดัน · ลดไขมัน · หัวใจ · ไม่มีกลิ่นกระเทียมแรง',
+    target: 'คนความดันสูง · ไขมันสูง · กลัวกินกระเทียมสด · ดูแลหัวใจ',
+    opener: 'ตรวจความดัน ไขมัน ครั้งสุดท้ายเป็นไงบ้าง',
+  },
+  {
+    name: 'Lecithin E',
+    name_th: 'เลซิติน อี',
+    cat: 'heart_brain',
+    price: 659,
+    sku: 'A4445TH',
+    desc: 'สกัดจากถั่วเหลืองบริสุทธิ์ + Vit E 5 IU + ชะเอม · เคี้ยวได้',
+    benefits: 'บำรุงประสาท · ความจำ · ลดไขมัน · ต้านอนุมูลอิสระ · ตับ',
+    target: 'นักเรียน · นักศึกษา · คนทำงานความคิด · คนไขมันสูง · ผู้สูงอายุ',
+    opener: 'ช่วงนี้เรียนหนักไหม สอบเยอะหรือเปล่า ตรวจไขมันเป็นไงบ้าง',
+  },
+  {
+    name: 'CoQ10 Plus',
+    name_th: 'โคคิวเท็น พลัส',
+    cat: 'heart_brain',
+    price: 2209,
+    sku: '101156TH',
+    desc: 'CoQ10 29.5mg + L-carnitine + Taurine + citrus bioflavonoid',
+    benefits: 'พลังงานเซลล์ · หัวใจ · ผิว · ลดริ้วรอย · ต้านวัย',
+    target: 'คนกินยา statin · หัวใจอ่อน · ผู้สูงอายุ · เพลียเรื้อรัง · นักกีฬา',
+    opener: 'กินยาลดไขมัน statin อยู่ใช่ไหม รู้สึกเพลียกว่าเดิมหรือเปล่า',
+  },
+  {
+    name: 'Probiotic W',
+    name_th: 'โพรไบโอติก ดับเบิ้ลยู',
+    cat: 'gut',
+    price: 1650,
+    sku: '120571TH',
+    desc: 'Probiotic 3 strains 10⁹+ CFU + inulin + FOS + cranberry · 30 ซอง',
+    benefits: 'ลำไส้สมดุล · ภูมิคุ้มกัน · ขับถ่ายดี · ดูแลทางเดินปัสสาวะหญิง',
+    target: 'ผู้หญิง · ท้องผูก · ทานยาฆ่าเชื้อ · ลำไส้แปรปรวน · ท้องอืด',
+    opener: 'ระบบขับถ่ายเป็นไงบ้าง ท้องอืดบ่อยกว่าเดิมหรือเปล่า',
+  },
+  {
+    name: 'Fiber Powder',
+    name_th: 'ไฟเบอร์ พาวเดอร์',
+    cat: 'gut',
+    price: 1627,
+    sku: '102736TH',
+    desc: 'ใยอาหาร 3 แหล่ง 4.5g/ซอง · resistant maltodextrin + inulin + PHGG',
+    benefits: 'ขับถ่ายดี · prebiotic · คุมน้ำตาล · อิ่มท้อง · ไร้กลิ่น/รส',
+    target: 'คนท้องผูก · ทานผักน้อย · เบาหวาน · คุมน้ำหนัก · ผสมน้ำ/อาหารได้',
+    opener: 'ใน 1 วัน ทานผักได้กี่ทัพพี ขับถ่ายทุกวันไหม',
+  },
+  {
+    name: 'Chewable Fiber Blend',
+    name_th: 'ชูเอเบิ้ล ไฟเบอร์ เบลนด์',
+    cat: 'gut',
+    price: 1168,
+    sku: '104402TH',
+    desc: 'ใยอาหารจากพืช 13 ชนิด แบบเคี้ยว · กลิ่นส้มธรรมชาติ',
+    benefits: 'ขับถ่าย · prebiotic · อิ่มท้อง · กินง่าย ไม่ต้องผสมน้ำ',
+    target: 'เด็ก · ผู้สูงอายุ · คนไม่ชอบกินผง · พกพาง่าย',
+    opener: 'ปกติทานไฟเบอร์ในรูปแบบไหน ผัก/ผง/เม็ด',
+  },
+  {
+    name: 'Calow (Carb Blocker)',
+    name_th: 'แคลโลว์',
+    cat: 'weight',
+    price: 1314,
+    sku: '100193TH',
+    desc: 'White bean extract 183mg + soy bean + parsley · ก่อนอาหาร 15-20 นาที',
+    benefits: 'ยับยั้งย่อยแป้ง · ลดดูดซึมคาร์บ · block ~300 kcal/dose',
+    target: 'คนลดน้ำหนัก · ติดข้าว/เส้น · เบาหวาน · อยากกินคาร์บแต่กลัวอ้วน',
+    opener: 'กินข้าวเหนียว ส้มตำ เส้นก๋วยเตี๋ยวแล้วอ้วนทันทีใช่ไหม',
+  },
+  {
+    name: 'CLA 500',
+    name_th: 'ซีแอลเอ 500',
+    cat: 'weight',
+    price: 1395,
+    sku: '102178TH',
+    desc: 'CLA 500mg จากน้ำมัน safflower · 1-3 caps ต่อวันพร้อมอาหาร',
+    benefits: 'ลดไขมัน · เพิ่ม lean body mass · เผาผลาญ · รูปร่าง',
+    target: 'คนลดน้ำหนัก · นักกีฬา fitness · คนต้องการ body composition ดี',
+    opener: 'ลดน้ำหนักแล้วผิวห่อย รูปร่างยังไม่ฟิตใช่ไหม',
+  },
+  {
+    name: 'Spinach Plus',
+    name_th: 'สปิแนช พลัส (Iron + Folate)',
+    cat: 'mineral',
+    price: 636,
+    sku: 'A5924TH',
+    desc: 'เปลือกหอย 337mg + ใบพาลัก + Iron 5.6 + Folate 170mcg',
+    benefits: 'เลือดดี · ป้องกันโลหิตจาง · Hb ปกติ · เสริม Ca เพิ่ม',
+    target: 'หญิงประจำเดือนเยอะ · ตั้งครรภ์ · มังสวิรัติ · นักวิ่ง · เด็กโตเร็ว',
+    opener: 'ประจำเดือนมาเยอะไหม ลุกเร็วๆ หน้ามืดบ้างหรือเปล่า',
+  },
+  {
+    name: 'Mixed Collagen Peptide',
+    name_th: 'มิกซ์ คอลลาเจน',
+    cat: 'beauty',
+    price: 1650,
+    sku: '119293TH',
+    desc: 'Marine collagen + soybean peptide + chrysanthemum 5g/stick · sugar-free',
+    benefits: 'ผิวพรรณ · เล็บ · ผม · ต้านอนุมูลอิสระ · ป้องกัน UV',
+    target: 'ผู้หญิง 30+ · ผิวหย่อน · ผมร่วง · เล็บเปราะ · กลัวริ้วรอย',
+    opener: 'ผิวรอบดวงตาเริ่มเหี่ยวเมื่อไหร่ไม่ทันรู้ตัวใช่ไหม',
+  },
+  {
+    name: 'SHN (Hair Skin Nails)',
+    name_th: 'เอสเอชเอ็น',
+    cat: 'beauty',
+    price: 1127,
+    sku: '101812TH',
+    desc: 'Hydrolyzed collagen 250 + Vit C + acerola + biotin + grape seed + L-cysteine',
+    benefits: 'ผม · ผิว · เล็บ · biotin บำรุงรากผม · grape seed antioxidant',
+    target: 'ผู้หญิง · ผมร่วง · ผิวแห้ง · เล็บเปราะ · ชอบเม็ดมากกว่าผง',
+    opener: 'ผมร่วงเยอะเวลาสระไหม เล็บเปราะ แตกง่ายหรือเปล่า',
+  },
+  {
+    name: 'Daily Nutrition Set',
+    name_th: 'ชุดพื้นฐานประจำวัน (DX + Triple Omega)',
+    cat: 'bundle',
+    price: 7195,
+    sku: '317270',
+    desc: 'Double X 186 เม็ด + Triple Omega 30 caps · พื้นฐาน 1 เดือน',
+    benefits: 'พื้นฐาน longevity · multivitamin + Omega ครบในชุดเดียว',
+    target: 'คนเริ่มต้น · ต้องการพื้นฐาน · ของขวัญสุขภาพ',
+    opener: 'อยากเริ่มดูแลตัวเองแต่ไม่รู้จะเริ่มที่ไหนใช่ไหม',
+  },
+];
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* APP                                                                */
+/* ═══════════════════════════════════════════════════════════════ */
+
+function App() {
+  const [search, setSearch] = useState('');
+  const [cat, setCat] = useState('all');
+  const [view, setView] = useState('grid'); // grid | list
+  const [expandedId, setExpandedId] = useState(null);
+  const [toast, setToast] = useState('');
+
+  const filtered = useMemo(() => {
+    return PRODUCTS.filter(p => {
+      if (cat !== 'all' && p.cat !== cat) return false;
+      if (search.trim()) {
+        const s = search.toLowerCase();
+        return (
+          p.name.toLowerCase().includes(s) ||
+          p.name_th.toLowerCase().includes(s) ||
+          p.target.toLowerCase().includes(s) ||
+          p.benefits.toLowerCase().includes(s)
+        );
+      }
+      return true;
+    });
+  }, [search, cat]);
+
+  const catCounts = useMemo(() => {
+    const c = { all: PRODUCTS.length };
+    Object.keys(CATEGORIES).forEach(k => { c[k] = PRODUCTS.filter(p => p.cat === k).length; });
+    return c;
+  }, []);
+
+  const copy = (text) => {
+    navigator.clipboard.writeText(text);
+    setToast('คัดลอกแล้ว ✓');
+    setTimeout(() => setToast(''), 2000);
+  };
+
+  return html`
+    <div className="min-h-screen px-4 py-8 md:px-8 md:py-12">
+
+      <!-- ── Header ── -->
+      <header className="max-w-7xl mx-auto mb-10">
+        <div className="glass glass-shine rounded-3xl px-6 py-8 md:px-10 md:py-10">
+          <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-rose-deep mb-3">
+            UP Wellness · Marketing Cards · ${new Date().toLocaleDateString('th-TH')}
+          </div>
+          <h1 className="font-display text-4xl md:text-5xl font-semibold text-ink mb-3 tracking-tight">
+            Nutrilite <em className="text-rose italic font-medium">Product Library</em>
+          </h1>
+          <p className="text-ink-60 text-base max-w-3xl leading-relaxed">
+            ${PRODUCTS.length} สินค้า · รายละเอียด · สรรพคุณ · target · ประโยคเปิดใจสำหรับใช้คุยกับลูกค้า
+            <br/>คลิกที่การ์ดเพื่อดู marketing opener · กดปุ่ม Copy เพื่อใช้ทันที
+          </p>
+
+          <!-- ── Stats ── -->
+          <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="glass-rose rounded-2xl px-4 py-3">
+              <div className="font-mono text-[9px] tracking-widest uppercase text-rose-deep">Total SKUs</div>
+              <div className="font-display text-2xl font-bold text-ink mt-1">${PRODUCTS.length}</div>
+            </div>
+            <div className="glass-rose rounded-2xl px-4 py-3">
+              <div className="font-mono text-[9px] tracking-widest uppercase text-rose-deep">Categories</div>
+              <div className="font-display text-2xl font-bold text-ink mt-1">${Object.keys(CATEGORIES).length}</div>
+            </div>
+            <div className="glass-rose rounded-2xl px-4 py-3">
+              <div className="font-mono text-[9px] tracking-widest uppercase text-rose-deep">Price Range</div>
+              <div className="font-display text-xl font-bold text-ink mt-1">฿527 – ฿7,195</div>
+            </div>
+            <div className="glass-rose rounded-2xl px-4 py-3">
+              <div className="font-mono text-[9px] tracking-widest uppercase text-rose-deep">Showing</div>
+              <div className="font-display text-2xl font-bold text-ink mt-1">${filtered.length} <span className="text-sm text-ink-40">/ ${PRODUCTS.length}</span></div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ── Filter bar ── -->
+      <div className="max-w-7xl mx-auto mb-6 no-print">
+        <div className="glass rounded-2xl px-4 py-3 flex flex-col md:flex-row gap-3 items-stretch md:items-center">
+          <!-- Search -->
+          <div className="flex-1 relative">
+            <input
+              type="text"
+              value=${search}
+              onChange=${(e) => setSearch(e.target.value)}
+              placeholder="ค้นหาสินค้า · target · สรรพคุณ..."
+              className="w-full px-4 py-2.5 pl-10 bg-white/40 border border-white/60 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose/30 focus:bg-white/70 transition"
+            />
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-40 pointer-events-none">🔍</span>
+            ${search && html`
+              <button onClick=${() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-40 hover:text-rose text-sm">✕</button>
+            `}
+          </div>
+
+          <!-- View toggle -->
+          <div className="flex gap-1 bg-white/40 rounded-xl p-1">
+            <button
+              onClick=${() => setView('grid')}
+              className=${`px-3 py-1.5 rounded-lg text-sm font-medium transition ${view === 'grid' ? 'bg-ink text-cream' : 'text-ink-60 hover:text-ink'}`}
+            >▦ Grid</button>
+            <button
+              onClick=${() => setView('list')}
+              className=${`px-3 py-1.5 rounded-lg text-sm font-medium transition ${view === 'list' ? 'bg-ink text-cream' : 'text-ink-60 hover:text-ink'}`}
+            >☰ List</button>
+          </div>
+        </div>
+
+        <!-- Category pills -->
+        <div className="mt-3 flex flex-wrap gap-2">
+          <button
+            onClick=${() => setCat('all')}
+            className=${`px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition border ${cat === 'all' ? 'bg-ink text-cream border-ink' : 'glass border-white/60 text-ink-60 hover:text-ink'}`}
+          >
+            ทั้งหมด <span className="ml-1 font-mono opacity-60">${catCounts.all}</span>
+          </button>
+          ${Object.entries(CATEGORIES).map(([key, c]) => html`
+            <button
+              key=${key}
+              onClick=${() => setCat(key)}
+              className=${`px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition border flex items-center gap-2 ${cat === key ? 'text-white border-transparent' : 'glass border-white/60 text-ink-60 hover:text-ink'}`}
+              style=${cat === key ? { background: c.color } : {}}
+            >
+              <span className="cat-dot" style=${{ background: c.color, color: c.color }}></span>
+              ${c.label} <span className="font-mono opacity-60">${catCounts[key] || 0}</span>
+            </button>
+          `)}
+        </div>
+      </div>
+
+      <!-- ── Cards ── -->
+      <div className="max-w-7xl mx-auto">
+        ${view === 'grid' ? html`
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            ${filtered.map((p, i) => html`<${ProductCard} key=${i} product=${p} expanded=${expandedId === i} onToggle=${() => setExpandedId(expandedId === i ? null : i)} onCopy=${copy} />`)}
+          </div>
+        ` : html`
+          <div className="space-y-3">
+            ${filtered.map((p, i) => html`<${ProductRow} key=${i} product=${p} expanded=${expandedId === i} onToggle=${() => setExpandedId(expandedId === i ? null : i)} onCopy=${copy} />`)}
+          </div>
+        `}
+
+        ${filtered.length === 0 && html`
+          <div className="glass rounded-3xl p-12 text-center">
+            <div className="text-4xl">🔍</div>
+            <p className="mt-3 text-ink-60">ไม่พบสินค้าตามเงื่อนไข</p>
+            <button onClick=${() => { setSearch(''); setCat('all'); }} className="mt-3 text-rose text-sm font-semibold hover:underline">↺ ล้างตัวกรอง</button>
+          </div>
+        `}
+      </div>
+
+      <!-- ── Footer ── -->
+      <footer className="max-w-7xl mx-auto mt-12 text-center text-ink-40 text-xs font-mono tracking-widest uppercase">
+        UP Wellness · Science-based · Personalized · Longevity-first
+      </footer>
+
+      <!-- ── Toast ── -->
+      <div className=${`toast ${toast ? 'show' : ''} glass-dark rounded-full px-5 py-2.5 text-sm font-medium`}>${toast}</div>
+    </div>
+  `;
+}
+
+/* ─── Card components ───────────────────────────────────────────── */
+
+function ProductCard({ product, expanded, onToggle, onCopy }) {
+  const c = CATEGORIES[product.cat];
+  return html`
+    <div className="glass glass-shine rounded-3xl p-6 cursor-pointer relative" onClick=${onToggle}>
+      <!-- Top accent line -->
+      <div
+        className="absolute top-0 left-6 right-6 h-[2px] rounded-full"
+        style=${{ background: `linear-gradient(90deg, ${c.color}, transparent)` }}
+      ></div>
+
+      <!-- Category + price -->
+      <div className="flex items-start justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <span className="cat-dot" style=${{ background: c.color, color: c.color }}></span>
+          <span className="font-mono text-[9px] tracking-widest uppercase text-ink-60">${c.label}</span>
+        </div>
+        <span className="font-mono text-xs font-bold text-ink">฿${product.price.toLocaleString()}</span>
+      </div>
+
+      <!-- Product name -->
+      <h3 className="font-display text-xl font-semibold text-ink leading-tight">${product.name}</h3>
+      <p className="font-thai text-[11px] text-ink-40 mt-0.5">${product.name_th} · ${product.sku}</p>
+
+      <!-- Fields -->
+      <div className="mt-4 space-y-2.5 text-[13px] leading-relaxed">
+        <div>
+          <div className="font-mono text-[9px] tracking-widest uppercase text-ink-40 mb-0.5">DESC</div>
+          <p className="text-ink">${product.desc}</p>
+        </div>
+        <div>
+          <div className="font-mono text-[9px] tracking-widest uppercase text-ink-40 mb-0.5">สรรพคุณ</div>
+          <p className="text-ink">${product.benefits}</p>
+        </div>
+        <div>
+          <div className="font-mono text-[9px] tracking-widest uppercase text-ink-40 mb-0.5">TARGET</div>
+          <p className="text-ink">${product.target}</p>
+        </div>
+      </div>
+
+      <!-- Marketing opener (expandable) -->
+      <div className=${`mt-4 rounded-2xl transition-all duration-300 overflow-hidden ${expanded ? 'opacity-100' : 'opacity-80'}`}>
+        <div
+          className="px-4 py-3 rounded-2xl border"
+          style=${{
+            background: `linear-gradient(135deg, ${c.color}15, ${c.color}05)`,
+            borderColor: `${c.color}30`,
+          }}
+        >
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex-1">
+              <div className="font-mono text-[9px] tracking-widest uppercase mb-1" style=${{ color: c.color }}>
+                💬 ประโยคเปิดใจ
+              </div>
+              <p className="font-display italic text-[15px] leading-snug text-ink">"${product.opener}"</p>
+            </div>
+            ${expanded && html`
+              <button
+                onClick=${(e) => { e.stopPropagation(); onCopy(product.opener); }}
+                className="flex-shrink-0 px-3 py-1 bg-ink text-cream rounded-full text-[10px] font-mono font-bold tracking-wider hover:bg-rose transition"
+              >COPY</button>
+            `}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function ProductRow({ product, expanded, onToggle, onCopy }) {
+  const c = CATEGORIES[product.cat];
+  return html`
+    <div className="glass rounded-2xl overflow-hidden">
+      <div onClick=${onToggle} className="cursor-pointer px-5 py-4 grid grid-cols-12 gap-3 items-center hover:bg-white/30 transition">
+        <!-- Category dot -->
+        <div className="col-span-1 flex justify-center">
+          <span className="cat-dot" style=${{ background: c.color, color: c.color }}></span>
+        </div>
+        <!-- Name -->
+        <div className="col-span-5 md:col-span-3">
+          <div className="font-display text-base font-semibold text-ink">${product.name}</div>
+          <div className="font-mono text-[10px] text-ink-40">${product.sku}</div>
+        </div>
+        <!-- Desc -->
+        <div className="col-span-12 md:col-span-5 text-[12.5px] text-ink-60 leading-snug">${product.desc}</div>
+        <!-- Price -->
+        <div className="col-span-3 md:col-span-2 text-right">
+          <div className="font-mono text-sm font-bold text-ink">฿${product.price.toLocaleString()}</div>
+          <div className="font-mono text-[9px] uppercase tracking-widest text-ink-40">${c.label}</div>
+        </div>
+        <!-- Toggle -->
+        <div className="col-span-3 md:col-span-1 text-right text-ink-40">${expanded ? '▼' : '›'}</div>
+      </div>
+
+      <!-- Expanded panel -->
+      ${expanded && html`
+        <div className="px-5 pb-4 pt-2 border-t border-white/40 grid md:grid-cols-3 gap-4">
+          <div>
+            <div className="font-mono text-[9px] tracking-widest uppercase text-ink-40 mb-1">สรรพคุณ</div>
+            <p className="text-[13px] text-ink leading-relaxed">${product.benefits}</p>
+          </div>
+          <div>
+            <div className="font-mono text-[9px] tracking-widest uppercase text-ink-40 mb-1">TARGET</div>
+            <p className="text-[13px] text-ink leading-relaxed">${product.target}</p>
+          </div>
+          <div
+            className="rounded-xl px-4 py-3 border"
+            style=${{
+              background: `linear-gradient(135deg, ${c.color}15, ${c.color}05)`,
+              borderColor: `${c.color}30`,
+            }}
+          >
+            <div className="flex items-start justify-between gap-2 mb-1">
+              <div className="font-mono text-[9px] tracking-widest uppercase" style=${{ color: c.color }}>
+                💬 ประโยคเปิดใจ
+              </div>
+              <button
+                onClick=${(e) => { e.stopPropagation(); onCopy(product.opener); }}
+                className="px-2 py-0.5 bg-ink text-cream rounded-full text-[9px] font-mono font-bold hover:bg-rose transition"
+              >COPY</button>
+            </div>
+            <p className="font-display italic text-[14px] leading-snug text-ink">"${product.opener}"</p>
+          </div>
+        </div>
+      `}
+    </div>
+  `;
+}
+
+const root = createRoot(document.getElementById('root'));
+root.render(html`<${App} />`);
+</script>
+
+</body>
+</html>
