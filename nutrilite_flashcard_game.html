@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nutrilite Flashcard Game · UP Wellness</title>
+<meta name="description" content="ฝึกพูดสินค้า Nutrilite · เกมพลิกการ์ด · จับคู่ · ทบทวน opener" />
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+          thai:  ['"Sarabun"', 'system-ui', 'sans-serif'],
+          mono:  ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        },
+        colors: {
+          rose:  { DEFAULT: '#8C4C4C', deep: '#6E3838', soft: '#B57878', mist: '#F4ECEC' },
+          green: { DEFAULT: '#396755', deep: '#2A4D40', mist: '#E5EDEA' },
+          cream: { DEFAULT: '#F5F0EB', deep: '#EDE6DF' },
+          ink:   { DEFAULT: '#1F1E1B', 60: '#5C5A56', 40: '#8B8884', 20: '#C9C6C0', 10: '#E5E2DD' },
+          gold:  '#B8965A',
+        },
+      },
+    },
+  };
+</script>
+<style>
+  :root {
+    --rose-rgb: 140, 76, 76;
+    --green-rgb: 57, 103, 85;
+    --gold-rgb: 184, 150, 90;
+  }
+  * { -webkit-font-smoothing: antialiased; }
+  body { font-family: 'Sarabun', sans-serif; min-height: 100vh; }
+  .font-display { font-family: 'Cormorant Garamond', serif; }
+
+  /* Aurora background */
+  .aurora {
+    position: fixed; inset: 0; overflow: hidden; z-index: -1;
+    background: linear-gradient(180deg, #FAF6F1 0%, #F5F0EB 100%);
+  }
+  .aurora::before, .aurora::after, .aurora-3 {
+    content: ''; position: absolute; border-radius: 50%; filter: blur(120px);
+    opacity: 0.45; will-change: transform;
+  }
+  .aurora::before {
+    width: 700px; height: 700px; top: -200px; left: -100px;
+    background: radial-gradient(circle, rgba(var(--rose-rgb), 0.65), transparent 60%);
+    animation: float-1 22s ease-in-out infinite;
+  }
+  .aurora::after {
+    width: 800px; height: 800px; bottom: -200px; right: -100px;
+    background: radial-gradient(circle, rgba(var(--green-rgb), 0.55), transparent 60%);
+    animation: float-2 28s ease-in-out infinite;
+  }
+  .aurora-3 {
+    width: 500px; height: 500px; top: 40%; left: 50%; transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(var(--gold-rgb), 0.5), transparent 60%);
+    animation: float-3 24s ease-in-out infinite;
+  }
+  @keyframes float-1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(80px,60px); } }
+  @keyframes float-2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-80px,-60px); } }
+  @keyframes float-3 { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-30%) translateY(40px); } }
+
+  /* Liquid glass */
+  .glass {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow:
+      0 8px 32px rgba(31, 30, 27, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      inset 0 -1px 0 rgba(31, 30, 27, 0.05);
+  }
+  .glass-rose {
+    background: rgba(244, 236, 236, 0.55);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(140, 76, 76, 0.18);
+  }
+  .glass-dark {
+    background: rgba(31, 30, 27, 0.88);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #F5F0EB;
+  }
+  .glass-shine { position: relative; overflow: hidden; }
+  .glass-shine::after {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.4), transparent);
+    border-radius: inherit; pointer-events: none;
+  }
+
+  /* 3D card flip */
+  .perspective { perspective: 1500px; }
+  .card-3d { transform-style: preserve-3d; transition: transform 700ms cubic-bezier(0.4, 0, 0.2, 1); }
+  .card-3d.flipped { transform: rotateY(180deg); }
+  .card-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+  .card-back { transform: rotateY(180deg); }
+
+  /* Match game tile */
+  .tile-3d { transform-style: preserve-3d; transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
+  .tile-3d.flipped { transform: rotateY(180deg); }
+  .tile-3d.matched { cursor: default; opacity: 0.55; }
+
+  /* Cat dot */
+  .cat-dot { display: inline-block; width: 8px; height: 8px; border-radius: 100px; background: currentColor; }
+
+  /* Pulse on correct */
+  @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.04); } 100% { transform: scale(1); } }
+  .pop { animation: pop 350ms ease-out; }
+  @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+  .shake { animation: shake 350ms ease; }
+
+  /* Toast */
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 100px); transition: transform 0.3s, opacity 0.3s; opacity: 0; z-index: 100; }
+  .toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+  /* Print hidden */
+  @media print { .no-print { display: none !important; } }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .aurora::before, .aurora::after, .aurora-3 { animation: none !important; }
+    .card-3d, .tile-3d { transition: none !important; }
+    .pop, .shake { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="aurora"><div class="aurora-3"></div></div>
+<div id="root"></div>
+
+<script type="importmap">
+{
+  "imports": {
+    "react":          "https://esm.sh/react@18.3.1",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+    "htm":            "https://esm.sh/htm@3.1.1"
+  }
+}
+</script>
+<script type="module">
+import React, { useState, useMemo, useEffect, useRef } from "react";
+import { createRoot } from "react-dom/client";
+import htm from "htm";
+const html = htm.bind(React.createElement);
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* DATA · subset of Nutrilite flagship products (most useful to    */
+/* practice on) — drawn from nutrilite_marketing_cards.html         */
+/* ═══════════════════════════════════════════════════════════════ */
+
+const CATEGORIES = {
+  weight:      { label: 'Weight',        color: '#8C4C4C' },
+  protein:     { label: 'Protein',       color: '#A6633F' },
+  heart_brain: { label: 'Heart · Brain', color: '#6E3838' },
+  vitamin:     { label: 'Vitamin',       color: '#B8965A' },
+  mineral:     { label: 'Mineral',       color: '#8B7355' },
+  gut:         { label: 'Gut Health',    color: '#396755' },
+  antioxidant: { label: 'Antioxidant',   color: '#2A4D40' },
+  beauty:      { label: 'Beauty',        color: '#B57878' },
+  sleep:       { label: 'Sleep',         color: '#5A4E7A' },
+  adaptogen:   { label: 'Adaptogen',     color: '#7B6F47' },
+  women:       { label: 'Women',         color: '#C8869C' },
+  youth:       { label: 'N* Youth',      color: '#D4A574' },
+};
+
+const PRODUCTS = [
+  { name: 'BodyKey',                cat: 'weight',      sku: '0124489',  desc: 'ผงทดแทนมื้ออาหาร · โปรตีนถั่วเหลือง + ใยอาหาร · 200 kcal/ซอง',                       benefits: 'ควบคุมน้ำหนัก · อิ่มนาน · สารอาหารครบ',                      target: 'คนอยากลดน้ำหนัก · ไม่มีเวลากินเช้า',                opener: 'เช้านี้มีเวลากินข้าวไหม รู้สึกพออิ่มแต่ไม่อ้วนมั้ย' },
+  { name: 'All Plant Protein Plus', cat: 'protein',     sku: '110415TH+',desc: 'โปรตีนพืช 3 แหล่ง · ถั่วเหลือง 80% + ข้าวสาลี 10% + lentil 7.5% · 8g/scoop',         benefits: '9 EAAs ครบ · 0% lactose · ดูดซึมง่าย',                       target: 'วีแกน · นักกีฬา · ผู้สูงอายุ sarcopenia',          opener: 'วันนี้ได้โปรตีนพอไหม รู้สึกกล้ามเนื้อหายกว่าตอนเด็กๆ ไหม' },
+  { name: 'Triple Omega',           cat: 'heart_brain', sku: '126132TH', desc: 'EPA 286 + DHA 214 mg + chia ALA · AquaCelle ดูดซึมดี',                                  benefits: 'หัวใจ · สมอง · ลดไตรกลีเซอไรด์ · ต้านอักเสบ',               target: 'ผู้สูงอายุ · ไขมันสูง · เด็กสมาธิสั้น',              opener: 'ตรวจสุขภาพปีนี้ไตรกลีเซอไรด์เป็นไง ปวดข้อบ่อยไหม' },
+  { name: 'Double X PhytoBlend',    cat: 'vitamin',     sku: '121575TH', desc: 'วิตามินรวม 12 vit + 9 minerals + 17 phytonutrients · 3 ฟอยล์',                            benefits: 'เสริมสารอาหารครบ · ต้านอนุมูลอิสระ · longevity',              target: 'ผู้ใหญ่ 40+ · คนทานผักไม่พอ',                        opener: 'วันนึงทานผัก-ผลไม้ครบ 5 สีจริงๆ บ้างไหม' },
+  { name: 'Concentrated F&V',       cat: 'antioxidant', sku: '102992TH', desc: 'ไฟโตนิวเทรียนต์จาก 12 ผัก-ผลไม้ 5 สี · 2 เม็ด/วัน',                                       benefits: 'antioxidant · ภูมิคุ้มกัน · ผิวพรรณ · ชะลอวัย',              target: 'คนไม่ทานผัก · เครียด · ผิวหมอง',                    opener: 'ช่วงนี้ทานผักผลไม้ครบไหม เหนื่อยง่ายกว่าเดิมหรือเปล่า' },
+  { name: 'Vitamin B Plus',         cat: 'vitamin',     sku: '122304TH', desc: 'บีรวม 8 ชนิด · Dual-Action ปลดปล่อยต่อเนื่อง 8 ชั่วโมง',                                  benefits: 'พลังงาน · เผาผลาญ · ลดเหนื่อย · ลด homocysteine',            target: 'คนทำงานหนัก · เครียด · นอนน้อย',                    opener: 'ช่วงนี้เพลียบ่อยไหม ตื่นมาแล้วไม่สดชื่นใช่ไหม' },
+  { name: 'Bio C Plus',             cat: 'vitamin',     sku: '109745TH', desc: 'Vit C 500mg จาก acerola + citrus bioflavonoids · slow-release',                          benefits: 'ภูมิคุ้มกัน · ผิวพรรณ · collagen · ลดหวัด',                   target: 'คนเป็นหวัดบ่อย · ผิวหมอง · นักกีฬา',                opener: 'ช่วงนี้ภูมิคุ้มกันเป็นไง เป็นหวัดบ่อยกว่าเดิมไหม' },
+  { name: 'Cal Mag D',              cat: 'mineral',     sku: '117147TH', desc: 'Ca 234 + Mg 118 + Vit D + alfalfa · 250 เม็ด/ขวด',                                        benefits: 'กระดูก · กล้ามเนื้อ · ป้องกันกระดูกพรุน',                    target: 'หญิง 40+ · ผู้สูงอายุ · เป็นตะคริว',                opener: 'ปวดเข่า ปวดหลังบ่อยไหม ตะคริวมาตอนตื่นไหม' },
+  { name: 'Garlic',                 cat: 'heart_brain', sku: 'A5923TH',  desc: 'กระเทียมอัดเม็ด 333mg + parsley + watercress · กลิ่นมิ้น',                                benefits: 'ดูแลความดัน · ลดไขมัน · หัวใจ · ไม่มีกลิ่นแรง',              target: 'คนความดันสูง · ไขมันสูง · ดูแลหัวใจ',               opener: 'ตรวจความดัน ไขมัน ครั้งสุดท้ายเป็นไงบ้าง' },
+  { name: 'CoQ10 Plus',             cat: 'heart_brain', sku: '101156TH', desc: 'CoQ10 29.5mg + L-carnitine + Taurine + citrus bioflavonoid',                              benefits: 'พลังงานเซลล์ · หัวใจ · ลดริ้วรอย · ต้านวัย',                 target: 'คนกินยา statin · หัวใจอ่อน · ผู้สูงอายุ',           opener: 'กินยาลดไขมัน statin อยู่ใช่ไหม รู้สึกเพลียกว่าเดิมไหม' },
+  { name: 'Probiotic W',            cat: 'gut',         sku: '120571TH', desc: 'Probiotic 3 strains 10⁹+ CFU + inulin + FOS + cranberry · 30 ซอง',                       benefits: 'ลำไส้สมดุล · ภูมิคุ้มกัน · ดูแลทางเดินปัสสาวะหญิง',        target: 'ผู้หญิง · ท้องผูก · ทานยาฆ่าเชื้อ',                 opener: 'ระบบขับถ่ายเป็นไงบ้าง ท้องอืดบ่อยกว่าเดิมหรือเปล่า' },
+  { name: 'Calow',                  cat: 'weight',      sku: '100193TH', desc: 'White bean extract 183mg + soy bean + parsley · กินก่อนอาหาร 15-20 นาที',                 benefits: 'ยับยั้งย่อยแป้ง · block ~300 kcal/dose',                      target: 'คนลดน้ำหนัก · ติดข้าว/เส้น · เบาหวาน',              opener: 'กินข้าวเหนียว ส้มตำ เส้นแล้วอ้วนทันทีใช่ไหม' },
+  { name: 'CLA 500',                cat: 'weight',      sku: '102178TH', desc: 'CLA 500mg จากน้ำมัน safflower · 1-3 caps/วัน',                                            benefits: 'ลดไขมัน · เพิ่ม lean body mass · เผาผลาญ',                    target: 'คนลดน้ำหนัก · นักกีฬา fitness',                     opener: 'ลดน้ำหนักแล้วผิวห่อย รูปร่างยังไม่ฟิตใช่ไหม' },
+  { name: 'Mixed Collagen',         cat: 'beauty',      sku: '119293TH', desc: 'Marine collagen + soybean peptide + chrysanthemum 5g/stick · sugar-free',                 benefits: 'ผิวพรรณ · เล็บ · ผม · ป้องกัน UV',                            target: 'ผู้หญิง 30+ · ผิวหย่อน · กลัวริ้วรอย',              opener: 'ผิวรอบดวงตาเริ่มเหี่ยวเมื่อไหร่ไม่ทันรู้ตัวใช่ไหม' },
+  { name: 'SHN',                    cat: 'beauty',      sku: '101812TH', desc: 'Hydrolyzed collagen 250 + Vit C + biotin + grape seed + L-cysteine',                       benefits: 'ผม · ผิว · เล็บ · biotin บำรุงรากผม',                         target: 'ผู้หญิง · ผมร่วง · เล็บเปราะ',                      opener: 'ผมร่วงเยอะเวลาสระไหม เล็บเปราะ แตกง่ายหรือเปล่า' },
+  { name: 'Jujube Nite',            cat: 'sleep',       sku: '123126TH', desc: 'เมล็ดพุทราจีน + GABA · 1 เม็ดก่อนนอน · 60 เม็ด',                                          benefits: 'คุณภาพการนอน · คลายเครียด · GABA ผ่อนคลาย',                  target: 'คนนอนยาก · เครียด · กลัวกินยานอนหลับ',              opener: 'นอนหลับสนิทไหม ตื่นมาแล้วยังเพลียอยู่หรือเปล่า' },
+  { name: 'Lingzhi Herbal Plus',    cat: 'adaptogen',   sku: '126715TH', desc: 'Lingzhi 57mg + sea buckthorn 20mg + elderberry 16mg · 60 เม็ด',                            benefits: 'ภูมิคุ้มกัน · adaptogen · longevity',                          target: 'คนป่วยบ่อย · ภูมิตก · ผู้สูงอายุ',                  opener: 'เป็นหวัด/ป่วยบ่อยกว่าเดิมไหม ภูมิตกง่าย' },
+  { name: 'Primrose Plus',          cat: 'women',       sku: '101135TH', desc: 'Evening primrose + borage oil (GLA) + dong quai + ginger',                                benefits: 'PMS · hormone balance · ดูแลผู้หญิง 30+',                     target: 'หญิง 25+ · PMS · ปวดท้องประจำเดือน',                opener: 'ก่อนประจำเดือนมีอาการรุนแรงไหม หงุดหงิด ปวดท้อง บวมน้ำ' },
+  { name: 'n* Pinkombu',            cat: 'youth',       sku: '315084',   desc: 'Probiotic + acerola + goji + blood orange + pomegranate · 15 ซอง × 5g',                   benefits: 'โพรไบโอติก + Vit C จากผลไม้ · ผิว · ภูมิ',                   target: 'ผู้หญิงรุ่นใหม่ · เน้นผิวดี · gut health entry',    opener: 'ดื่มน้ำผลไม้ vitamin C ปกติไหม อยากได้ probiotic ด้วยมั้ย' },
+  { name: 'Vital Gold Pack',        cat: 'heart_brain', sku: '125566TH', desc: 'Fish Oil + Garlic + CoQ10 Plus (gold) · 30 ซอง × 3 เม็ด',                                 benefits: 'stack หัวใจ premium · ครบใน 1 ซอง',                           target: 'คนต้องการ cardio stack ครบ · เดินทางบ่อย',          opener: 'อยากกินครบ Omega + Garlic + CoQ10 แต่กลัวยุ่ง — มีแบบรวมซองให้นะ' },
+];
+
+/* ─── small helpers ─────────────────────────────────────── */
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* APP · 3 modes (Pair Practice / Memory Match / Quiz Battle)       */
+/* ═══════════════════════════════════════════════════════════════ */
+
+function App() {
+  const [mode, setMode] = useState('pair');   // pair · match · quiz
+  const [toast, setToast] = useState('');
+
+  const showToast = (msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(''), 2200);
+  };
+
+  return html`
+    <div className="min-h-screen px-4 py-8 md:px-8 md:py-12">
+
+      <!-- ── Header ── -->
+      <header className="max-w-6xl mx-auto mb-8">
+        <div className="glass glass-shine rounded-3xl px-6 py-7 md:px-10 md:py-9">
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <div className="font-mono text-[11px] tracking-[0.2em] uppercase text-rose-deep mb-3">
+                UP Wellness · Training Studio · ${new Date().toLocaleDateString('th-TH')}
+              </div>
+              <h1 className="font-display text-4xl md:text-5xl font-semibold text-ink mb-2 tracking-tight">
+                Nutrilite <em className="text-rose italic font-medium">Flashcard Game</em>
+              </h1>
+              <p className="text-ink-60 text-sm md:text-base max-w-2xl leading-relaxed">
+                ฝึกพูดสินค้า · ทบทวน opener · จับคู่ marketing message — เล่นคนเดียวหรือกับเพื่อนก็ได้ ${PRODUCTS.length} สินค้า
+              </p>
+            </div>
+            <a href="nutrilite_marketing_cards.html"
+               className="font-mono text-[10px] uppercase tracking-widest text-ink-60 hover:text-rose transition border border-ink-10 rounded-full px-3 py-1.5">
+              ← Product Library
+            </a>
+          </div>
+
+          <!-- ── Mode pills ── -->
+          <div className="mt-6 flex flex-wrap gap-2 no-print">
+            ${[
+              ['pair',  '🃏 Pair Practice', 'ฝึกพูดเป็นคู่'],
+              ['match', '🧠 Memory Match',  'จับคู่จากความจำ'],
+              ['quiz',  '⚡ Quiz Battle',    'ทายชื่อจาก opener'],
+            ].map(([k, label, sub]) => html`
+              <button key=${k}
+                onClick=${() => setMode(k)}
+                className=${`group flex items-center gap-2 rounded-2xl px-4 py-2.5 text-sm font-semibold transition border ${
+                  mode === k
+                    ? 'bg-ink text-cream border-ink shadow-lg'
+                    : 'glass border-white/60 text-ink-60 hover:text-ink hover:-translate-y-0.5'
+                }`}
+              >
+                <span>${label}</span>
+                <span className="text-[10px] font-mono opacity-70">· ${sub}</span>
+              </button>
+            `)}
+          </div>
+        </div>
+      </header>
+
+      <!-- ── Active mode ── -->
+      <div className="max-w-6xl mx-auto">
+        ${mode === 'pair'  && html`<${PairPractice} showToast=${showToast} />`}
+        ${mode === 'match' && html`<${MemoryMatch}  showToast=${showToast} />`}
+        ${mode === 'quiz'  && html`<${QuizBattle}   showToast=${showToast} />`}
+      </div>
+
+      <!-- ── Footer ── -->
+      <footer className="max-w-6xl mx-auto mt-12 text-center text-ink-40 text-xs font-mono tracking-widest uppercase">
+        UP Wellness · Science-based · Personalized · Longevity-first
+      </footer>
+
+      <!-- ── Toast ── -->
+      <div className=${`toast ${toast ? 'show' : ''} glass-dark rounded-full px-5 py-2.5 text-sm font-medium`}>
+        ${toast}
+      </div>
+    </div>
+  `;
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* MODE 1 · PAIR PRACTICE                                            */
+/* 2 cards drawn at random · click to flip individually · "reveal    */
+/* both" button · score how many sets reviewed                       */
+/* ═══════════════════════════════════════════════════════════════ */
+function PairPractice({ showToast }) {
+  const [pair, setPair]   = useState(() => pickPair());
+  const [flips, setFlips] = useState([false, false]);
+  const [count, setCount] = useState(0);
+
+  function pickPair() {
+    const s = shuffle(PRODUCTS);
+    return [s[0], s[1]];
+  }
+
+  const drawNew = () => {
+    setPair(pickPair());
+    setFlips([false, false]);
+    setCount(c => c + 1);
+  };
+
+  const flipBoth = () => {
+    const allFlipped = flips.every(Boolean);
+    setFlips(allFlipped ? [false, false] : [true, true]);
+  };
+
+  const flipOne = (i) => {
+    setFlips(prev => prev.map((f, idx) => (idx === i ? !f : f)));
+  };
+
+  return html`
+    <div>
+      <!-- Score bar -->
+      <div className="glass rounded-2xl p-4 mb-6 flex items-center justify-between flex-wrap gap-3">
+        <div className="flex items-center gap-5 flex-wrap">
+          <div>
+            <div className="font-mono text-[9px] tracking-widest uppercase text-rose-deep">Cards reviewed</div>
+            <div className="font-display text-2xl font-bold text-ink">${count + 1}</div>
+          </div>
+          <div className="hidden sm:block h-10 w-px bg-ink-10" />
+          <div>
+            <div className="font-mono text-[9px] tracking-widest uppercase text-ink-40">Mode</div>
+            <div className="font-display text-base font-semibold text-ink">ฝึกพูดเป็นคู่</div>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 no-print">
+          <button onClick=${flipBoth}
+            className="rounded-full px-4 py-2 text-xs font-semibold border border-ink-10 hover:border-rose hover:text-rose transition">
+            🔁 พลิกทั้งคู่
+          </button>
+          <button onClick=${drawNew}
+            className="rounded-full bg-ink text-cream px-5 py-2 text-xs font-semibold hover:bg-rose transition">
+            🎲 สุ่มคู่ใหม่
+          </button>
+        </div>
+      </div>
+
+      <!-- 2 cards side by side -->
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        ${pair.map((p, i) => html`
+          <${FlipCard} key=${p.sku + '-' + i} product=${p} flipped=${flips[i]} onFlip=${() => flipOne(i)} />
+        `)}
+      </div>
+
+      <!-- Practice prompt -->
+      <div className="mt-7 glass-rose glass-shine rounded-2xl p-5">
+        <div className="font-mono text-[10px] tracking-widest uppercase text-rose-deep font-bold mb-2">💬 วิธีเล่น</div>
+        <ol className="font-thai text-[13.5px] text-ink leading-relaxed space-y-1 list-decimal list-inside">
+          <li><strong>คลิกการ์ดทีละใบ</strong> เพื่อดูชื่อสินค้า — แล้ว <em>พูดสรรพคุณ · target · opener</em> ออกมาให้ได้</li>
+          <li>คลิกพลิกอีกครั้งเพื่อดู <em>เฉลย</em> ของสินค้านั้น — เช็คว่าตรงไหม</li>
+          <li>กด <strong>🎲 สุ่มคู่ใหม่</strong> เพื่อข้ามไปสินค้าคู่ถัดไป</li>
+        </ol>
+      </div>
+    </div>
+  `;
+}
+
+function FlipCard({ product, flipped, onFlip }) {
+  const c = CATEGORIES[product.cat] || { label: '?', color: '#8C4C4C' };
+  return html`
+    <div className="perspective h-[440px] md:h-[460px] cursor-pointer no-print" onClick=${onFlip}>
+      <div className=${`relative w-full h-full card-3d ${flipped ? 'flipped' : ''}`}>
+
+        <!-- Front: just product name + cat color -->
+        <div className="card-face absolute inset-0 glass glass-shine rounded-3xl p-6 flex flex-col">
+          <div className="flex items-start justify-between">
+            <div className="flex items-center gap-2">
+              <span className="cat-dot" style=${{ background: c.color, color: c.color }}></span>
+              <span className="font-mono text-[10px] tracking-widest uppercase text-ink-60">${c.label}</span>
+            </div>
+            <span className="font-mono text-[10px] text-ink-40">${product.sku}</span>
+          </div>
+
+          <div className="flex-1 flex flex-col items-center justify-center text-center px-4">
+            <div className="font-mono text-[10px] tracking-[0.18em] uppercase text-ink-40 mb-3">▼ TAP TO FLIP ▼</div>
+            <h2 className="font-display text-[36px] md:text-[44px] font-semibold text-ink leading-tight mb-3">${product.name}</h2>
+            <div className="font-thai text-[14px] text-ink-60 italic">
+              "ลองพูดสรรพคุณ · target · opener ก่อนพลิกดู"
+            </div>
+          </div>
+
+          <div className="font-mono text-[10px] tracking-widest uppercase text-ink-40 text-center">
+            #${product.cat} · #${product.sku.toLowerCase()}
+          </div>
+        </div>
+
+        <!-- Back: full marketing copy -->
+        <div className="card-face card-back absolute inset-0 glass-rose glass-shine rounded-3xl p-6 flex flex-col overflow-auto">
+          <div className="flex items-start justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <span className="cat-dot" style=${{ background: c.color, color: c.color }}></span>
+              <span className="font-mono text-[10px] tracking-widest uppercase text-ink-60 font-bold">${c.label}</span>
+            </div>
+            <span className="font-mono text-[10px] text-rose-deep">${product.sku}</span>
+          </div>
+
+          <h3 className="font-display text-[26px] font-semibold text-ink leading-tight">${product.name}</h3>
+
+          <div className="mt-3 space-y-2 text-[12.5px] leading-relaxed flex-1">
+            <div>
+              <div className="font-mono text-[9px] tracking-widest uppercase text-ink-40 mb-0.5">DESC</div>
+              <p className="text-ink">${product.desc}</p>
+            </div>
+            <div>
+              <div className="font-mono text-[9px] tracking-widest uppercase text-ink-40 mb-0.5">สรรพคุณ</div>
+              <p className="text-ink">${product.benefits}</p>
+            </div>
+            <div>
+              <div className="font-mono text-[9px] tracking-widest uppercase text-ink-40 mb-0.5">TARGET</div>
+              <p className="text-ink">${product.target}</p>
+            </div>
+          </div>
+
+          <div className="mt-3 rounded-2xl px-4 py-3 border" style=${{
+            background: `linear-gradient(135deg, ${c.color}15, ${c.color}05)`,
+            borderColor: `${c.color}30`,
+          }}>
+            <div className="font-mono text-[9px] tracking-widest uppercase mb-1 font-bold" style=${{ color: c.color }}>
+              💬 OPENER
+            </div>
+            <p className="font-display italic text-[15px] leading-snug text-ink">"${product.opener}"</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* MODE 2 · MEMORY MATCH                                             */
+/* 12 tiles · 6 pairs · match product NAME ↔ OPENER                  */
+/* ═══════════════════════════════════════════════════════════════ */
+function MemoryMatch({ showToast }) {
+  const [round, setRound] = useState(0);
+  const [pairCount, setPairCount] = useState(6); // 6 pairs = 12 tiles
+  const [tiles, setTiles] = useState([]);
+  const [flipped, setFlipped] = useState([]);   // ids currently face-up
+  const [matched, setMatched] = useState([]);   // ids already matched
+  const [moves, setMoves] = useState(0);
+  const [startedAt, setStartedAt] = useState(null);
+  const [elapsed, setElapsed] = useState(0);
+  const timerRef = useRef(null);
+
+  useEffect(() => { reset(); }, [round, pairCount]);
+
+  useEffect(() => {
+    if (startedAt && matched.length < tiles.length) {
+      timerRef.current = setInterval(() => setElapsed(Math.floor((Date.now() - startedAt) / 1000)), 1000);
+      return () => clearInterval(timerRef.current);
+    }
+  }, [startedAt, matched.length, tiles.length]);
+
+  function reset() {
+    const picked = shuffle(PRODUCTS).slice(0, pairCount);
+    // Each product produces 2 tiles: type='name' and type='opener'
+    const ts = [];
+    picked.forEach((p, i) => {
+      ts.push({ id: i * 2,     pid: i, type: 'name',   product: p });
+      ts.push({ id: i * 2 + 1, pid: i, type: 'opener', product: p });
+    });
+    setTiles(shuffle(ts));
+    setFlipped([]);
+    setMatched([]);
+    setMoves(0);
+    setStartedAt(null);
+    setElapsed(0);
+    if (timerRef.current) clearInterval(timerRef.current);
+  }
+
+  const onTileClick = (tile) => {
+    if (matched.includes(tile.id) || flipped.includes(tile.id)) return;
+    if (flipped.length >= 2) return;
+    if (!startedAt) setStartedAt(Date.now());
+
+    const next = [...flipped, tile.id];
+    setFlipped(next);
+
+    if (next.length === 2) {
+      setMoves(m => m + 1);
+      const [a, b] = next.map(id => tiles.find(t => t.id === id));
+      if (a.pid === b.pid && a.type !== b.type) {
+        // Match!
+        setTimeout(() => {
+          setMatched(m => [...m, a.id, b.id]);
+          setFlipped([]);
+          if (matched.length + 2 === tiles.length) {
+            showToast(`🏆 ชนะใน ${moves + 1} ครั้ง · ${elapsed}s`);
+          }
+        }, 600);
+      } else {
+        // No match — flip back
+        setTimeout(() => setFlipped([]), 1100);
+      }
+    }
+  };
+
+  const isDone = tiles.length > 0 && matched.length === tiles.length;
+  const cols = pairCount <= 6 ? 'grid-cols-3 md:grid-cols-4' : 'grid-cols-3 md:grid-cols-6';
+
+  return html`
+    <div>
+      <!-- Score bar -->
+      <div className="glass rounded-2xl p-4 mb-6 flex items-center justify-between flex-wrap gap-3">
+        <div className="flex items-center gap-5 flex-wrap">
+          <div>
+            <div className="font-mono text-[9px] tracking-widest uppercase text-rose-deep">Moves</div>
+            <div className="font-display text-2xl font-bold text-ink">${moves}</div>
+          </div>
+          <div className="h-10 w-px bg-ink-10" />
+          <div>
+            <div className="font-mono text-[9px] tracking-widest uppercase text-rose-deep">Time</div>
+            <div className="font-display text-2xl font-bold text-ink">${elapsed}s</div>
+          </div>
+          <div className="h-10 w-px bg-ink-10" />
+          <div>
+            <div className="font-mono text-[9px] tracking-widest uppercase text-rose-deep">Matched</div>
+            <div className="font-display text-2xl font-bold text-ink">${matched.length / 2} / ${tiles.length / 2}</div>
+          </div>
+          ${isDone && html`
+            <div className="font-display text-2xl text-rose font-bold pop">🏆 WIN!</div>
+          `}
+        </div>
+        <div className="flex items-center gap-2 no-print">
+          <select value=${pairCount} onChange=${e => setPairCount(Number(e.target.value))}
+            className="rounded-full px-3 py-2 text-xs font-mono border border-ink-10 bg-white/70">
+            <option value=${6}>6 pairs · Easy</option>
+            <option value=${8}>8 pairs · Medium</option>
+            <option value=${10}>10 pairs · Hard</option>
+          </select>
+          <button onClick=${() => setRound(r => r + 1)}
+            className="rounded-full bg-ink text-cream px-5 py-2 text-xs font-semibold hover:bg-rose transition">
+            🔄 เริ่มใหม่
+          </button>
+        </div>
+      </div>
+
+      <!-- Grid of tiles -->
+      <div className=${`grid ${cols} gap-3 md:gap-4`}>
+        ${tiles.map(t => html`
+          <${MatchTile} key=${t.id} tile=${t}
+            isFlipped=${flipped.includes(t.id) || matched.includes(t.id)}
+            isMatched=${matched.includes(t.id)}
+            onClick=${() => onTileClick(t)} />
+        `)}
+      </div>
+
+      <!-- Rules -->
+      <div className="mt-7 glass-rose glass-shine rounded-2xl p-5">
+        <div className="font-mono text-[10px] tracking-widest uppercase text-rose-deep font-bold mb-2">🧠 วิธีเล่น</div>
+        <ol className="font-thai text-[13.5px] text-ink leading-relaxed space-y-1 list-decimal list-inside">
+          <li>คลิกเปิดการ์ด 2 ใบ — จับคู่ <strong>ชื่อสินค้า</strong> กับ <strong>opener</strong> ของสินค้านั้น</li>
+          <li>เปิดถูก = คงเปิดไว้ · เปิดผิด = ปิดกลับ ต้องจำตำแหน่ง</li>
+          <li>เป้าหมาย: จับคู่ครบใน <em>moves น้อยที่สุด · เวลาสั้นที่สุด</em></li>
+        </ol>
+      </div>
+    </div>
+  `;
+}
+
+function MatchTile({ tile, isFlipped, isMatched, onClick }) {
+  const c = CATEGORIES[tile.product.cat] || { color: '#8C4C4C' };
+  return html`
+    <div className="perspective aspect-[3/4]">
+      <div className=${`relative w-full h-full tile-3d ${isFlipped ? 'flipped' : ''} ${isMatched ? 'matched' : ''}`}
+        onClick=${onClick}>
+
+        <!-- Back (showing first) -->
+        <div className="card-face absolute inset-0 glass-rose glass-shine rounded-2xl flex items-center justify-center">
+          <div className="font-display text-4xl text-rose-deep/40 font-bold">?</div>
+        </div>
+
+        <!-- Front (revealed) -->
+        <div className="card-face card-back absolute inset-0 glass glass-shine rounded-2xl p-3 flex flex-col">
+          <div className="flex items-center gap-1.5 mb-2">
+            <span className="cat-dot" style=${{ background: c.color, color: c.color }}></span>
+            <span className="font-mono text-[8px] tracking-widest uppercase text-ink-60 font-bold">${tile.type === 'name' ? 'PRODUCT' : 'OPENER'}</span>
+          </div>
+          ${tile.type === 'name' ? html`
+            <div className="flex-1 flex flex-col items-center justify-center text-center">
+              <div className="font-display text-[18px] md:text-[22px] font-semibold text-ink leading-tight">${tile.product.name}</div>
+              <div className="font-mono text-[9px] text-ink-40 mt-1">${tile.product.sku}</div>
+            </div>
+          ` : html`
+            <div className="flex-1 flex items-center text-left">
+              <p className="font-display italic text-[13px] md:text-[14px] leading-snug text-ink">"${tile.product.opener}"</p>
+            </div>
+          `}
+          ${isMatched && html`
+            <div className="text-center font-mono text-[9px] uppercase tracking-widest text-rose font-bold pop">✓ MATCHED</div>
+          `}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* MODE 3 · QUIZ BATTLE                                              */
+/* Shows opener — guess which product it belongs to (4 choices)      */
+/* 10 rounds · score · time                                          */
+/* ═══════════════════════════════════════════════════════════════ */
+const TOTAL_ROUNDS = 10;
+
+function QuizBattle({ showToast }) {
+  const [round, setRound]   = useState(0);
+  const [score, setScore]   = useState(0);
+  const [picked, setPicked] = useState(null);
+  const [reveal, setReveal] = useState(false);
+  const [seed, setSeed]     = useState(0);
+
+  const challenge = useMemo(() => {
+    const shuffled = shuffle(PRODUCTS);
+    const correct = shuffled[0];
+    const distractors = shuffled.slice(1, 4);
+    const options = shuffle([correct, ...distractors]);
+    return { correct, options };
+  }, [round, seed]);
+
+  const isDone = round >= TOTAL_ROUNDS;
+
+  const onPick = (p) => {
+    if (picked) return;
+    setPicked(p);
+    setReveal(true);
+    const isCorrect = p.sku === challenge.correct.sku;
+    if (isCorrect) {
+      setScore(s => s + 1);
+      showToast('✓ ถูกต้อง!');
+    } else {
+      showToast(`✗ ที่ถูกคือ ${challenge.correct.name}`);
+    }
+    setTimeout(() => {
+      setPicked(null);
+      setReveal(false);
+      setRound(r => r + 1);
+    }, 1800);
+  };
+
+  const restart = () => {
+    setRound(0);
+    setScore(0);
+    setPicked(null);
+    setReveal(false);
+    setSeed(s => s + 1);
+  };
+
+  if (isDone) {
+    const pct = Math.round((score / TOTAL_ROUNDS) * 100);
+    const grade = pct >= 90 ? '🏆 EXPERT'
+                : pct >= 70 ? '⭐ PRO'
+                : pct >= 50 ? '👍 GOOD'
+                : '📚 KEEP PRACTICING';
+    return html`
+      <div className="glass glass-shine rounded-3xl p-10 text-center">
+        <div className="font-mono text-[11px] tracking-widest uppercase text-rose-deep font-bold mb-4">Final score</div>
+        <div className="font-display text-7xl font-bold text-ink mb-3">${score} / ${TOTAL_ROUNDS}</div>
+        <div className="font-display text-3xl text-rose italic mb-6">${grade}</div>
+        <div className="font-thai text-ink-60 mb-8 max-w-md mx-auto">
+          ${pct >= 90 ? 'รู้ทุก opener แล้ว · พร้อมคุยกับลูกค้าตัวจริง'
+            : pct >= 70 ? 'แม่นมาก · ทบทวนอีกนิดให้ครบทุกสินค้า'
+            : pct >= 50 ? 'พื้นฐานดี · ลองเล่น Pair Practice ก่อนกลับมา'
+            : 'เริ่มจาก Pair Practice เพื่อทำความรู้จักสินค้าก่อนก็ได้'}
+        </div>
+        <button onClick=${restart}
+          className="rounded-full bg-ink text-cream px-7 py-3 text-sm font-semibold hover:bg-rose transition">
+          🔄 เริ่มใหม่
+        </button>
+      </div>
+    `;
+  }
+
+  return html`
+    <div>
+      <!-- Progress bar -->
+      <div className="glass rounded-2xl p-4 mb-6 flex items-center justify-between flex-wrap gap-3">
+        <div className="flex items-center gap-5 flex-wrap">
+          <div>
+            <div className="font-mono text-[9px] tracking-widest uppercase text-rose-deep">Round</div>
+            <div className="font-display text-2xl font-bold text-ink">${round + 1} / ${TOTAL_ROUNDS}</div>
+          </div>
+          <div className="h-10 w-px bg-ink-10" />
+          <div>
+            <div className="font-mono text-[9px] tracking-widest uppercase text-rose-deep">Score</div>
+            <div className="font-display text-2xl font-bold text-rose">${score}</div>
+          </div>
+        </div>
+        <div className="flex-1 max-w-xs ml-auto">
+          <div className="h-2 rounded-full bg-ink-10 overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-rose to-green transition-all duration-500" style=${{ width: `${((round) / TOTAL_ROUNDS) * 100}%` }} />
+          </div>
+        </div>
+      </div>
+
+      <!-- Opener card -->
+      <div className="glass-rose glass-shine rounded-3xl p-8 md:p-10 mb-6">
+        <div className="font-mono text-[10px] tracking-widest uppercase text-rose-deep font-bold mb-3">💬 ประโยคเปิดใจ · เป็นของสินค้าไหน?</div>
+        <p className="font-display italic text-[26px] md:text-[34px] leading-snug text-ink">
+          "${challenge.correct.opener}"
+        </p>
+      </div>
+
+      <!-- Choices -->
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        ${challenge.options.map((opt) => {
+          const isCorrect = reveal && opt.sku === challenge.correct.sku;
+          const isWrongPick = reveal && picked?.sku === opt.sku && opt.sku !== challenge.correct.sku;
+          const c = CATEGORIES[opt.cat];
+          return html`
+            <button key=${opt.sku}
+              disabled=${!!picked}
+              onClick=${() => onPick(opt)}
+              className=${`text-left rounded-2xl p-5 border transition-all ${
+                isCorrect ? 'bg-green/15 border-green pop' :
+                isWrongPick ? 'bg-rose/15 border-rose shake' :
+                'glass border-white/60 hover:-translate-y-0.5 hover:border-rose'
+              }`}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <span className="cat-dot" style=${{ background: c.color, color: c.color }}></span>
+                <span className="font-mono text-[9px] tracking-widest uppercase text-ink-60">${c.label}</span>
+                ${isCorrect && html`<span className="ml-auto text-green text-xl">✓</span>`}
+                ${isWrongPick && html`<span className="ml-auto text-rose text-xl">✗</span>`}
+              </div>
+              <div className="font-display text-[20px] md:text-[22px] font-semibold text-ink leading-tight">${opt.name}</div>
+              <div className="font-mono text-[10px] text-ink-40 mt-1">${opt.sku}</div>
+              ${isCorrect && html`<div className="mt-2 font-thai text-[12.5px] text-green-deep leading-snug">${opt.benefits}</div>`}
+            </button>
+          `;
+        })}
+      </div>
+
+      <!-- Rules -->
+      <div className="mt-7 glass rounded-2xl p-5">
+        <div className="font-mono text-[10px] tracking-widest uppercase text-ink-60 font-bold mb-2">⚡ วิธีเล่น</div>
+        <ol className="font-thai text-[13.5px] text-ink leading-relaxed space-y-1 list-decimal list-inside">
+          <li>อ่าน <strong>opener</strong> ด้านบน — เดาว่าน่าจะเป็นของสินค้าตัวไหน</li>
+          <li>คลิกตัวเลือก 1 ใน 4 · ระบบเฉลยทันที</li>
+          <li>เล่นครบ ${TOTAL_ROUNDS} รอบ → ดูคะแนน + grade</li>
+        </ol>
+      </div>
+    </div>
+  `;
+}
+
+createRoot(document.getElementById('root')).render(html`<${App} />`);
+</script>
+
+</body>
+</html>
