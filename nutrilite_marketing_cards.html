@@ -182,7 +182,7 @@ import htm from "https://esm.sh/htm";
 const html = htm.bind(React.createElement);
 
 /* ═══════════════════════════════════════════════════════════════ */
-/* DATA · 24 Nutrilite products with marketing scripts              */
+/* DATA · 42 Nutrilite products + sub-brands (N* / Truvivity)      */
 /* ═══════════════════════════════════════════════════════════════ */
 
 const CATEGORIES = {
@@ -195,6 +195,10 @@ const CATEGORIES = {
   antioxidant:  { label: 'Antioxidant',  color: '#2A4D40', glow: 'rgba(42, 77, 64, 0.4)' },
   beauty:       { label: 'Beauty',       color: '#B57878', glow: 'rgba(181, 120, 120, 0.4)' },
   bundle:       { label: 'Bundle',       color: '#5C5A56', glow: 'rgba(92, 90, 86, 0.4)' },
+  sleep:        { label: 'Sleep',        color: '#5A4E7A', glow: 'rgba(90, 78, 122, 0.4)' },
+  adaptogen:    { label: 'Adaptogen',    color: '#7B6F47', glow: 'rgba(123, 111, 71, 0.4)' },
+  women:        { label: 'Women',        color: '#C8869C', glow: 'rgba(200, 134, 156, 0.4)' },
+  youth:        { label: 'N* Youth',     color: '#D4A574', glow: 'rgba(212, 165, 116, 0.4)' },
 };
 
 const PRODUCTS = [
@@ -219,6 +223,28 @@ const PRODUCTS = [
     benefits: '9 amino acid ครบ · 0% lactose · 0% cholesterol · ดูดซึมง่าย',
     target: 'วีแกน · คนแพ้นมวัว · นักกีฬา · ผู้สูงอายุที่กล้ามเนื้อหาย · คนผอม',
     opener: 'วันนี้ได้โปรตีนพอไหม รู้สึกกล้ามเนื้อหายกว่าตอนเด็กๆ ไหม',
+  },
+  {
+    name: 'All Plant Protein (ORIGINAL)',
+    name_th: 'ออล แพลนท์ โปรตีน 450g (สูตรเดิม)',
+    cat: 'protein',
+    price: 1209,
+    sku: '110415TH',
+    desc: 'โปรตีนพืช · สูตรดั้งเดิม · 450g · กลิ่นจืด ผสมในเครื่องดื่ม/อาหารได้',
+    benefits: '9 EAAs ครบ · ไม่หวาน · 0% lactose · ลูกค้าเก่าคุ้นเคย',
+    target: 'ลูกค้า loyalty · ชอบสูตรเดิม · ไม่ชอบรสหวาน · ผสมในอาหาร',
+    opener: 'ติดสูตรเดิมหรือสูตรใหม่ มี 2 แบบให้เลือก',
+  },
+  {
+    name: 'All Plant Protein 900g',
+    name_th: 'ออล แพลนท์ โปรตีน 900g (ขนาดประหยัด)',
+    cat: 'protein',
+    price: 2300,
+    sku: '122594TH',
+    desc: 'โปรตีนพืช · 900g · ประหยัดกว่าซื้อ 2 กระป๋อง · สำหรับครอบครัว',
+    benefits: 'ครอบครัวคุ้ม · เก็บใช้ได้นาน · ลูกค้า heavy user · ลด cost/serving',
+    target: 'ครอบครัวที่กินโปรตีนกันทั้งบ้าน · นักกีฬากินทุกวัน · ร้าน café',
+    opener: 'กินโปรตีนทั้งบ้านหรือเปล่า มีขนาดประหยัดกว่าด้วยนะ',
   },
   {
     name: 'Green Tea Protein',
@@ -440,6 +466,214 @@ const PRODUCTS = [
     target: 'คนเริ่มต้น · ต้องการพื้นฐาน · ของขวัญสุขภาพ',
     opener: 'อยากเริ่มดูแลตัวเองแต่ไม่รู้จะเริ่มที่ไหนใช่ไหม',
   },
+
+  /* ─── N* by Nutrilite (sub-brand · Young Gen / Young at Heart) ─── */
+  {
+    name: 'n* a Day',
+    name_th: 'เอ็น* บาย นิวทริไลท์ เอ็น* เดย์',
+    cat: 'youth',
+    price: null,
+    sku: 'verify-2026',
+    desc: 'Multivitamin + minerals · กัมมี่ · 1 ชิ้น/วัน',
+    benefits: 'วิตามินรวม-แร่ธาตุครบ · กินง่าย · ไม่ต้องกลืนเม็ด',
+    target: 'วัยรุ่น · นักศึกษา · คนกลืนเม็ดไม่ลง · multivitamin entry',
+    opener: 'กินวิตามินรวมประจำหรือเปล่า เม็ดใหญ่กลืนยากไหม',
+  },
+  {
+    name: 'n* Routine',
+    name_th: 'เอ็น* บาย นิวทริไลท์ เอ็น* รูทีน',
+    cat: 'youth',
+    price: null,
+    sku: 'verify-2026',
+    desc: 'Lutein + beta carotene · กัมมี่บำรุงสายตา',
+    benefits: 'บำรุงตา · ลดล้าจากจอ · antioxidant · กินง่าย',
+    target: 'คนใช้คอม-มือถือเยอะ · นักศึกษา · นักออกแบบ · WFH',
+    opener: 'จ้องจอวันละกี่ชั่วโมง ตาแห้ง ปวดตาไหม',
+  },
+  {
+    name: 'n* Joy',
+    name_th: 'เอ็น* บาย นิวทริไลท์ เอ็น* จอย',
+    cat: 'youth',
+    price: null,
+    sku: 'verify-2026',
+    desc: 'Cookie supplement · snack-style · กินเล่นได้ระหว่างวัน',
+    benefits: 'อาหารเสริมที่กินเหมือนของว่าง · กินสบาย · ไม่รู้สึกเฝือ',
+    target: 'คนรุ่นใหม่ · ไม่ชอบกินวิตามินเม็ด · ของฝากสุขภาพ',
+    opener: 'อยากกินวิตามินแต่กลัวเฝือ ลองเป็นคุกกี้ไหม',
+  },
+  {
+    name: 'n* Out',
+    name_th: 'เอ็น* บาย นิวทริไลท์ เอ็น* เอาท์',
+    cat: 'youth',
+    price: null,
+    sku: 'verify-2026',
+    desc: 'L-theanine + collagen · 8 ขวด × 50ml/กล่อง · drink',
+    benefits: 'ผ่อนคลาย · ลดเครียด · ผิวสวย · กินสะดวกแบบดื่ม',
+    target: 'คนเครียด · นอนหลับยาก · ดูแลผิว · อายุ 20-35',
+    opener: 'ช่วงนี้เครียดเยอะไหม นอนหลับยากบ้างหรือเปล่า',
+  },
+  {
+    name: 'n* Pinkombu',
+    name_th: 'เอ็น* บาย นิวทริไลท์ เอ็น* พิงค์คอมบุ',
+    cat: 'youth',
+    price: null,
+    sku: '315084',
+    desc: 'Probiotic + acerola + goji + blood orange + pomegranate · 15 ซอง × 5g',
+    benefits: 'โพรไบโอติก + วิตซีจากผลไม้ · ผิว · ภูมิ · ลำไส้ดี',
+    target: 'ผู้หญิงรุ่นใหม่ · เน้นผิวดี · ลำไส้ดี · ของขวัญ',
+    opener: 'ดื่มน้ำผลไม้ vitamin C ปกติไหม อยากได้ probiotic ด้วยมั้ย',
+  },
+  {
+    name: 'n* Cha',
+    name_th: 'เอ็น* บาย นิวทริไลท์ เอ็น* ชา',
+    cat: 'youth',
+    price: null,
+    sku: '305273',
+    desc: 'Fermented black/green tea (Korea) + maltodextrin · L. reuteri + L. rhamnosus · 15×6.2g',
+    benefits: 'ชาหมัก + probiotic + ใยอาหาร · ลำไส้-ขับถ่าย · 1 ซอง/วัน',
+    target: 'คนดื่มชา · ลำไส้แปรปรวน · ท้องผูก · gut health entry',
+    opener: 'ขับถ่ายทุกวันไหม ลองดูแลลำไส้ด้วยชาหมัก probiotic ดูมั้ย',
+  },
+
+  /* ─── Nutrilite Packs (combo · 30 sachets × 3 tablets) ─── */
+  {
+    name: 'Vital Pack',
+    name_th: 'นิวทริไลท์ ไวทัล แพ็ค',
+    cat: 'heart_brain',
+    price: null,
+    sku: 'verify',
+    desc: 'Fish Oil + Garlic + CoQ10 Plus · 30 ซอง × 3 เม็ด · 1 ซอง/วัน',
+    benefits: 'stack หัวใจ-หลอดเลือด-พลังงานเซลล์ · convenient · พกพา',
+    target: 'คนดูแลหัวใจ · เริ่ม cardio program · ผู้สูงอายุ · นักวิ่ง',
+    opener: 'ตรวจสุขภาพหัวใจครั้งสุดท้ายเมื่อไหร่ ดูแลครบหรือยัง',
+  },
+  {
+    name: 'Vital Gold Pack',
+    name_th: 'นิวทริไลท์ ไวทัล โกลด์ แพ็ค',
+    cat: 'heart_brain',
+    price: null,
+    sku: '125566TH',
+    desc: 'Fish Oil + Garlic + CoQ10 Plus (gold formula) · 30 ซอง × 3 เม็ด',
+    benefits: 'stack หัวใจ premium · ครบ Omega + Garlic + CoQ10 ในซองเดียว',
+    target: 'คนต้องการ cardio stack ครบ · เดินทางบ่อย · ของขวัญ',
+    opener: 'อยากกินครบ Omega + Garlic + CoQ10 แต่กลัวยุ่ง — มีแบบรวมซองให้นะ',
+  },
+  {
+    name: 'W Pack',
+    name_th: 'นิวทริไลท์ ดับเบิ้ลยู แพ็ค',
+    cat: 'gut',
+    price: null,
+    sku: '125567TH',
+    desc: 'Probiotic W-based combo · 30 ซอง × 3 เม็ด · 1 ซอง/วัน',
+    benefits: 'stack ลำไส้-ภูมิ-ทางเดินปัสสาวะหญิง · convenient',
+    target: 'ผู้หญิง · ลำไส้แปรปรวน · ดูแล UTI · 1 ซอง/วัน',
+    opener: 'อยากดูแล probiotic ครบและไม่ต้องคิดเยอะ — มีแบบ pack ให้เลย',
+  },
+  {
+    name: 'Concentrate Pack',
+    name_th: 'นิวทริไลท์ คอนเซ็นเทรต แพ็ค',
+    cat: 'adaptogen',
+    price: null,
+    sku: '125565TH',
+    desc: 'Cistanche + Ginkgo Plus + Vitamin B Plus · 30 ซอง × 3 เม็ด',
+    benefits: 'stack สมอง-ความจำ-พลังงาน · adaptogen + neuroprotective',
+    target: 'ผู้สูงอายุ · นักทำงานความคิด · กลัว brain fog · ลูกค้า Memory Builder เดิม',
+    opener: 'ความจำเริ่มไม่เหมือนก่อนไหม ลืมง่ายขึ้น บางวันสมองล้า',
+  },
+
+  /* ─── Standalones ─── */
+  {
+    name: 'Primrose Plus',
+    name_th: 'นิวทริไลท์ ไพรม์โรส พลัส',
+    cat: 'women',
+    price: null,
+    sku: '101135TH',
+    desc: 'Evening primrose oil + borage oil (GLA) + dong quai + ginger',
+    benefits: 'PMS · hormone balance · ผิว · ดูแลผู้หญิง 30+',
+    target: 'หญิง 25+ · PMS · อาการก่อนประจำเดือน · ปวดท้อง · หงุดหงิด',
+    opener: 'ก่อนประจำเดือนมีอาการรุนแรงไหม หงุดหงิด ปวดท้อง บวมน้ำ',
+  },
+  {
+    name: 'Cistanche',
+    name_th: 'นิวทริไลท์ ซิสแตนเช่',
+    cat: 'adaptogen',
+    price: null,
+    sku: 'verify',
+    desc: 'Cistanche tubulosa root extract · adaptogen herb (phytonutrients)',
+    benefits: 'ลดอ่อนเพลียเรื้อรัง · ดูแลสมอง · longevity stack · adaptogen',
+    target: 'ผู้สูงอายุ · คนเหนื่อยล้าเรื้อรัง · สาย longevity',
+    opener: 'เพลียเรื้อรังไหม กลางวันต้องงีบเสมอ',
+  },
+  {
+    name: 'Ginkgo Plus',
+    name_th: 'นิวทริไลท์ แปะก๊วย พลัส',
+    cat: 'heart_brain',
+    price: null,
+    sku: 'verify',
+    desc: 'Ginkgo biloba leaf extract + tuna fish oil (DHA + EPA)',
+    benefits: 'บำรุงสมอง · ไหลเวียนเลือด · ความจำ · ผู้สูงอายุ',
+    target: 'ผู้สูงอายุ · ความจำเสื่อมเริ่มต้น · circulation issues',
+    opener: 'ลืมของบ่อย วางของแล้วหาไม่เจอใช่ไหม',
+  },
+  {
+    name: 'Protein Berry Flavor',
+    name_th: 'นิวทริไลท์ โปรตีน กลิ่นเบอร์รี่',
+    cat: 'protein',
+    price: null,
+    sku: '100325TH',
+    desc: 'Soy protein isolate · 19g protein + 70mg Vit C/serving · กลิ่นเบอร์รี่',
+    benefits: 'โปรตีนถั่วเหลือง สูตรเดิม · 9 EAAs · เสริมโปรตีน + Vit C',
+    target: 'คนชอบโปรตีนถั่วเหลือง · กลิ่นเบอร์รี่ · เด็ก-ผู้ใหญ่',
+    opener: 'กินโปรตีนเสริมรสไหน เคยลองรสเบอร์รี่ไหม',
+  },
+
+  /* ─── Truvivity by Nutrilite (sub-brand · beauty/anti-aging) ─── */
+  {
+    name: 'Truvivity TruMist',
+    name_th: 'ทรูวิวิตี้ บาย นิวทริไลท์ ทรูมิสท์',
+    cat: 'beauty',
+    price: null,
+    sku: '119408',
+    desc: 'Wheat-derived ceramides + PhytoInfuse Complex · กิน 1 เม็ดก่อนนอน',
+    benefits: 'ความชุ่มชื้นผิวลึก · ฟื้นผิวระหว่างนอน · anti-aging',
+    target: 'ผู้หญิง 30+ · ผิวแห้ง · กลัวริ้วรอย · ต้องการ beauty supplement',
+    opener: 'ตื่นมาเช้าผิวแห้งกว่าเดิมไหม ครีมทาแล้วยังไม่พอ',
+  },
+
+  /* ─── Sleep · Adaptogen · Immunity ─── */
+  {
+    name: 'Jujube Nite',
+    name_th: 'นิวทริไลท์ จูจูบี ไนท์',
+    cat: 'sleep',
+    price: 1200,
+    sku: '123126TH',
+    desc: 'เมล็ดพุทราจีน (jujube seed) + GABA · 1 เม็ดก่อนนอน · 60 เม็ด',
+    benefits: 'คุณภาพการนอน · คลายเครียด · GABA ช่วยผ่อนคลาย',
+    target: 'คนนอนยาก · เครียด · ทำงานดึก · กลัวกินยานอนหลับ',
+    opener: 'นอนหลับสนิทไหม ตื่นมาแล้วยังเพลียอยู่หรือเปล่า',
+  },
+  {
+    name: 'Lingzhi Herbal Plus',
+    name_th: 'นิวทริไลท์ หลินจือ เฮอร์บัล พลัส',
+    cat: 'adaptogen',
+    price: 800,
+    sku: '126715TH',
+    desc: 'Lingzhi 57mg + sea buckthorn 20mg + elderberry 16mg · 60 เม็ด',
+    benefits: 'ภูมิคุ้มกัน · adaptogen · longevity · 3 สมุนไพรธรรมชาติ',
+    target: 'คนป่วยบ่อย · ภูมิตก · ต้องการ longevity · ผู้สูงอายุ',
+    opener: 'เป็นหวัด/ป่วยบ่อยกว่าเดิมไหม ภูมิตกง่าย',
+  },
+  {
+    name: 'Siberian Ginseng & Ginkgo',
+    name_th: 'นิวทริไลท์ ไซบีเรีย จิงเซง แอนด์ กิงโก',
+    cat: 'adaptogen',
+    price: null,
+    sku: 'A5985',
+    desc: 'Siberian ginseng + Ginkgo biloba leaf + acerola · 100 เม็ด',
+    benefits: 'ลดอ่อนเพลีย · ปรับสมดุล หยิน-หยาง · เสริมแรง · สมอง',
+    target: 'นักกีฬา · ผู้สูงอายุ · คนเพลียเรื้อรัง · ต่างจาก Ginkgo Plus',
+    opener: 'ออกแรงน้อยแต่เหนื่อยมาก ใช่ไหม ไม่ค่อยมีพลังเหมือนก่อน',
+  },
 ];
 
 /* ═══════════════════════════════════════════════════════════════ */
@@ -458,16 +692,29 @@ function App() {
       if (cat !== 'all' && p.cat !== cat) return false;
       if (search.trim()) {
         const s = search.toLowerCase();
+        const catLabel = (CATEGORIES[p.cat]?.label || '').toLowerCase();
         return (
           p.name.toLowerCase().includes(s) ||
           p.name_th.toLowerCase().includes(s) ||
           p.target.toLowerCase().includes(s) ||
-          p.benefits.toLowerCase().includes(s)
+          p.benefits.toLowerCase().includes(s) ||
+          (p.desc || '').toLowerCase().includes(s) ||
+          (p.sku || '').toLowerCase().includes(s) ||
+          (p.opener || '').toLowerCase().includes(s) ||
+          catLabel.includes(s)
         );
       }
       return true;
     });
   }, [search, cat]);
+
+  const priceRange = useMemo(() => {
+    const prices = PRODUCTS.filter(p => p.price && p.price > 0).map(p => p.price);
+    if (prices.length === 0) return '—';
+    const min = Math.min(...prices);
+    const max = Math.max(...prices);
+    return `฿${min.toLocaleString()} – ฿${max.toLocaleString()}`;
+  }, []);
 
   const catCounts = useMemo(() => {
     const c = { all: PRODUCTS.length };
@@ -510,7 +757,7 @@ function App() {
             </div>
             <div className="glass-rose rounded-2xl px-4 py-3">
               <div className="font-mono text-[9px] tracking-widest uppercase text-rose-deep">Price Range</div>
-              <div className="font-display text-xl font-bold text-ink mt-1">฿527 – ฿7,195</div>
+              <div className="font-display text-xl font-bold text-ink mt-1">${priceRange}</div>
             </div>
             <div className="glass-rose rounded-2xl px-4 py-3">
               <div className="font-mono text-[9px] tracking-widest uppercase text-rose-deep">Showing</div>
@@ -529,7 +776,7 @@ function App() {
               type="text"
               value=${search}
               onChange=${(e) => setSearch(e.target.value)}
-              placeholder="ค้นหาสินค้า · target · สรรพคุณ..."
+              placeholder="ค้นหา · ชื่อ · SKU · target · สรรพคุณ · category..."
               className="w-full px-4 py-2.5 pl-10 bg-white/40 border border-white/60 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose/30 focus:bg-white/70 transition"
             />
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-40 pointer-events-none">🔍</span>
@@ -623,7 +870,9 @@ function ProductCard({ product, expanded, onToggle, onCopy }) {
           <span className="cat-dot" style=${{ background: c.color, color: c.color }}></span>
           <span className="font-mono text-[9px] tracking-widest uppercase text-ink-60">${c.label}</span>
         </div>
-        <span className="font-mono text-xs font-bold text-ink">฿${product.price.toLocaleString()}</span>
+        <span className="font-mono text-xs font-bold text-ink">
+          ${product.price ? `฿${product.price.toLocaleString()}` : 'ปรึกษาราคา'}
+        </span>
       </div>
 
       <!-- Product name -->
@@ -693,7 +942,9 @@ function ProductRow({ product, expanded, onToggle, onCopy }) {
         <div className="col-span-12 md:col-span-5 text-[12.5px] text-ink-60 leading-snug">${product.desc}</div>
         <!-- Price -->
         <div className="col-span-3 md:col-span-2 text-right">
-          <div className="font-mono text-sm font-bold text-ink">฿${product.price.toLocaleString()}</div>
+          <div className="font-mono text-sm font-bold text-ink">
+            ${product.price ? `฿${product.price.toLocaleString()}` : 'ปรึกษา'}
+          </div>
           <div className="font-mono text-[9px] uppercase tracking-widest text-ink-40">${c.label}</div>
         </div>
         <!-- Toggle -->
