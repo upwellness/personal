@@ -289,75 +289,186 @@ function App() {
 
 /* ═══════════════════════════════════════════════════════════════ */
 /* MODE 1 · PAIR PRACTICE                                            */
-/* 2 cards drawn at random · click to flip individually · "reveal    */
-/* both" button · score how many sets reviewed                       */
+/* Deck overview · seen tracker (no repeats) · explicit reset        */
 /* ═══════════════════════════════════════════════════════════════ */
 function PairPractice({ showToast }) {
-  const [pair, setPair]   = useState(() => pickPair());
+  // seen = SKUs reviewed (not including the current pair)
+  const [seen, setSeen]   = useState(() => new Set());
+  const [pair, setPair]   = useState(() => pickFresh(new Set(), []));
   const [flips, setFlips] = useState([false, false]);
-  const [count, setCount] = useState(0);
 
-  function pickPair() {
-    const s = shuffle(PRODUCTS);
+  function pickFresh(seenSet, excludeSkus) {
+    const avail = PRODUCTS.filter(p => !seenSet.has(p.sku) && !excludeSkus.includes(p.sku));
+    if (avail.length < 2) return null;
+    const s = shuffle(avail);
     return [s[0], s[1]];
   }
 
   const drawNew = () => {
-    setPair(pickPair());
+    // Mark current pair as seen first
+    const nextSeen = new Set(seen);
+    if (pair) pair.forEach(p => nextSeen.add(p.sku));
+    setSeen(nextSeen);
+
+    const next = pickFresh(nextSeen, []);
+    if (next) {
+      setPair(next);
+      setFlips([false, false]);
+    } else {
+      setPair(null);
+      showToast('🏆 เปิดครบทุกสินค้าแล้ว · กด Reset เพื่อเริ่มใหม่');
+    }
+  };
+
+  const reset = () => {
+    const fresh = new Set();
+    setSeen(fresh);
+    setPair(pickFresh(fresh, []));
     setFlips([false, false]);
-    setCount(c => c + 1);
+    showToast('↺ รีเซ็ตเรียบร้อย · เริ่มรอบใหม่ได้เลย');
   };
 
   const flipBoth = () => {
     const allFlipped = flips.every(Boolean);
     setFlips(allFlipped ? [false, false] : [true, true]);
   };
+  const flipOne = (i) => setFlips(prev => prev.map((f, idx) => (idx === i ? !f : f)));
 
-  const flipOne = (i) => {
-    setFlips(prev => prev.map((f, idx) => (idx === i ? !f : f)));
+  // Click on an overview thumbnail → make it the right card (if unseen and not current)
+  const jumpTo = (product) => {
+    if (!pair) return;
+    if (seen.has(product.sku)) return;
+    if (pair.some(p => p.sku === product.sku)) return;
+    setPair([pair[0], product]);
+    setFlips([flips[0], false]);
   };
+
+  const total       = PRODUCTS.length;
+  const seenCount   = seen.size;
+  const currentSkus = pair ? pair.map(p => p.sku) : [];
+  const isDone      = !pair;
+  const progressPct = Math.round((seenCount / total) * 100);
 
   return html`
     <div>
-      <!-- Score bar -->
-      <div className="glass rounded-2xl p-4 mb-6 flex items-center justify-between flex-wrap gap-3">
+      <!-- ── Score + control bar ── -->
+      <div className="glass rounded-2xl p-4 mb-5 flex items-center justify-between flex-wrap gap-3">
         <div className="flex items-center gap-5 flex-wrap">
           <div>
-            <div className="font-mono text-[9px] tracking-widest uppercase text-rose-deep">Cards reviewed</div>
-            <div className="font-display text-2xl font-bold text-ink">${count + 1}</div>
+            <div className="font-mono text-[9px] tracking-widest uppercase text-rose-deep">Reviewed</div>
+            <div className="font-display text-2xl font-bold text-ink">${seenCount} <span className="text-sm text-ink-40">/ ${total}</span></div>
           </div>
           <div className="hidden sm:block h-10 w-px bg-ink-10" />
-          <div>
-            <div className="font-mono text-[9px] tracking-widest uppercase text-ink-40">Mode</div>
-            <div className="font-display text-base font-semibold text-ink">ฝึกพูดเป็นคู่</div>
+          <div className="flex-1 min-w-[150px] max-w-xs">
+            <div className="font-mono text-[9px] tracking-widest uppercase text-ink-40 mb-1">Progress</div>
+            <div className="h-2 rounded-full bg-ink-10 overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-rose to-green transition-all duration-500" style=${{ width: progressPct + '%' }} />
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-2 no-print">
-          <button onClick=${flipBoth}
-            className="rounded-full px-4 py-2 text-xs font-semibold border border-ink-10 hover:border-rose hover:text-rose transition">
-            🔁 พลิกทั้งคู่
-          </button>
-          <button onClick=${drawNew}
-            className="rounded-full bg-ink text-cream px-5 py-2 text-xs font-semibold hover:bg-rose transition">
-            🎲 สุ่มคู่ใหม่
+          ${!isDone && html`
+            <button onClick=${flipBoth}
+              className="rounded-full px-4 py-2 text-xs font-semibold border border-ink-10 hover:border-rose hover:text-rose transition">
+              🔁 พลิกทั้งคู่
+            </button>
+            <button onClick=${drawNew}
+              className="rounded-full bg-ink text-cream px-5 py-2 text-xs font-semibold hover:bg-rose transition">
+              🎲 สุ่มคู่ใหม่
+            </button>
+          `}
+          <button onClick=${reset}
+            className=${`rounded-full px-4 py-2 text-xs font-semibold transition ${
+              isDone
+                ? 'bg-rose text-white hover:bg-rose-deep'
+                : 'border border-ink-10 text-ink-60 hover:border-rose hover:text-rose'
+            }`}>
+            ↺ Reset
           </button>
         </div>
       </div>
 
-      <!-- 2 cards side by side -->
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        ${pair.map((p, i) => html`
-          <${FlipCard} key=${p.sku + '-' + i} product=${p} flipped=${flips[i]} onFlip=${() => flipOne(i)} />
-        `)}
+      <!-- ── 2 active cards ── -->
+      ${isDone ? html`
+        <div className="glass glass-shine rounded-3xl p-10 text-center mb-5">
+          <div className="text-6xl mb-4">🏆</div>
+          <div className="font-display text-3xl md:text-4xl font-semibold text-ink mb-2">เปิดครบทุกสินค้าแล้ว!</div>
+          <p className="font-thai text-ink-60 max-w-md mx-auto mb-6">
+            คุณทบทวนครบทั้ง ${total} สินค้า · กด <strong>Reset</strong> เพื่อเริ่มรอบใหม่ หรือลอง mode อื่นต่อ
+          </p>
+          <button onClick=${reset}
+            className="rounded-full bg-ink text-cream px-7 py-3 text-sm font-semibold hover:bg-rose transition">
+            ↺ เริ่มรอบใหม่
+          </button>
+        </div>
+      ` : html`
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+          ${pair.map((p, i) => html`
+            <${FlipCard} key=${p.sku + '-' + i} product=${p} flipped=${flips[i]} onFlip=${() => flipOne(i)} />
+          `)}
+        </div>
+      `}
+
+      <!-- ── Deck overview (all 20 thumbnails) ── -->
+      <div className="glass rounded-2xl p-4 md:p-5 mb-5">
+        <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
+          <div className="font-mono text-[10px] tracking-widest uppercase text-ink-60 font-bold">
+            🗂  Deck overview · ${total} สินค้า
+          </div>
+          <div className="flex items-center gap-3 font-mono text-[9.5px] text-ink-40">
+            <span className="flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-rose" />
+              CURRENT
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-ink-20" />
+              UNSEEN
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-green" />
+              SEEN
+            </span>
+          </div>
+        </div>
+        <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-10 gap-2">
+          ${PRODUCTS.map(p => {
+            const c = CATEGORIES[p.cat] || { color: '#8C4C4C' };
+            const isSeen    = seen.has(p.sku);
+            const isCurrent = currentSkus.includes(p.sku);
+            const stateCls  = isCurrent
+              ? 'ring-2 ring-rose bg-rose-mist/60 shadow-md'
+              : isSeen
+                ? 'bg-green-mist/30 opacity-50 hover:opacity-70 cursor-default'
+                : 'bg-white/60 hover:bg-white hover:-translate-y-0.5 cursor-pointer';
+            return html`
+              <button key=${p.sku}
+                onClick=${() => jumpTo(p)}
+                disabled=${isSeen || isCurrent || isDone}
+                title=${`${p.name} · ${p.sku}${isSeen ? ' (เปิดแล้ว)' : isCurrent ? ' (อยู่ในคู่ปัจจุบัน)' : ' (คลิกเพื่อเลือก)'}`}
+                className=${`relative rounded-xl border border-white/50 px-2 py-2 text-left transition-all ${stateCls}`}
+              >
+                <div className="flex items-center gap-1.5 mb-1">
+                  <span className="h-1.5 w-1.5 rounded-full shrink-0" style=${{ background: c.color }} />
+                  <span className="font-mono text-[8px] uppercase tracking-widest text-ink-60 truncate">${c.label}</span>
+                </div>
+                <div className="font-display text-[11.5px] font-semibold text-ink leading-tight truncate">${p.name}</div>
+                ${isSeen && html`<span className="absolute top-1 right-1 text-[10px] text-green font-bold">✓</span>`}
+                ${isCurrent && html`<span className="absolute top-1 right-1 text-[10px] text-rose font-bold animate-pulse">●</span>`}
+              </button>
+            `;
+          })}
+        </div>
       </div>
 
-      <!-- Practice prompt -->
-      <div className="mt-7 glass-rose glass-shine rounded-2xl p-5">
+      <!-- ── Practice prompt ── -->
+      <div className="glass-rose glass-shine rounded-2xl p-5">
         <div className="font-mono text-[10px] tracking-widest uppercase text-rose-deep font-bold mb-2">💬 วิธีเล่น</div>
         <ol className="font-thai text-[13.5px] text-ink leading-relaxed space-y-1 list-decimal list-inside">
           <li><strong>คลิกการ์ดทีละใบ</strong> เพื่อดูชื่อสินค้า — แล้ว <em>พูดสรรพคุณ · target · opener</em> ออกมาให้ได้</li>
           <li>คลิกพลิกอีกครั้งเพื่อดู <em>เฉลย</em> ของสินค้านั้น — เช็คว่าตรงไหม</li>
-          <li>กด <strong>🎲 สุ่มคู่ใหม่</strong> เพื่อข้ามไปสินค้าคู่ถัดไป</li>
+          <li>กด <strong>🎲 สุ่มคู่ใหม่</strong> เพื่อข้ามไป — สินค้าที่เปิดแล้วจะไม่ถูกสุ่มซ้ำ</li>
+          <li>ใน <strong>Deck overview</strong> คลิกชื่อสินค้าที่ยังไม่ได้เปิด เพื่อสลับเข้ามาเป็นคู่ขวา</li>
+          <li>กด <strong>↺ Reset</strong> เมื่อต้องการเริ่มรอบใหม่</li>
         </ol>
       </div>
     </div>
