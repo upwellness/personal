@@ -926,12 +926,12 @@ function ProductCard({ product, expanded, onToggle, onCopy, onDownload }) {
         style=${{ background: `linear-gradient(90deg, ${c.color}, transparent)` }}
       ></div>
 
-      <!-- Download button · always visible top-right (skip-export so it doesn't appear in image) -->
+      <!-- Download button · bottom-right (away from price) · skip-export so doesn't appear in PNG -->
       <button
         onClick=${(e) => { e.stopPropagation(); onDownload(product.sku, product.name); }}
         title="ดาวน์โหลดเป็นรูป · ส่งให้ลูกค้าได้เลย"
-        className="skip-export absolute top-3 right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/70 hover:bg-rose hover:text-white text-ink-60 transition-all text-[13px] font-bold shadow-sm border border-white/80"
-      >⬇</button>
+        className="skip-export absolute bottom-3 right-3 z-20 flex h-9 items-center gap-1.5 px-3 rounded-full bg-ink/85 hover:bg-rose text-white transition-all text-[11px] font-mono font-bold tracking-wider shadow-md backdrop-blur"
+      >⬇ <span>SAVE</span></button>
 
       <!-- Category + price -->
       <div className="flex items-start justify-between mb-3">
@@ -997,12 +997,12 @@ function ProductRow({ product, expanded, onToggle, onCopy, onDownload }) {
   const c = CATEGORIES[product.cat];
   return html`
     <div id=${`card-${product.sku}`} className="glass rounded-2xl overflow-hidden relative">
-      <!-- Download button · top-right · skip-export -->
+      <!-- Download button · bottom-right (clear of price column) · skip-export -->
       <button
         onClick=${(e) => { e.stopPropagation(); onDownload(product.sku, product.name); }}
         title="ดาวน์โหลดเป็นรูป"
-        className="skip-export absolute top-2 right-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-white/70 hover:bg-rose hover:text-white text-ink-60 transition-all text-[11px] font-bold shadow-sm border border-white/80"
-      >⬇</button>
+        className="skip-export absolute bottom-2 right-2 z-20 flex h-7 items-center gap-1 px-2.5 rounded-full bg-ink/85 hover:bg-rose text-white transition-all text-[10px] font-mono font-bold tracking-wider shadow-md backdrop-blur"
+      >⬇ <span>SAVE</span></button>
       <div onClick=${onToggle} className="cursor-pointer px-5 py-4 grid grid-cols-12 gap-3 items-center hover:bg-white/30 transition">
         <!-- Category dot -->
         <div className="col-span-1 flex justify-center">
