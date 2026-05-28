@@ -179,6 +179,7 @@
 import React, { useState, useMemo, useEffect } from "https://esm.sh/react@18";
 import { createRoot } from "https://esm.sh/react-dom@18/client";
 import htm from "https://esm.sh/htm";
+import { toPng } from "https://esm.sh/html-to-image@1.11.13";
 const html = htm.bind(React.createElement);
 
 /* ═══════════════════════════════════════════════════════════════ */
@@ -763,6 +764,32 @@ function App() {
     setTimeout(() => setToast(''), 2000);
   };
 
+  /* ─── Download card as PNG · ใช้ html-to-image ─── */
+  const download = async (sku, name) => {
+    const el = document.getElementById(`card-${sku}`);
+    if (!el) { setToast('⚠ หาการ์ดไม่เจอ'); setTimeout(() => setToast(''), 2000); return; }
+    setToast('📸 กำลังบันทึก...');
+    const slug = name.toLowerCase().replace(/[^a-z0-9ก-๙]+/g, '-').replace(/^-|-$/g, '');
+    try {
+      const dataUrl = await toPng(el, {
+        pixelRatio: 2,
+        backgroundColor: '#FAF6F1',
+        cacheBust: true,
+        filter: (n) => !(n.classList && n.classList.contains('skip-export')),
+      });
+      const link = document.createElement('a');
+      link.download = `nutrilite-${slug || 'card'}.png`;
+      link.href = dataUrl;
+      link.click();
+      setToast(`✓ บันทึก ${name} แล้ว`);
+      setTimeout(() => setToast(''), 2200);
+    } catch (e) {
+      console.error('download error:', e);
+      setToast('⚠ ดาวน์โหลดไม่สำเร็จ · ลองใหม่');
+      setTimeout(() => setToast(''), 2200);
+    }
+  };
+
   return html`
     <div className="min-h-screen px-4 py-8 md:px-8 md:py-12">
 
@@ -859,11 +886,11 @@ function App() {
       <div className="max-w-7xl mx-auto">
         ${view === 'grid' ? html`
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            ${filtered.map((p, i) => html`<${ProductCard} key=${i} product=${p} expanded=${expandedId === i} onToggle=${() => setExpandedId(expandedId === i ? null : i)} onCopy=${copy} />`)}
+            ${filtered.map((p, i) => html`<${ProductCard} key=${i} product=${p} expanded=${expandedId === i} onToggle=${() => setExpandedId(expandedId === i ? null : i)} onCopy=${copy} onDownload=${download} />`)}
           </div>
         ` : html`
           <div className="space-y-3">
-            ${filtered.map((p, i) => html`<${ProductRow} key=${i} product=${p} expanded=${expandedId === i} onToggle=${() => setExpandedId(expandedId === i ? null : i)} onCopy=${copy} />`)}
+            ${filtered.map((p, i) => html`<${ProductRow} key=${i} product=${p} expanded=${expandedId === i} onToggle=${() => setExpandedId(expandedId === i ? null : i)} onCopy=${copy} onDownload=${download} />`)}
           </div>
         `}
 
@@ -889,15 +916,22 @@ function App() {
 
 /* ─── Card components ───────────────────────────────────────────── */
 
-function ProductCard({ product, expanded, onToggle, onCopy }) {
+function ProductCard({ product, expanded, onToggle, onCopy, onDownload }) {
   const c = CATEGORIES[product.cat];
   return html`
-    <div className="glass glass-shine rounded-3xl p-6 cursor-pointer relative" onClick=${onToggle}>
+    <div id=${`card-${product.sku}`} className="glass glass-shine rounded-3xl p-6 cursor-pointer relative" onClick=${onToggle}>
       <!-- Top accent line -->
       <div
         className="absolute top-0 left-6 right-6 h-[2px] rounded-full"
         style=${{ background: `linear-gradient(90deg, ${c.color}, transparent)` }}
       ></div>
+
+      <!-- Download button · always visible top-right (skip-export so it doesn't appear in image) -->
+      <button
+        onClick=${(e) => { e.stopPropagation(); onDownload(product.sku, product.name); }}
+        title="ดาวน์โหลดเป็นรูป · ส่งให้ลูกค้าได้เลย"
+        className="skip-export absolute top-3 right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/70 hover:bg-rose hover:text-white text-ink-60 transition-all text-[13px] font-bold shadow-sm border border-white/80"
+      >⬇</button>
 
       <!-- Category + price -->
       <div className="flex items-start justify-between mb-3">
@@ -959,10 +993,16 @@ function ProductCard({ product, expanded, onToggle, onCopy }) {
   `;
 }
 
-function ProductRow({ product, expanded, onToggle, onCopy }) {
+function ProductRow({ product, expanded, onToggle, onCopy, onDownload }) {
   const c = CATEGORIES[product.cat];
   return html`
-    <div className="glass rounded-2xl overflow-hidden">
+    <div id=${`card-${product.sku}`} className="glass rounded-2xl overflow-hidden relative">
+      <!-- Download button · top-right · skip-export -->
+      <button
+        onClick=${(e) => { e.stopPropagation(); onDownload(product.sku, product.name); }}
+        title="ดาวน์โหลดเป็นรูป"
+        className="skip-export absolute top-2 right-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-white/70 hover:bg-rose hover:text-white text-ink-60 transition-all text-[11px] font-bold shadow-sm border border-white/80"
+      >⬇</button>
       <div onClick=${onToggle} className="cursor-pointer px-5 py-4 grid grid-cols-12 gap-3 items-center hover:bg-white/30 transition">
         <!-- Category dot -->
         <div className="col-span-1 flex justify-center">
