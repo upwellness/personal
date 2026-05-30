@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cold Audience Review · สรุปผล · Longevity Solution Talk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rose:#8C4C4C; --rose-deep:#6E3838; --green:#396755; --green-deep:#2A4F40;
+    --gold:#B8965A; --amber:#C47A2A; --cream:#F5F0EB; --cream-2:#EFE8DF;
+    --ink:#1F1E1B; --ink-soft:#4A4641; --line:#E2D9CD; --white:#FCFAF6;
+    --good:#396755; --warn:#C47A2A; --bad:#A8443C;
+    --shadow:0 1px 2px rgba(31,30,27,.04),0 8px 24px rgba(31,30,27,.06);
+    --shadow-lg:0 2px 4px rgba(31,30,27,.05),0 18px 50px rgba(31,30,27,.10);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Sarabun',sans-serif; color:var(--ink); line-height:1.6;
+    background:
+      radial-gradient(1200px 600px at 85% -10%, rgba(184,150,90,.10), transparent 60%),
+      radial-gradient(900px 500px at -10% 10%, rgba(57,103,85,.08), transparent 55%),
+      var(--cream);
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:48px 28px 80px}
+  .mono{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums}
+  .serif{font-family:'Cormorant Garamond',serif}
+
+  /* ---------- HERO ---------- */
+  .hero{margin-bottom:40px}
+  .eyebrow{
+    font-family:'Manrope',sans-serif;font-weight:700;font-size:12px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--rose);display:flex;align-items:center;gap:10px;margin-bottom:18px
+  }
+  .eyebrow::before{content:"";width:28px;height:2px;background:var(--rose);display:inline-block}
+  h1.title{
+    font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(34px,5vw,56px);
+    line-height:1.08;letter-spacing:-.01em;color:var(--ink);max-width:18ch;margin-bottom:18px
+  }
+  .lede{font-size:18px;color:var(--ink-soft);max-width:62ch;margin-bottom:26px}
+  .lede b{color:var(--rose);font-weight:600}
+  .verdict-chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{
+    display:inline-flex;align-items:center;gap:8px;padding:8px 15px;border-radius:999px;
+    font-family:'Manrope',sans-serif;font-weight:600;font-size:13.5px;border:1px solid var(--line);
+    background:var(--white);box-shadow:var(--shadow)
+  }
+  .chip .dot{width:8px;height:8px;border-radius:50%}
+  .chip.good .dot{background:var(--good)} .chip.warn .dot{background:var(--warn)} .chip.bad .dot{background:var(--bad)}
+
+  /* ---------- METRIC BAND ---------- */
+  .metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:40px 0 16px}
+  .metric{
+    background:var(--white);border:1px solid var(--line);border-radius:18px;padding:20px 18px;
+    box-shadow:var(--shadow);position:relative;overflow:hidden
+  }
+  .metric::after{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--gold)}
+  .metric.health::after{background:var(--green)} .metric.biz::after{background:var(--amber)}
+  .metric.alert::after{background:var(--bad)}
+  .metric .label{font-family:'Manrope',sans-serif;font-weight:600;font-size:11.5px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px}
+  .metric .big{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:40px;line-height:1;color:var(--ink)}
+  .metric .big .unit{font-size:18px;color:var(--ink-soft);font-weight:500}
+  .metric .sub{font-size:12.5px;color:var(--ink-soft);margin-top:8px;font-family:'JetBrains Mono',monospace}
+  .metric .delta-up{color:var(--good);font-weight:700}
+  .metric .big.bad{color:var(--bad)}
+
+  /* ---------- SECTION ---------- */
+  section{margin-top:52px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px;flex-wrap:wrap}
+  .sec-num{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);font-weight:700;letter-spacing:.1em}
+  h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:32px;letter-spacing:-.01em;color:var(--ink)}
+  .sec-sub{font-size:15px;color:var(--ink-soft);margin-top:-12px;margin-bottom:22px;max-width:70ch}
+
+  /* ---------- THE ANSWER (two verdict cards) ---------- */
+  .answer{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .vcard{border-radius:20px;padding:26px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden;border:1px solid var(--line)}
+  .vcard.yes{background:linear-gradient(160deg,#F2F6F2,#FCFAF6)}
+  .vcard.no{background:linear-gradient(160deg,#FBF1E8,#FCFAF6)}
+  .vcard .who{font-family:'Manrope',sans-serif;font-weight:800;font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+  .vcard.yes .who{color:var(--green)} .vcard.no .who{color:var(--amber)}
+  .vcard .verdict{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;margin:6px 0 4px;display:flex;align-items:center;gap:10px}
+  .vcard.yes .verdict{color:var(--green-deep)} .vcard.no .verdict{color:#9A5A18}
+  .vcard .score-row{display:flex;gap:18px;margin:16px 0;align-items:flex-end}
+  .vcard .score-row .s{font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:700;line-height:.9}
+  .vcard.yes .score-row .s{color:var(--green)} .vcard.no .score-row .s{color:var(--amber)}
+  .vcard .score-row .sl{font-size:13px;color:var(--ink-soft);padding-bottom:6px;line-height:1.4}
+  .vcard p{font-size:14.5px;color:var(--ink-soft)}
+  .vcard .tag{display:inline-block;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:12px;
+    background:rgba(31,30,27,.05);padding:5px 11px;border-radius:8px;color:var(--ink)}
+
+  /* ---------- FUNNEL ---------- */
+  .funnel{display:flex;flex-direction:column;gap:10px;background:var(--white);border:1px solid var(--line);
+    border-radius:20px;padding:26px;box-shadow:var(--shadow)}
+  .frow{display:flex;align-items:center;gap:16px}
+  .fbar{height:54px;border-radius:12px;display:flex;align-items:center;padding:0 20px;color:#fff;
+    font-family:'Manrope',sans-serif;font-weight:700;font-size:15px;transition:width .6s ease;white-space:nowrap}
+  .fbar.f1{width:100%;background:linear-gradient(90deg,var(--ink),var(--ink-soft))}
+  .fbar.f2{width:100%;background:linear-gradient(90deg,var(--green-deep),var(--green))}
+  .fbar.f3{width:24%;background:linear-gradient(90deg,var(--gold),#CBA869)}
+  .fbar.f4{width:6%;background:var(--bad);min-width:62px;justify-content:center;padding:0 8px}
+  .fmeta{font-size:13.5px;color:var(--ink-soft);flex:1}
+  .fmeta b{color:var(--ink);font-weight:700}
+  .fcount{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:18px;min-width:62px;text-align:right}
+  .fcount.zero{color:var(--bad)} .fcount.full{color:var(--green)}
+
+  /* ---------- PERSONA TABLE ---------- */
+  .ptable{display:flex;flex-direction:column;gap:8px}
+  .prow{display:grid;grid-template-columns:208px 1fr 124px 92px;gap:16px;align-items:center;
+    background:var(--white);border:1px solid var(--line);border-radius:14px;padding:14px 18px;box-shadow:var(--shadow)}
+  .prow.head{background:transparent;border:none;box-shadow:none;padding:0 18px 4px;
+    font-family:'Manrope',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .pname{font-weight:600;font-size:14.5px;line-height:1.25}
+  .pname .pmeta{display:block;font-size:11.5px;color:var(--ink-soft);font-weight:400;font-family:'JetBrains Mono',monospace}
+  .deltabar{position:relative}
+  .track{height:12px;border-radius:7px;background:var(--cream-2);position:relative;overflow:hidden;border:1px solid var(--line)}
+  .fill{position:absolute;top:0;left:0;height:100%;border-radius:7px}
+  .before-mark{position:absolute;top:-4px;width:2px;height:20px;background:var(--ink);opacity:.45;z-index:2}
+  .dl-row{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-soft);margin-top:6px}
+  .dl-row .d{font-weight:700}
+  .d.d4{color:#2F7D4F} .d.d3{color:var(--green)} .d.d2{color:var(--amber)}
+  .scorecell{display:flex;gap:7px;font-family:'JetBrains Mono',monospace;font-size:12.5px}
+  .sb{flex:1;text-align:center;padding:5px 2px;border-radius:8px;font-weight:700;background:var(--cream-2)}
+  .sb .t{display:block;font-size:9px;font-weight:600;color:var(--ink-soft);letter-spacing:.05em}
+  .stepcell{font-family:'Manrope',sans-serif;font-weight:700;font-size:12px;text-align:center;padding:7px 6px;border-radius:9px}
+  .step1{background:#EAF1EC;color:var(--green-deep)} .step2{background:#FBF1E2;color:#9A5A18} .step3{background:#F6E4E2;color:var(--bad)}
+
+  /* ---------- DRIVERS vs BLOCKERS ---------- */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .col-card{background:var(--white);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:var(--shadow)}
+  .col-card h3{font-family:'Manrope',sans-serif;font-weight:800;font-size:15px;letter-spacing:.04em;
+    display:flex;align-items:center;gap:10px;margin-bottom:18px}
+  .col-card.good h3{color:var(--green)} .col-card.bad h3{color:var(--amber)}
+  .col-card h3 .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:16px}
+  .col-card.good h3 .ic{background:#EAF1EC} .col-card.bad h3 .ic{background:#FBF1E2}
+  .item{display:flex;gap:13px;padding:13px 0;border-top:1px solid var(--line)}
+  .item:first-of-type{border-top:none}
+  .item .rank{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;flex-shrink:0;
+    width:42px;height:24px;border-radius:7px;display:grid;place-items:center;font-size:11px}
+  .good .rank{background:#EAF1EC;color:var(--green-deep)} .bad .rank{background:#FBF1E2;color:#9A5A18}
+  .item .txt{font-size:14px}
+  .item .txt b{font-weight:700;color:var(--ink)}
+  .item .txt .freq{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-soft)}
+
+  /* ---------- FIXES ---------- */
+  .fixes{display:flex;flex-direction:column;gap:12px}
+  .fix{display:flex;gap:18px;background:var(--white);border:1px solid var(--line);border-radius:16px;
+    padding:20px 22px;box-shadow:var(--shadow);position:relative}
+  .fix .pri{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:34px;line-height:1;color:var(--gold);flex-shrink:0;width:42px}
+  .fix.p1 .pri{color:var(--bad)} .fix.p2 .pri{color:var(--amber)}
+  .fix .body h4{font-family:'Manrope',sans-serif;font-weight:700;font-size:16px;margin-bottom:6px;color:var(--ink)}
+  .fix .body p{font-size:14px;color:var(--ink-soft)}
+  .fix .who-said{margin-top:9px;display:flex;flex-wrap:wrap;gap:6px}
+  .fix .who-said span{font-family:'JetBrains Mono',monospace;font-size:10.5px;background:var(--cream-2);
+    padding:3px 8px;border-radius:6px;color:var(--ink-soft)}
+  .badge-sev{position:absolute;top:18px;right:20px;font-family:'Manrope',sans-serif;font-weight:700;font-size:10px;
+    letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:6px}
+  .sev-block{background:#F6E4E2;color:var(--bad)} .sev-high{background:#FBF1E2;color:#9A5A18} .sev-med{background:#EFE8DF;color:var(--ink-soft)}
+
+  /* ---------- COMPARE ---------- */
+  .compare{background:linear-gradient(135deg,var(--green-deep),var(--green));border-radius:20px;padding:32px;
+    color:#EDF3EE;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:center}
+  .compare .cc{text-align:center}
+  .compare .cl{font-family:'Manrope',sans-serif;font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+  .compare .cv{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:58px;line-height:1;margin:8px 0}
+  .compare .cd{font-size:13px;opacity:.85}
+  .compare .arrow{font-size:32px;opacity:.6}
+
+  /* ---------- FOOTER ---------- */
+  .method{margin-top:52px;background:var(--white);border:1px solid var(--line);border-radius:18px;padding:24px 26px;box-shadow:var(--shadow)}
+  .method h3{font-family:'Manrope',sans-serif;font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px}
+  .method p{font-size:13.5px;color:var(--ink-soft);max-width:80ch}
+  .method .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .method .tags span{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--cream-2);padding:4px 10px;border-radius:7px}
+  .foot{text-align:center;margin-top:36px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-soft);opacity:.7}
+
+  @media(max-width:880px){
+    .metrics{grid-template-columns:repeat(2,1fr)}
+    .answer,.two-col{grid-template-columns:1fr}
+    .prow{grid-template-columns:1fr 1fr;gap:12px}
+    .prow .deltabar{grid-column:1/-1;order:3} .prow .scorecell{order:4} .prow .stepcell{order:5}
+    .prow.head{display:none}
+    .compare{grid-template-columns:1fr;gap:14px} .compare .arrow{transform:rotate(90deg)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="eyebrow">Opp Workshop · Cold-Audience Review · v3 Script</div>
+    <h1 class="title">คนเย็นชา 10 คน เดินเข้ามาแบบไม่สน — เดินออกไปแบบไหน?</h1>
+    <p class="lede">
+      คำถามตั้งต้น: <b>“จบพาร์ตจิ้น (สุขภาพ) และ ต้น (ธุรกิจ) ทำให้คนจาก 0 สนใจมากขึ้นจริงไหม?”</b><br>
+      เราส่งบท v3 ให้ 10 persona ที่<b>ไม่เคยสนใจสุขภาพหรือธุรกิจมาก่อน</b> และตั้งการ์ดระแวง MLM —
+      วัด interest ก่อน/หลัง และดูว่าจะ “รับก้าวต่อไป” ก้าวไหน
+    </p>
+    <div class="verdict-chips">
+      <span class="chip good"><span class="dot"></span>สุขภาพ (จิ้น) แปลงคนได้จริง · 10/10 รับก้าวสุขภาพ</span>
+      <span class="chip bad"><span class="dot"></span>ธุรกิจ (ต้น) ยังไม่แปลง cold · 0/10 รับก้าวธุรกิจ</span>
+      <span class="chip warn"><span class="dot"></span>3 ตัวปิดประตูซ้ำๆ: ราคาซ่อน · Amway reveal · n=1</span>
+    </div>
+  </header>
+
+  <!-- METRIC BAND -->
+  <div class="metrics">
+    <div class="metric">
+      <div class="label">Interest เฉลี่ย</div>
+      <div class="big">2.1<span class="unit"> →</span> 5.2</div>
+      <div class="sub"><span class="delta-up">▲ +3.1</span> / 10</div>
+    </div>
+    <div class="metric">
+      <div class="label">คะแนนรวมเฉลี่ย</div>
+      <div class="big">5.7<span class="unit">/10</span></div>
+      <div class="sub">cold audience</div>
+    </div>
+    <div class="metric health">
+      <div class="label">พาร์ตจิ้น · สุขภาพ</div>
+      <div class="big">7.25</div>
+      <div class="sub">ตัวแปลงคนหลัก</div>
+    </div>
+    <div class="metric biz">
+      <div class="label">พาร์ตต้น · ธุรกิจ</div>
+      <div class="big">4.95</div>
+      <div class="sub">gap −2.30</div>
+    </div>
+    <div class="metric alert">
+      <div class="label">รับก้าวธุรกิจ</div>
+      <div class="big bad">0<span class="unit">/10</span></div>
+      <div class="sub">ไม่มีใครเลย</div>
+    </div>
+  </div>
+
+  <!-- THE ANSWER -->
+  <section>
+    <div class="sec-head"><span class="sec-num">01</span><h2>คำตอบของคำถามตั้งต้น</h2></div>
+    <p class="sec-sub">แยกคำตอบเป็น 2 ครึ่ง เพราะสองพาร์ตให้ผลตรงข้ามกันอย่างชัดเจน</p>
+    <div class="answer">
+      <div class="vcard yes">
+        <div class="who">จิ้น · โอกาสของการมีสุขภาพดี</div>
+        <div class="verdict">✅ ใช่ — แปลงคนเย็น → สนใจได้จริง</div>
+        <div class="score-row">
+          <div class="s">7.25</div>
+          <div class="sl">เฉลี่ยพาร์ตจิ้น<br>(สูงสุด 8.0 · ต่ำสุด 6.0)</div>
+        </div>
+        <p>ทั้ง 10 คนยอม “รับก้าวสุขภาพ” — เพราะ <b>“ชั้น 0 ฟรี = 95% ของผล”</b>, มี citation จริง,
+        กล้าบอกงานวิจัยที่ผล null, และพูดเรื่อง safety/ผลข้างเคียง คนระแวงจับสัญญาณ “ไม่ได้มาขายของ” ได้</p>
+        <span class="tag">10/10 รับก้าวที่ 1 (ฟรี · ไม่ผูกมัด)</span>
+      </div>
+      <div class="vcard no">
+        <div class="who">ต้น · โอกาสของธุรกิจสุขภาพ</div>
+        <div class="verdict">❌ ยังไม่ — ไม่แปลง cold audience</div>
+        <div class="score-row">
+          <div class="s">4.95</div>
+          <div class="sl">เฉลี่ยพาร์ตต้น<br>(สูงสุด 6.0 · ต่ำสุด 3.0)</div>
+        </div>
+        <p>ที่หนักคือ พาร์ตธุรกิจ <b>“ลดทอนความเชื่อใจที่จิ้นสร้างมา”</b> — พยาบาลถึงกับบอกว่าความเชื่อใจ
+        “พังลงเกินครึ่ง” ตอนเฉลย Amway แม้จะให้เครดิตความซื่อสัตย์ (60–70% เลิกปีแรก) ก็กู้ไม่กลับ</p>
+        <span class="tag">0/10 รับก้าวธุรกิจ · 2/10 แค่ดูคอมมูฟรี</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUNNEL -->
+  <section>
+    <div class="sec-head"><span class="sec-num">02</span><h2>กรวยการแปลง (Conversion funnel)</h2></div>
+    <p class="sec-sub">คนเย็น 10 คนเดินผ่านบทพูดตั้งแต่ต้นจนจบ แล้วเลือก “ก้าวต่อไป” ที่ตัวเองยอมรับ</p>
+    <div class="funnel">
+      <div class="frow">
+        <div class="fbar f1">เดินเข้ามา · ระแวง MLM</div>
+        <div class="fmeta"><b>10 คน</b> · interest เฉลี่ยตอนเข้า = <b>2.1/10</b></div>
+        <div class="fcount">10</div>
+      </div>
+      <div class="frow">
+        <div class="fbar f2">รับก้าวสุขภาพ (ฟรี)</div>
+        <div class="fmeta">หลังพาร์ตจิ้น · interest ขึ้นเป็น <b>5.2/10</b> · <b>ทุกคน</b>ยอมเริ่ม habit + ตรวจ Vit D</div>
+        <div class="fcount full">10</div>
+      </div>
+      <div class="frow">
+        <div class="fbar f3">รับก้าวคอมมูนิตี้ฟรี</div>
+        <div class="fmeta">TikTok Creator + Corp Lawyer · low-commitment, แค่สแกน QR ดู ไม่คุยธุรกิจ</div>
+        <div class="fcount">2</div>
+      </div>
+      <div class="frow">
+        <div class="fbar f4">ธุรกิจ</div>
+        <div class="fmeta"><b>ไม่มีใครรับก้าวธุรกิจเลย</b> · ติดที่ราคาซ่อน, ภาพ Amway, งบ/เวลา/ระเบียบ</div>
+        <div class="fcount zero">0</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERSONA TABLE -->
+  <section>
+    <div class="sec-head"><span class="sec-num">03</span><h2>รายคน · 10 persona</h2></div>
+    <p class="sec-sub">แถบสีแสดง interest ก่อน (เส้นดำ) → หลัง (แถบสี) · เรียงตาม Δ (การเปลี่ยนใจ) มาก→น้อย</p>
+    <div class="ptable">
+      <div class="prow head">
+        <div>Persona</div><div>0 → interested</div><div>จิ้น / ต้น / รวม</div><div>ก้าวที่รับ</div>
+      </div>
+
+      <!-- rows: fill width = after*10%, before-mark left = before*10% -->
+      <div class="prow">
+        <div class="pname">Middle Manager<span class="pmeta">สราวุธ · ผจก.ผลิต 47</span></div>
+        <div class="deltabar">
+          <div class="track"><div class="fill" style="width:70%;background:linear-gradient(90deg,var(--green),#5C9B7E)"></div><div class="before-mark" style="left:30%"></div></div>
+          <div class="dl-row"><span>3 → 7</span><span class="d d4">Δ +4</span></div>
+        </div>
+        <div class="scorecell"><div class="sb"><span class="t">จิ้น</span>7.5</div><div class="sb"><span class="t">ต้น</span>6.0</div><div class="sb"><span class="t">รวม</span>7.0</div></div>
+        <div class="stepcell step1">ก้าว 1</div>
+      </div>
+
+      <div class="prow">
+        <div class="pname">Teacher<span class="pmeta">สุภาพร · ครู ม.ต้น 36</span></div>
+        <div class="deltabar">
+          <div class="track"><div class="fill" style="width:60%;background:linear-gradient(90deg,var(--green),#5C9B7E)"></div><div class="before-mark" style="left:20%"></div></div>
+          <div class="dl-row"><span>2 → 6</span><span class="d d4">Δ +4</span></div>
+        </div>
+        <div class="scorecell"><div class="sb"><span class="t">จิ้น</span>8.0</div><div class="sb"><span class="t">ต้น</span>5.0</div><div class="sb"><span class="t">รวม</span>6.5</div></div>
+        <div class="stepcell step1">ก้าว 1</div>
+      </div>
+
+      <div class="prow">
+        <div class="pname">Public Nurse<span class="pmeta">วารี · พยาบาล ICU 34</span></div>
+        <div class="deltabar">
+          <div class="track"><div class="fill" style="width:60%;background:linear-gradient(90deg,var(--green),#5C9B7E)"></div><div class="before-mark" style="left:20%"></div></div>
+          <div class="dl-row"><span>2 → 6</span><span class="d d4">Δ +4</span></div>
+        </div>
+        <div class="scorecell"><div class="sb"><span class="t">จิ้น</span>7.5</div><div class="sb"><span class="t">ต้น</span>4.5</div><div class="sb"><span class="t">รวม</span>6.0</div></div>
+        <div class="stepcell step1">ก้าว 1</div>
+      </div>
+
+      <div class="prow">
+        <div class="pname">SW Engineer<span class="pmeta">นิติพงศ์ · 30 · 5 YOE</span></div>
+        <div class="deltabar">
+          <div class="track"><div class="fill" style="width:50%;background:linear-gradient(90deg,var(--green),#6CA88B)"></div><div class="before-mark" style="left:20%"></div></div>
+          <div class="dl-row"><span>2 → 5</span><span class="d d3">Δ +3</span></div>
+        </div>
+        <div class="scorecell"><div class="sb"><span class="t">จิ้น</span>7.0</div><div class="sb"><span class="t">ต้น</span>5.0</div><div class="sb"><span class="t">รวม</span>6.0</div></div>
+        <div class="stepcell step1">ก้าว 1</div>
+      </div>
+
+      <div class="prow">
+        <div class="pname">TikTok Creator<span class="pmeta">cold · gen ใหม่</span></div>
+        <div class="deltabar">
+          <div class="track"><div class="fill" style="width:60%;background:linear-gradient(90deg,var(--green),#6CA88B)"></div><div class="before-mark" style="left:30%"></div></div>
+          <div class="dl-row"><span>3 → 6</span><span class="d d3">Δ +3</span></div>
+        </div>
+        <div class="scorecell"><div class="sb"><span class="t">จิ้น</span>8.0</div><div class="sb"><span class="t">ต้น</span>5.0</div><div class="sb"><span class="t">รวม</span>6.0</div></div>
+        <div class="stepcell step2">ก้าว 2</div>
+      </div>
+
+      <div class="prow">
+        <div class="pname">E-com Seller<span class="pmeta">ภาณุ · ร้านออนไลน์ 34</span></div>
+        <div class="deltabar">
+          <div class="track"><div class="fill" style="width:50%;background:linear-gradient(90deg,var(--green),#6CA88B)"></div><div class="before-mark" style="left:20%"></div></div>
+          <div class="dl-row"><span>2 → 5</span><span class="d d3">Δ +3</span></div>
+        </div>
+        <div class="scorecell"><div class="sb"><span class="t">จิ้น</span>6.0</div><div class="sb"><span class="t">ต้น</span>6.0</div><div class="sb"><span class="t">รวม</span>5.5</div></div>
+        <div class="stepcell step1">ก้าว 1</div>
+      </div>
+
+      <div class="prow">
+        <div class="pname">Civil Servant<span class="pmeta">วิทยา · ขรก. ซี7 · 44</span></div>
+        <div class="deltabar">
+          <div class="track"><div class="fill" style="width:50%;background:linear-gradient(90deg,var(--green),#6CA88B)"></div><div class="before-mark" style="left:20%"></div></div>
+          <div class="dl-row"><span>2 → 5</span><span class="d d3">Δ +3</span></div>
+        </div>
+        <div class="scorecell"><div class="sb"><span class="t">จิ้น</span>7.5</div><div class="sb"><span class="t">ต้น</span>3.0</div><div class="sb"><span class="t">รวม</span>5.0</div></div>
+        <div class="stepcell step1">ก้าว 1</div>
+      </div>
+
+      <div class="prow">
+        <div class="pname">Uni Student<span class="pmeta">ไข่มุก · ป.ตรี ปี 2 · 20</span></div>
+        <div class="deltabar">
+          <div class="track"><div class="fill" style="width:40%;background:linear-gradient(90deg,var(--amber),#D89A5B)"></div><div class="before-mark" style="left:10%"></div></div>
+          <div class="dl-row"><span>1 → 4</span><span class="d d3">Δ +3</span></div>
+        </div>
+        <div class="scorecell"><div class="sb"><span class="t">จิ้น</span>6.0</div><div class="sb"><span class="t">ต้น</span>4.0</div><div class="sb"><span class="t">รวม</span>4.0</div></div>
+        <div class="stepcell step1">ก้าว 1</div>
+      </div>
+
+      <div class="prow">
+        <div class="pname">Corp Lawyer<span class="pmeta">M&amp;A partner · MLM-wary</span></div>
+        <div class="deltabar">
+          <div class="track"><div class="fill" style="width:40%;background:linear-gradient(90deg,var(--amber),#D89A5B)"></div><div class="before-mark" style="left:20%"></div></div>
+          <div class="dl-row"><span>2 → 4</span><span class="d d2">Δ +2</span></div>
+        </div>
+        <div class="scorecell"><div class="sb"><span class="t">จิ้น</span>8.0</div><div class="sb"><span class="t">ต้น</span>6.0</div><div class="sb"><span class="t">รวม</span>6.0</div></div>
+        <div class="stepcell step2">ก้าว 2</div>
+      </div>
+
+      <div class="prow">
+        <div class="pname">Crypto Trader<span class="pmeta">analytical · ROI-first</span></div>
+        <div class="deltabar">
+          <div class="track"><div class="fill" style="width:40%;background:linear-gradient(90deg,var(--amber),#D89A5B)"></div><div class="before-mark" style="left:20%"></div></div>
+          <div class="dl-row"><span>2 → 4</span><span class="d d2">Δ +2</span></div>
+        </div>
+        <div class="scorecell"><div class="sb"><span class="t">จิ้น</span>7.0</div><div class="sb"><span class="t">ต้น</span>5.0</div><div class="sb"><span class="t">รวม</span>5.0</div></div>
+        <div class="stepcell step1">ก้าว 1</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DRIVERS vs BLOCKERS -->
+  <section>
+    <div class="sec-head"><span class="sec-num">04</span><h2>อะไรดึงคนเข้า · อะไรปิดประตู</h2></div>
+    <p class="sec-sub">เรียงตามจำนวน persona ที่พูดถึง (ความถี่ = สัญญาณว่าเป็น pattern จริง ไม่ใช่ความเห็นเดี่ยว)</p>
+    <div class="two-col">
+      <div class="col-card good">
+        <h3><span class="ic">✅</span> ตัวขับเคลื่อน (ดึงคนเย็น → อุ่น)</h3>
+        <div class="item"><span class="rank">8/10</span><div class="txt"><b>“ชั้น 0 ฟรี = 95% ของผล”</b> — ประโยคทรงพลังที่สุด คนระแวงอ่านเป็น “ไม่ได้มาดันขายของ” <span class="freq">mm·stu·eng·nur·ecom·tch·civ·cry</span></div></div>
+        <div class="item"><span class="rank">8/10</span><div class="txt"><b>FTC honesty “60–70% เลิกปีแรก”</b> — กล้าบอกอัตราล้มเหลว = disarm คนที่เคยโดน MLM <span class="freq">เกือบทุกคนให้เครดิต</span></div></div>
+        <div class="item"><span class="rank">6/10</span><div class="txt"><b>“supplement เสริมแค่ 20% · lifestyle 80%”</b> — สวนทาง sales pitch ปกติ = น่าเชื่อ <span class="freq">mm·eng·nur·ecom·tch·cry</span></div></div>
+        <div class="item"><span class="rank">5/10</span><div class="txt"><b>Citation จริง + กล้าบอกผล null (STRENGTH trial)</b> — สาย data จับได้ว่าไม่ cherry-pick <span class="freq">eng·law·nur·tch·cry</span></div></div>
+        <div class="item"><span class="rank">5/10</span><div class="txt"><b>AI hook “ฉันอยู่ชนชั้นไหน”</b> — โดน fear เรื่องตกงาน (แต่พังตอนเฉลย Amway) <span class="freq">mm·stu·eng·ecom·tch</span></div></div>
+        <div class="item"><span class="rank">4/10</span><div class="txt"><b>เคสแม่ลูก 2 · เงินเดือน 38k · เริ่ม Vit D 400 บาท</b> — relatable กับคนงบจำกัด <span class="freq">stu·ecom·tch·civ</span></div></div>
+      </div>
+      <div class="col-card bad">
+        <h3><span class="ic">⚠️</span> ตัวปิดประตู (ทำให้ไม่ไปต่อ)</h3>
+        <div class="item"><span class="rank">8/10</span><div class="txt"><b>ราคาซ่อนใน LINE OA</b> — “คุยราคาทางแชท” = red flag #1 ทุก persona ตีความว่ามี hidden fee <span class="freq">mm·eng·nur·ecom·cry·tch·civ + law</span></div></div>
+        <div class="item"><span class="rank">10/10</span><div class="txt"><b>Amway reveal ลดความเชื่อใจ</b> — แม้ทุกคนรับรู้, ภาพเดิม (เสียเพื่อน/โดนตื๊อ) ลบไม่ออกใน 2 นาที <span class="freq">ทุกคนพูดถึง</span></div></div>
+        <div class="item"><span class="rank">7/10</span><div class="txt"><b>“4 ชนชั้น AI” = รู้สึกโดน setup</b> — catchy แต่ไม่มี source, รู้สึกถูกวางมา funnel เข้าทีม <span class="freq">mm·eng·nur·tch·stu·tik·cry</span></div></div>
+        <div class="item"><span class="rank">4/10</span><div class="txt"><b>n=1 (พี่นันท์ 15k)</b> — สาย data ต้องการ median/distribution ไม่ใช่ 1 success = survivorship bias <span class="freq">eng·ecom·law·cry</span></div></div>
+        <div class="item"><span class="rank">4/10</span><div class="txt"><b>40 นาทีธุรกิจยาวเกิน</b> — คนมาเพื่อสุขภาพล้วน รู้สึกถูกลากเข้า MLM <span class="freq">mm·tch·civ·tik</span></div></div>
+        <div class="item"><span class="rank">4/10</span><div class="txt"><b>กลุ่มที่ถูกกันออกโดยโครงสร้าง</b> — นศ.(อายุ/งบ), ขรก.(ระเบียบห้าม), ครู/พยาบาล(ไม่มีเวลา) <span class="freq">stu·civ·nur·tch</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIXES -->
+  <section>
+    <div class="sec-head"><span class="sec-num">05</span><h2>สิ่งที่ต้องแก้ · เรียงตามผลกระทบ</h2></div>
+    <p class="sec-sub">รวบจาก top_fixes ของทั้ง 10 คน — แก้ 3 ข้อแรกก่อน จะปลดล็อกพาร์ตธุรกิจได้มากที่สุด</p>
+    <div class="fixes">
+      <div class="fix p1">
+        <div class="pri">1</div>
+        <div class="body">
+          <span class="badge-sev sev-block">Blocker</span>
+          <h4>ใส่ราคาจริงบนเวที — เลิก “คุยทาง LINE OA”</h4>
+          <p>โชว์ตัวเลขชัด: starter kit, monthly minimum (เป็นบาท/เดือน), ราคา Vit D3/เดือน เป็นตาราง “ต้นทุนจริง”
+          ราคาที่ต้องไปทักแชทถาม = สัญญาณ hidden fee ที่ปิดประตูทันที โดยเฉพาะคน value-conscious</p>
+          <div class="who-said"><span>8/10 เรียกร้อง</span><span>mm</span><span>eng</span><span>nur</span><span>ecom</span><span>cry</span><span>tch</span><span>civ</span></div>
+        </div>
+      </div>
+      <div class="fix p1">
+        <div class="pri">2</div>
+        <div class="body">
+          <span class="badge-sev sev-block">Trust</span>
+          <h4>เปิดคำว่า “Amway” เร็วและตรง — ก่อนวางเรื่อง 4 ชนชั้น</h4>
+          <p>เฉลยตั้งแต่ต้นพาร์ตต้น แล้วค่อยเล่า megatrend ทีหลัง เพื่อไม่ให้คนรู้สึกว่า “4 ชนชั้น AI” ถูกวางมา
+          setup ให้กลัวตกงานก่อนแล้วค่อยลากเข้าทีม — ความตรงไปตรงมานี่แหละที่จะกู้ trust</p>
+          <div class="who-said"><span>7/10</span><span>mm</span><span>eng</span><span>nur</span><span>tch</span><span>stu</span><span>tik</span><span>ecom</span></div>
+        </div>
+      </div>
+      <div class="fix p1">
+        <div class="pri">3</div>
+        <div class="body">
+          <span class="badge-sev sev-high">Evidence</span>
+          <h4>แทน n=1 ด้วย median/distribution หรือ 3 เคส</h4>
+          <p>เคสพี่นันท์เดี่ยวๆ = survivorship bias ที่สาย data จับได้ทันที โชว์รายได้ median ของกลุ่ม 30–40%
+          ที่ทำต่อ + ทั้ง cohort ที่ล้มเหลว พร้อมกัน จะน่าเชื่อกว่า 1 success story มาก</p>
+          <div class="who-said"><span>4/10 (เสียงหนักแน่น)</span><span>eng</span><span>ecom</span><span>law</span><span>cry</span></div>
+        </div>
+      </div>
+      <div class="fix p2">
+        <div class="pri">4</div>
+        <div class="body">
+          <span class="badge-sev sev-high">Structure</span>
+          <h4>ประกาศ “track สุขภาพล้วน” ตั้งแต่ต้น</h4>
+          <p>บอกชัดว่า “ถ้าสนแค่สุขภาพ ก้าวที่ 1 พอ ไม่ต้องฟังพาร์ตธุรกิจ 40 นาทีก็ได้” — รักษาคนที่มาเพื่อสุขภาพ
+          ไว้ ไม่ให้รู้สึกถูกลากเข้า MLM และตัดความอึดอัดของคนที่ทำธุรกิจไม่ได้</p>
+          <div class="who-said"><span>4/10</span><span>mm</span><span>tch</span><span>civ</span><span>nur</span></div>
+        </div>
+      </div>
+      <div class="fix p2">
+        <div class="pri">5</div>
+        <div class="body">
+          <span class="badge-sev sev-high">Legal</span>
+          <h4>ทำให้ถูกระเบียบ + ใส่ disclaimer กลุ่มเฉพาะ</h4>
+          <p>ผูกตัวเลขรายได้กับ official income disclosure ของบริษัท, แสดงเลขจดทะเบียน สคบ. (พ.ร.บ.ขายตรง 2545),
+          ระบุว่ารายได้มาจากยอดขายปลีกจริง ไม่ใช่บังคับซื้อ + เตือน “ข้าราชการ/พนักงานรัฐทำขายตรงไม่ได้”</p>
+          <div class="who-said"><span>law (กฎหมาย)</span><span>civ (ระเบียบ)</span></div>
+        </div>
+      </div>
+      <div class="fix p2">
+        <div class="pri">6</div>
+        <div class="body">
+          <span class="badge-sev sev-med">Tone</span>
+          <h4>ลดภาษา hype/FOMO + แก้ hook เปิดงาน</h4>
+          <p>ตัดศัพท์ปั้น (“The Great Reset”, “Cyborgs”, “รวยก่อน”) ที่เด้ง MLM-seminar radar · และฆ่า opening
+          พิธีการ (ยืนนิ่ง 3 วิ + “ขอบคุณที่สละเวลา”) — เปิดด้วยคำถาม “อยู่ถึง 90 แต่ป่วยตั้งแต่ 50” เป็นประโยคแรก</p>
+          <div class="who-said"><span>cry</span><span>tik</span><span>eng</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARE -->
+  <section>
+    <div class="sec-head"><span class="sec-num">06</span><h2>เทียบกับรอบ audience อุ่น</h2></div>
+    <p class="sec-sub">รอบที่แล้วใช้ persona ที่สนใจสุขภาพ/ธุรกิจอยู่แล้ว — รอบนี้คือ stress test กับคนที่ระแวงตั้งแต่แรก</p>
+    <div class="compare">
+      <div class="cc">
+        <div class="cl">Round 2 · Warm</div>
+        <div class="cv">8.31</div>
+        <div class="cd">คนที่สนใจอยู่แล้ว · ปรับแก้ตาม 9 directives</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="cc">
+        <div class="cl">Cold · Skeptic</div>
+        <div class="cv">5.70</div>
+        <div class="cd">ไม่เคยสน + ตั้งการ์ด MLM · 0→interested</div>
+      </div>
+    </div>
+    <p class="sec-sub" style="margin-top:18px">
+      ช่องว่าง −2.61 คือ “ราคาที่แท้จริง” ของการพูดกับคนเย็น — และมันชี้ชัดว่าจุดอ่อนเกือบทั้งหมดกระจุกที่
+      <b style="color:var(--amber)">ครึ่งธุรกิจ</b> ไม่ใช่ครึ่งสุขภาพ ครึ่งสุขภาพแข็งแรงพอจะยืนเดี่ยวได้แล้ว
+    </p>
+  </section>
+
+  <!-- METHOD -->
+  <div class="method">
+    <h3>วิธีการ (Methodology)</h3>
+    <p>
+      สุ่ม 10 persona จาก Agent Persona DB ที่<b>ไม่เคยสนใจสุขภาพหรือโอกาสธุรกิจมาก่อน</b> และมีอคติ/ระแวง MLM
+      ต่างระดับกัน — แต่ละ agent อ่านบท <span class="mono">opp-script-v3.md</span> เต็ม แล้วให้คะแนน interest_before (ตอนเดินเข้า)
+      → interest_after (ตอนจบ), คะแนนพาร์ตจิ้น/ต้น แยกกัน, ก้าวที่ยอมรับจริง, และ top 3 fixes รันขนานแบบ background
+      เขียนผล JSON ลง <span class="mono">reviews-cold/</span> รายงานนี้รวบ pattern จากความถี่ที่ persona พูดถึงตรงกัน
+    </p>
+    <div class="tags">
+      <span>n = 10 cold/skeptic personas</span>
+      <span>script: opp-script-v3.md</span>
+      <span>metric: 0→interested (Δ)</span>
+      <span>avg Δ +3.1</span>
+      <span>health 7.25 · biz 4.95</span>
+      <span>business step: 0/10</span>
+    </div>
+  </div>
+
+  <p class="foot">UP Wellness · Opp Workshop · Cold-Audience Review · 2026-05-30 · 10/10 personas · generated from reviews-cold/*.json</p>
+
+</div>
+</body>
+</html>
