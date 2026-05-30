@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Opp · Workshop Summary · UP Wellness</title>
+<meta name="description" content="Multi-agent workshop: 60-min Longevity Opportunity talk · 7 parts · 10 persona reviewers · 2 rounds" />
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=Sarabun:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = {
+    theme: { extend: {
+      fontFamily: {
+        display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        head:    ['"Manrope"', 'Helvetica Neue', 'sans-serif'],
+        body:    ['"Inter"', 'Helvetica Neue', 'sans-serif'],
+        thai:    ['"Sarabun"', 'system-ui', 'sans-serif'],
+        mono:    ['"JetBrains Mono"', 'monospace'],
+      },
+      colors: {
+        rose:    { DEFAULT: '#8C4C4C', deep: '#6B3535', soft: '#B57878', mist: '#F4ECEC' },
+        green:   { DEFAULT: '#396755', deep: '#244438', soft: '#6AAF91', mist: '#D6EDE4' },
+        cream:   { DEFAULT: '#F5F0EB', deep: '#EDE6DF' },
+        ink:     { DEFAULT: '#1F1E1B', 80: '#3D3840', 60: '#5C5A56', 40: '#8B8884', 20: '#C9C6C0', 10: '#E5E2DD' },
+        gold:    '#B8965A',
+        amber:   '#C47A2A',
+        warm:    '#FDFCFB',
+      },
+    } }
+  };
+</script>
+<style>
+  :root {
+    --rose-rgb: 140, 76, 76;
+    --green-rgb: 57, 103, 85;
+    --gold-rgb: 184, 150, 90;
+    --amber-rgb: 196, 122, 42;
+  }
+  * { -webkit-font-smoothing: antialiased; }
+  body { font-family: 'Inter', sans-serif; background: #FDFCFB; color: #1F1E1B; min-height: 100vh; }
+  .font-display { font-family: 'Cormorant Garamond', serif; }
+  .font-thai { font-family: 'Sarabun', sans-serif; }
+  .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* mesh atmosphere */
+  @keyframes mesh-a { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(40px,-30px) scale(1.05); } }
+  @keyframes mesh-b { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-30px,20px) scale(0.95); } }
+  @keyframes mesh-c { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(20px,30px) scale(1.08); } }
+  .mesh-a { animation: mesh-a 18s ease-in-out infinite; }
+  .mesh-b { animation: mesh-b 22s ease-in-out infinite; }
+  .mesh-c { animation: mesh-c 26s ease-in-out infinite; }
+
+  .glass {
+    background: linear-gradient(135deg, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.38) 100%);
+    backdrop-filter: blur(28px) saturate(140%);
+    border: 1px solid rgba(255,255,255,0.7);
+    box-shadow: 0 30px 70px -30px rgba(140,76,76,0.18);
+  }
+  .glass-rose { background: linear-gradient(135deg, rgba(240,224,222,0.85) 0%, rgba(196,133,126,0.4) 100%); border: 1px solid rgba(255,255,255,0.55); }
+  .glass-wellness { background: linear-gradient(135deg, rgba(214,237,228,0.85) 0%, rgba(106,175,145,0.35) 100%); border: 1px solid rgba(255,255,255,0.55); }
+  .glass-gold { background: linear-gradient(135deg, rgba(253,240,219,0.85) 0%, rgba(196,122,42,0.35) 100%); border: 1px solid rgba(255,255,255,0.55); }
+  .glass-ink { background: rgba(31,30,27,0.95); color: #F5F0EB; border: 1px solid rgba(255,255,255,0.08); }
+
+  .stripe { background-image: repeating-linear-gradient(135deg, rgba(140,76,76,0.05) 0 1px, transparent 1px 14px); }
+
+  /* score bar */
+  .bar-track { height: 6px; background: rgba(31,30,27,0.06); border-radius: 100px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 100px; transition: width 0.6s ease; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mesh-a, .mesh-b, .mesh-c { animation: none !important; }
+  }
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white !important; }
+    .glass, .glass-rose, .glass-wellness, .glass-gold { background: white !important; backdrop-filter: none !important; border: 1px solid #DDD9DF !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- mesh atmosphere -->
+<div aria-hidden class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+  <div class="mesh-a absolute -top-32 -left-20 h-[500px] w-[500px] rounded-full" style="background: radial-gradient(circle, rgba(140,76,76,0.18), transparent 65%); filter: blur(80px);"></div>
+  <div class="mesh-b absolute top-20 right-0 h-[460px] w-[460px] rounded-full" style="background: radial-gradient(circle, rgba(196,122,42,0.18), transparent 65%); filter: blur(80px);"></div>
+  <div class="mesh-c absolute top-1/2 left-1/3 h-[560px] w-[560px] rounded-full" style="background: radial-gradient(circle, rgba(57,103,85,0.15), transparent 65%); filter: blur(90px);"></div>
+</div>
+
+<main class="mx-auto max-w-7xl px-6 md:px-10 py-10 md:py-14">
+
+  <!-- HEADER -->
+  <header class="mb-12">
+    <div class="font-mono text-[11px] tracking-[0.28em] text-rose-deep uppercase font-bold mb-3">
+      UP Wellness · Multi-Agent Workshop · 2026-05-30
+    </div>
+    <h1 class="font-display font-light tracking-tight text-ink leading-[1.05] text-[52px] md:text-[88px]">
+      Opp · Longevity Solution<br>
+      <em class="italic text-rose font-medium">โอกาสในโลกยุคใหม่.</em>
+    </h1>
+    <p class="mt-6 max-w-3xl font-thai text-[16px] md:text-[18px] leading-relaxed text-ink-60">
+      สร้างโครงสร้าง+script การบรรยาย 60 นาที โดย AI 12 agents · ผ่าน 10 persona reviewer panel · 2 รอบ ·
+      ยกระดับจาก draft v1 → v2 ด้วย 9 directives จาก feedback panel ครบ
+    </p>
+
+    <!-- top stats -->
+    <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+      <div class="glass rounded-2xl p-5">
+        <div class="font-mono text-[9px] tracking-widest uppercase text-rose font-bold">Speakers</div>
+        <div class="mt-2 font-display text-[42px] font-medium text-ink leading-none">3</div>
+        <div class="mt-1 font-thai text-[12px] text-ink-60">จิ้น · ต้น · พี่เต๋า</div>
+      </div>
+      <div class="glass rounded-2xl p-5">
+        <div class="font-mono text-[9px] tracking-widest uppercase text-rose font-bold">Parts</div>
+        <div class="mt-2 font-display text-[42px] font-medium text-ink leading-none">7</div>
+        <div class="mt-1 font-thai text-[12px] text-ink-60">60 นาที · emotional arc ครบ</div>
+      </div>
+      <div class="glass rounded-2xl p-5">
+        <div class="font-mono text-[9px] tracking-widest uppercase text-rose font-bold">Reviewers</div>
+        <div class="mt-2 font-display text-[42px] font-medium text-ink leading-none">10</div>
+        <div class="mt-1 font-thai text-[12px] text-ink-60">personas หลากหลาย</div>
+      </div>
+      <div class="glass rounded-2xl p-5">
+        <div class="font-mono text-[9px] tracking-widest uppercase text-rose font-bold">Score lift</div>
+        <div class="mt-2 font-display text-[42px] font-medium text-rose leading-none">+1.4</div>
+        <div class="mt-1 font-thai text-[12px] text-ink-60">6.91 → 8.31</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- VATTHU + GOAL -->
+  <section class="mb-14">
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="glass-rose rounded-3xl p-7 md:p-8">
+        <div class="font-mono text-[10px] uppercase tracking-[0.16em] text-rose-deep font-bold">วัตถุประสงค์ · Objective</div>
+        <h3 class="mt-3 font-display text-[28px] md:text-[34px] font-medium leading-tight text-ink">
+          สร้างคู่มือ ไม่ใช่ pitch.
+        </h3>
+        <p class="mt-4 font-thai text-[15px] leading-relaxed text-ink-80">
+          ทำให้คนฟัง 60 นาทีแล้วกลับบ้านพร้อม "1 ก้าวที่ทำได้พรุ่งนี้" — ไม่ว่าจะเลือกสุขภาพ ความรู้ หรือธุรกิจ ·
+          ไม่บีบ ไม่กดดัน · ใช้ evidence + community เป็นแกน · ไม่ใช่ MLM hype
+        </p>
+      </div>
+      <div class="glass-wellness rounded-3xl p-7 md:p-8">
+        <div class="font-mono text-[10px] uppercase tracking-[0.16em] text-green-deep font-bold">Audience</div>
+        <h3 class="mt-3 font-display text-[28px] md:text-[34px] font-medium leading-tight text-ink">
+          ผู้ใหญ่ Thai 35-55.
+        </h3>
+        <p class="mt-4 font-thai text-[15px] leading-relaxed text-ink-80">
+          กังวลเศรษฐกิจ + สุขภาพ + อนาคต · มีกำลังลงทุน 400-3,500 บาท/เดือนได้ ·
+          เปิดใจฟังถ้าไม่ pitch ตรงๆ · sensitive ต่อ MLM cues
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7-PART STRUCTURE -->
+  <section class="mb-14">
+    <div class="mb-8 flex items-center gap-3">
+      <span class="font-mono text-[11px] text-rose">01</span>
+      <span class="h-2 w-2 rounded-full bg-rose"></span>
+      <span class="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-rose">Structure · 7 parts · 60 min</span>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-4">
+      <article class="glass rounded-2xl p-5">
+        <div class="flex items-baseline justify-between">
+          <div class="font-mono text-[10px] tracking-widest text-ink-40 font-bold">PART 00</div>
+          <div class="font-mono text-[10px] text-rose">4 min · ต้น</div>
+        </div>
+        <h3 class="mt-2 font-display text-[24px] font-medium text-ink leading-tight">HOOK · แบ่งปัน 3 มุมมอง</h3>
+        <p class="mt-2 font-thai text-[13px] text-ink-60 leading-relaxed">เปิดด้วย Forbes/UBS ตัวเลขจริง · ตั้งกติกา "ฟังจบแล้วถ้าใช่ค่อยคุย"</p>
+        <div class="mt-3 inline-flex items-center gap-2 rounded-full bg-rose/8 px-2.5 py-1">
+          <span class="text-[10px] font-mono uppercase text-rose-deep font-bold">Energy 6/10</span>
+        </div>
+      </article>
+
+      <article class="glass rounded-2xl p-5">
+        <div class="flex items-baseline justify-between">
+          <div class="font-mono text-[10px] tracking-widest text-ink-40 font-bold">PART 01</div>
+          <div class="font-mono text-[10px] text-rose">7 min · ต้น</div>
+        </div>
+        <h3 class="mt-2 font-display text-[24px] font-medium text-ink leading-tight">The Great Reset · 3 Megatrends</h3>
+        <p class="mt-2 font-thai text-[13px] text-ink-60 leading-relaxed">Tariff · AI 4 ชนชั้น (WEF 44%) · Longevity · "อยู่ถึง 90 ป่วยตั้งแต่ 50?"</p>
+        <div class="mt-3 inline-flex items-center gap-2 rounded-full bg-rose/8 px-2.5 py-1">
+          <span class="text-[10px] font-mono uppercase text-rose-deep font-bold">6→8</span>
+        </div>
+      </article>
+
+      <article class="glass-wellness rounded-2xl p-5">
+        <div class="flex items-baseline justify-between">
+          <div class="font-mono text-[10px] tracking-widest text-ink-40 font-bold">PART 02 · 18 min</div>
+          <div class="font-mono text-[10px] text-wellness-deep font-bold">จิ้น</div>
+        </div>
+        <h3 class="mt-2 font-display text-[24px] font-medium text-ink leading-tight">The Healthspan Opportunity</h3>
+        <p class="mt-2 font-thai text-[13px] text-ink-60 leading-relaxed">
+          2.1 Healthspan ≠ Lifespan (WHO HALE 67y) ·
+          2.2 Pyramid 5 ชั้น (ชั้น 0+1 = 95%) ·
+          2.3 <strong>"5 ยาก"</strong> + 2 cases (ผู้บริหาร 47 + แม่ลูก 2 งบ 400B) ·
+          2.4 Find a Healthy Friend (Senior/Online/ต่างจังหวัด) ·
+          2.5 Safety + 1 habit + 1 supplement
+        </p>
+        <div class="mt-3 inline-flex items-center gap-2 rounded-full bg-wellness/12 px-2.5 py-1">
+          <span class="text-[10px] font-mono uppercase text-wellness-deep font-bold">7 → 9</span>
+        </div>
+      </article>
+
+      <article class="glass-gold rounded-2xl p-5">
+        <div class="flex items-baseline justify-between">
+          <div class="font-mono text-[10px] tracking-widest text-ink-40 font-bold">PART 03 · 15 min</div>
+          <div class="font-mono text-[10px] text-amber font-bold">ต้น</div>
+        </div>
+        <h3 class="mt-2 font-display text-[24px] font-medium text-ink leading-tight">The Business Opportunity</h3>
+        <p class="mt-2 font-thai text-[13px] text-ink-60 leading-relaxed">
+          3.1 Life Portfolio (ย่อ 90s) ·
+          3.2 Longevity > Weight Loss (UN 2024) ·
+          3.3 Nutrilite turnkey + farms ·
+          3.4 <strong>เคสพี่นันท์</strong> SME ต่างจังหวัด ·
+          3.5 <strong>Real Costs</strong> + FTC-style "60-70% หยุดปีแรก"
+        </p>
+        <div class="mt-3 inline-flex items-center gap-2 rounded-full bg-amber/15 px-2.5 py-1">
+          <span class="text-[10px] font-mono uppercase text-amber font-bold">8 → 9</span>
+        </div>
+      </article>
+
+      <article class="glass rounded-2xl p-5 border-2 border-dashed border-amber/40">
+        <div class="flex items-baseline justify-between">
+          <div class="font-mono text-[10px] tracking-widest text-amber font-bold">PART 04 · 10 min ⚠ PLACEHOLDER</div>
+          <div class="font-mono text-[10px] text-ink-60">พี่เต๋า</div>
+        </div>
+        <h3 class="mt-2 font-display text-[24px] font-medium text-ink leading-tight">The Life Design Opportunity</h3>
+        <p class="mt-2 font-thai text-[13px] text-ink-60 leading-relaxed">
+          <strong>รอ interview พี่เต๋า</strong> · มี handoff prompt + 7 คำถาม + script guide 5 sub-sections (Before · Turning Point · <em>Messy Middle</em> · Today · Invitation)
+        </p>
+        <div class="mt-3 inline-flex items-center gap-2 rounded-full bg-amber/15 px-2.5 py-1">
+          <span class="text-[10px] font-mono uppercase text-amber font-bold">⚠ Single point of failure · ต้อง messy middle</span>
+        </div>
+      </article>
+
+      <article class="glass rounded-2xl p-5">
+        <div class="flex items-baseline justify-between">
+          <div class="font-mono text-[10px] tracking-widest text-ink-40 font-bold">PART 05 · 6 min</div>
+          <div class="font-mono text-[10px] text-rose">จิ้น + ต้น</div>
+        </div>
+        <h3 class="mt-2 font-display text-[24px] font-medium text-ink leading-tight">Closing · 3 ก้าวที่ทำได้วันนี้</h3>
+        <p class="mt-2 font-thai text-[13px] text-ink-60 leading-relaxed">
+          🌿 สุขภาพ · 📚 ความรู้ · 💼 ธุรกิจ · <strong>เลือก 1 พอ</strong> · CTA 3 ระดับ (กาแฟ + 1-pager + voice note)
+        </p>
+        <div class="mt-3 inline-flex items-center gap-2 rounded-full bg-rose/8 px-2.5 py-1">
+          <span class="text-[10px] font-mono uppercase text-rose-deep font-bold">10 → 7 (calm warm close)</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 10 PERSONAS · R1 vs R2 -->
+  <section class="mb-14">
+    <div class="mb-8 flex items-center gap-3">
+      <span class="font-mono text-[11px] text-rose">02</span>
+      <span class="h-2 w-2 rounded-full bg-rose"></span>
+      <span class="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-rose">Review · 10 Personas · 2 Rounds</span>
+    </div>
+
+    <div class="glass rounded-3xl p-7 md:p-8 overflow-hidden">
+      <div class="grid grid-cols-12 gap-3 font-mono text-[10px] uppercase tracking-widest text-ink-40 font-bold pb-3 border-b border-ink-10">
+        <div class="col-span-5">Persona</div>
+        <div class="col-span-2">Domain</div>
+        <div class="col-span-2 text-right">R1</div>
+        <div class="col-span-2 text-right">R2</div>
+        <div class="col-span-1 text-right">Δ</div>
+      </div>
+
+      <!-- Wellness Coach -->
+      <div class="grid grid-cols-12 gap-3 items-center py-3 border-b border-ink-10">
+        <div class="col-span-5">
+          <div class="font-head text-[14px] font-bold text-ink">Wellness Coach</div>
+          <div class="font-thai text-[11px] text-ink-60">peer professional · 32yo</div>
+        </div>
+        <div class="col-span-2 font-mono text-[10px] text-wellness-deep">healthcare</div>
+        <div class="col-span-2 text-right font-mono text-[12px] text-ink-60">7.8</div>
+        <div class="col-span-2 text-right font-mono text-[14px] font-bold text-wellness-deep">8.6</div>
+        <div class="col-span-1 text-right font-mono text-[11px] text-wellness font-bold">+0.8</div>
+      </div>
+
+      <!-- Working Mom -->
+      <div class="grid grid-cols-12 gap-3 items-center py-3 border-b border-ink-10">
+        <div class="col-span-5">
+          <div class="font-head text-[14px] font-bold text-ink">Working Mom · ปิยนุช</div>
+          <div class="font-thai text-[11px] text-ink-60">accountant · 37yo · 2 kids</div>
+        </div>
+        <div class="col-span-2 font-mono text-[10px] text-rose-deep">consumer</div>
+        <div class="col-span-2 text-right font-mono text-[12px] text-ink-60">7.0</div>
+        <div class="col-span-2 text-right font-mono text-[14px] font-bold text-wellness-deep">8.4</div>
+        <div class="col-span-1 text-right font-mono text-[11px] text-wellness font-bold">+1.4</div>
+      </div>
+
+      <!-- GP Doctor -->
+      <div class="grid grid-cols-12 gap-3 items-center py-3 border-b border-ink-10">
+        <div class="col-span-5">
+          <div class="font-head text-[14px] font-bold text-ink">GP Doctor</div>
+          <div class="font-thai text-[11px] text-ink-60">clinical eye · safety check</div>
+        </div>
+        <div class="col-span-2 font-mono text-[10px] text-wellness-deep">healthcare</div>
+        <div class="col-span-2 text-right font-mono text-[12px] text-ink-60">7.25</div>
+        <div class="col-span-2 text-right font-mono text-[14px] font-bold text-wellness-deep">8.4</div>
+        <div class="col-span-1 text-right font-mono text-[11px] text-wellness font-bold">+1.15</div>
+      </div>
+
+      <!-- SME Owner -->
+      <div class="grid grid-cols-12 gap-3 items-center py-3 border-b border-ink-10">
+        <div class="col-span-5">
+          <div class="font-head text-[14px] font-bold text-ink">SME Owner · นุ่น</div>
+          <div class="font-thai text-[11px] text-ink-60">ร้านอาหาร 2 สาขา ต่างจังหวัด</div>
+        </div>
+        <div class="col-span-2 font-mono text-[10px] text-amber">entrepreneur</div>
+        <div class="col-span-2 text-right font-mono text-[12px] text-ink-60">6.9</div>
+        <div class="col-span-2 text-right font-mono text-[14px] font-bold text-wellness-deep">8.4</div>
+        <div class="col-span-1 text-right font-mono text-[11px] text-wellness font-bold">+1.5</div>
+      </div>
+
+      <!-- CFO -->
+      <div class="grid grid-cols-12 gap-3 items-center py-3 border-b border-ink-10">
+        <div class="col-span-5">
+          <div class="font-head text-[14px] font-bold text-ink">CFO · วิชัย</div>
+          <div class="font-thai text-[11px] text-ink-60">SME finance · data-strict</div>
+        </div>
+        <div class="col-span-2 font-mono text-[10px] text-rose-deep">c-suite</div>
+        <div class="col-span-2 text-right font-mono text-[12px] text-rose">5.6</div>
+        <div class="col-span-2 text-right font-mono text-[14px] font-bold text-gold">7.75</div>
+        <div class="col-span-1 text-right font-mono text-[11px] text-gold font-bold">+2.15</div>
+      </div>
+
+      <!-- Pending R2 -->
+      <div class="grid grid-cols-12 gap-3 items-center py-3 border-b border-ink-10 opacity-50">
+        <div class="col-span-5">
+          <div class="font-head text-[14px] font-bold text-ink">Active Retiree</div>
+          <div class="font-thai text-[11px] text-ink-60">Longevity focus · 64yo</div>
+        </div>
+        <div class="col-span-2 font-mono text-[10px] text-rose-deep">consumer</div>
+        <div class="col-span-2 text-right font-mono text-[12px] text-ink-60">7.0</div>
+        <div class="col-span-2 text-right font-mono text-[12px] text-amber">pending</div>
+        <div class="col-span-1 text-right font-mono text-[11px] text-ink-40">—</div>
+      </div>
+
+      <div class="grid grid-cols-12 gap-3 items-center py-3 border-b border-ink-10 opacity-50">
+        <div class="col-span-5">
+          <div class="font-head text-[14px] font-bold text-ink">CFP · Wealth Manager</div>
+          <div class="font-thai text-[11px] text-ink-60">MLM-radar · 42yo</div>
+        </div>
+        <div class="col-span-2 font-mono text-[10px] text-amber">finance</div>
+        <div class="col-span-2 text-right font-mono text-[12px] text-ink-60">6.75</div>
+        <div class="col-span-2 text-right font-mono text-[12px] text-amber">pending</div>
+        <div class="col-span-1 text-right font-mono text-[11px] text-ink-40">—</div>
+      </div>
+
+      <div class="grid grid-cols-12 gap-3 items-center py-3 border-b border-ink-10 opacity-50">
+        <div class="col-span-5">
+          <div class="font-head text-[14px] font-bold text-ink">Business Podcaster</div>
+          <div class="font-thai text-[11px] text-ink-60">content + soundbite POV</div>
+        </div>
+        <div class="col-span-2 font-mono text-[10px] text-rose-deep">media</div>
+        <div class="col-span-2 text-right font-mono text-[12px] text-ink-60">7.75</div>
+        <div class="col-span-2 text-right font-mono text-[12px] text-amber">pending</div>
+        <div class="col-span-1 text-right font-mono text-[11px] text-ink-40">—</div>
+      </div>
+
+      <div class="grid grid-cols-12 gap-3 items-center py-3 border-b border-ink-10 opacity-50">
+        <div class="col-span-5">
+          <div class="font-head text-[14px] font-bold text-ink">Gen Z · skeptical</div>
+          <div class="font-thai text-[11px] text-ink-60">MLM-sniff · 24yo</div>
+        </div>
+        <div class="col-span-2 font-mono text-[10px] text-rose-deep">consumer</div>
+        <div class="col-span-2 text-right font-mono text-[12px] text-rose">4.3</div>
+        <div class="col-span-2 text-right font-mono text-[12px] text-amber">pending</div>
+        <div class="col-span-1 text-right font-mono text-[11px] text-ink-40">—</div>
+      </div>
+
+      <div class="grid grid-cols-12 gap-3 items-center py-3 opacity-50">
+        <div class="col-span-5">
+          <div class="font-head text-[14px] font-bold text-ink">Labor Economist</div>
+          <div class="font-thai text-[11px] text-ink-60">academic · stats-rigorous</div>
+        </div>
+        <div class="col-span-2 font-mono text-[10px] text-wellness-deep">professional</div>
+        <div class="col-span-2 text-right font-mono text-[12px] text-rose">4.4</div>
+        <div class="col-span-2 text-right font-mono text-[12px] text-amber">pending</div>
+        <div class="col-span-1 text-right font-mono text-[11px] text-ink-40">—</div>
+      </div>
+
+      <!-- Average row -->
+      <div class="grid grid-cols-12 gap-3 items-center py-4 mt-4 border-t-2 border-ink rounded-xl bg-ink/4 px-3">
+        <div class="col-span-5">
+          <div class="font-head text-[15px] font-bold text-ink">Avg (5 of 10 completed R2)</div>
+          <div class="font-thai text-[11px] text-ink-60">target 9.0/10</div>
+        </div>
+        <div class="col-span-2"></div>
+        <div class="col-span-2 text-right">
+          <div class="font-display text-[20px] font-medium text-ink-60">6.91</div>
+          <div class="font-mono text-[9px] text-ink-40">R1 partial avg</div>
+        </div>
+        <div class="col-span-2 text-right">
+          <div class="font-display text-[26px] font-medium text-rose">8.31</div>
+          <div class="font-mono text-[9px] text-ink-40">R2 partial avg</div>
+        </div>
+        <div class="col-span-1 text-right">
+          <div class="font-mono text-[13px] font-bold text-wellness">+1.4</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 DIRECTIVES APPLIED -->
+  <section class="mb-14">
+    <div class="mb-8 flex items-center gap-3">
+      <span class="font-mono text-[11px] text-rose">03</span>
+      <span class="h-2 w-2 rounded-full bg-rose"></span>
+      <span class="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-rose">v1 → v2 · 9 Directives Applied</span>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="glass rounded-2xl p-5">
+        <div class="font-mono text-[11px] tracking-widest uppercase text-rose font-bold">A</div>
+        <h4 class="mt-2 font-head text-[15px] font-bold text-ink leading-tight">Cite all stats · 9 macro</h4>
+        <p class="mt-2 font-thai text-[12.5px] text-ink-60 leading-relaxed">
+          Forbes / UBS / WHO HALE / WEF 44% / Chailurkit / REDUCE-IT + STRENGTH null / Cell Metabolism / Harvard Waldinger / Euromonitor / UN DESA
+        </p>
+        <div class="mt-3 text-[10px] font-mono text-wellness">✓ Done</div>
+      </div>
+
+      <div class="glass rounded-2xl p-5">
+        <div class="font-mono text-[11px] tracking-widest uppercase text-rose font-bold">B</div>
+        <h4 class="mt-2 font-head text-[15px] font-bold text-ink leading-tight">Income ladder → FTC-style</h4>
+        <p class="mt-2 font-thai text-[12.5px] text-ink-60 leading-relaxed">
+          ลบ tier 500K+/ล้าน · 60-70% หยุดปีแรก · 30-40% ได้ 5-30K/mo · 5-10% 6 หลัก · ไม่พูดเกินกว่านี้
+        </p>
+        <div class="mt-3 text-[10px] font-mono text-wellness">✓ Done</div>
+      </div>
+
+      <div class="glass rounded-2xl p-5">
+        <div class="font-mono text-[11px] tracking-widest uppercase text-rose font-bold">C</div>
+        <h4 class="mt-2 font-head text-[15px] font-bold text-ink leading-tight">Persona diversity · 3 cases</h4>
+        <p class="mt-2 font-thai text-[12.5px] text-ink-60 leading-relaxed">
+          แม่ลูก 2 (Vit D 400B) + พี่นันท์ SME ต่างจังหวัด (15K/mo · 5h/wk) + retiree-friendly CTA
+        </p>
+        <div class="mt-3 text-[10px] font-mono text-wellness">✓ Done</div>
+      </div>
+
+      <div class="glass rounded-2xl p-5">
+        <div class="font-mono text-[11px] tracking-widest uppercase text-rose font-bold">D</div>
+        <h4 class="mt-2 font-head text-[15px] font-bold text-ink leading-tight">"5 ยาก" lifestyle-anchored</h4>
+        <p class="mt-2 font-thai text-[12.5px] text-ink-60 leading-relaxed">
+          ตัด supplement-as-mechanism · ผูกกับ sleep/exercise · "80% lifestyle / 20% supplement"
+        </p>
+        <div class="mt-3 text-[10px] font-mono text-wellness">✓ Done</div>
+      </div>
+
+      <div class="glass rounded-2xl p-5">
+        <div class="font-mono text-[11px] tracking-widest uppercase text-rose font-bold">E</div>
+        <h4 class="mt-2 font-head text-[15px] font-bold text-ink leading-tight">Safety disclaimer · 30s</h4>
+        <p class="mt-2 font-thai text-[12.5px] text-ink-60 leading-relaxed">
+          ก่อน Nutrilite mention · "wellness ≠ medical advice" · 3 contraindications (Sarcoidosis · antiplatelet · immunocompromised)
+        </p>
+        <div class="mt-3 text-[10px] font-mono text-wellness">✓ Done</div>
+      </div>
+
+      <div class="glass rounded-2xl p-5">
+        <div class="font-mono text-[11px] tracking-widest uppercase text-rose font-bold">F</div>
+        <h4 class="mt-2 font-head text-[15px] font-bold text-ink leading-tight">Cut PRIME · trim Portfolio</h4>
+        <p class="mt-2 font-thai text-[12.5px] text-ink-60 leading-relaxed">
+          PRIME framework ตัดออก · Life Portfolio ย่อ 90 วินาที · ประหยัด 3 นาทีไปใช้ SME case + Real Costs
+        </p>
+        <div class="mt-3 text-[10px] font-mono text-wellness">✓ Done</div>
+      </div>
+
+      <div class="glass rounded-2xl p-5">
+        <div class="font-mono text-[11px] tracking-widest uppercase text-rose font-bold">G</div>
+        <h4 class="mt-2 font-head text-[15px] font-bold text-ink leading-tight">Multi-level CTA</h4>
+        <p class="mt-2 font-thai text-[12.5px] text-ink-60 leading-relaxed">
+          กาแฟ 1 ชม. + 1-pager 5 นาที + voice note LINE OA · "ไม่ต้องตัดสินใจในห้องนี้"
+        </p>
+        <div class="mt-3 text-[10px] font-mono text-wellness">✓ Done</div>
+      </div>
+
+      <div class="glass rounded-2xl p-5">
+        <div class="font-mono text-[11px] tracking-widest uppercase text-rose font-bold">H</div>
+        <h4 class="mt-2 font-head text-[15px] font-bold text-ink leading-tight">Inclusive community</h4>
+        <p class="mt-2 font-thai text-[12.5px] text-ink-60 leading-relaxed">
+          Senior Track (Walking Club + Tai Chi) · Online + LINE OA · ต่างจังหวัด chapter (Chiang Mai · Phuket · Khon Kaen)
+        </p>
+        <div class="mt-3 text-[10px] font-mono text-wellness">✓ Done</div>
+      </div>
+
+      <div class="glass rounded-2xl p-5">
+        <div class="font-mono text-[11px] tracking-widest uppercase text-rose font-bold">I</div>
+        <h4 class="mt-2 font-head text-[15px] font-bold text-ink leading-tight">Confident open</h4>
+        <p class="mt-2 font-thai text-[12.5px] text-ink-60 leading-relaxed">
+          "แบ่งปัน 3 มุมมอง" แทน "ไม่ใช่ pitch" defensive (ตัด pre-suasion trigger)
+        </p>
+        <div class="mt-3 text-[10px] font-mono text-wellness">✓ Done</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMOTIONAL ROLEPLAY -->
+  <section class="mb-14">
+    <div class="mb-8 flex items-center gap-3">
+      <span class="font-mono text-[11px] text-rose">04</span>
+      <span class="h-2 w-2 rounded-full bg-rose"></span>
+      <span class="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-rose">Emotional Arc · per-part feeling</span>
+    </div>
+
+    <div class="glass-ink rounded-3xl p-7 md:p-10 stripe relative overflow-hidden">
+      <div class="font-mono text-[10px] uppercase tracking-[0.16em] text-gold font-bold">Audience จากเริ่มถึงจบ</div>
+      <h3 class="mt-3 font-display text-[36px] md:text-[44px] font-medium leading-tight text-cream">
+        จาก <em class="italic text-rose-soft">"กังวล"</em>
+        → <em class="italic text-amber">"ตื่นรู้"</em>
+        → <em class="italic text-wellness-soft">"หวัง"</em>
+        → <em class="italic text-cream">"มั่นใจ"</em>
+        → <em class="italic text-gold">"ตัดสินใจ"</em>
+      </h3>
+
+      <div class="mt-8 space-y-5">
+        <div class="border-l-2 border-rose pl-5">
+          <div class="font-mono text-[10px] uppercase tracking-widest text-rose-soft font-bold">PART 00-01 · 11 min · ต้น</div>
+          <div class="mt-1 font-display text-[20px] italic text-cream">"ตื่นรู้ · นี่ไม่ใช่ pitch"</div>
+          <p class="mt-2 font-thai text-[14px] leading-relaxed text-cream/70">
+            ผู้ฟังเข้าห้องด้วยความกังวลเศรษฐกิจ/อนาคต · เปิดด้วย Forbes/UBS ทำให้รู้สึก "มีอะไรกำลังเกิดขึ้น" · 4 ชนชั้น AI ทำให้สะท้อนตัวเอง: "ฉันอยู่ชนชั้นไหน?"
+          </p>
+        </div>
+
+        <div class="border-l-2 border-wellness pl-5">
+          <div class="font-mono text-[10px] uppercase tracking-widest text-wellness-soft font-bold">PART 02 · 18 min · จิ้น · พีค emotional ที่ "5 ยาก"</div>
+          <div class="mt-1 font-display text-[20px] italic text-cream">"เห็นฉันแล้ว · มันคืนได้"</div>
+          <p class="mt-2 font-thai text-[14px] leading-relaxed text-cream/70">
+            Healthspan ≠ Lifespan ทำให้ตกใจ "เงินจะหมดในช่วงติดเตียง" · Pyramid 0+1 = 95% ทำให้สบายใจ "ไม่ต้องแพง" · "5 ยาก" + เคสแม่ลูก + ผู้บริหาร 47 ทำให้รู้สึก "เห็นฉัน" · safety disclaimer = trust signal
+          </p>
+        </div>
+
+        <div class="border-l-2 border-gold pl-5">
+          <div class="font-mono text-[10px] uppercase tracking-widest text-gold font-bold">PART 03 · 15 min · ต้น</div>
+          <div class="mt-1 font-display text-[20px] italic text-cream">"มีเหตุผล · ไม่ใช่ MLM"</div>
+          <p class="mt-2 font-thai text-[14px] leading-relaxed text-cream/70">
+            Longevity > Weight Loss + UN 2024 = market thesis valid · พี่นันท์เคส = ฉันก็ทำได้ · Real Costs + FTC "60-70% หยุด" = ความซื่อสัตย์ที่ทำให้เชื่อ · "ฉันอยากกลายเป็นใคร?" = anchor
+          </p>
+        </div>
+
+        <div class="border-l-2 border-amber pl-5">
+          <div class="font-mono text-[10px] uppercase tracking-widest text-amber font-bold">PART 04 · 10 min · พี่เต๋า · พีคสุด</div>
+          <div class="mt-1 font-display text-[20px] italic text-cream">"ฉันก็เคยเป็นแบบนั้น"</div>
+          <p class="mt-2 font-thai text-[14px] leading-relaxed text-cream/70">
+            <strong>ต้องมี messy middle</strong> · vulnerability + setback · "เกือบล้มเลิกตอนไหน" = moment ที่ audience เชื่อ · ถ้าเป็น perfect arc → drop 1-1.5 points · 4 freedom (Time/Health/Relationship/Meaning) · ตัวเลขรายได้เป็น supporting ไม่ใช่ headline
+          </p>
+        </div>
+
+        <div class="border-l-2 border-cream pl-5">
+          <div class="font-mono text-[10px] uppercase tracking-widest text-cream font-bold">PART 05 · 6 min · จิ้น + ต้น · calm warm close</div>
+          <div class="mt-1 font-display text-[20px] italic text-cream">"ขยับ 1 ก้าวก็พอ"</div>
+          <p class="mt-2 font-thai text-[14px] leading-relaxed text-cream/70">
+            3 ก้าวให้เลือก 1 · ไม่บีบ · "คุณไม่ต้องซื้อกับเรา · แค่เริ่มก็พอ" · "เพื่อนที่ใช่จะเดินไปด้วยกัน" · audience ออกจากห้องพร้อม 1 ก้าว
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THEMES SYNTHESIS -->
+  <section class="mb-14">
+    <div class="mb-8 flex items-center gap-3">
+      <span class="font-mono text-[11px] text-rose">05</span>
+      <span class="h-2 w-2 rounded-full bg-rose"></span>
+      <span class="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-rose">Strengths vs Remaining Concerns</span>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="glass-wellness rounded-3xl p-7">
+        <div class="font-mono text-[10px] uppercase tracking-[0.16em] text-wellness-deep font-bold">✓ Strengths · ห้ามแตะ</div>
+        <ul class="mt-4 space-y-3 font-thai text-[14px] text-ink leading-relaxed">
+          <li>• <strong>"นี่คือคู่มือ ไม่ใช่ pitch"</strong> · disarm framing</li>
+          <li>• <strong>Healthspan vs Lifespan</strong> + "10 ปีติดเตียง เงินจะหมด" reframe</li>
+          <li>• <strong>Longevity Pyramid + "95% มาจากชั้น 0+1"</strong> · intellectual honesty</li>
+          <li>• <strong>"5 ยาก"</strong> Thai mnemonic · signature soundbite</li>
+          <li>• <strong>Harvard Waldinger 2023</strong> citation · "find a healthy friend"</li>
+          <li>• <strong>"3 ก้าว เลือก 1"</strong> · low-pressure close</li>
+          <li>• <strong>"คุณจะกลายเป็นใคร"</strong> · anchor question</li>
+          <li>• <strong>เคสมี messy middle</strong> · vulnerability ทำให้เชื่อ</li>
+        </ul>
+      </div>
+
+      <div class="glass-rose rounded-3xl p-7">
+        <div class="font-mono text-[10px] uppercase tracking-[0.16em] text-rose-deep font-bold">⚠ Remaining Concerns · R3</div>
+        <ul class="mt-4 space-y-3 font-thai text-[14px] text-ink leading-relaxed">
+          <li>• <strong>Part 4 พี่เต๋า ยัง placeholder</strong> · single point of failure</li>
+          <li>• <strong>Real Costs ยังไม่มี THB number</strong> จริง (CFO/SME flag)</li>
+          <li>• <strong>Retention stats 60-70 / 30-40 / 5-10</strong> ไม่มี source</li>
+          <li>• <strong>"Soontornpun 2020" citation</strong> ต้อง verify (Doctor)</li>
+          <li>• <strong>Ice Bath contraindication</strong> ยังไม่มี · CVD/HT/Raynaud screening</li>
+          <li>• <strong>Hook ยังเปิดด้วย billionaire/millionaire</strong> · trigger ปิดใจ working mom</li>
+          <li>• <strong>CTA ลำดับ</strong> ควรเรียง 1-pager → voice → กาแฟ (low-friction first)</li>
+          <li>• <strong>Nutrilite ใน 2.5 (28 min)</strong> เร็วเกินไป · ย้าย farm detail ไป 3.3</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- AGENT GENEALOGY -->
+  <section class="mb-14">
+    <div class="mb-8 flex items-center gap-3">
+      <span class="font-mono text-[11px] text-rose">06</span>
+      <span class="h-2 w-2 rounded-full bg-rose"></span>
+      <span class="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-rose">Workshop Pipeline · 12 Agents · 4h</span>
+    </div>
+
+    <div class="glass rounded-3xl p-7 md:p-8">
+      <div class="grid md:grid-cols-5 gap-4">
+        <div class="text-center">
+          <div class="font-display text-[40px] font-medium text-ink leading-none">1</div>
+          <div class="mt-2 font-mono text-[10px] uppercase tracking-widest text-rose-deep font-bold">Structure Architect</div>
+          <div class="mt-2 font-thai text-[12px] text-ink-60">วิเคราะห์ต้นฉบับ · 7 parts · v1 script 1261 lines</div>
+        </div>
+
+        <div class="text-center">
+          <div class="font-display text-[40px] font-medium text-ink leading-none">10</div>
+          <div class="mt-2 font-mono text-[10px] uppercase tracking-widest text-rose-deep font-bold">Reviewers R1</div>
+          <div class="mt-2 font-thai text-[12px] text-ink-60">10 personas parallel · avg 6.48 / 10</div>
+        </div>
+
+        <div class="text-center">
+          <div class="font-display text-[40px] font-medium text-ink leading-none">1</div>
+          <div class="mt-2 font-mono text-[10px] uppercase tracking-widest text-rose-deep font-bold">Facilitator</div>
+          <div class="mt-2 font-thai text-[12px] text-ink-60">Synthesize 10 reviews → 9 directives</div>
+        </div>
+
+        <div class="text-center">
+          <div class="font-display text-[40px] font-medium text-ink leading-none">1</div>
+          <div class="mt-2 font-mono text-[10px] uppercase tracking-widest text-rose-deep font-bold">Copywriter</div>
+          <div class="mt-2 font-thai text-[12px] text-ink-60">v1 → v2 · apply 9 directives</div>
+        </div>
+
+        <div class="text-center">
+          <div class="font-display text-[40px] font-medium text-amber leading-none">5/10</div>
+          <div class="mt-2 font-mono text-[10px] uppercase tracking-widest text-amber font-bold">Reviewers R2</div>
+          <div class="mt-2 font-thai text-[12px] text-ink-60">avg 8.31 (partial) · session limit · resume 3:10am</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEXT STEPS -->
+  <section class="mb-14">
+    <div class="glass-gold rounded-3xl p-7 md:p-10">
+      <div class="font-mono text-[10px] uppercase tracking-[0.16em] text-amber font-bold">⚡ NEXT STEPS · เพื่อ ship จริง</div>
+      <h3 class="mt-3 font-display text-[34px] md:text-[40px] font-medium leading-tight text-ink">
+        3 things to do before live.
+      </h3>
+
+      <ol class="mt-7 space-y-5">
+        <li class="flex gap-4">
+          <div class="font-display text-[48px] italic text-amber leading-none font-medium shrink-0">01</div>
+          <div>
+            <h4 class="font-head text-[18px] font-bold text-ink">Interview พี่เต๋า · 7 คำถาม</h4>
+            <p class="mt-1 font-thai text-[14px] text-ink-80 leading-relaxed">
+              เน้นคำถามที่ 3 "<em>3 เดือนแรก เกือบล้มเลิกตอนไหน?</em>" · ต้องได้ scene จริง + messy middle · ถ้าเป็น perfect arc script จะ drop 1-1.5 จุด · audience จะรู้สึก MLM testimonial
+            </p>
+          </div>
+        </li>
+
+        <li class="flex gap-4">
+          <div class="font-display text-[48px] italic text-amber leading-none font-medium shrink-0">02</div>
+          <div>
+            <h4 class="font-head text-[18px] font-bold text-ink">เติม Real Costs · ตัวเลข THB</h4>
+            <p class="mt-1 font-thai text-[14px] text-ink-80 leading-relaxed">
+              Starter kit (กี่ THB range) · monthly minimum purchase (กี่ THB) · ICAEW-grade transparency · CFO/SME audience รับไม่ได้ถ้าบอก "คุยกับทีมเราได้" ใน close
+            </p>
+          </div>
+        </li>
+
+        <li class="flex gap-4">
+          <div class="font-display text-[48px] italic text-amber leading-none font-medium shrink-0">03</div>
+          <div>
+            <h4 class="font-head text-[18px] font-bold text-ink">Round 3 · 10 personas อีกครั้ง</h4>
+            <p class="mt-1 font-thai text-[14px] text-ink-80 leading-relaxed">
+              หลังเติม Part 4 + Real Costs · spawn 10 personas อีกครั้ง · target avg ≥ 9.0/10 · estimated 1 รอบเพิ่มน่าจะถึง
+            </p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ARTIFACT INDEX -->
+  <section class="mb-14">
+    <div class="mb-6 flex items-center gap-3">
+      <span class="font-mono text-[11px] text-rose">07</span>
+      <span class="h-2 w-2 rounded-full bg-rose"></span>
+      <span class="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-rose">Artifact Index · ไฟล์ทั้งหมด</span>
+    </div>
+
+    <div class="glass rounded-2xl p-6 md:p-7 font-mono text-[12px] text-ink-80 leading-loose">
+      <div><span class="text-rose font-bold">opp-structure.json</span> · 288 lines · 27 KB · 7-part outline + handoff prompts</div>
+      <div><span class="text-rose font-bold">opp-script-v1.md</span> · 1,261 lines · 60 KB · first draft with stage directions</div>
+      <div><span class="text-rose font-bold">synthesis-r1.md</span> · facilitator output · 9 directives A-I + before/after</div>
+      <div><span class="text-rose font-bold">opp-script-v2.md</span> · revised draft · all 9 directives applied</div>
+      <div><span class="text-rose font-bold">reviews-r1/</span> · 10 JSON reviews · avg 6.48/10</div>
+      <div><span class="text-rose font-bold">reviews-r2/</span> · 5 JSON reviews (partial) · avg 8.31/10</div>
+      <div><span class="text-rose font-bold">PROGRESS.html</span> · live dashboard (port 3003)</div>
+      <div><span class="text-rose font-bold">progress.json</span> · state file · agents · messages · scores</div>
+      <div><span class="text-rose font-bold">update.py</span> · helper script for progress updates</div>
+      <div class="mt-3"><span class="text-wellness-deep font-bold">opp.html</span> · this summary (you are here)</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="text-center py-10 border-t border-ink-10">
+    <div class="font-display text-[24px] italic text-rose">"การเริ่มต้นใหม่ในทิศทางที่ถูกต้อง"</div>
+    <div class="mt-2 font-thai text-[14px] text-ink-60">คือพลังที่ยิ่งใหญ่ที่สุดในการเปลี่ยนชะตาชีวิตในโลกใบใหม่นี้</div>
+    <div class="mt-8 font-mono text-[10px] uppercase tracking-widest text-ink-40">
+      UP Wellness · Opp Workshop · Generated 2026-05-30 · Multi-Agent Pipeline · 12 agents · 4 hours
+    </div>
+  </footer>
+</main>
+
+</body>
+</html>
