@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Opp · Flow เต็ม · Script + 5 มิติ · UP Wellness</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = { theme: { extend: {
+    fontFamily: { display:['"Cormorant Garamond"','serif'], head:['"Manrope"','sans-serif'], thai:['"Sarabun"','sans-serif'], mono:['"JetBrains Mono"','monospace'] },
+    colors: {
+      rose:{DEFAULT:'#8C4C4C',deep:'#6B3535',soft:'#B57878',mist:'#F4ECEC'},
+      green:{DEFAULT:'#396755',deep:'#244438',soft:'#6AAF91',mist:'#D6EDE4'},
+      cream:{DEFAULT:'#F5F0EB',deep:'#EDE6DF'},
+      ink:{DEFAULT:'#1F1E1B',80:'#3D3840',60:'#5C5A56',40:'#8B8884',20:'#C9C6C0',10:'#E5E2DD'},
+      gold:'#B8965A', amber:'#C47A2A', warm:'#FDFCFB',
+    },
+  } } };
+</script>
+<style>
+  *{-webkit-font-smoothing:antialiased}
+  body{font-family:'Sarabun',sans-serif;background:#2A2724}
+  .font-display{font-family:'Cormorant Garamond',serif}
+  .font-head{font-family:'Manrope',sans-serif}
+  .font-mono{font-family:'JetBrains Mono',monospace}
+  #canvas{background:radial-gradient(ellipse 60% 40% at 20% 0%,rgba(140,76,76,.06),transparent 60%),radial-gradient(ellipse 50% 40% at 90% 30%,rgba(196,122,42,.06),transparent 60%),radial-gradient(ellipse 60% 40% at 10% 80%,rgba(57,103,85,.06),transparent 60%),#FDFCFB}
+  .card-jin{border-top:5px solid #396755}
+  .card-ton{border-top:5px solid #C47A2A}
+  .card-tao{border-top:5px dashed #B57878}
+  .card-close{border-top:5px solid #B8965A}
+  .zone{border-radius:12px;padding:12px 14px}
+  .z-idea{background:rgba(31,30,27,.04)}
+  .z-kw{background:linear-gradient(135deg,rgba(140,76,76,.08),rgba(140,76,76,.02))}
+  .z-script{background:linear-gradient(135deg,rgba(57,103,85,.07),rgba(57,103,85,.02));border:1px solid rgba(57,103,85,.18)}
+  .z-feel{background:linear-gradient(135deg,rgba(184,150,90,.10),rgba(184,150,90,.03));border:1px solid rgba(184,150,90,.25)}
+  .z-slide{background:linear-gradient(135deg,rgba(196,122,42,.08),rgba(196,122,42,.02))}
+  .controls{position:fixed;top:18px;right:18px;z-index:50;display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+  .btn{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.05em;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;border-radius:100px;border:none}
+  .btn-d{background:#1F1E1B;color:#F5F0EB;padding:11px 20px;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+  .btn-d:hover{background:#8C4C4C;transform:translateY(-2px)}
+  .btn-l{background:rgba(245,240,235,.92);color:#1F1E1B;padding:11px 18px;border:1px solid rgba(31,30,27,.1);box-shadow:0 10px 30px rgba(0,0,0,.2)}
+  .btn-l:hover{background:#fff}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,100px);background:rgba(31,30,27,.92);color:#F5F0EB;padding:12px 24px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:13px;transition:transform .3s;z-index:60}
+  .toast.show{transform:translate(-50%,0)}
+  @media print{@page{size:A4;margin:10mm}.skip-export{display:none!important}body{background:#fff}#canvas{box-shadow:none;max-width:none}}
+</style>
+</head>
+<body class="py-8 px-4">
+
+<div class="controls skip-export">
+  <button class="btn btn-l" id="expandBtn">⊕ ขยายทุกการ์ด</button>
+  <button class="btn btn-d" id="saveBtn">⬇ SAVE PNG</button>
+</div>
+
+<div id="canvas" class="mx-auto max-w-4xl rounded-3xl px-5 md:px-10 py-12 md:py-16">
+
+  <div class="text-center mb-10">
+    <div class="font-mono text-[11px] tracking-[0.3em] text-rose-deep uppercase font-bold">UP Wellness · Opp · Flow เต็ม · Script + Production</div>
+    <h1 class="mt-3 font-display text-[44px] md:text-[64px] font-medium text-ink leading-none">เส้นทางการพูด <em class="italic text-rose">ฉบับสมบูรณ์.</em></h1>
+    <p class="mt-4 font-thai text-[15px] text-ink-60 max-w-2xl mx-auto">แต่ละก้าวมี 5 มิติ: <b class="text-ink-80">💡 Main idea</b> · <b class="text-rose">🔑 Keyword</b> · <b class="text-green-deep">🗣 Script ที่พูด</b> · <b class="text-amber">❤️ คนฟังรู้สึก</b> · <b class="text-amber">🖼 แนวทาง Slide</b> — กดการ์ดเพื่อขยาย</p>
+  </div>
+
+  <!-- JIN -->
+  <div class="rounded-2xl bg-green p-5 text-cream shadow-lg mb-5">
+    <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-cream/70 font-bold">PART A · 45 นาที · 9 ก้าว</div>
+    <div class="font-display text-[30px] font-medium leading-none mt-1">🌿 จิ้น · โอกาสของการมีสุขภาพดี</div>
+    <div class="mt-2 font-thai text-[13px] text-cream/80">เป้าหมาย: คนยังไม่สนใจ → "ฉันมีปัญหานี้จริง และทางออกทำได้ทุกงบ"</div>
+  </div>
+  <div class="space-y-3" id="jin-steps"></div>
+  <div id="jin-assess" class="mt-4"></div>
+
+  <div class="my-7 text-center"><span class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber font-bold px-4 py-1.5 rounded-full bg-amber/15">↓ ส่งไม้ต่อ · "พื้นฐานพร้อม · ต่อด้วยอนาคต"</span></div>
+
+  <!-- TON -->
+  <div class="rounded-2xl bg-amber p-5 text-cream shadow-lg mb-5">
+    <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-cream/80 font-bold">PART B · 40 นาที · 8 ก้าว</div>
+    <div class="font-display text-[30px] font-medium leading-none mt-1">💼 ต้น · โอกาสของธุรกิจสุขภาพ</div>
+    <div class="mt-2 font-thai text-[13px] text-cream/90">เป้าหมาย: เห็นโอกาสจริง → "ไม่ใช่ MLM แบบที่ฉันกลัว · มีข้อมูลให้ตัดสินใจ"</div>
+  </div>
+  <div class="space-y-3" id="ton-steps"></div>
+  <div id="ton-assess" class="mt-4"></div>
+
+  <div class="my-7 text-center"><span class="font-mono text-[10px] uppercase tracking-[0.2em] text-rose font-bold px-4 py-1.5 rounded-full bg-rose/10">↓ ส่งไม้ต่อ · "ตัวเลขคือกระดาษ · ชีวิตจริงเป็นยังไง"</span></div>
+
+  <!-- TAO -->
+  <div class="rounded-2xl border-2 border-dashed border-rose-soft bg-rose-mist/40 p-5 text-ink shadow-lg mb-5">
+    <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-rose-deep font-bold">PART C · 10-15 นาที · ⚠ รอ interview</div>
+    <div class="font-display text-[30px] font-medium leading-none mt-1 text-rose-deep">🌟 พี่เต๋า · โอกาสของชีวิตที่ออกแบบได้</div>
+    <div class="mt-2 font-thai text-[13px] text-rose-deep/80">เป้าหมาย: emotion peak → "เขาเคยเป็นแบบฉัน · ฉันก็เป็นได้"</div>
+  </div>
+  <div class="space-y-3" id="tao-steps"></div>
+
+  <div class="my-7 text-center"><span class="font-mono text-[10px] uppercase tracking-[0.2em] text-gold font-bold px-4 py-1.5 rounded-full bg-gold/10">↓ ปิดร่วมกัน</span></div>
+
+  <!-- CLOSE -->
+  <div class="rounded-2xl p-5 text-cream shadow-lg mb-5" style="background:#1F1E1B">
+    <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-gold font-bold">PART D · 5 นาที · จิ้น + ต้น</div>
+    <div class="font-display text-[30px] font-medium leading-none mt-1">🎯 ปิด · 3 ก้าวให้เลือก 1</div>
+  </div>
+  <div class="space-y-3" id="close-steps"></div>
+
+  <div class="mt-10 text-center font-mono text-[9px] uppercase tracking-widest text-ink-40">UP Wellness · Opp Flow Full · จิ้น 45m + ต้น 40m + พี่เต๋า · 2026</div>
+</div>
+
+<div class="toast skip-export" id="toast"></div>
+
+<script type="module">
+import { toPng } from "https://esm.sh/html-to-image@1.11.13";
+
+/* [step,time,dur,idea,keyword,script,feel,slide] */
+const JIN=[
+["A1","0:00",3,"เปิดด้วยความถ่อมตน + ตั้งกติกา ไม่ pitch","แบ่งปัน 3 มุมมอง · ฟังจบค่อยคุย",
+"\"สวัสดีค่ะทุกคน ขอบคุณที่สละเวลามากันวันนี้ · วันนี้เรา 3 คนอยากแบ่งปัน 3 มุมมอง — เรื่องสุขภาพ เรื่องเงิน เรื่องการออกแบบชีวิต · ดิฉันขึ้นก่อน เล่าเรื่องสุขภาพ 45 นาที เพราะเชื่อว่าทุกอย่างเริ่มจากร่างกายที่ใช้การได้ · ถ้าฟังจบแล้วมีอะไรอยากคุยต่อ ค่อยคุย · ถ้าไม่ กลับบ้านพร้อมความรู้ก็พอ — นั่นคือสัญญาของวันนี้ค่ะ\"",
+"ผ่อนคลาย · ลดการ์ด · \"คนนี้ไม่ได้มาขายของ\" · เปิดใจฟังต่อ",
+"Title card สะอาด · โลโก้ UP Wellness · พื้นครีม · ไม่มีตัวเลข ไม่มี bullet · เน้นความนิ่ง"],
+["A2","3:00",5,"คำถามที่กระแทกความจริง · Healthspan ≠ Lifespan","อยู่ถึง 90 ป่วยตั้งแต่ 50 · เงินจะหมด",
+"\"ดิฉันมีคำถามให้คิดในใจ 1 ข้อ — 'ถ้าคุณจะอยู่ถึง 90 ปี แต่ป่วยตั้งแต่ 50 คุณจะใช้ชีวิต 40 ปีที่เหลือยังไง?' [pause 4 วิ] · นี่ไม่ใช่สมมติ · คนไทยหญิงอายุเฉลี่ย 73 ชาย 70 แต่ตาม WHO ปี 2019 ช่วงที่ยังแข็งแรงจริงๆ มีแค่ 67 ปี · ส่วนต่าง 6-8 ปีสุดท้ายคือช่วงติดเตียง · กินยา 5-7 ตัว ไปโรงพยาบาลทุกเดือน · และที่สำคัญ — เงินที่เก็บมาทั้งชีวิต จะหมดในช่วงนี้\"",
+"ตกใจเงียบ · \"เรื่องนี้เกี่ยวกับฉันจริง\" · กลัวอนาคตติดเตียง+เงินหมด · เริ่มอยากรู้ทางออก",
+"2 แท่งกราฟ: Lifespan 73 (เทา) vs Healthspan 67 (โรส) · ช่อง 6-8 ปีไฮไลต์แดง พร้อมคำว่า 'ติดเตียง + เงินหมด' · minimal · ตัวเลขใหญ่"],
+["A3","8:00",10,"แผนที่การดูแลสุขภาพ · Longevity Pyramid 5 ชั้น","ชั้น 0+1 = 95% · เริ่มได้ทุกงบ",
+"\"ดิฉันใช้เครื่องมือเดียวสอนลูกค้าทุกคน เรียก Longevity Pyramid · 5 ชั้นจากล่างขึ้นบน · ชั้น 0 ทำได้ฟรี — นอน 7-8 ชม. เดิน 8,000 ก้าว ออกแดดเช้า กินตามเวลา · ขอย้ำ ชั้น 0 คือ 95% ของผลลัพธ์ เริ่มที่ชั้น 0 ไม่ใช่ความล้มเหลว คือชัยชนะ · ชั้น 1 supplement 4 ตัว Vit D3 / Omega-3 / Protein / Probiotic · เริ่มแค่ Vit D ตัวเดียว 400 บาท/เดือนก็ได้ · ชั้น 2-4 ค่อยขึ้นไปเมื่อพื้นฐานแน่น · คำถามที่โดนบ่อยสุด 'ควรอยู่ชั้นไหน' คำตอบคือ ชั้น 0+1 พอ\"",
+"โล่งใจ · \"ไม่ต้องแพง ไม่ต้องซับซ้อน · เริ่มฟรีได้เลย\" · ความกลัวเรื่องค่าใช้จ่ายหายไป",
+"พีระมิด 5 ชั้น · ชั้น 0+1 สว่างกว่า (เขียว) ชั้น 2-4 จาง · ระบุงบแต่ละชั้น · ลูกศรชี้ '95% มาจากตรงนี้'"],
+["A4","18:00",8,"ผลลัพธ์ที่จับต้องได้ · signature \"5 ยาก\"","โกรธ/เหนื่อย/หิว/อ้วน/เครียด ยาก · 80% lifestyle",
+"\"ดิฉันจะบอกผลลัพธ์จริงด้วย 2 คำง่ายๆ — '5 ยาก' [ให้ slide ขึ้น] · โกรธยาก เพราะนอนพอ cortisol ไม่พุ่ง · เหนื่อยยาก เพราะออกกำลังสม่ำเสมอ mitochondria ดีขึ้น (Cell Metabolism 2022) · หิวยาก insulin ดีขึ้น · อ้วนยาก metabolic flexibility · เครียดยาก เพราะมีคอมมูนิตี้+นอนพอ · แต่ขอย้ำตรงๆ — supplement ช่วยเสริม แต่ 80% ของผลลัพธ์มาจาก lifestyle ค่ะ\"",
+"จดจำได้ทันที · \"5 ยาก ฟังแล้วอยากได้\" · เห็นภาพชีวิตที่ดีขึ้นแบบรูปธรรม · soundbite ติดหู",
+"5 คำใหญ่มาก เรียงแนวตั้ง · โกรธยาก·เหนื่อยยาก·หิวยาก·อ้วนยาก·เครียดยาก · ด้านล่างเล็กๆ '80% มาจาก lifestyle' · ตัวอักษร Cormorant ใหญ่"],
+["A5","26:00",7,"2 เรื่องเล่า ที่มี messy middle ไม่ perfect","ผู้บริหาร 47 หยุดแล้วกลับ · แม่ลูก 2 งบ 400฿",
+"\"ขอเล่า 2 เคส · ผู้บริหารหญิง 47 บอก 'ดิฉันโกรธลูกทุกวัน' · เริ่ม Vit D + นอน · เดือนที่ 2 เธอหยุดทำ บอกเหนื่อยเกิน ดิฉันไม่บีบ · week 10 เธอกลับมาเอง · 3 เดือนต่อมา ลูกชายบอกพ่อ 'ทำไมแม่ไม่ขึ้นเสียงนานแล้ว' · เคส 2 แม่ลูก 2 เงินเดือน 38,000 บอก 'งบไม่มี' · ดิฉันให้ Vit D ตัวเดียว 400 บาท · 6 เดือนต่อมาใช้ 1,200 ไม่ใช่ 3,500 · เริ่มเล็กได้ค่ะ ที่สำคัญคือเริ่ม\"",
+"\"เห็นฉันในเรื่องนี้\" · เชื่อเพราะมีจุดที่ล้ม+กลับมา · รู้สึกว่าทำได้แม้งบน้อย+ไม่ perfect",
+"ภาพ lifestyle เบลอหน้า (ความเป็นส่วนตัว) · timeline เล็กๆ แสดง 'เริ่ม → หยุด → กลับมา → ผล' · เน้นว่าไม่ใช่เส้นตรง"],
+["A6","33:00",5,"ความสัมพันธ์คือตัวพยากรณ์สุขภาพ · ต้องมีคอมมูนิตี้","find a healthy friend · Harvard 1,938 คน",
+"\"ความรู้อย่างเดียวไม่พอ · งานวิจัย Harvard Waldinger 2023 ติดตามคน 1,938 คน พบว่าตัวพยากรณ์สุขภาพระยะยาวที่แม่นสุด ไม่ใช่ cholesterol ไม่ใช่ออกกำลัง — คือคุณภาพความสัมพันธ์รอบตัว · 'If you want to be healthy, find a healthy friend' · นี่คือเหตุผลที่เราเป็นคอมมูนิตี้ ไม่ใช่แค่ที่ขายวิตามิน · เปิดทุกวัย วัยทำงาน Run Club · วัยเกษียณ Walking Club · มีลูกเล็ก online · ต่างจังหวัด มี chapter\"",
+"\"ฉันอยากมีเพื่อนแบบนี้\" · เห็นว่ามีที่ให้ไม่เดินคนเดียว · ลด loneliness · อยากเป็นส่วนหนึ่ง",
+"ภาพ community จริง (Run Club / กลุ่ม) + อ้างอิง Harvard study เล็กๆ มุมล่าง · ประโยค quote ใหญ่กลางจอ"],
+["A7","38:00",3,"ความปลอดภัยมาก่อน · สร้าง trust","wellness ≠ medical advice · contraindications",
+"\"ก่อนแนะนำ supplement ขอย้ำ — ทั้งหมดที่พูดมาคือ wellness guidance ไม่ใช่ medical advice · ถ้ามีโรคประจำตัว กินยาประจำ ตั้งครรภ์ ให้นมบุตร คุยกับแพทย์ก่อน · Vit D ระวัง sarcoidosis · Omega-3 ระวังถ้ากินยาต้านเกล็ดเลือด · Probiotic ระวังภูมิคุ้มกันต่ำ · Ice Bath เช็คความดันหัวใจก่อน · ทีมเรามีแพทย์ที่ปรึกษาค่ะ\"",
+"\"ทีมนี้จริงจัง รับผิดชอบ\" · ไว้ใจมากขึ้น · ตรงข้ามกับภาพ MLM ที่ขายไม่สนผลข้างเคียง",
+"พื้นเรียบ · checklist contraindications แบบ medical · ไอคอน ⚠ · โทนสุภาพจริงจัง ไม่ขายของ"],
+["A8","41:00",3,"ก้าวที่ทำได้พรุ่งนี้ · 1 habit + 1 supplement","Vit D3 ตัวเดียว · ตรวจเลือดก่อน",
+"\"กลับบ้านพร้อม 1 habit + 1 supplement · habit เลือก 1 อย่าง นอน 7 ชม. หรือเดิน 8,000 ก้าว หรือออกแดดเช้า ทำ 30 วัน · supplement ถ้าจะเริ่ม Vit D3 ตัวเดียว ตรวจระดับเลือดก่อน · ที่ดิฉันใช้คือ Nutrilite เพราะเป็น vitamin brand อันดับ 1 ของโลกด้านยอดขาย มีฟาร์มออร์แกนิกเอง · แต่ถ้าใช้แบรนด์อื่นก็ดี ขอเช็ก GMP\"",
+"\"ฉันรู้แล้วว่าจะเริ่มยังไงพรุ่งนี้\" · มีก้าวเล็กชัดเจน · ไม่ overwhelm · พร้อมลงมือ",
+"การ์ด 2 ใบ: 'เลือก 1 habit' + 'Vit D3 + ตรวจเลือด' · เรียบ ทำได้จริง · ไม่ดันขายแบรนด์หนัก"],
+["A9","44:00",1,"สะพานเชื่อมไปต้น · สุขภาพดีอย่างเดียวไม่พอ","ร่างกายพร้อม → ต้องมีงานรอดยุค AI",
+"\"45 นาทีที่ผ่านมาคือพื้นฐาน — ถ้าร่างกายไม่ไหว ไม่มีโอกาสไหนทำได้สำเร็จ · แต่ในยุคที่โลกเปลี่ยนเร็วมาก สุขภาพดีอย่างเดียวยังไม่พอ เราต้องมีงานที่อยู่รอดในยุค AI ด้วย · เดี๋ยวพี่ต้นจะมาเล่าให้ฟัง · ขอเชิญพี่ต้นค่ะ\"",
+"\"อยากรู้ว่าเรื่องเงิน/ธุรกิจจะต่อยังไง\" · เชื่อมโยงสุขภาพ→อนาคต · เปิดรับ part ต่อไป",
+"จอ transition เบาๆ · อาจขึ้นคำว่า 'สุขภาพดี = พื้นฐาน · แล้วต่อไป?' · เตรียมส่งเวที"],
+];
+
+const TON=[
+["B1","45:00",3,"รับช่วง + ตั้งคำถามยุค AI","ทำธุรกิจอะไรในยุค AI?",
+"\"ขอบคุณจิ้นครับ · ตอนจิ้นพูด ผมแอบมองทุกคน เห็นบางคนพยักหน้า บางคนนิ่ง · ลึกๆ ทุกคนอาจมีคำถามคล้ายกัน — 'ตอนนี้ผมจะทำธุรกิจอะไรดี ในโลกที่ AI กำลังเปลี่ยนทุกอย่าง?' · ใน 40 นาทีจากนี้ ผมจะตอบ รวมถึงส่วนที่ไม่สวยงาม\"",
+"\"ใช่ ฉันก็คิดเรื่องนี้\" · รู้สึกถูกอ่านใจ · อยากฟังคำตอบ",
+"ภาพ Ton + คำถามใหญ่กลางจอ 'ทำธุรกิจอะไรในยุค AI?' · พื้นเข้มขึ้นนิดเพื่อเปลี่ยนโทนจากจิ้น"],
+["B2","48:00",7,"3 megatrends + 4 ชนชั้น AI","Tariff·AI·Longevity · Cyborg vs Displaced",
+"\"ปี 2024 Forbes รายงาน billionaire เพิ่ม 141 คน UBS บอก millionaire เพิ่ม 600,000 คน — ในขณะที่คนส่วนใหญ่รู้สึกเงินหายาก · เพราะพวกเขาเห็น 3 เทรนด์ Tariff AI Longevity แล้วขยับก่อน · ในยุค AI เกิด 4 ชนชั้น — เจ้าของสนาม / Cyborg มนุษย์เสริม AI / Heart-worker / The Displaced คนถูกแทนที่ · WEF บอก 44% ของทักษะจะ disrupted ใน 5 ปี · ลองถามตัวเอง ผมอยู่ชนชั้นไหน? ระหว่าง Cyborg กับ Displaced มีเส้นบางๆ — ใครปรับตัวเร็วกว่า\"",
+"\"ฉันอยู่ชนชั้นไหน?\" · ตื่นตัว/กังวลเรื่องถูกแทนที่ · อยากเป็นฝั่งที่ปรับตัวทัน",
+"4 ภาพคน = 4 ชนชั้น · ไฮไลต์ Cyborg (โอกาส) vs Displaced (ความเสี่ยง) · ตัวเลข Forbes/UBS/WEF อ้างอิงชัด"],
+["B3","55:00",5,"เลือกเทรนด์ที่ยั่งยืน · Longevity > Weight Loss","ปี 2050 · 1 ใน 6 คนเกิน 65",
+"\"ถ้าจะเพิ่มงานที่ 2 ต้องเลือกบนเมกาเทรนด์ ไม่ใช่กระแส · Weight Loss ตลาดใหญ่ แต่ target แค่คนอยากลด และ GLP-1 เปลี่ยน landscape เร็ว · Longevity target คือ 'ทุกคนที่ไม่อยากตายเร็ว' = ทุกคน · UN บอกปี 2050 1 ใน 6 คนทั่วโลกอายุเกิน 65 · คุณกำลังมองตลาดที่โตไปพร้อมประชากรโลก\"",
+"\"ตลาดนี้ไม่ใช่ของชั่วคราว\" · เห็น logic ของการเลือก · มั่นใจในทิศทาง",
+"กราฟเปรียบเทียบ 2 ตลาด · Longevity เส้นโตยาว · อ้างอิง UN 2024 · ภาพประชากรสูงวัยเพิ่ม"],
+["B4","60:00",5,"ทำไม turnkey · Nutrilite","สร้างเอง 2-5 ล้าน vs ของพร้อม #1",
+"\"ถ้าสร้างแบรนด์เอง ใช้ 2-5 ล้าน หาโรงงาน R&D regulation ส่วนใหญ่เจ๊งก่อน · ทางเลือก 2 ใช้ธุรกิจสำเร็จรูป · เราเลือก Nutrilite ใช่ครับคือ Amway แต่ขอ 2 นาที · Nutrilite เกิด 1934 เก่ากว่า Apple #1 vitamin brand โลก มีฟาร์มออร์แกนิกเอง 4 ประเทศ third-party tested · มี Product Logistics Training Compensation พร้อม · เราทำแค่ 2 อย่าง Domain Expertise + Community Building\"",
+"\"ไม่ต้องเสี่ยงลงทุนหนัก · มีระบบรองรับ\" · ลดความกลัวเรื่องทุน · เริ่มยอมรับคำว่า Amway",
+"เปรียบเทียบ สร้างเอง (2-5 ล้าน ❌) vs Turnkey (✅) · timeline Nutrilite since 1934 · ภาพฟาร์ม"],
+["B5","65:00",5,"เคสจริง relatable · พี่นันท์ SME","ร้านอาหารต่างจังหวัด · 15K/เดือน · 5 ชม.",
+"\"ขอเล่าคนจริง พี่นันท์ เจ้าของร้านอาหารต่างจังหวัด 2 สาขา ทำงาน 7 วัน ไม่มีเวลาว่าง · เริ่มจากใช้ Nutrilite กับครอบครัวก่อน ไม่ได้ตั้งใจทำธุรกิจ · เดือนแรกยาก บอก 'ไม่รู้จะอธิบายยังไง กลัวดูแปลก' · 1 ปี ลูกค้าถาม 'ทำอะไรถึงดูสดใส' เธอเริ่มแชร์ · ตอนนี้ side income 15,000 บาท/เดือน ใช้ 5 ชม./อาทิตย์ · ไม่ใช่ million-dollar story แต่เป็นเสาที่ 2 ที่ทำให้ใจกลางวงจนน้อยลง\"",
+"\"คนธรรมดาก็ทำได้ · ไม่ต้อง quit job\" · เห็นตัวเองในพี่นันท์ · realistic ไม่เว่อร์",
+"ภาพพี่นันท์/ร้าน · ตัวเลขจริง 15K · 5 ชม. · เน้นคำว่า 'เสาที่ 2' ไม่ใช่ 'รวยล้าน'"],
+["B6","70:00",8,"ความจริงแบบ FTC + ต้นทุนจริง ⭐","60-70% หยุดปีแรก · Real Costs",
+"\"ทุกคนรอตัวเลข ผมพูดตรงแบบที่ FTC แนะนำ · นี่ไม่ใช่ promise ไม่ใช่ guarantee · 60-70% ของคนที่เริ่ม จะหยุดทำในปีแรก เพราะเวลาไม่สอดคล้องความคาดหวัง · 30-40% ที่ทำต่อ ได้ 5,000-30,000 บาท/เดือน หลัง 6-12 เดือน ใช้ 5-10 ชม. · 5-10% เต็มเวลา ปีที่ 3-5 ได้ 6 หลัก แลก 30+ ชม. · ผมไม่พูดตัวเลขสูงกว่านี้ เพราะเบี่ยงเบนจาก 95% ของคน · และต้นทุนจริง — starter kit, monthly minimum, time 5-10 ชม., break-even 3-6 เดือน · ผมพูดเพราะการตัดสินใจดีต้องมาจากข้อมูลครบ\"",
+"\"เขาบอกความจริงแม้ไม่สวย · เชื่อใจได้\" · MLM radar ลดลงมาก · respect ในความโปร่งใส",
+"ตาราง 3 ชั้น 60-70% / 30-40% / 5-10% แบบ honest · Real Costs list · โทนจริงจัง ตัวเลขชัด ไม่ขายฝัน"],
+["B7","78:00",4,"คำถามสะท้อนตัวตน + Life Portfolio","จะกลายเป็นใคร · 4 มิติ",
+"\"ที่สำคัญกว่าตัวเลขทุกอย่าง ผมอยากให้ถามตัวเอง — 'ถ้าใช้เวลา 10 ชม./อาทิตย์ใน 1 ปี ฉันจะกลายเป็นใคร?' · ไม่ใช่ได้เงินเท่าไหร่ แต่จะรู้เรื่อง longevity ลึกแค่ไหน มีเพื่อนสุขภาพดีกี่คน ดูแลพ่อแม่ลูกได้แค่ไหน · นี่คือ Life Portfolio 4 มิติ — งานสร้างเงิน สร้างแพสชั่น สร้างอนาคต สร้างสังคม · ในยุค AI 1 อาชีพไม่พอแล้ว\"",
+"สะท้อนลึก · มองเกินเรื่องเงิน · เห็นภาพตัวเองในอนาคตที่มีหลายเสา",
+"ประโยค 'จะกลายเป็นใคร?' ใหญ่กลางจอ · ด้านล่าง 4 มิติ Life Portfolio เป็นวงกลม 4 ส่วน"],
+["B8","82:00",3,"สะพานสู่ emotion · ส่งพี่เต๋า","ตัวเลขคือกระดาษ · ชีวิตจริง",
+"\"ตัวเลขทุกอย่างที่ผมพูดมา มันคือกระดาษครับ · ที่สำคัญกว่า คือ 'ชีวิตที่ออกแบบได้' หน้าตาเป็นยังไงจริงๆ ในวันธรรมดา ไม่ใช่วันที่สวยงามที่สุด · เราโชคดีที่มีคนเดินเส้นทางนี้มาแล้ว ทั้งส่วนที่งดงามและที่ยากมาก · ขอเชิญพี่เต๋าครับ\"",
+"อยากเห็นคนจริง · เปลี่ยนจาก logic → emotion · เปิดใจรับเรื่องเล่า",
+"จอลดความเข้ม · เตรียมโทน emotional · อาจขึ้น 'ชีวิตที่ออกแบบได้ หน้าตาเป็นยังไง?'"],
+];
+
+const TAO=[
+["C1","85:00",3,"ชีวิตเดิม · scene จริง vulnerable","ตื่น 5 โมง · ลูกหลับแล้ว",
+"[รอ interview] · เปิดด้วย scene เฉพาะเจาะจง เช่น 'ปีนั้น ผมตื่น 5 โมง ขับรถ 1 ชม. เข้าออฟฟิศ กลับบ้าน 2 ทุ่ม ลูกหลับแล้ว' · บอกอาการสุขภาพ + ความรู้สึก 'ผมไม่ได้ใช้ชีวิต ผมแค่อยู่ไปวันๆ'",
+"\"นี่คือชีวิตฉันเลย\" · เห็นตัวเองในเรื่อง · เริ่มอิน",
+"ภาพ before / mood มืดๆ เหนื่อยๆ · หรือ silhouette · โทน muted"],
+["C2","88:00",2,"จุดเปลี่ยน · 1 moment","วันที่รู้ว่าต้องเปลี่ยน",
+"[รอ interview] · เล่า moment เดียวที่รู้ว่า 'ต้องเปลี่ยน' · รายละเอียดชัด · ไม่ต้องสมบูรณ์แบบ",
+"emotional connection · อิน · เริ่มลุ้นว่าจะเกิดอะไรต่อ",
+"ภาพ turning moment · 1 ภาพทรงพลัง · เปลี่ยนโทนจากมืดเป็นมีแสง"],
+["C3","90:00",3,"⭐ Messy Middle · ห้ามข้าม","เกือบล้มเลิกตอนไหน",
+"[รอ interview — สำคัญสุด] · เล่า 3-6 เดือนแรกที่ไม่สวยงาม · เคยอยากเลิก ถูกคนตั้งคำถาม · อะไรทำให้อยู่ต่อ · 'ไม่มี overnight success'",
+"\"เขาก็ลำบากเหมือนกัน ไม่ใช่ฟลุ้ค\" · เชื่อเพราะมีจุดล้ม · ความ vulnerable สร้าง trust สูงสุด",
+"ไม่ต้องมี slide หรูหรา · อาจปล่อยจอมืด/เรียบ ให้ความสนใจอยู่ที่คนพูด"],
+["C4","93:00",3,"ชีวิตวันนี้ · 4 freedom","วันธรรมดา · ไม่ flex ตัวเลข",
+"[รอ interview] · เล่าวันธรรมดาปัจจุบัน เช่น 'วันนี้ผมตื่น 6 โมง ออกกำลังกับลูก กินข้าวเช้ากับครอบครัว' · เน้น 4 freedom Time/Health/Relationship/Meaning · ตัวเลขรายได้เป็น supporting ไม่ใช่ headline",
+"เห็นปลายทางที่อยากได้ · ไม่ใช่เงิน แต่เป็นคุณภาพชีวิต",
+"ภาพ today สว่าง อบอุ่น · 4 ไอคอน freedom · ไม่โชว์ตัวเลขเงินใหญ่"],
+["C5","96:00",1,"คำเชิญที่ไม่บีบ","ลองเปิดประตูดู",
+"[รอ interview] · 'ผมไม่บอกให้ใครเชื่อผม แต่ลองเปิดประตูก้าวแรกดู · ถ้าวันนี้คุณรู้สึกตามที่ผมเคยรู้สึก ก้าวเดียวเท่านั้น'",
+"อยากลองก้าวแรก · ไม่รู้สึกถูกขาย · pull ไม่ใช่ push",
+"close-up พี่เต๋า · ประโยคเชิญสั้นๆ · soft warm"],
+];
+
+const CLOSE=[
+["D1","97:00",2,"ก้าวสุขภาพ (ต้นพูด)","1 habit + 1 supplement · ไม่ต้องซื้อกับเรา",
+"\"ก้าวที่ 1 ก้าวสุขภาพ — กลับบ้านเริ่ม 1 habit + 1 supplement ที่จิ้นแนะนำ · นอน 7 ชม. หรือเดิน 8,000 ก้าว · ถ้าจะเริ่ม supplement Vit D3 ตัวเดียวก่อน ตรวจเลือดก่อน · คุณไม่ต้องซื้อกับเรา แค่เริ่มก็พอ\"",
+"\"ก้าวนี้ฟรี ไม่กดดันเลย\" · zero-pressure ทำให้ลองง่าย",
+"การ์ดที่ 1 ใน 3 ก้าว · ไอคอน 🌿 · เน้น 'ไม่ต้องซื้อกับเรา'"],
+["D2","99:00",2,"ก้าวความรู้ (จิ้นพูด)","คอมมูนิตี้ฟรี · QR scan",
+"\"ก้าวที่ 2 ก้าวความรู้ — เข้ามาเป็นส่วนหนึ่งของคอมมูนิตี้ ฟรีค่ะ · วัยทำงาน Run Club · วัยเกษียณ Walking Club · ไม่ออกบ้าน LINE OA + online call · QR code หน้าห้อง scan ก่อนกลับ\"",
+"\"มีที่ให้เข้าร่วมเลยวันนี้\" · ก้าวกลางที่ทำได้ทันที",
+"การ์ดที่ 2 + QR code ใหญ่ scan ได้จริง · ไอคอน 📚"],
+["D3","101:00",2,"ก้าวธุรกิจ (ต้นพูด) · async CTA","1-pager / voice / กาแฟ · ไม่ตัดสินใจวันนี้",
+"\"ก้าวที่ 3 ก้าวธุรกิจ — ถ้ารู้สึก 'มันใช่' มี 3 ทาง · อ่าน 1-pager 5 นาที / ส่ง voice note ใน LINE OA เราตอบใน 24 ชม. / นัดกาแฟ 1 ชม. · ไม่ใช่วันนี้ ไม่ต้องตัดสินใจในห้องนี้\"",
+"\"เลือกจังหวะเองได้ ไม่ถูกไล่บี้\" · low-friction · ลด resistance",
+"การ์ดที่ 3 · 3 sub-options เรียง low→high commitment · ไอคอน 💼"],
+["D4","103:00",2,"ปิด · ขยับ 1 ก้าวก็พอ","โลกของคนขยับเร็ว · เพื่อนที่ใช่",
+"\"1 ก้าว ก้าวไหนก็ได้ · เพราะที่สำคัญที่สุดวันนี้ ไม่ใช่ว่าคุณตัดสินใจอะไร แต่คือคุณ 'ขยับ' ในทิศทางที่อยากให้เป็น · โลกยุคใหม่ ไม่ใช่ของคนเก่งสุด แต่ของคนที่ขยับเร็วสุด โดยไม่หมดหวังกลางทาง · และทางที่ไม่หมดหวัง คือเดินไปกับเพื่อนที่ใช่ · เราอยากเป็นเพื่อนคนนั้นของคุณค่ะ\"",
+"อบอุ่น มีพลัง · ออกจากห้องพร้อมขยับ 1 ก้าว · จดจำ 'ขยับก็พอ'",
+"จอปิดเข้ม + ประโยค 'ขยับ 1 ก้าว' ทอง · 3 คนยืนเรียง · fade to logo"],
+];
+
+/* part-end assessments — does it move 0→interested? */
+const ASSESS_JIN = {
+  verdict: "ใช่ · แต่มีเงื่อนไข",
+  score: "7.5/10 ในการดึงคนจาก 0",
+  works: ["A2 คำถาม 'ป่วยตั้งแต่ 50 เงินหมด' = universal fear hook ดึงแม้คนไม่สนสุขภาพ","A3 'ชั้น 0 ฟรี = 95%' ลบข้ออ้าง 'แพง/ยุ่ง'","A4 '5 ยาก' = sticky soundbite จำง่าย แชร์ต่อ","A5 messy middle ทำให้ relatable แม้คนขี้สงสัย"],
+  risks: ["คนที่คิดว่าตัวเอง 'ยังแข็งแรง' (อายุ <40) อาจไม่อิน A2 — ต้องมี hook สำหรับวัยหนุ่มสาวด้วย","45 นาทียาว · คนสมาธิสั้น/busy อาจหลุดกลางทาง","Nutrilite mention ที่ A8 เร็วไป อาจปลุก MLM radar ก่อนเวลา"],
+};
+const ASSESS_TON = {
+  verdict: "ใช่ ถ้าผ่าน B6 · เสี่ยงถ้าข้าม",
+  score: "7/10 ในการดึงคนจาก 0",
+  works: ["B2 'ฉันอยู่ชนชั้นไหน' = existential hook ดึงคนกลัวตกงาน","B5 พี่นันท์ = proof ว่าคนธรรมดาทำได้","B6 FTC '60-70% หยุด' = trust reversal · เปลี่ยน skeptic เป็น respect","B7 'จะกลายเป็นใคร' = reframe จากเงิน→ตัวตน"],
+  risks: ["B4 คำว่า 'Amway' ยังเป็น hard barrier สำหรับคนเคยถูก MLM ชวน — 2 นาทีอาจไม่พอ","ถ้า speaker เร่ง B6 หรือพูด income แบบ hype = พังทันที","คนที่มาเพื่อสุขภาพล้วน (ไม่อยากทำธุรกิจ) อาจรู้สึก B ยาวเกินไม่เกี่ยวกับตัว"],
+};
+
+const C={jin:{n:'#396755',c:'card-jin'},ton:{n:'#C47A2A',c:'card-ton'},tao:{n:'#B57878',c:'card-tao'},close:{n:'#B8965A',c:'card-close'}};
+
+function render(id,data,kind){
+  const cc=C[kind];
+  document.getElementById(id).innerHTML=data.map(([step,time,dur,idea,kw,script,feel,slide])=>`
+    <details class="step-card ${cc.c} rounded-2xl bg-white shadow-[0_8px_24px_-12px_rgba(31,30,27,0.18)] overflow-hidden">
+      <summary class="px-5 py-4 flex items-center justify-between gap-3 cursor-pointer">
+        <div class="flex items-center gap-3 min-w-0">
+          <span class="font-mono text-[11px] font-bold tracking-widest shrink-0" style="color:${cc.n}">${step} · ${time} · ${dur}'</span>
+          <span class="font-head text-[15px] font-bold text-ink truncate">${idea}</span>
+        </div>
+        <span class="font-mono text-[10px] text-ink-40 shrink-0">▼</span>
+      </summary>
+      <div class="px-4 pb-4 space-y-2.5">
+        <div class="zone z-kw"><div class="font-mono text-[8.5px] uppercase tracking-widest text-rose font-bold mb-1">🔑 KEYWORD</div><div class="font-head text-[14px] font-bold text-rose-deep">${kw}</div></div>
+        <div class="zone z-script"><div class="font-mono text-[8.5px] uppercase tracking-widest text-green-deep font-bold mb-1">🗣 SCRIPT ที่ต้องพูด</div><div class="font-thai text-[13.5px] leading-relaxed text-ink">${script}</div></div>
+        <div class="grid md:grid-cols-2 gap-2.5">
+          <div class="zone z-feel"><div class="font-mono text-[8.5px] uppercase tracking-widest text-amber font-bold mb-1">❤️ คนฟังรู้สึก/เข้าใจ</div><div class="font-thai text-[13px] leading-snug text-ink">${feel}</div></div>
+          <div class="zone z-slide"><div class="font-mono text-[8.5px] uppercase tracking-widest text-amber font-bold mb-1">🖼 แนวทาง SLIDE หน้านี้</div><div class="font-thai text-[13px] leading-snug text-ink-80">${slide}</div></div>
+        </div>
+      </div>
+    </details>
+  `).join('');
+}
+
+function renderAssess(id, a, kind){
+  const cc = C[kind];
+  document.getElementById(id).innerHTML = `
+    <div class="rounded-2xl p-6" style="background:linear-gradient(135deg,${cc.n}14,${cc.n}05);border:1.5px solid ${cc.n}40">
+      <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+        <div class="font-mono text-[10px] uppercase tracking-[0.16em] font-bold" style="color:${cc.n}">⚖️ ประเมิน · ทำให้คนจาก 0 สนใจจริงไหม?</div>
+        <div class="font-display text-[24px] italic font-medium" style="color:${cc.n}">${a.verdict} · ${a.score}</div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div>
+          <div class="font-mono text-[9px] uppercase tracking-widest text-green-deep font-bold mb-2">✓ สิ่งที่ work</div>
+          <ul class="space-y-1.5 font-thai text-[13px] text-ink-80">${a.works.map(w=>`<li>• ${w}</li>`).join('')}</ul>
+        </div>
+        <div>
+          <div class="font-mono text-[9px] uppercase tracking-widest text-rose-deep font-bold mb-2">⚠ ความเสี่ยง</div>
+          <ul class="space-y-1.5 font-thai text-[13px] text-ink-80">${a.risks.map(r=>`<li>• ${r}</li>`).join('')}</ul>
+        </div>
+      </div>
+    </div>`;
+}
+
+render('jin-steps',JIN,'jin');
+render('ton-steps',TON,'ton');
+render('tao-steps',TAO,'tao');
+render('close-steps',CLOSE,'close');
+renderAssess('jin-assess', ASSESS_JIN, 'jin');
+renderAssess('ton-assess', ASSESS_TON, 'ton');
+
+const toast=(m)=>{const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)};
+let allOpen=false;
+document.getElementById('expandBtn').addEventListener('click',()=>{
+  allOpen=!allOpen;
+  document.querySelectorAll('details.step-card').forEach(d=>d.open=allOpen);
+  document.getElementById('expandBtn').textContent=allOpen?'⊖ ย่อทุกการ์ด':'⊕ ขยายทุกการ์ด';
+});
+document.getElementById('saveBtn').addEventListener('click',async()=>{
+  document.querySelectorAll('details.step-card').forEach(d=>d.open=true);
+  toast('📸 กำลังสร้างรูป (ขยายทุกการ์ด)...');
+  await new Promise(r=>setTimeout(r,400));
+  try{
+    const u=await toPng(document.getElementById('canvas'),{pixelRatio:2,backgroundColor:'#FDFCFB',cacheBust:true,filter:n=>!(n.classList&&n.classList.contains('skip-export'))});
+    const a=document.createElement('a');a.download='opp-flow-เต็ม.png';a.href=u;a.click();
+    toast('✓ บันทึกแล้ว · opp-flow-เต็ม.png');
+  }catch(e){console.error(e);toast('⚠ ลองใหม่')}
+});
+</script>
+</body>
+</html>
