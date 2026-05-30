@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Opp · Flow การพูด · UP Wellness</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = {
+    theme: { extend: {
+      fontFamily: {
+        display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        head:    ['"Manrope"', 'Helvetica Neue', 'sans-serif'],
+        thai:    ['"Sarabun"', 'system-ui', 'sans-serif'],
+        mono:    ['"JetBrains Mono"', 'monospace'],
+      },
+      colors: {
+        rose:  { DEFAULT: '#8C4C4C', deep: '#6B3535', soft: '#B57878', mist: '#F4ECEC' },
+        green: { DEFAULT: '#396755', deep: '#244438', soft: '#6AAF91', mist: '#D6EDE4' },
+        cream: { DEFAULT: '#F5F0EB', deep: '#EDE6DF' },
+        ink:   { DEFAULT: '#1F1E1B', 80:'#3D3840', 60: '#5C5A56', 40: '#8B8884', 20: '#C9C6C0', 10: '#E5E2DD' },
+        gold:  '#B8965A',
+        amber: '#C47A2A',
+        warm:  '#FDFCFB',
+      },
+    } }
+  };
+</script>
+<style>
+  * { -webkit-font-smoothing: antialiased; }
+  body { font-family: 'Sarabun', sans-serif; background: #2A2724; }
+  .font-display { font-family: 'Cormorant Garamond', serif; }
+  .font-head { font-family: 'Manrope', sans-serif; }
+  .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* The capture canvas — solid bg for clean PNG export */
+  #flow-canvas {
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 0%, rgba(140,76,76,0.07), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 90% 30%, rgba(196,122,42,0.07), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 10% 80%, rgba(57,103,85,0.07), transparent 60%),
+      #FDFCFB;
+  }
+
+  /* spine */
+  .spine { position: relative; }
+  .spine::before {
+    content: ''; position: absolute; left: 27px; top: 30px; bottom: 30px; width: 2px;
+    background: linear-gradient(180deg, #6AAF91 0%, #6AAF91 38%, #C47A2A 42%, #C47A2A 72%, #B57878 75%, #B57878 86%, #B8965A 89%, #B8965A 100%);
+    opacity: 0.4;
+  }
+  @media (min-width: 768px) {
+    .spine::before { left: 35px; }
+  }
+
+  .node {
+    position: absolute; left: 16px; top: 8px;
+    width: 24px; height: 24px; border-radius: 100px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: white;
+    z-index: 2; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  @media (min-width: 768px) { .node { left: 24px; } }
+
+  .card-jin    { border-left: 4px solid #396755; }
+  .card-ton    { border-left: 4px solid #C47A2A; }
+  .card-tao    { border-left: 4px dashed #B57878; }
+  .card-close  { border-left: 4px solid #B8965A; }
+
+  .zone-say    { background: rgba(31,30,27,0.03); }
+  .zone-detail { color: #5C5A56; }
+  .zone-get    { background: linear-gradient(135deg, rgba(184,150,90,0.10), rgba(184,150,90,0.03)); border: 1px solid rgba(184,150,90,0.25); }
+
+  .seg-header { position: relative; z-index: 2; }
+
+  .btn-save {
+    position: fixed; top: 20px; right: 20px; z-index: 50;
+    background: #1F1E1B; color: #F5F0EB; border: none;
+    padding: 12px 22px; border-radius: 100px; cursor: pointer;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
+    letter-spacing: 0.05em; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-save:hover { background: #8C4C4C; transform: translateY(-2px); }
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 100px);
+    background: rgba(31,30,27,0.92); color: #F5F0EB; padding: 12px 24px; border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; transition: transform 0.3s; z-index: 60;
+  }
+  .toast.show { transform: translate(-50%, 0); }
+  .skip-export { }
+  @media print { .skip-export { display: none !important; } }
+</style>
+</head>
+<body class="py-8 px-4">
+
+<button class="btn-save skip-export" id="saveBtn">⬇ SAVE เป็นรูป (PNG)</button>
+
+<div id="flow-canvas" class="mx-auto max-w-5xl rounded-3xl px-6 md:px-12 py-12 md:py-16">
+
+  <!-- TITLE -->
+  <div class="text-center mb-12">
+    <div class="font-mono text-[11px] tracking-[0.3em] text-rose-deep uppercase font-bold">UP Wellness · Opp · Flow การพูด</div>
+    <h1 class="mt-3 font-display text-[44px] md:text-[64px] font-medium text-ink leading-none">
+      เส้นทางการพูด · <em class="italic text-rose">ทีละก้าว.</em>
+    </h1>
+    <p class="mt-4 font-thai text-[15px] text-ink-60 max-w-2xl mx-auto">
+      จิ้น 45 นาที → ต้น 40 นาที → พี่เต๋า (รอ interview) → ปิดร่วมกัน · เห็นชัดว่าแต่ละก้าว
+      <span class="text-green-deep font-bold">พูดอะไร</span> ·
+      <span class="text-ink-80 font-bold">รายละเอียด</span> ·
+      <span class="text-amber font-bold">คนฟังได้อะไร</span>
+    </p>
+
+    <!-- legend -->
+    <div class="mt-6 flex flex-wrap items-center justify-center gap-4 font-mono text-[10px] uppercase tracking-wide">
+      <span class="flex items-center gap-1.5"><span class="h-3 w-3 rounded bg-green"></span> จิ้น · สุขภาพ</span>
+      <span class="flex items-center gap-1.5"><span class="h-3 w-3 rounded bg-amber"></span> ต้น · ธุรกิจ</span>
+      <span class="flex items-center gap-1.5"><span class="h-3 w-3 rounded border-2 border-dashed border-rose-soft"></span> พี่เต๋า · ชีวิต</span>
+      <span class="flex items-center gap-1.5"><span class="h-3 w-3 rounded bg-gold"></span> ปิดร่วม</span>
+    </div>
+  </div>
+
+  <!-- ============ START ============ -->
+  <div class="flex items-center gap-3 mb-8 justify-center">
+    <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-40 font-bold px-4 py-1.5 rounded-full bg-ink/5">▼ เริ่ม · 0:00</span>
+  </div>
+
+  <!-- ============ JIN SEGMENT ============ -->
+  <div class="seg-header mb-6">
+    <div class="rounded-2xl bg-green p-5 text-cream shadow-lg">
+      <div class="flex items-center justify-between flex-wrap gap-2">
+        <div>
+          <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-cream/70 font-bold">PART A · 45 นาที</div>
+          <div class="font-display text-[32px] font-medium leading-none mt-1">🌿 จิ้น · โอกาสของการมีสุขภาพดี</div>
+        </div>
+        <div class="font-display text-[15px] italic text-cream/80 text-right max-w-[200px]">
+          อารมณ์: กังวล → ตื่นรู้ → หวัง → พร้อมเริ่ม
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="spine pl-14 md:pl-20 space-y-4" id="jin-steps"></div>
+
+  <!-- handoff -->
+  <div class="my-8 flex items-center justify-center gap-3">
+    <span class="h-px w-12 bg-ink-20"></span>
+    <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-amber font-bold px-4 py-1.5 rounded-full bg-amber/10">↓ ส่งไม้ต่อ · "พื้นฐานพร้อม · ต่อด้วยอนาคต"</span>
+    <span class="h-px w-12 bg-ink-20"></span>
+  </div>
+
+  <!-- ============ TON SEGMENT ============ -->
+  <div class="seg-header mb-6">
+    <div class="rounded-2xl bg-amber p-5 text-cream shadow-lg">
+      <div class="flex items-center justify-between flex-wrap gap-2">
+        <div>
+          <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-cream/80 font-bold">PART B · 40 นาที</div>
+          <div class="font-display text-[32px] font-medium leading-none mt-1">💼 ต้น · โอกาสของธุรกิจสุขภาพ</div>
+        </div>
+        <div class="font-display text-[15px] italic text-cream/90 text-right max-w-[200px]">
+          อารมณ์: ตื่นรู้ → เห็นภาพ → เชื่อข้อมูล → ลังเลแบบมีเหตุผล
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="spine pl-14 md:pl-20 space-y-4" id="ton-steps"></div>
+
+  <!-- handoff -->
+  <div class="my-8 flex items-center justify-center gap-3">
+    <span class="h-px w-12 bg-ink-20"></span>
+    <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-rose font-bold px-4 py-1.5 rounded-full bg-rose/10">↓ ส่งไม้ต่อ · "ตัวเลขคือกระดาษ · ชีวิตจริงหน้าตาเป็นยังไง"</span>
+    <span class="h-px w-12 bg-ink-20"></span>
+  </div>
+
+  <!-- ============ PI TAO SEGMENT ============ -->
+  <div class="seg-header mb-6">
+    <div class="rounded-2xl border-2 border-dashed border-rose-soft bg-rose-mist/40 p-5 text-ink shadow-lg">
+      <div class="flex items-center justify-between flex-wrap gap-2">
+        <div>
+          <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-rose-deep font-bold">PART C · 10-15 นาที · ⚠ รอ interview</div>
+          <div class="font-display text-[32px] font-medium leading-none mt-1 text-rose-deep">🌟 พี่เต๋า · โอกาสของชีวิตที่ออกแบบได้</div>
+        </div>
+        <div class="font-display text-[15px] italic text-rose-deep/80 text-right max-w-[200px]">
+          อารมณ์: peak · "เขาเคยเป็นแบบฉัน · ฉันก็เป็นได้"
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="spine pl-14 md:pl-20 space-y-4" id="tao-steps"></div>
+
+  <!-- handoff -->
+  <div class="my-8 flex items-center justify-center gap-3">
+    <span class="h-px w-12 bg-ink-20"></span>
+    <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-gold font-bold px-4 py-1.5 rounded-full bg-gold/10">↓ ปิดร่วมกัน</span>
+    <span class="h-px w-12 bg-ink-20"></span>
+  </div>
+
+  <!-- ============ CLOSING SEGMENT ============ -->
+  <div class="seg-header mb-6">
+    <div class="rounded-2xl p-5 text-cream shadow-lg" style="background:#1F1E1B;">
+      <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-gold font-bold">PART D · 5 นาที · จิ้น + ต้น</div>
+      <div class="font-display text-[32px] font-medium leading-none mt-1">🎯 ปิด · 3 ก้าวให้เลือก 1</div>
+    </div>
+  </div>
+
+  <div class="spine pl-14 md:pl-20 space-y-4" id="close-steps"></div>
+
+  <!-- END -->
+  <div class="mt-10 text-center">
+    <div class="inline-block rounded-3xl bg-ink px-8 py-6 text-cream max-w-xl">
+      <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-gold font-bold">END · ~1:40:00</div>
+      <div class="mt-2 font-display text-[26px] italic leading-tight">
+        "ที่สำคัญไม่ใช่ตัดสินใจอะไร<br>แต่คือคุณ <span class="text-gold not-italic">ขยับ</span> 1 ก้าว"
+      </div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div class="mt-10 text-center font-mono text-[9px] uppercase tracking-widest text-ink-40">
+    UP Wellness · Opp Flow · จิ้น 45m + ต้น 40m + พี่เต๋า · 2026
+  </div>
+</div>
+
+<div class="toast skip-export" id="toast"></div>
+
+<script type="module">
+import { toPng } from "https://esm.sh/html-to-image@1.11.13";
+
+/* ─── Flow data · [step, time, say, detail, get] ─── */
+const JIN = [
+  ["A1","0:00","เปิดตัว + ตั้งกติกา","\"เราจะแบ่งปัน 3 มุมมอง · ฟังจบถ้าใช่ค่อยคุย\"","รู้สึกปลอดภัย · ไม่ถูก pitch · เปิดใจฟัง"],
+  ["A2","3:00","คำถามที่ทำให้คนเงียบ","\"อยู่ถึง 90 แต่ป่วยตั้งแต่ 50?\" · Healthspan 67 vs Lifespan 73","ตกใจ · ตระหนักว่า \"เงินจะหมดช่วงติดเตียง\""],
+  ["A3","8:00","Longevity Pyramid 5 ชั้น","ชั้น 0 ฟรี + ชั้น 1 (400-3,500฿) = 95% ของผล","โล่งใจ · \"เริ่มได้ทุกงบ · ไม่ต้องแพง\""],
+  ["A4","18:00","\"5 ยาก\" ⭐ signature","โกรธ/เหนื่อย/หิว/อ้วน/เครียด ยาก · 80% จาก lifestyle","จดจำได้ · เห็นผลลัพธ์ที่จับต้องได้"],
+  ["A5","26:00","2 เรื่องเล่า (มี messy middle)","ผู้บริหาร 47 (หยุดแล้วกลับมา) + แม่ลูก 2 งบ 400฿","\"เห็นฉัน\" · เชื่อเพราะไม่ perfect"],
+  ["A6","33:00","ทำไมต้องมีคอมมูนิตี้","Harvard Waldinger · \"find a healthy friend\"","อยากมีเพื่อนสุขภาพดี · ไม่เดินคนเดียว"],
+  ["A7","38:00","ความปลอดภัยก่อน ⚠","\"wellness ≠ medical advice\" + contraindications","ไว้ใจ · รู้ว่าทีมจริงจังเรื่อง safety"],
+  ["A8","41:00","1 habit + 1 supplement","เลือก 1 นิสัย + Vit D3 ตัวเดียว · ตรวจเลือดก่อน","มีก้าวที่ทำได้พรุ่งนี้ · ชัดเจน"],
+  ["A9","44:00","ส่งไม้ต่อพี่ต้น","\"ร่างกายพร้อม · แต่ต้องมีงานรอดยุค AI ด้วย\"","พร้อมฟังเรื่องต่อ · เชื่อมโยง"],
+];
+
+const TON = [
+  ["B1","45:00","ขอบคุณ + ตั้งคำถาม","\"ทำธุรกิจอะไรดี ในยุคที่ AI เปลี่ยนทุกอย่าง?\"","ตั้งคำถามกับตัวเอง · สนใจต่อ"],
+  ["B2","48:00","3 Megatrends + 4 AI ชนชั้น","Tariff·AI·Longevity · Landlords/Cyborgs/Heart/Displaced (WEF 44%)","สะท้อนตัวเอง: \"ฉันอยู่ชนชั้นไหน?\""],
+  ["B3","55:00","Longevity > Weight Loss","UN 2024 · ปี 2050 · 1 ใน 6 คนเกิน 65 ปี","เห็นว่าตลาดยั่งยืน · ไม่ใช่กระแส"],
+  ["B4","60:00","Nutrilite Turnkey","สร้างเอง 2-5 ล้าน vs ของพร้อม #1 brand 1934","\"ไม่ต้องเสี่ยงสร้างเอง\" · มีระบบ"],
+  ["B5","65:00","เคสพี่นันท์ SME","ร้านอาหารต่างจังหวัด · 15K/เดือน · 5 ชม/อาทิตย์","relatable · \"ฉันก็ทำได้แบบนี้\""],
+  ["B6","70:00","ตัวเลขจริง + Real Costs ⭐","FTC-style: 60-70% หยุดปีแรก · ต้นทุนจริง","เชื่อใจมาก · \"เขาบอกความจริง\""],
+  ["B7","78:00","\"จะกลายเป็นใคร\" + Portfolio","ไม่ใช่ได้เงินเท่าไหร่ · แต่ Life Portfolio 4 มิติ","สะท้อนลึก · มองภาพระยะยาว"],
+  ["B8","82:00","ส่งไม้ต่อพี่เต๋า","\"ตัวเลขคือกระดาษ · ชีวิตจริงเป็นยังไง\"","อยากเห็นคนจริง · เปิดใจรับ emotion"],
+];
+
+const TAO = [
+  ["C1","85:00","ชีวิตก่อนหน้านี้","scene จริง · ตื่น 5 โมง กลับ 2 ทุ่ม ลูกหลับแล้ว","เห็นภาพ · \"นี่คือชีวิตฉันเลย\""],
+  ["C2","88:00","Turning Point","moment เดียวที่รู้ว่า \"ต้องเปลี่ยน\"","อิน · emotional connection"],
+  ["C3","90:00","Messy Middle ⭐ ห้ามข้าม","\"เกือบล้มเลิกตอนไหน\" · มีคนตั้งคำถาม","เชื่อ · \"ไม่ใช่ overnight · เขาก็ลำบาก\""],
+  ["C4","93:00","ชีวิตวันนี้","วันธรรมดา · 4 freedom · ไม่ flex ตัวเลข","เห็นปลายทางที่อยากได้"],
+  ["C5","96:00","The Invitation","\"ผมไม่บอกให้เชื่อ · แต่ลองเปิดประตูดู\"","อยากลองก้าวแรก · ไม่ถูกบีบ"],
+];
+
+const CLOSE = [
+  ["D1","97:00","ก้าวที่ 1 · สุขภาพ (ต้น)","1 habit + 1 supplement · \"ไม่ต้องซื้อกับเรา\"","มีก้าวง่ายสุด · zero pressure"],
+  ["D2","99:00","ก้าวที่ 2 · ความรู้ (จิ้น)","คอมมูนิตี้ฟรี · ทุกวัย · QR scan","มีก้าวกลาง · เข้าร่วมได้เลย"],
+  ["D3","101:00","ก้าวที่ 3 · ธุรกิจ (ต้น)","1-pager / voice note / กาแฟ · \"ไม่ต้องตัดสินใจวันนี้\"","มีก้าวลึก · เลือกจังหวะเอง"],
+  ["D4","103:00","ปิด · \"ขยับ 1 ก้าวก็พอ\"","\"โลกของคนขยับเร็ว · ไม่หมดหวัง · มีเพื่อนที่ใช่\"","ออกจากห้องพร้อม 1 ก้าว · อบอุ่น"],
+];
+
+const COLORS = {
+  jin:   { node: '#396755', card: 'card-jin' },
+  ton:   { node: '#C47A2A', card: 'card-ton' },
+  tao:   { node: '#B57878', card: 'card-tao' },
+  close: { node: '#B8965A', card: 'card-close' },
+};
+
+function renderSteps(containerId, data, kind) {
+  const c = COLORS[kind];
+  const html = data.map(([step, time, say, detail, get]) => `
+    <div class="relative">
+      <div class="node" style="background:${c.node};">${step.replace(/[A-D]/,'')}</div>
+      <div class="${c.card} rounded-2xl bg-white shadow-[0_8px_24px_-12px_rgba(31,30,27,0.18)] overflow-hidden">
+        <div class="flex items-center justify-between px-5 pt-3.5">
+          <div class="font-mono text-[10px] font-bold tracking-widest text-ink-40">${step} · ${time}</div>
+        </div>
+        <div class="zone-say px-5 py-2.5 mt-2">
+          <div class="font-mono text-[8.5px] uppercase tracking-widest text-ink-40 font-bold mb-0.5">🗣 พูดอะไร</div>
+          <div class="font-head text-[16px] font-bold text-ink leading-tight">${say}</div>
+        </div>
+        <div class="zone-detail px-5 py-2.5">
+          <div class="font-mono text-[8.5px] uppercase tracking-widest text-ink-40 font-bold mb-0.5">📝 รายละเอียด</div>
+          <div class="font-thai text-[13px] leading-snug">${detail}</div>
+        </div>
+        <div class="zone-get px-5 py-3 m-2.5 rounded-xl">
+          <div class="font-mono text-[8.5px] uppercase tracking-widest text-amber font-bold mb-0.5">💡 คนฟังได้อะไร</div>
+          <div class="font-thai text-[13.5px] font-medium text-ink leading-snug">${get}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById(containerId).innerHTML = html;
+}
+
+renderSteps('jin-steps', JIN, 'jin');
+renderSteps('ton-steps', TON, 'ton');
+renderSteps('tao-steps', TAO, 'tao');
+renderSteps('close-steps', CLOSE, 'close');
+
+/* ─── Save as PNG ─── */
+const toast = (msg) => {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+};
+
+document.getElementById('saveBtn').addEventListener('click', async () => {
+  toast('📸 กำลังสร้างรูป...');
+  const node = document.getElementById('flow-canvas');
+  try {
+    const dataUrl = await toPng(node, {
+      pixelRatio: 2,
+      backgroundColor: '#FDFCFB',
+      cacheBust: true,
+      filter: (n) => !(n.classList && n.classList.contains('skip-export')),
+    });
+    const link = document.createElement('a');
+    link.download = 'opp-flow-การพูด.png';
+    link.href = dataUrl;
+    link.click();
+    toast('✓ บันทึกรูปแล้ว · opp-flow-การพูด.png');
+  } catch (e) {
+    console.error(e);
+    toast('⚠ ลองใหม่อีกครั้ง');
+  }
+});
+</script>
+
+</body>
+</html>
