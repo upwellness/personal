@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ลดน้ำหนัก vs Longevity · ใครโกยตลาดมากกว่ากัน</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Bricolage+Grotesque:wght@400;600;700;800;900&family=DM+Mono&family=Noto+Sans+Thai:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #FF3DA8;
+    --cyan: #00E0FF;
+    --yellow: #FFE600;
+    --purple: #B026FF;
+    --orange: #FF6B35;
+    --lime: #C8FF00;
+    --ink: #0B0014;
+  }
+  html, body { background: var(--ink); height: 100%; }
+  body {
+    font-family: 'Space Grotesk', 'Noto Sans Thai', sans-serif;
+    color: white;
+    overflow: hidden;
+    margin: 0;
+  }
+  .display { font-family: 'Bricolage Grotesque', 'Noto Sans Thai', sans-serif; letter-spacing: -0.03em; font-weight: 900; }
+  .thai { font-family: 'Noto Sans Thai', 'Space Grotesk', sans-serif; }
+  .mono { font-family: 'DM Mono', monospace; }
+
+  .mesh-bg {
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255, 61, 168, 0.45) 0%, transparent 40%),
+      radial-gradient(circle at 85% 15%, rgba(0, 224, 255, 0.40) 0%, transparent 42%),
+      radial-gradient(circle at 75% 85%, rgba(176, 38, 255, 0.45) 0%, transparent 45%),
+      radial-gradient(circle at 10% 80%, rgba(255, 230, 0, 0.28) 0%, transparent 38%),
+      radial-gradient(circle at 50% 50%, rgba(255, 107, 53, 0.20) 0%, transparent 60%),
+      var(--ink);
+    background-size: 200% 200%;
+    animation: meshShift 22s ease-in-out infinite;
+  }
+  @keyframes meshShift {
+    0%, 100% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+  @keyframes float1 { 0%,100%{transform:translate(0,0) scale(1);} 33%{transform:translate(60px,-40px) scale(1.1);} 66%{transform:translate(-30px,50px) scale(.95);} }
+  @keyframes float2 { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(-80px,60px) scale(1.15);} }
+  @keyframes float3 { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(70px,-70px) scale(.9);} }
+
+  .grain::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    pointer-events: none; z-index: 60; opacity: 0.4;
+  }
+
+  .sticker { box-shadow: 4px 4px 0 #0B0014, 8px 8px 0 rgba(255,255,255,0.08); border: 3px solid #0B0014; }
+  .sticker-lite { box-shadow: 3px 3px 0 rgba(0,0,0,0.5); border: 2px solid rgba(0,0,0,0.6); }
+
+  .gradient-text { background: linear-gradient(135deg,#FF3DA8 0%,#FFE600 50%,#00E0FF 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .gradient-text-2 { background: linear-gradient(120deg,#C8FF00 0%,#00E0FF 50%,#B026FF 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .text-outline { -webkit-text-stroke: 2px white; color: transparent; }
+  .text-outline-pink { -webkit-text-stroke: 2px var(--pink); color: transparent; }
+
+  @keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+  .spin-slow { animation: spin 16s linear infinite; }
+  @keyframes wiggle { 0%,100%{transform:rotate(-3deg)} 50%{transform:rotate(3deg)} }
+  .wiggle { animation: wiggle 4s ease-in-out infinite; }
+  @keyframes pulseGlow { 0%,100%{opacity:1} 50%{opacity:.6} }
+  .pulse { animation: pulseGlow 2s ease-in-out infinite; }
+
+  /* Slide system */
+  .deck { position: fixed; inset: 0; }
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: 4vh 6vw;
+    opacity: 0; visibility: hidden;
+    transform: translateY(30px) scale(0.98);
+    transition: opacity .55s ease, transform .55s cubic-bezier(.34,1.56,.64,1), visibility .55s;
+    z-index: 1;
+  }
+  .slide.active { opacity: 1; visibility: visible; transform: translateY(0) scale(1); z-index: 2; }
+  .slide-inner { width: 100%; max-width: 1180px; }
+
+  /* Reveal-on-active children */
+  .slide.active .rise { animation: rise .6s cubic-bezier(.34,1.56,.64,1) both; }
+  .slide.active .rise:nth-child(1){animation-delay:.05s}
+  .slide.active .rise:nth-child(2){animation-delay:.13s}
+  .slide.active .rise:nth-child(3){animation-delay:.21s}
+  .slide.active .rise:nth-child(4){animation-delay:.29s}
+  .slide.active .rise:nth-child(5){animation-delay:.37s}
+  @keyframes rise { from{opacity:0; transform:translateY(24px)} to{opacity:1; transform:translateY(0)} }
+
+  /* Nav UI */
+  .nav-btn {
+    position: fixed; top: 50%; transform: translateY(-50%);
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(255,255,255,0.08); backdrop-filter: blur(8px);
+    border: 2px solid rgba(255,255,255,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; cursor: pointer; z-index: 70; color: white;
+    transition: background .2s, transform .2s;
+    user-select: none;
+  }
+  .nav-btn:hover { background: var(--yellow); color: #000; border-color: var(--yellow); transform: translateY(-50%) scale(1.1); }
+  #prev { left: 18px; } #next { right: 18px; }
+
+  .progress-wrap { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 70; display: flex; gap: 8px; align-items: center; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.25); cursor: pointer; transition: all .3s; }
+  .dot.active { width: 30px; border-radius: 6px; background: var(--yellow); }
+
+  .counter { position: fixed; top: 20px; right: 24px; z-index: 70; }
+  .brandtag { position: fixed; top: 20px; left: 24px; z-index: 70; }
+
+  .stat-num { font-variant-numeric: tabular-nums; line-height: .9; }
+
+  /* Bar chart */
+  .bar { transition: width 1.1s cubic-bezier(.22,1,.36,1); width: 0; }
+  .slide.active .bar { width: var(--w); }
+
+  table.tbl { border-collapse: separate; border-spacing: 0; width: 100%; }
+  table.tbl th, table.tbl td { padding: 12px 14px; text-align: left; }
+  table.tbl thead th { font-size: 11px; text-transform: uppercase; letter-spacing: .12em; opacity: .7; }
+  table.tbl tbody tr { background: rgba(255,255,255,0.04); }
+  table.tbl tbody tr td:first-child { border-radius: 12px 0 0 12px; }
+  table.tbl tbody tr td:last-child { border-radius: 0 12px 12px 0; }
+
+  @media (max-width: 640px) {
+    .nav-btn { width: 42px; height: 42px; }
+    .slide { padding: 3vh 5vw; }
+  }
+</style>
+</head>
+<body class="mesh-bg grain">
+
+<div class="blob" style="background:#FF3DA8;width:480px;height:480px;top:0%;left:-8%;animation:float1 20s ease-in-out infinite"></div>
+<div class="blob" style="background:#00E0FF;width:420px;height:420px;top:35%;right:-10%;animation:float2 24s ease-in-out infinite"></div>
+<div class="blob" style="background:#B026FF;width:380px;height:380px;bottom:5%;left:25%;animation:float3 26s ease-in-out infinite"></div>
+
+<!-- top bars -->
+<div class="brandtag flex items-center gap-2">
+  <div class="w-8 h-8 rounded-full bg-yellow-300 flex items-center justify-center text-black font-black text-sm sticker-lite">U</div>
+  <span class="mono text-[11px] uppercase tracking-widest opacity-80">UP Wellness · market intel</span>
+</div>
+<div class="counter mono text-xs opacity-70"><span id="cur">01</span> / <span id="total">10</span></div>
+
+<div class="deck" id="deck">
+
+  <!-- SLIDE 1 — COVER -->
+  <section class="slide active">
+    <div class="slide-inner text-center">
+      <div class="rise inline-flex items-center gap-2 px-4 py-2 rounded-full sticker mb-8" style="background:#C8FF00">
+        <span class="w-2 h-2 rounded-full bg-black pulse"></span>
+        <span class="mono text-xs text-black font-bold uppercase tracking-widest">Facts &amp; Figures · 2026</span>
+      </div>
+      <h1 class="rise display leading-[0.82] thai" style="font-size:clamp(2.6rem,8.5vw,7rem)">
+        <span class="block">ลดน้ำหนัก<span class="opacity-40"> Boom เมื่อวาน</span></span>
+        <span class="block gradient-text">Longevity ระเบิดวันนี้</span>
+      </h1>
+      <p class="rise thai mt-8 text-xl md:text-2xl opacity-80 max-w-3xl mx-auto leading-relaxed">
+        ตลาดไหนใหญ่กว่า? เกี่ยวกับคนกี่คน? เม็ดเงินเท่าไร?
+        <span class="gradient-text-2 font-bold">ใครจะโกยตลาดได้มากกว่ากัน</span>
+      </p>
+      <div class="rise mono text-xs uppercase tracking-[0.3em] opacity-50 mt-10">กดลูกศร → เพื่อเริ่ม</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 — THE QUESTION -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="mono text-xs uppercase tracking-[0.3em] opacity-60 mb-6 rise">/ คำถามที่เราจะตอบ</div>
+      <div class="grid sm:grid-cols-2 gap-5">
+        <div class="rise sticker rounded-3xl p-7" style="background:#FF3DA8">
+          <div class="display text-5xl mb-2">1</div>
+          <div class="thai text-lg font-bold">ลดน้ำหนัก เป็นกี่ % ของ Longevity?</div>
+        </div>
+        <div class="rise sticker rounded-3xl p-7" style="background:#00E0FF;color:#0B0014">
+          <div class="display text-5xl mb-2">2</div>
+          <div class="thai text-lg font-bold">10 ปีก่อน ลดน้ำหนัก Boom — คนกี่คน เงินเท่าไร?</div>
+        </div>
+        <div class="rise sticker rounded-3xl p-7" style="background:#FFE600;color:#0B0014">
+          <div class="display text-5xl mb-2">3</div>
+          <div class="thai text-lg font-bold">Longevity ระเบิดต่อกี่ปี คนกี่คน เงินเท่าไร?</div>
+        </div>
+        <div class="rise sticker rounded-3xl p-7" style="background:#B026FF">
+          <div class="display text-5xl mb-2">4</div>
+          <div class="thai text-lg font-bold">สัดส่วนการโกยตลาด มากกว่ากันกี่เท่า?</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3 — Q2 weight loss 10 yrs ago -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="mono text-xs uppercase tracking-[0.3em] opacity-60 mb-3 rise">/ 10 ปีก่อน · ราว 2015</div>
+      <h2 class="rise display text-4xl md:text-6xl mb-8 thai">ลดน้ำหนัก <span class="gradient-text">ระเบิดระเบ้อ</span></h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="rise sticker rounded-3xl p-8" style="background:linear-gradient(135deg,#FF3DA8,#FF6B35)">
+          <div class="mono text-xs uppercase tracking-widest opacity-80 mb-2">เม็ดเงิน · ตลาดทั่วโลก</div>
+          <div class="stat-num display text-6xl md:text-7xl">$0.6T</div>
+          <div class="thai text-lg mt-2 font-semibold">~$586–650 พันล้าน (ปี 2015)</div>
+          <div class="thai text-sm opacity-80 mt-1">ตลาด weight loss &amp; diet management ทั้งอาหาร อุปกรณ์ บริการ ศัลยกรรม</div>
+        </div>
+        <div class="rise sticker rounded-3xl p-8" style="background:#0B0014">
+          <div class="mono text-xs uppercase tracking-widest opacity-70 mb-2">ฐานคน · คนอ้วน+น้ำหนักเกิน</div>
+          <div class="stat-num display text-6xl md:text-7xl gradient-text-2">~1–3<span class="text-3xl"> พันล้าน</span></div>
+          <div class="thai text-lg mt-2 font-semibold">น้ำหนักเกิน 2.5 พันล้านคน · อ้วน ~890 ล้าน</div>
+          <div class="thai text-sm opacity-70 mt-1">เฉพาะ "คนที่มีปัญหาน้ำหนัก" เท่านั้น</div>
+        </div>
+      </div>
+      <div class="rise mono text-[11px] opacity-50 mt-6">ที่มา: MarketsandMarkets · Transparency Market Research · WHO</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 4 — weight loss TODAY / GLP-1 -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="mono text-xs uppercase tracking-[0.3em] opacity-60 mb-3 rise">/ วันนี้ · คลื่นลูกใหม่ GLP-1</div>
+      <h2 class="rise display text-4xl md:text-6xl mb-8 thai">ยาลดอ้วน <span class="gradient-text">Ozempic / Wegovy</span></h2>
+      <div class="grid sm:grid-cols-3 gap-5">
+        <div class="rise sticker rounded-3xl p-6" style="background:#00E0FF;color:#0B0014">
+          <div class="mono text-[10px] uppercase tracking-widest mb-2 opacity-70">ยา GLP-1 ลดน้ำหนัก</div>
+          <div class="stat-num display text-4xl">$14B</div>
+          <div class="thai text-sm mt-1 font-semibold">2024 → <span class="font-black">$49B</span> ปี 2030</div>
+          <div class="mono text-[11px] mt-1 opacity-70">CAGR 18.5%</div>
+        </div>
+        <div class="rise sticker rounded-3xl p-6" style="background:#FFE600;color:#0B0014">
+          <div class="mono text-[10px] uppercase tracking-widest mb-2 opacity-70">ตลาดยาลดอ้วนรวม</div>
+          <div class="stat-num display text-4xl">$53B</div>
+          <div class="thai text-sm mt-1 font-semibold">2025 → <span class="font-black">$134B</span> ปี 2034</div>
+          <div class="mono text-[11px] mt-1 opacity-70">CAGR 10.9%</div>
+        </div>
+        <div class="rise sticker rounded-3xl p-6" style="background:#FF3DA8">
+          <div class="mono text-[10px] uppercase tracking-widest mb-2 opacity-80">Wall Street พีค</div>
+          <div class="stat-num display text-4xl">$100–150B</div>
+          <div class="thai text-sm mt-1 font-semibold">Goldman 2030 · Morgan St. 2035</div>
+          <div class="mono text-[11px] mt-1 opacity-80">US users 10M→25M (2030)</div>
+        </div>
+      </div>
+      <div class="rise mt-6 thai text-base opacity-80 sticker-lite rounded-2xl p-4" style="background:rgba(255,255,255,0.05)">
+        💡 แม้ GLP-1 จะร้อนแรง แต่ "ยา vs ยา" ตลาดลดอ้วนพีคที่ ~$150B — ยังเป็น <b>เศษเสี้ยว</b> ของ Longevity economy
+      </div>
+      <div class="rise mono text-[11px] opacity-50 mt-3">ที่มา: Grand View · Goldman Sachs · Morgan Stanley</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5 — Longevity exploding -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="mono text-xs uppercase tracking-[0.3em] opacity-60 mb-3 rise">/ วันนี้ &amp; อีก 25+ ปี</div>
+      <h2 class="rise display text-4xl md:text-6xl mb-8 thai">Longevity <span class="gradient-text-2">กำลังระเบิด</span></h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="rise sticker rounded-3xl p-8" style="background:linear-gradient(135deg,#B026FF,#00E0FF)">
+          <div class="mono text-xs uppercase tracking-widest opacity-90 mb-2">Longevity Economy (UBS)</div>
+          <div class="stat-num display text-6xl md:text-7xl">$8T</div>
+          <div class="thai text-lg mt-2 font-semibold">ภายในปี 2030 · ภาคคน 60+ รวม $27T</div>
+          <div class="thai text-sm opacity-90 mt-1">การใช้จ่ายเพื่อ "อยู่ดี-อยู่นาน": health-tech, biotech, wellness</div>
+        </div>
+        <div class="rise sticker rounded-3xl p-8" style="background:#0B0014">
+          <div class="mono text-xs uppercase tracking-widest opacity-70 mb-2">ฐานคน · ประชากรสูงวัย 60+</div>
+          <div class="stat-num display text-6xl md:text-7xl gradient-text">2.1<span class="text-3xl"> พันล้าน</span></div>
+          <div class="thai text-lg mt-2 font-semibold">1.4 พันล้าน (2030) → 2.1 พันล้าน (2050)</div>
+          <div class="thai text-sm opacity-70 mt-1">แต่ TAM จริง = "ทุกคนที่แก่ตัว" ≈ 8 พันล้าน</div>
+        </div>
+      </div>
+      <div class="rise grid grid-cols-2 gap-4 mt-5">
+        <div class="sticker-lite rounded-2xl p-4 thai text-sm" style="background:rgba(255,255,255,0.05)">
+          ⏳ <b>ระเบิดต่ออีก 25+ ปี</b> (2025–2050) — ขับด้วยเมกะเทรนด์ประชากรที่หยุดไม่ได้
+        </div>
+        <div class="sticker-lite rounded-2xl p-4 thai text-sm" style="background:rgba(255,255,255,0.05)">
+          💰 คน 50+ ครองการบริโภคโลก <b>$35T (2020) → $96T (2050)</b>
+        </div>
+      </div>
+      <div class="rise mono text-[11px] opacity-50 mt-4">ที่มา: UBS · AARP Global Longevity Economy · WHO · UN</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 6 — BAR CHART money -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="mono text-xs uppercase tracking-[0.3em] opacity-60 mb-3 rise">/ เปรียบเทียบเม็ดเงิน</div>
+      <h2 class="rise display text-3xl md:text-5xl mb-8 thai">ขนาดตลาด <span class="gradient-text">เทียบกันชัดๆ</span></h2>
+      <div class="space-y-5">
+        <div class="rise">
+          <div class="flex justify-between mb-1 thai text-sm"><span>ลดน้ำหนัก · ตลาดผลิตภัณฑ์ (2015)</span><span class="mono font-bold">$0.6T</span></div>
+          <div class="h-8 rounded-full bg-white/10 overflow-hidden"><div class="bar h-full rounded-full" style="--w:2.2%;background:#FF3DA8"></div></div>
+        </div>
+        <div class="rise">
+          <div class="flex justify-between mb-1 thai text-sm"><span>ยาลดอ้วน · พีค (Wall St. 2035)</span><span class="mono font-bold">$0.15T</span></div>
+          <div class="h-8 rounded-full bg-white/10 overflow-hidden"><div class="bar h-full rounded-full" style="--w:0.6%;background:#FF6B35"></div></div>
+        </div>
+        <div class="rise">
+          <div class="flex justify-between mb-1 thai text-sm"><span>Longevity Economy (UBS · 2030)</span><span class="mono font-bold">$8T</span></div>
+          <div class="h-8 rounded-full bg-white/10 overflow-hidden"><div class="bar h-full rounded-full" style="--w:29.6%;background:#00E0FF"></div></div>
+        </div>
+        <div class="rise">
+          <div class="flex justify-between mb-1 thai text-sm"><span>ภาคเศรษฐกิจคน 60+ (UBS · 2030)</span><span class="mono font-bold">$27T</span></div>
+          <div class="h-8 rounded-full bg-white/10 overflow-hidden"><div class="bar h-full rounded-full" style="--w:100%;background:linear-gradient(90deg,#C8FF00,#00E0FF,#B026FF)"></div></div>
+        </div>
+      </div>
+      <div class="rise mt-7 text-center display text-3xl md:text-4xl thai">
+        Longevity ใหญ่กว่า <span class="gradient-text-2">12–40 เท่า</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 7 — Q1 the % -->
+  <section class="slide">
+    <div class="slide-inner text-center">
+      <div class="mono text-xs uppercase tracking-[0.3em] opacity-60 mb-4 rise">/ คำตอบข้อ 1</div>
+      <p class="rise thai text-xl md:text-2xl opacity-80 mb-2">ตลาดลดน้ำหนัก เป็นกี่ % ของ Longevity?</p>
+      <div class="rise display leading-none thai my-4" style="font-size:clamp(4rem,16vw,12rem)">
+        <span class="gradient-text">~3–8%</span>
+      </div>
+      <p class="rise thai text-lg md:text-xl opacity-80 max-w-2xl mx-auto">
+        เมื่อวัดทั้งระบบเศรษฐกิจ ลดน้ำหนักเป็นแค่ <b>เศษเสี้ยว</b> ของ Longevity economy
+      </p>
+      <div class="rise mt-6 inline-block sticker rounded-2xl px-6 py-3 thai" style="background:#FFE600;color:#0B0014">
+        $0.6T ÷ $8–27T ≈ 2–8%
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 8 — comparison table -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="mono text-xs uppercase tracking-[0.3em] opacity-60 mb-3 rise">/ ตารางสรุป · 3 ตัวชี้วัด</div>
+      <h2 class="rise display text-3xl md:text-5xl mb-6 thai">ใคร <span class="gradient-text">โกยมากกว่า</span></h2>
+      <div class="rise overflow-x-auto">
+        <table class="tbl thai">
+          <thead><tr>
+            <th>ตัวชี้วัด</th><th style="color:#FF3DA8">ลดน้ำหนัก</th><th style="color:#00E0FF">Longevity</th><th style="color:#C8FF00">โกยมากกว่า</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td class="font-semibold">เม็ดเงิน</td><td>~$0.6T</td><td class="font-bold">$8–27T</td>
+              <td class="display text-xl" style="color:#C8FF00">12–40×</td>
+            </tr>
+            <tr>
+              <td class="font-semibold">คนที่เกี่ยวข้อง</td><td>1–3 พันล้าน<br><span class="text-xs opacity-60">(เฉพาะคนอ้วน)</span></td>
+              <td class="font-bold">~8 พันล้าน<br><span class="text-xs opacity-60">(ทุกคนที่แก่)</span></td>
+              <td class="display text-xl" style="color:#C8FF00">3–8×</td>
+            </tr>
+            <tr>
+              <td class="font-semibold">อายุของเทรนด์</td><td>พีค ~2030–35</td><td class="font-bold">ยาว 25+ ปี → 2050+</td>
+              <td class="display text-xl" style="color:#C8FF00">ยาวกว่า</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="rise mt-5 thai text-sm opacity-70 sticker-lite rounded-2xl p-4" style="background:rgba(255,255,255,0.05)">
+        ⚖️ <b>ความซื่อสัตย์ของตัวเลข:</b> $8–27T = "longevity economy" (การใช้จ่ายของคนสูงวัยทั้งหมด) ส่วน $0.6T = "ตลาดสินค้าลดน้ำหนัก" — ถ้าเทียบ "ยา vs ยา" ตอนนี้ยาลดอ้วน ($150B) ยังใหญ่กว่ายา longevity ($67B) แต่ longevity โต "ลึกและยาวกว่า" เพราะลูกค้าคือทุกคน
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 9 — the takeaway story -->
+  <section class="slide">
+    <div class="slide-inner text-center">
+      <div class="mono text-xs uppercase tracking-[0.3em] opacity-60 mb-6 rise">/ สตอรี่สรุป</div>
+      <h3 class="rise display leading-[1.05] thai" style="font-size:clamp(1.8rem,5vw,3.6rem)">
+        <span class="block">วันที่ลดน้ำหนักระเบิด คนโกยจากตลาด <span class="gradient-text">~$0.6T</span></span>
+        <span class="block">บนฐานคนอ้วน <span class="gradient-text">~1 พันล้าน</span></span>
+        <span class="block mt-4 opacity-90">แต่ Longevity วันนี้ คือ <span class="gradient-text-2">$8–27 ล้านล้าน</span></span>
+        <span class="block">ใหญ่กว่า <span class="gradient-text-2">12–40 เท่า</span> บนฐาน "<span class="italic">ทุกคนที่แก่ตัว</span>"</span>
+        <span class="block mt-4">และจะ <span class="gradient-text">ระเบิดต่ออีก 25+ ปี</span></span>
+      </h3>
+    </div>
+  </section>
+
+  <!-- SLIDE 10 — sources / close -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="rise display text-4xl md:text-6xl mb-6 thai">แหล่งอ้างอิง <span class="gradient-text">(Facts)</span></div>
+      <div class="grid sm:grid-cols-2 gap-3 thai text-sm">
+        <div class="rise sticker-lite rounded-xl p-4" style="background:rgba(255,255,255,0.05)">📊 <b>WHO</b> — Obesity &amp; Ageing fact sheets (2.5B น้ำหนักเกิน · 60+ จะเป็น 2.1B)</div>
+        <div class="rise sticker-lite rounded-xl p-4" style="background:rgba(255,255,255,0.05)">🏦 <b>UBS</b> — Longevity economy $8T (2030) · sector $27T</div>
+        <div class="rise sticker-lite rounded-xl p-4" style="background:rgba(255,255,255,0.05)">👵 <b>AARP</b> — Global Longevity Economy ($35T→$96T)</div>
+        <div class="rise sticker-lite rounded-xl p-4" style="background:rgba(255,255,255,0.05)">💊 <b>Goldman Sachs</b> — ยาลดอ้วน $100B by 2030</div>
+        <div class="rise sticker-lite rounded-xl p-4" style="background:rgba(255,255,255,0.05)">📈 <b>Morgan Stanley</b> — GLP-1 พีค $150–190B (2035)</div>
+        <div class="rise sticker-lite rounded-xl p-4" style="background:rgba(255,255,255,0.05)">🔬 <b>Grand View / MarketsandMarkets</b> — ขนาดตลาด weight &amp; GLP-1</div>
+      </div>
+      <div class="rise mt-8 flex items-center justify-between flex-wrap gap-4">
+        <div class="mono text-xs uppercase tracking-widest opacity-60">© 2026 · UP Wellness · market intel</div>
+        <div class="sticker rounded-full px-6 py-3 display text-lg thai" style="background:linear-gradient(135deg,#FF3DA8,#FFE600,#00E0FF);color:#0B0014">โอกาสอยู่ที่ Longevity 🚀</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- controls -->
+<div class="nav-btn" id="prev">‹</div>
+<div class="nav-btn" id="next">›</div>
+<div class="progress-wrap" id="dots"></div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let idx = 0;
+  document.getElementById('total').textContent = String(total).padStart(2,'0');
+
+  const dotsWrap = document.getElementById('dots');
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0?' active':'');
+    d.addEventListener('click', () => go(i));
+    dotsWrap.appendChild(d);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  function go(n) {
+    idx = Math.max(0, Math.min(total-1, n));
+    slides.forEach((s,i) => s.classList.toggle('active', i===idx));
+    dots.forEach((d,i) => d.classList.toggle('active', i===idx));
+    document.getElementById('cur').textContent = String(idx+1).padStart(2,'0');
+  }
+  const next = () => go(idx+1);
+  const prev = () => go(idx-1);
+
+  document.getElementById('next').addEventListener('click', next);
+  document.getElementById('prev').addEventListener('click', prev);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    if (e.key === 'Home') go(0);
+    if (e.key === 'End') go(total-1);
+  });
+  // swipe
+  let sx = 0;
+  document.addEventListener('touchstart', e => sx = e.touches[0].clientX, {passive:true});
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 50) (dx < 0 ? next() : prev());
+  }, {passive:true});
+</script>
+</body>
+</html>
