@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MTM: Modernize The Message Sponsor — training experience แบบ React + Tailwind glassmorphism สำหรับฝึก FORM, Message และ QC" />
+  <title>MTM Glass Workshop · Modernize The Message Sponsor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Mono&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            thai: ['Noto Sans Thai', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'Noto Sans Thai', 'sans-serif'],
+            mono: ['DM Mono', 'monospace']
+          },
+          colors: {
+            ink: '#09111F',
+            night: '#0E1630',
+            glass: 'rgba(255,255,255,0.12)',
+            cyan: '#67E8F9',
+            blue: '#60A5FA',
+            violet: '#A78BFA',
+            rose: '#FB7185',
+            amber: '#FBBF24',
+            mint: '#6EE7B7'
+          },
+          boxShadow: {
+            glow: '0 24px 90px rgba(103, 232, 249, 0.20)',
+            violet: '0 24px 80px rgba(167, 139, 250, 0.22)',
+            card: 'inset 0 1px 0 rgba(255,255,255,.28), 0 20px 60px rgba(0,0,0,.25)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --ink: #09111f;
+      --surface: rgba(255, 255, 255, 0.105);
+      --surface-strong: rgba(255, 255, 255, 0.18);
+      --line: rgba(255, 255, 255, 0.20);
+      --line-soft: rgba(255, 255, 255, 0.12);
+      --text: #f8fbff;
+      --muted: rgba(226, 232, 240, 0.72);
+      --cyan: #67e8f9;
+      --violet: #a78bfa;
+      --rose: #fb7185;
+      --amber: #fbbf24;
+      --mint: #6ee7b7;
+    }
+    html { scroll-behavior: smooth; background: var(--ink); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: 'Noto Sans Thai', sans-serif;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(103, 232, 249, .34), transparent 32rem),
+        radial-gradient(circle at 78% 4%, rgba(167, 139, 250, .35), transparent 34rem),
+        radial-gradient(circle at 85% 55%, rgba(251, 113, 133, .23), transparent 32rem),
+        radial-gradient(circle at 20% 88%, rgba(110, 231, 183, .22), transparent 30rem),
+        linear-gradient(135deg, #09111f 0%, #111b39 52%, #111225 100%);
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background-image:
+        linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), rgba(0,0,0,.18));
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 50;
+      opacity: .18;
+      background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .45 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    }
+    .aurora {
+      position: fixed;
+      inset: -20vh -15vw auto -15vw;
+      height: 70vh;
+      z-index: -2;
+      filter: blur(52px) saturate(130%);
+      opacity: .72;
+      background:
+        radial-gradient(circle at 20% 25%, rgba(103,232,249,.85), transparent 24%),
+        radial-gradient(circle at 48% 20%, rgba(167,139,250,.72), transparent 26%),
+        radial-gradient(circle at 75% 34%, rgba(251,113,133,.55), transparent 24%),
+        radial-gradient(circle at 35% 72%, rgba(110,231,183,.45), transparent 22%);
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+    @keyframes drift { to { transform: translate3d(4vw, 6vh, 0) scale(1.08); } }
+    .glass {
+      background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(255,255,255,.075));
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.26), 0 24px 80px rgba(0,0,0,.24);
+      backdrop-filter: blur(22px) saturate(150%);
+      -webkit-backdrop-filter: blur(22px) saturate(150%);
+    }
+    .glass-soft {
+      background: rgba(255,255,255,.085);
+      border: 1px solid rgba(255,255,255,.13);
+      backdrop-filter: blur(16px) saturate(135%);
+      -webkit-backdrop-filter: blur(16px) saturate(135%);
+    }
+    .hairline { border-color: rgba(255,255,255,.14); }
+    .display { font-family: 'Plus Jakarta Sans', 'Noto Sans Thai', sans-serif; letter-spacing: -0.055em; }
+    .mono { font-family: 'DM Mono', monospace; }
+    .text-gradient {
+      background: linear-gradient(110deg, #ffffff 0%, #a5f3fc 28%, #c4b5fd 58%, #fda4af 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 999px;
+      pointer-events: none;
+      filter: blur(10px);
+      opacity: .82;
+    }
+    .float-slow { animation: float 7s ease-in-out infinite alternate; }
+    .float-delay { animation: float 9s ease-in-out infinite alternate-reverse; }
+    @keyframes float { to { transform: translateY(-18px) translateX(8px); } }
+    .shine { position: relative; overflow: hidden; }
+    .shine::before {
+      content: '';
+      position: absolute;
+      inset: -120% auto auto -80%;
+      width: 60%;
+      height: 240%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
+      transform: rotate(18deg);
+      transition: transform .7s ease;
+    }
+    .shine:hover::before { transform: translateX(420%) rotate(18deg); }
+    .focus-ring:focus-visible { outline: 3px solid rgba(103,232,249,.88); outline-offset: 4px; }
+    .snap-card { scroll-snap-align: start; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .001ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"></div>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const pillars = [
+      { th: 'ถาม', en: 'Ask', tone: 'cyan', copy: 'เปิดพื้นที่ปลอดภัยด้วยคำถามทีละข้อ' },
+      { th: 'ฟัง', en: 'Listen', tone: 'violet', copy: 'ฟังให้จบก่อนคิดว่าจะตอบอะไร' },
+      { th: 'เข้าใจ', en: 'Understand', tone: 'mint', copy: 'จับปัญหา เป้าหมาย เวลา และเงื่อนไขจริง' },
+      { th: 'ส่งสาร', en: 'Message', tone: 'rose', copy: 'เสนอทางเลือกอย่างอ่อนน้อม ไม่กดดัน' }
+    ];
+
+    const modules = [
+      { no: '01', title: 'Context', text: 'เข้าใจผู้มุ่งหวังยุค 4.0: เคยฟัง เคยตั้งการ์ด แต่ยังเปิดใจได้ถ้าเจอวิธีใหม่' },
+      { no: '02', title: 'Mindset', text: 'เปลี่ยนจากผู้เสนอเป็นผู้ถาม — พูดให้น้อยลง ถามและฟังให้มากขึ้น' },
+      { no: '03', title: 'FORM', text: 'ใช้ F/O/R/M เป็น blueprint เพื่อไม่รีบ Sponsor ก่อนข้อมูลครบ' },
+      { no: '04', title: 'Message', text: 'ทวน → ตีกรอบ → เสนอ → เงียบ ให้สิทธิ์ตัดสินใจอยู่ที่เขา' },
+      { no: '05', title: 'Practice & QC', text: 'ฝึก role-play, ทำรายชื่อ, ทบทวนบทสนทนา และเตรียมคำถามถัดไป' }
+    ];
+
+    const formSteps = [
+      {
+        letter: 'F', label: 'Family / Fact Finding', accent: '#67E8F9',
+        intent: 'อุ่นเครื่อง รื้อฟื้นความสัมพันธ์ และดูว่า “ตอนนี้เขาเป็นอย่างไร”',
+        prompts: ['ช่วงนี้เป็นอย่างไรบ้าง?', 'งานที่ทำสนุกไหม รายได้โอเคไหม?', 'อนาคตอยากให้เป็นแบบไหน?']
+      },
+      {
+        letter: 'O', label: 'OK / Outcome', accent: '#A78BFA',
+        intent: 'แยกว่าเขาจริงจังกับการแก้ปัญหา หรือแค่บ่น แล้วทำให้ project ในฝันเป็นรูปธรรม',
+        prompts: ['แล้วที่โอเคคืออย่างไร?', 'คิดว่าจะขายได้เท่าไรต่อเดือน?', 'ทั้งหมดต้องลงทุนเท่าไร เสี่ยงไหม?']
+      },
+      {
+        letter: 'R', label: 'Recreation / Reality Check', accent: '#6EE7B7',
+        intent: 'สำรวจเวลาจริง พลังจริง และสิ่งที่เขายอมแลกเพื่อเป้าหมาย',
+        prompts: ['ทำงานกี่วันต่อสัปดาห์?', 'จะจัดเวลาช่วงไหนมาทำ?', 'ถ้าไม่สำเร็จจะกลับไปทำอะไร?']
+      },
+      {
+        letter: 'M', label: 'Message', accent: '#FB7185',
+        intent: 'เมื่อเข้าใจครบแล้ว จึงทวนกรอบและเสนอทางเลือกอย่างไม่ต้อน',
+        prompts: ['ผมเข้าใจว่าคุณไม่ชอบงานขาย...', 'ถ้ามันช่วยแก้ปัญหา ทำไมไม่ลองดู?', 'ลองดูไหม ผมอาจช่วยคุณได้']
+      }
+    ];
+
+    const contrasts = [
+      ['นิสัยเก่า', 'มีเป้าหมายในใจ รีบชวนก่อนเพื่อนตอบหมด บรรยากาศอึดอัด'],
+      ['นิสัยใหม่', 'ถามไปเรื่อย ๆ จนเขาเห็นคำตอบด้วยตัวเอง ความสัมพันธ์ปลอดภัย'],
+      ['ไฟแดง', 'รู้ปัญหาแล้วแต่ข้อมูลยังไม่ครบ — ยังไม่ใช่ Step Sponsor'],
+      ['ไฟเขียว', 'รู้ปัญหา เป้าหมาย เวลา เงื่อนไข และทวนความเข้าใจตรงกันแล้ว']
+    ];
+
+    const scriptSteps = [
+      { title: 'ทวน', text: 'ตอนนี้สิ่งที่คุณกังวลคือ… และสิ่งที่อยากได้คือ… ใช่ไหม' },
+      { title: 'ตีกรอบ', text: 'ถ้าวิธีเดิมยังแก้ไม่ได้ เรากำลังคุยกันเรื่อง “งานที่ใช่” ไม่ใช่แค่งานที่ชอบ' },
+      { title: 'เสนอ', text: 'ถ้ามีทางเลือกที่ช่วยแก้ปัญหาได้ใน 2–3 ปี แม้อาจไม่ใช่งานที่ชอบที่สุด คุณจะลองดูไหม' },
+      { title: 'เงียบ', text: 'เว้น 5–10 วินาที แล้วพูดซ้ำอย่างอ่อนน้อม: ลองดูไหม ผมอาจช่วยคุณได้' }
+    ];
+
+    function Icon({ type, className = 'w-6 h-6' }) {
+      const common = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' };
+      const paths = {
+        ask: <><path d="M12 3a8 8 0 0 0-7.5 10.7L3 21l6.8-1.8A8 8 0 1 0 12 3Z"/><path d="M9.7 9.4a2.5 2.5 0 1 1 3.7 2.2c-.9.5-1.4 1.1-1.4 2.1"/><path d="M12 17h.01"/></>,
+        listen: <><path d="M4 12a8 8 0 0 1 16 0"/><path d="M6 13v3a3 3 0 0 0 3 3h1v-8H9a3 3 0 0 0-3 3Z"/><path d="M18 13v3a3 3 0 0 1-3 3h-1v-8h1a3 3 0 0 1 3 3Z"/></>,
+        map: <><path d="M9 18 3 21V6l6-3 6 3 6-3v15l-6 3-6-3Z"/><path d="M9 3v15"/><path d="M15 6v15"/></>,
+        message: <><path d="M4 5h16v11H7l-3 3V5Z"/><path d="M8 9h8"/><path d="M8 12h5"/></>,
+        check: <><path d="m5 12 4 4L19 6"/><path d="M21 12a9 9 0 1 1-5.3-8.2"/></>,
+        arrow: <><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></>
+      };
+      return <svg viewBox="0 0 24 24" className={className} aria-hidden="true" {...common}>{paths[type]}</svg>;
+    }
+
+    function App() {
+      return <main className="relative">
+        <Nav />
+        <Hero />
+        <Pillars />
+        <Roadmap />
+        <Mindset />
+        <FormBlueprint />
+        <MessageFramework />
+        <Workshop />
+        <Commitment />
+        <Footer />
+      </main>;
+    }
+
+    function Nav() {
+      return <nav className="sticky top-3 z-40 mx-auto mt-3 max-w-7xl px-4">
+        <div className="glass flex items-center justify-between rounded-full px-4 py-3 md:px-6">
+          <a href="#top" className="focus-ring flex items-center gap-3 rounded-full" aria-label="MTM home">
+            <span className="grid h-10 w-10 place-items-center rounded-full bg-white text-ink shadow-glow font-display font-black">M</span>
+            <span className="hidden sm:block">
+              <span className="block font-display text-sm font-extrabold leading-none">MTM Glass</span>
+              <span className="mono text-[10px] uppercase tracking-[.22em] text-slate-300">Sponsor Training</span>
+            </span>
+          </a>
+          <div className="hidden items-center gap-1 md:flex">
+            {['Roadmap','FORM','Message','Workshop'].map((item) => <a key={item} href={`#${item.toLowerCase()}`} className="focus-ring rounded-full px-4 py-2 text-sm font-semibold text-slate-200 transition hover:bg-white/12 hover:text-white">{item}</a>)}
+          </div>
+          <a href="#commit" className="focus-ring shine rounded-full bg-white px-4 py-2 text-sm font-extrabold text-ink transition hover:scale-[1.02] md:px-5">48-hour plan</a>
+        </div>
+      </nav>;
+    }
+
+    function Hero() {
+      return <section id="top" className="relative mx-auto max-w-7xl px-5 pb-16 pt-16 md:pb-24 md:pt-24">
+        <div className="orb left-[8%] top-20 h-24 w-24 bg-cyan/30 float-slow" />
+        <div className="orb right-[8%] top-44 h-32 w-32 bg-violet/25 float-delay" />
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+          <div>
+            <div className="glass-soft mb-7 inline-flex items-center gap-3 rounded-full px-4 py-2">
+              <span className="relative flex h-2.5 w-2.5"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-mint opacity-75"></span><span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-mint"></span></span>
+              <span className="mono text-[11px] uppercase tracking-[.24em] text-slate-200">Modernize The Message Sponsor</span>
+            </div>
+            <h1 className="display text-gradient text-[clamp(3.5rem,9vw,8.5rem)] font-black leading-[.88]">
+              MTM<br />
+              Training<br />
+              Experience
+            </h1>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 md:text-2xl md:leading-10">
+              เปลี่ยนงาน Sponsor จากการ “รีบชวน” ให้เป็นระบบบทสนทนาที่เข้าใจคนลึกขึ้น — ถาม ฟัง เข้าใจ แล้วส่งสารให้ถูกจังหวะ
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a href="#form" className="focus-ring shine inline-flex items-center justify-center gap-3 rounded-2xl bg-cyan px-6 py-4 font-extrabold text-ink shadow-glow transition hover:-translate-y-1">เริ่มจาก FORM <Icon type="arrow" className="h-5 w-5" /></a>
+              <a href="#message" className="focus-ring inline-flex items-center justify-center rounded-2xl border border-white/20 bg-white/10 px-6 py-4 font-bold text-white backdrop-blur transition hover:-translate-y-1 hover:bg-white/16">ดู Message Framework</a>
+            </div>
+          </div>
+          <div className="glass rounded-[2rem] p-5 md:p-7">
+            <div className="rounded-[1.5rem] border border-white/12 bg-ink/35 p-5">
+              <div className="mb-5 flex items-center justify-between border-b border-white/10 pb-4">
+                <span className="mono text-xs uppercase tracking-[.25em] text-cyan">Core shift</span>
+                <span className="rounded-full bg-mint/15 px-3 py-1 text-xs font-bold text-mint">นิสัยใหม่</span>
+              </div>
+              <div className="space-y-4">
+                <GlassMetric number="6x" label="คน say no ลดลง เมื่อวิธีสื่อสารเปลี่ยน" tone="cyan" />
+                <GlassMetric number="3x" label="คนอยากทำเพิ่มขึ้น เพราะเข้าใจโจทย์ของเขาก่อน" tone="violet" />
+                <GlassMetric number="48h" label="หลัง session: เขียนรายชื่อ เลือก 3 คน เตรียม F questions" tone="rose" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>;
+    }
+
+    function GlassMetric({ number, label, tone }) {
+      const color = tone === 'cyan' ? 'text-cyan' : tone === 'violet' ? 'text-violet' : 'text-rose';
+      return <div className="glass-soft rounded-3xl p-5">
+        <div className={`display text-5xl font-black ${color}`}>{number}</div>
+        <p className="mt-2 text-sm leading-6 text-slate-300">{label}</p>
+      </div>;
+    }
+
+    function Pillars() {
+      const icons = ['ask','listen','map','message'];
+      return <section className="mx-auto max-w-7xl px-5 py-10">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {pillars.map((p, i) => <div key={p.th} className="glass-soft group rounded-[1.75rem] p-5 transition duration-300 hover:-translate-y-1 hover:bg-white/14">
+            <div className={`mb-5 grid h-12 w-12 place-items-center rounded-2xl ${i===0?'bg-cyan/20 text-cyan':i===1?'bg-violet/20 text-violet':i===2?'bg-mint/20 text-mint':'bg-rose/20 text-rose'}`}><Icon type={icons[i]} /></div>
+            <div className="display text-3xl font-black">{p.th}</div>
+            <div className="mono mt-1 text-xs uppercase tracking-[.22em] text-slate-400">{p.en}</div>
+            <p className="mt-4 text-sm leading-6 text-slate-300">{p.copy}</p>
+          </div>)}
+        </div>
+      </section>;
+    }
+
+    function SectionHeader({ eyebrow, title, subtitle, id }) {
+      return <div id={id} className="mb-10 max-w-3xl scroll-mt-28">
+        <div className="mono mb-3 text-xs uppercase tracking-[.32em] text-cyan">{eyebrow}</div>
+        <h2 className="display text-4xl font-black leading-tight text-white md:text-6xl">{title}</h2>
+        {subtitle && <p className="mt-5 text-lg leading-8 text-slate-300">{subtitle}</p>}
+      </div>;
+    }
+
+    function Roadmap() {
+      return <section className="mx-auto max-w-7xl px-5 py-16 md:py-24">
+        <SectionHeader id="roadmap" eyebrow="01 / learning map" title="จาก mindset สู่บทสนทนาที่ฝึกได้จริง" subtitle="หน้าเดียวเห็นทั้ง session: ผู้สอนใช้เป็นแผนที่ ผู้เรียนใช้เป็น checklist ว่าตอนนี้อยู่จุดไหนของกระบวนการ" />
+        <div className="grid gap-4 lg:grid-cols-5">
+          {modules.map((m, i) => <article key={m.no} className={`glass relative overflow-hidden rounded-[1.75rem] p-6 ${i===0 || i===4 ? 'lg:translate-y-8' : i===2 ? 'lg:-translate-y-4' : ''}`}>
+            <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-cyan/10 blur-2xl" />
+            <div className="mono text-xs uppercase tracking-[.24em] text-cyan">{m.no}</div>
+            <h3 className="mt-6 font-display text-2xl font-black">{m.title}</h3>
+            <p className="mt-4 text-sm leading-7 text-slate-300">{m.text}</p>
+          </article>)}
+        </div>
+      </section>;
+    }
+
+    function Mindset() {
+      return <section className="mx-auto max-w-7xl px-5 py-16">
+        <div className="glass rounded-[2.2rem] p-6 md:p-10">
+          <div className="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
+            <div>
+              <div className="mono mb-3 text-xs uppercase tracking-[.32em] text-amber">02 / mindset shift</div>
+              <h2 className="display text-4xl font-black leading-tight md:text-6xl">อย่าขุดหลุมผิด แม้จะขุดเร็วแค่ไหน</h2>
+              <p className="mt-6 text-lg leading-8 text-slate-300">ปัญหาไม่ใช่ไม่มีคน แต่คือการรีบเข้าเรื่องเร็วเกินไป MTM สอนให้ Sponsor เป็นการทำความเข้าใจอย่างพิถีพิถัน ไม่ใช่การไล่ปิดการขาย</p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {contrasts.map(([title, text], i) => <div key={title} className="glass-soft rounded-[1.5rem] p-5">
+                <div className={`mb-3 inline-flex rounded-full px-3 py-1 text-xs font-black ${i%2===0?'bg-rose/15 text-rose':'bg-mint/15 text-mint'}`}>{title}</div>
+                <p className="text-sm leading-7 text-slate-300">{text}</p>
+              </div>)}
+            </div>
+          </div>
+        </div>
+      </section>;
+    }
+
+    function FormBlueprint() {
+      return <section className="mx-auto max-w-7xl px-5 py-16 md:py-24">
+        <SectionHeader id="form" eyebrow="03 / FORM blueprint" title="F/O/R/M คือระบบ ไม่ใช่สคริปต์ท่องจำ" subtitle="แต่ละ step มีหน้าที่ของมันเอง จุดสำคัญคืออย่าข้าม step: รู้ปัญหาแล้วก็ยังไม่ใช่เวลาชวน จนกว่าจะเห็นเป้าหมาย เวลา และเงื่อนไขจริง" />
+        <div className="grid gap-5 lg:grid-cols-4">
+          {formSteps.map((s) => <article key={s.letter} className="glass group rounded-[2rem] p-5 transition hover:-translate-y-1">
+            <div className="mb-6 flex items-center justify-between">
+              <div className="display text-6xl font-black" style={{ color: s.accent }}>{s.letter}</div>
+              <div className="h-14 w-14 rounded-full border border-white/15 bg-white/10" style={{ boxShadow: `0 0 40px ${s.accent}45` }} />
+            </div>
+            <h3 className="font-display text-xl font-black leading-tight">{s.label}</h3>
+            <p className="mt-3 min-h-[6rem] text-sm leading-7 text-slate-300">{s.intent}</p>
+            <div className="mt-5 space-y-2 border-t border-white/10 pt-5">
+              {s.prompts.map((q) => <div key={q} className="rounded-2xl bg-white/7 px-4 py-3 text-sm leading-6 text-slate-200">{q}</div>)}
+            </div>
+          </article>)}
+        </div>
+      </section>;
+    }
+
+    function MessageFramework() {
+      return <section className="mx-auto max-w-7xl px-5 py-16 md:py-24">
+        <SectionHeader id="message" eyebrow="04 / message framework" title="ทวน → ตีกรอบ → เสนอ → เงียบ" subtitle="Message ที่ดีไม่ใช่การต้อนเข้ามุม แต่คือการส่งข้อมูลให้ชัด อ่อนน้อม และให้สิทธิ์ตัดสินใจกับเขา" />
+        <div className="glass rounded-[2.2rem] p-5 md:p-8">
+          <div className="grid gap-4 md:grid-cols-4">
+            {scriptSteps.map((s, i) => <div key={s.title} className="relative rounded-[1.6rem] border border-white/12 bg-ink/30 p-5">
+              <div className="mb-10 flex items-center justify-between">
+                <span className="mono text-xs uppercase tracking-[.24em] text-slate-400">step {i+1}</span>
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-white text-ink font-black">{i+1}</span>
+              </div>
+              <h3 className="font-display text-2xl font-black">{s.title}</h3>
+              <p className="mt-4 text-sm leading-7 text-slate-300">{s.text}</p>
+            </div>)}
+          </div>
+          <blockquote className="mt-5 rounded-[1.8rem] border border-cyan/25 bg-cyan/10 p-6 text-lg leading-9 text-cyan-50 md:p-8 md:text-2xl">
+            “ผมเข้าใจดีว่าคุณไม่ชอบงานขาย… แต่ถ้าคุณยังไม่มีวิธีอื่นที่ดีกว่า และมันสามารถช่วยแก้ปัญหาของคุณได้ ทำไมไม่ลองดูหล่ะ — ลองดูไหม ผมอาจช่วยคุณได้”
+          </blockquote>
+        </div>
+      </section>;
+    }
+
+    function Workshop() {
+      const rounds = [
+        { title: 'Round 1: F', text: 'ฝึก warm-up และ fact finding โดยห้ามเสนอ solution' },
+        { title: 'Round 2: O/R', text: 'ถามให้ project และเวลาจริงชัดขึ้น โดยอยู่ข้างความคิดเขา' },
+        { title: 'Round 3: M', text: 'ทวนกรอบ ส่ง message เงียบ และนัด next step ใน 2–3 วัน' }
+      ];
+      const score = ['ถามทีละคำถาม', 'ฟังให้จบ', 'สรุปถูกต้อง', 'ไม่รีบ Sponsor', 'ส่ง Message อ่อนน้อม', 'ทำ QC หลังคุย'];
+      return <section id="workshop" className="mx-auto max-w-7xl scroll-mt-28 px-5 py-16 md:py-24">
+        <div className="grid gap-6 lg:grid-cols-[.95fr_1.05fr]">
+          <div>
+            <SectionHeader eyebrow="05 / practice lab" title="Role-play ให้เห็นพฤติกรรม ไม่ใช่แค่จำเนื้อหา" subtitle="ผู้สอนแบ่งเป็นรอบสั้น ๆ แล้ว debrief หลังแต่ละรอบ เพื่อเปลี่ยน FORM ให้กลายเป็นนิสัยใหม่" />
+            <div className="space-y-4">
+              {rounds.map((r, i) => <div key={r.title} className="glass-soft rounded-[1.5rem] p-5">
+                <div className="flex gap-4"><span className="mono text-cyan">0{i+1}</span><div><h3 className="font-display text-xl font-black">{r.title}</h3><p className="mt-2 text-sm leading-6 text-slate-300">{r.text}</p></div></div>
+              </div>)}
+            </div>
+          </div>
+          <div className="glass rounded-[2rem] p-6 md:p-8">
+            <div className="mb-6 flex items-center justify-between">
+              <h3 className="font-display text-3xl font-black">Scorecard</h3>
+              <Icon type="check" className="h-9 w-9 text-mint" />
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {score.map((s) => <label key={s} className="group flex cursor-pointer items-center gap-3 rounded-2xl border border-white/12 bg-white/7 p-4 transition hover:bg-white/12">
+                <span className="grid h-6 w-6 place-items-center rounded-lg border border-mint/40 bg-mint/10 text-mint transition group-hover:bg-mint group-hover:text-ink"><Icon type="check" className="h-4 w-4" /></span>
+                <span className="text-sm font-semibold text-slate-200">{s}</span>
+              </label>)}
+            </div>
+            <div className="mt-6 rounded-[1.5rem] bg-amber/12 p-5 text-sm leading-7 text-amber-50">
+              Debrief question: “จังหวะไหนที่เราเริ่มคันปากอยาก Sponsor? แล้วรอบถัดไปจะถามอะไรแทน?”
+            </div>
+          </div>
+        </div>
+      </section>;
+    }
+
+    function Commitment() {
+      const actions = ['เขียนรายชื่อคนรู้จักทั้งหมด', 'เลือก 3 คนแรกที่ควรเริ่ม F', 'เตรียมคำถามอุ่นเครื่องเฉพาะคน', 'คุยแล้วทำ QC: เก่า/ใหม่/คำถามถัดไป'];
+      return <section id="commit" className="mx-auto max-w-7xl scroll-mt-28 px-5 py-16 md:py-24">
+        <div className="glass relative overflow-hidden rounded-[2.5rem] p-6 md:p-12">
+          <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan/20 blur-3xl" />
+          <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-rose/20 blur-3xl" />
+          <div className="relative grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
+            <div>
+              <div className="mono mb-4 text-xs uppercase tracking-[.32em] text-mint">commitment</div>
+              <h2 className="display text-5xl font-black leading-none md:text-7xl">48 ชั่วโมงหลัง session</h2>
+              <p className="mt-5 text-lg leading-8 text-slate-300">เปลี่ยนความเข้าใจให้เป็นการลงมือทำทันที ก่อนความชัดเจนและอารมณ์จะเลือนราง</p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {actions.map((a, i) => <div key={a} className="rounded-[1.5rem] border border-white/12 bg-white/9 p-5">
+                <div className="mono mb-6 text-xs uppercase tracking-[.24em] text-cyan">task {String(i+1).padStart(2,'0')}</div>
+                <p className="text-lg font-bold leading-8">{a}</p>
+              </div>)}
+            </div>
+          </div>
+        </div>
+      </section>;
+    }
+
+    function Footer() {
+      return <footer className="mx-auto max-w-7xl px-5 pb-10 pt-6">
+        <div className="flex flex-col justify-between gap-4 border-t border-white/10 pt-6 text-sm text-slate-400 md:flex-row">
+          <div>MTM: Modernize The Message Sponsor · Glass workshop page</div>
+          <div className="mono uppercase tracking-[.22em]">ถาม / ฟัง / เข้าใจ / ส่งสาร</div>
+        </div>
+      </footer>;
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
