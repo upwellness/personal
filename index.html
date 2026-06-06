@@ -217,6 +217,8 @@ function Nav() {
         <a href="#work" data-hover className="hover:text-yellow-300 transition">/ work</a>
         <a href="mtm-glass.html" data-hover className="hover:text-lime-300 transition">/ mtm glass</a>
         <a href="mtm-sponsor-training-presentation.html" data-hover className="hover:text-cyan-300 transition">/ mtm deck</a>
+        <a href="mtm-jin-7step-summary.html" data-hover className="hover:text-yellow-300 transition">/ mtm 7 step</a>
+        <a href="mtm-form-tracker.html" data-hover className="hover:text-lime-300 transition">/ form tracker</a>
         <a href="#vibes" data-hover className="hover:text-pink-400 transition">/ vibes</a>
         <a href="#contact" data-hover className="hover:text-cyan-300 transition">/ ping me</a>
       </div>
@@ -308,6 +310,7 @@ function Ventures() {
     { title: 'UP Wellness', tag: 'longevity · weight · health', emoji: '🌿', bg: '#FF3DA8', rot: 'tilt-r' },
     { title: 'MTM Glass', tag: 'sponsor training page', emoji: '💎', bg: '#C8FF00', rot: 'tilt-l', href: 'mtm-glass.html' },
     { title: 'MTM Deck', tag: 'browser presentation', emoji: '🎤', bg: '#00E0FF', rot: 'tilt-r', href: 'mtm-sponsor-training-presentation.html' },
+    { title: 'MTM 7 Step', tag: 'jin summary + form tracker', emoji: '🧭', bg: '#FFE600', rot: 'tilt-l', href: 'mtm-jin-7step-summary.html' },
     { title: 'TonPalearn AI', tag: 'AI for everyone', emoji: '🤖', bg: '#00E0FF', rot: 'tilt-l' },
     { title: 'TourLead', tag: 'one-stop tours', emoji: '🌅', bg: '#FFE600', rot: 'tilt-r' },
     { title: 'Consulting', tag: 'strategy · execution', emoji: '🎯', bg: '#B026FF', rot: 'tilt-l' },
@@ -320,7 +323,7 @@ function Ventures() {
         </h2>
         <p className="mono text-sm uppercase tracking-widest opacity-70 mb-12">// no boring stuff allowed</p>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-6">
           {cards.map((c, i) => {
             const CardTag = c.href ? 'a' : 'div';
             return (
