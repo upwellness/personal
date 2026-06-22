@@ -119,11 +119,18 @@ h1,h2,h3,h4,.head{font-family:'Kanit',sans-serif;font-weight:600;letter-spacing:
 /* ── TAB 3 · BODY ── */
 .bodywrap{display:grid;grid-template-columns:minmax(260px,420px) 1fr;gap:26px;align-items:start}
 .bodyfig{position:relative;background:linear-gradient(160deg,#fff,var(--cream));border:1px solid var(--cream-dark);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
-.bodyfig svg{display:block;width:100%;height:auto;max-height:560px}
-.pin{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;border:2.5px solid #fff;background:var(--gold-deep);color:#fff;font-family:'Kanit';font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 3px 10px -2px rgba(31,30,27,.4);transition:transform .15s,background .2s;z-index:3}
-.pin:hover{transform:translate(-50%,-50%) scale(1.18)}
-.pin.on{background:var(--olive);transform:translate(-50%,-50%) scale(1.22);box-shadow:0 0 0 6px rgba(61,88,38,.18)}
-.pin:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.bodyfig svg{display:block;width:100%;height:auto;max-height:680px}
+.rg{cursor:pointer}
+.rg .dot,.rg .cobox,.rg .cotext,.rg .colead,.rg .selring{transition:.18s}
+.rg .cotext,.rg .colead,.rg .selring{pointer-events:none}
+.rg .selring{opacity:0}
+.rg:hover .dot{filter:drop-shadow(0 1px 4px rgba(31,30,27,.4))}
+.rg:hover .cobox{filter:brightness(.97)}
+.rg.on .dot{stroke-width:3.5;filter:drop-shadow(0 0 7px rgba(31,30,27,.45))}
+.rg.on .cobox{stroke-width:2.4}
+.rg.on .selring{opacity:1}
+.rg:focus-visible{outline:none}
+.rg:focus-visible .dot{stroke:var(--gold);stroke-width:4}
 .bodydetail{background:var(--white);border:1px solid var(--cream-dark);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);min-height:300px}
 .bd-empty{color:var(--ink-40);font-size:14px;text-align:center;padding-top:60px}
 .bd-empty .big{font-size:34px;display:block;margin-bottom:10px}
@@ -264,34 +271,39 @@ footer .meta{font-size:11.5px;color:rgba(247,244,238,.6);margin-top:10px}
   <div class="sec-head">
     <div class="eyebrow">Body Map</div>
     <div class="t">อาการ · ยา · วิตามิน อยู่ตรงไหนของร่างกาย</div>
-    <div class="s">คลิกจุดบนร่างกาย เพื่อดูว่าอวัยวะนั้นเกี่ยวกับอาการ ยา และวิตามินตัวไหน</div>
+    <div class="s">คลิกที่อวัยวะ (มี label ชี้ตำแหน่งจริง) เพื่อดูว่าอวัยวะนั้นเกี่ยวกับอาการ ยา และวิตามินตัวไหน</div>
   </div>
   <div class="bodywrap">
     <div>
       <div class="bodyfig" id="bodyfig">
-        <svg viewBox="0 0 220 470" xmlns="http://www.w3.org/2000/svg" aria-label="ภาพร่างกาย">
-          <defs>
-            <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#5A7A3A" stop-opacity=".22"/>
-              <stop offset="1" stop-color="#3D5826" stop-opacity=".30"/>
-            </linearGradient>
-          </defs>
-          <g fill="url(#bg)" stroke="#3D5826" stroke-opacity=".35" stroke-width="1.5">
-            <circle cx="110" cy="42" r="27"/>
-            <path d="M99 67 h22 v13 c18 3 30 14 33 33 l6 50 c1 9 -10 12 -13 3 l-9 -34 -3 60 c6 40 9 80 6 128 c-1 12 -19 12 -21 0 l-8 -86 -8 86 c-2 12 -20 12 -21 0 c-3 -48 0 -88 6 -128 l-3 -60 -9 34 c-3 9 -14 6 -13 -3 l6 -50 c3 -19 15 -30 33 -33 z"/>
+        <svg viewBox="0 0 400 640" xmlns="http://www.w3.org/2000/svg" aria-label="แผนที่ร่างกาย" id="bodysvg">
+          <!-- body silhouette (เดียวกับหน้า Labs BodyView) -->
+          <g stroke="#94A3B8" stroke-width="1.5" fill="#F8FAFC" stroke-linejoin="round" stroke-linecap="round">
+            <ellipse cx="200" cy="70" rx="36" ry="42"/>
+            <circle cx="188" cy="66" r="2" fill="#94A3B8" stroke="none"/>
+            <circle cx="212" cy="66" r="2" fill="#94A3B8" stroke="none"/>
+            <path d="M 190 84 Q 200 90 210 84" fill="none"/>
+            <path d="M 188 110 L 188 122 L 152 138 Q 138 148 138 178 L 144 320 L 152 410 L 168 590 Q 172 605 184 605 L 195 605 Q 200 605 200 590 L 200 410 L 200 590 Q 200 605 205 605 L 216 605 Q 228 605 232 590 L 248 410 L 256 320 L 262 178 Q 262 148 248 138 L 212 122 L 212 110 Z"/>
+            <path d="M 142 142 Q 110 200 100 280 L 108 380 Q 110 392 120 388 Q 124 386 122 376 L 116 280 Q 122 220 152 162" fill="none"/>
+            <path d="M 258 142 Q 290 200 300 280 L 292 380 Q 290 392 280 388 Q 276 386 278 376 L 284 280 Q 278 220 248 162" fill="none"/>
+            <ellipse cx="115" cy="392" rx="10" ry="7"/>
+            <ellipse cx="285" cy="392" rx="10" ry="7"/>
+            <ellipse cx="178" cy="618" rx="16" ry="7"/>
+            <ellipse cx="222" cy="618" rx="16" ry="7"/>
           </g>
+          <!-- region dots + callouts (JS) -->
+          <g id="regions"></g>
         </svg>
-        <div id="pins"></div>
       </div>
       <div class="bodylegend">
-        <span><i class="lgdot" style="background:var(--c-pcos)"></i> อาการ</span>
-        <span><i class="lgdot" style="background:var(--olive-light)"></i> ยา</span>
-        <span><i class="lgdot" style="background:var(--green)"></i> วิตามิน</span>
-        <span><i class="lgdot" style="background:var(--red)"></i> ข้อระวัง</span>
+        <span><i class="lgdot" style="background:#DC2626;border-radius:50%"></i> ต้องเฝ้าระวัง</span>
+        <span><i class="lgdot" style="background:#EAB308;border-radius:50%"></i> ระวัง</span>
+        <span><i class="lgdot" style="background:#16A34A;border-radius:50%"></i> ดูแลได้</span>
+        <span style="color:var(--ink-40)">ป้ายแดง = จำนวนข้อควรระวัง · ตัวเลขใน label = จำนวนรายการ</span>
       </div>
     </div>
     <div class="bodydetail" id="bodydetail">
-      <div class="bd-empty"><span class="big">🧍</span>คลิกจุดสีทองบนร่างกาย<br>เพื่อดูรายละเอียดแต่ละอวัยวะ</div>
+      <div class="bd-empty"><span class="big">🧍</span>คลิกที่อวัยวะบนภาพร่างกาย<br>เพื่อดูว่าเกี่ยวกับอาการ ยา และวิตามินตัวไหน</div>
     </div>
   </div>
 </section>
@@ -407,25 +419,25 @@ const MAP = {
     {id:'garlic',name:'Garlic',status:'caution',link:['lusefi','metformin'],why:'ลดน้ำตาล + ต้านเกล็ดเลือดอ่อนๆ · ระวังร่วมยาเบาหวาน/ผ่าตัด'},
   ],
   body: [
-    {id:'brain',label:'สมอง',ic:'🧠',x:50,y:9,note:'ศูนย์ควบคุมอารมณ์ + การนอน — เป็นเป้าหลักของยากลุ่มไบโพลาร์',
+    {id:'brain',label:'สมอง',short:'Brain',ic:'🧠',x:200,y:70,co:{x:80,y:70,a:'right'},lvl:'high',note:'ศูนย์ควบคุมอารมณ์ + การนอน — เป็นเป้าหลักของยากลุ่มไบโพลาร์',
       sym:['อารมณ์แปรปรวน','นอนไม่หลับ','วิตกกังวล'],drug:['Abilify','Rivotril','Valdoxan','Dayvigo'],vit:['B Plus (ระบบประสาท)','Triple Omega (สมอง/อารมณ์)'],warn:['ยานอน/กล่อมประสาท 4-5 ตัว → ง่วงสะสม']},
-    {id:'heart',label:'หัวใจ & หลอดเลือด',ic:'🫀',x:43,y:30,note:'เป้าของยาไขมัน + ความเสี่ยงลิ่มเลือดจากยาคุม',
+    {id:'heart',label:'หัวใจ & หลอดเลือด',short:'Heart',ic:'🫀',x:215,y:215,co:{x:325,y:210,a:'left'},lvl:'watch',note:'เป้าของยาไขมัน + ความเสี่ยงลิ่มเลือดจากยาคุม',
       sym:['ไตรกลีเซอไรด์สูง','HDL ต่ำ'],drug:['Supalip (Fenofibrate)'],vit:['Triple Omega (ลด TG/หัวใจ)','Garlic'],warn:['Diane 35 → เสี่ยงลิ่มเลือด (VTE)']},
-    {id:'liver',label:'ตับ',ic:'🟤',x:60,y:39,note:'โรงงานเปลี่ยนแปลงยา + จุดเสี่ยงพิษตับที่ต้องเฝ้า',
+    {id:'liver',label:'ตับ',short:'Liver',ic:'🟤',x:170,y:295,co:{x:70,y:290,a:'right'},lvl:'high',note:'โรงงานเปลี่ยนแปลงยา + จุดเสี่ยงพิษตับที่ต้องเฝ้า',
       sym:[],drug:['Agomelatine (เสี่ยงพิษตับ)','Metformin','Fenofibrate'],vit:[],warn:['ตรวจ LFT เป็นระยะ','เลี่ยงไนอาซินสูง + ชาเขียวสกัด (Green Tea Plus)']},
-    {id:'pancreas',label:'ตับอ่อน',ic:'🟡',x:42,y:45,note:'ผลิตอินซูลิน — หัวใจของเบาหวาน',
+    {id:'pancreas',label:'ตับอ่อน',short:'Pancreas',ic:'🟡',x:222,y:305,co:{x:325,y:322,a:'left'},lvl:'ok',note:'ผลิตอินซูลิน — หัวใจของเบาหวาน',
       sym:['ดื้ออินซูลิน','น้ำตาลสูง'],drug:['Metformin (เพิ่มไวอินซูลิน)'],vit:[],warn:[]},
-    {id:'kidney',label:'ไต',ic:'🫘',x:62,y:46,note:'ที่ที่ SGLT2 ขับน้ำตาลทิ้ง',
+    {id:'kidney',label:'ไต',short:'Kidneys',ic:'🫘',x:200,y:372,co:{x:325,y:392,a:'left'},lvl:'high',note:'ที่ที่ SGLT2 ขับน้ำตาลทิ้ง',
       sym:[],drug:['Lusefi (SGLT2 — ขับน้ำตาลทางปัสสาวะ)'],vit:[],warn:['ขาดน้ำ · ติดเชื้อทางเดินปัสสาวะ','คาร์บต่ำ + SGLT2 → DKA']},
-    {id:'gut',label:'ทางเดินอาหาร',ic:'🦠',x:50,y:53,note:'จุดดูดซึมสารอาหาร + แกนลำไส้-ฮอร์โมน',
+    {id:'gut',label:'ทางเดินอาหาร',short:'Gut',ic:'🦠',x:195,y:335,co:{x:70,y:348,a:'right'},lvl:'ok',note:'จุดดูดซึมสารอาหาร + แกนลำไส้-ฮอร์โมน',
       sym:[],drug:['Metformin (คลื่นไส้ · ลดการดูดซึม B12)'],vit:['B Plus','Probiotic / Fiber (สมดุลฮอร์โมน)'],warn:[]},
-    {id:'ovary',label:'รังไข่ / ฮอร์โมน',ic:'🌸',x:50,y:60,note:'ต้นเหตุ PCOS — แอนโดรเจนเกิน',
+    {id:'ovary',label:'รังไข่ / ฮอร์โมน',short:'Repro',ic:'🌸',x:200,y:425,co:{x:70,y:432,a:'right'},lvl:'watch',note:'ต้นเหตุ PCOS — แอนโดรเจนเกิน',
       sym:['รอบเดือนไม่ปกติ','สิว / ขนดก'],drug:['Diane 35 (ต้านแอนโดรเจน)'],vit:['Bio C — ระวังขนาดสูง'],warn:[]},
-    {id:'bone',label:'กระดูก',ic:'🦴',x:62,y:66,note:'มวลกระดูกลดเร็วในวัยหมดประจำเดือน',
+    {id:'bone',label:'กระดูก',short:'Bone',ic:'🦴',x:195,y:560,co:{x:70,y:560,a:'right'},lvl:'watch',note:'มวลกระดูกลดเร็วในวัยหมดประจำเดือน',
       sym:[],drug:[],vit:['Calow (Ca + Mg + D)'],warn:['Mg ขนาดสูงตอนกลางคืนเสริมฤทธิ์ง่วง']},
-    {id:'legs',label:'ขา',ic:'🦵',x:43,y:82,note:'จุดของอาการขาอยู่ไม่สุข',
+    {id:'legs',label:'ขา',short:'Legs',ic:'🦵',x:215,y:475,co:{x:325,y:472,a:'left'},lvl:'watch',note:'จุดของอาการขาอยู่ไม่สุข',
       sym:['ขากระตุก/ไม่สบายขา ตอนกลางคืน'],drug:['Lyrica (Pregabalin)'],vit:[],warn:['Pregabalin → บวมที่ขาได้']},
-    {id:'skin',label:'ผิวหนัง',ic:'🩹',x:24,y:40,note:'แสดงออกของฮอร์โมน + ปฏิกิริยาแพ้ยา',
+    {id:'skin',label:'ผิวหนัง',short:'Skin',ic:'🩹',x:298,y:250,co:{x:325,y:252,a:'left'},lvl:'watch',note:'แสดงออกของฮอร์โมน + ปฏิกิริยาแพ้ยา',
       sym:['สิว / ขนดก (PCOS)'],drug:[],vit:[],warn:['แพ้ยา 3 ตัว → ผื่น (Oxcarbazepine · Succinylcholine · Stresam)']},
   ],
   warnings: [
@@ -514,14 +526,37 @@ MAP.drugs.forEach(d=>{const col=condColor(d.cond);const cl=(MAP.conditions.find(
    '<div class="drow"><div class="rl">↔️ Drug Interaction</div>'+d.di.map(x=>'<div class="di">'+x+'</div>').join('')+'</div>'+
   '</div>';dgrid.appendChild(card);});
 
-/* ===== TAB 3 · BODY ===== */
-const pins=document.getElementById('pins'),bd=document.getElementById('bodydetail');
-MAP.body.forEach((r,i)=>{const p=el('button','pin',(i+1));p.style.left=r.x+'%';p.style.top=r.y+'%';p.dataset.id=r.id;p.title=r.label;p.setAttribute('aria-label',r.label);
-  p.onclick=()=>showRegion(r.id);pins.appendChild(p);});
-function showRegion(id){const r=MAP.body.find(x=>x.id===id);if(!r)return;
-  document.querySelectorAll('.pin').forEach(p=>p.classList.toggle('on',p.dataset.id===id));
+/* ===== TAB 3 · BODY (Labs-style body map) ===== */
+const bd=document.getElementById('bodydetail');
+const LVL={high:{fill:'#DC2626',bg:'#FEE2E2',text:'#991B1B',stroke:'#B91C1C',lab:'ต้องเฝ้าระวัง'},
+           watch:{fill:'#EAB308',bg:'#FEF9C3',text:'#854D0E',stroke:'#CA8A04',lab:'ระวัง'},
+           ok:{fill:'#16A34A',bg:'#DCFCE7',text:'#15803D',stroke:'#16A34A',lab:'ดูแลได้'}};
+(function renderBody(){
+  let s='';
+  MAP.body.forEach(r=>{
+    const c=LVL[r.lvl], n=r.sym.length+r.drug.length+r.vit.length, w=r.warn.length;
+    const bw=94, bh=22, bx=r.co.a==='left'?r.co.x:r.co.x-bw, tx=bx+bw/2;
+    s+='<g class="rg" data-id="'+r.id+'" tabindex="0" role="button" aria-label="'+r.label+'">';
+    if(r.lvl!=='ok') s+='<circle cx="'+r.x+'" cy="'+r.y+'" r="22" fill="'+c.fill+'" fill-opacity="0.14"/>';
+    s+='<circle class="selring" cx="'+r.x+'" cy="'+r.y+'" r="18" fill="none" stroke="'+c.fill+'" stroke-width="2" stroke-opacity=".6"/>';
+    s+='<line class="colead" x1="'+r.x+'" y1="'+r.y+'" x2="'+r.co.x+'" y2="'+r.co.y+'" stroke="'+c.stroke+'" stroke-width="1.2" stroke-dasharray="3 2"/>';
+    s+='<rect class="cobox" x="'+bx+'" y="'+(r.co.y-bh/2)+'" width="'+bw+'" height="'+bh+'" rx="7" fill="'+c.bg+'" stroke="'+c.stroke+'"/>';
+    s+='<text class="cotext" x="'+tx+'" y="'+(r.co.y+4)+'" text-anchor="middle" fill="'+c.text+'" font-family="Kanit" font-size="11" font-weight="700">'+r.short+' · '+n+'</text>';
+    s+='<circle class="dot" cx="'+r.x+'" cy="'+r.y+'" r="11" fill="'+c.fill+'" stroke="#fff" stroke-width="3"/>';
+    if(w>0) s+='<circle cx="'+(r.x+10)+'" cy="'+(r.y-10)+'" r="8" fill="#B91C1C"/><text x="'+(r.x+10)+'" y="'+(r.y-6.5)+'" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">'+w+'</text>';
+    s+='</g>';
+  });
+  const reg=document.getElementById('regions');
+  reg.innerHTML=s;
+  reg.addEventListener('click',e=>{const g=e.target.closest('.rg');if(g)showRegion(g.dataset.id);});
+  reg.addEventListener('keydown',e=>{const g=e.target.closest('.rg');if(g&&(e.key==='Enter'||e.key===' ')){e.preventDefault();showRegion(g.dataset.id);}});
+})();
+function showRegion(id){const r=MAP.body.find(x=>x.id===id);if(!r)return;const c=LVL[r.lvl];const n=r.sym.length+r.drug.length+r.vit.length;
+  document.querySelectorAll('#regions .rg').forEach(p=>p.classList.toggle('on',p.dataset.id===id));
   const blk=(title,arr,cls)=>arr&&arr.length?'<div class="bd-block"><div class="bl">'+title+'</div><div class="chiprow">'+arr.map(x=>'<span class="bchip '+cls+'">'+x+'</span>').join('')+'</div></div>':'';
-  bd.innerHTML='<div class="bd-title">'+r.ic+' '+r.label+'</div><div class="bd-sub">'+r.note+'</div>'+
+  bd.innerHTML='<div class="bd-title">'+r.ic+' '+r.label+'</div>'+
+    '<div style="margin-top:9px"><span style="display:inline-block;border-radius:100px;padding:4px 13px;font-family:Kanit;font-weight:700;font-size:11.5px;background:'+c.bg+';color:'+c.text+'">'+c.lab+' · '+n+' รายการ'+(r.warn.length?' · ⚠ '+r.warn.length+' ข้อระวัง':'')+'</span></div>'+
+    '<div class="bd-sub" style="margin-top:9px">'+r.note+'</div>'+
     blk('อาการ',r.sym,'sym')+blk('ยาที่ออกฤทธิ์ตรงนี้',r.drug,'drug')+blk('วิตามิน / อาหารเสริม',r.vit,'vit')+blk('ข้อระวัง',r.warn,'warn');}
 
 /* ===== TAB 4 · COURSE ===== */
