@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Plate Planner — UP Labs</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = { theme: { extend: { colors: {
+    ink: {DEFAULT:'#18151A','80':'#3D3840','60':'#5C5660','40':'#8A838E','20':'#BAB5BD','10':'#DDD9DF','5':'#F2F0F3'},
+    surface:'#F7F5F3','warm-white':'#FDFCFB',
+    wellness:{DEFAULT:'#396755',light:'#6AAF91',deep:'#244438'},
+    science:{DEFAULT:'#2A7B8F',light:'#5BBDD4'},
+    gold:{DEFAULT:'#C47A2A'},
+    brose:{DEFAULT:'#8C4C4C',light:'#C4857E'},
+    optimal:'#16A34A',
+  }}}};
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Kanit:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  body{font-family:'IBM Plex Sans Thai',system-ui,sans-serif;color:#18151A;background:#FAF6F1;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  h1,h2,h3,.font-head{font-family:'Kanit','IBM Plex Sans Thai',sans-serif;}
+  /* UP Labs liquid glass (light) */
+  .glass{background:rgba(255,255,255,0.55);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,0.6);box-shadow:0 8px 32px rgba(31,30,27,0.06),inset 0 1px 0 rgba(255,255,255,0.85);isolation:isolate;}
+  .glass-hover{transition:all 300ms cubic-bezier(0.4,0,0.2,1);}
+  .glass-hover:hover{background:rgba(255,255,255,0.74);transform:translateY(-2px);box-shadow:0 12px 40px rgba(31,30,27,0.10),inset 0 1px 0 rgba(255,255,255,0.9);border-color:rgba(255,255,255,0.9);}
+  .liquid-header{background:rgba(255,255,255,0.7);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(31,30,27,0.06);}
+  /* Aurora ambient orbs */
+  .aurora{position:fixed;inset:0;overflow:hidden;z-index:-1;background:linear-gradient(180deg,#FAF6F1 0%,#F2EDE8 60%,#F5F0EB 100%);pointer-events:none;}
+  .aurora i{position:absolute;border-radius:50%;filter:blur(140px);will-change:transform;display:block;}
+  .aurora .o1{width:640px;height:640px;background:radial-gradient(circle,rgba(140,76,76,0.34),transparent 65%);top:-180px;left:-100px;opacity:.55;animation:fl1 22s ease-in-out infinite;}
+  .aurora .o2{width:720px;height:720px;background:radial-gradient(circle,rgba(57,103,85,0.30),transparent 65%);bottom:-200px;right:-100px;opacity:.55;animation:fl2 28s ease-in-out infinite;}
+  .aurora .o3{width:480px;height:480px;background:radial-gradient(circle,rgba(196,122,42,0.26),transparent 65%);top:42%;left:50%;transform:translateX(-50%);opacity:.5;animation:fl3 24s ease-in-out infinite;}
+  @keyframes fl1{0%,100%{transform:translate(0,0)}50%{transform:translate(70px,50px)}}
+  @keyframes fl2{0%,100%{transform:translate(0,0)}50%{transform:translate(-70px,-50px)}}
+  @keyframes fl3{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-38%) translateY(36px)}}
+  ::selection{background:#F0E0DE;color:#6B3535;}
+  ::-webkit-scrollbar{height:8px;width:8px;}::-webkit-scrollbar-thumb{background:#DDD9DF;border-radius:100px;}::-webkit-scrollbar-thumb:hover{background:#BAB5BD;}
+  @media (prefers-reduced-motion:reduce){.aurora i{animation:none!important;}.glass-hover{transition:none!important}.glass-hover:hover{transform:none!important}}
+</style>
+</head>
+<body>
+<div class="aurora"><i class="o1"></i><i class="o2"></i><i class="o3"></i></div>
+<div class="liquid-header sticky top-0 z-20">
+  <div class="max-w-4xl mx-auto px-4 py-2.5 flex items-center gap-2">
+    <span class="w-6 h-6 rounded-lg flex items-center justify-center text-white text-xs font-head" style="background:linear-gradient(135deg,#396755,#244438)">UP</span>
+    <span class="text-sm font-head text-ink">UP Labs</span>
+    <span class="text-ink-20">/</span>
+    <span class="text-sm text-ink-60">Plate Planner</span>
+  </div>
+</div>
+<div id="root" class="min-h-screen"></div>
+<script type="text/babel-src" id="appsrc">
+const {useState, useMemo} = React;
+
+// ===== ฐานข้อมูลอาหาร (ค่าจริงจาก knowledge/food-db/thai-food-db.csv · USDA FDC / Source-anchor) =====
+// ค่าทั้งหมดต่อ 100 กรัม (ยกเว้น kcal ของผัก ใช้ค่า USDA ตรง ไม่ recompute)
+const CAT = {
+  protein:{c:'#8C4C4C', label:'โปรตีน'}, carb:{c:'#C47A2A', label:'คาร์บ'},
+  veg:{c:'#396755', label:'ผัก'}, fat:{c:'#2A7B8F', label:'ไขมันดี'},
+};
+// u=หน่วยครัวเรือน · ug=กรัมต่อ 1 หน่วย · max=เพดานกรัม/มื้อที่ "กินจริงได้"
+const DB = {
+  protein:[
+    {th:'อกไก่ (สุก)', kcal:165,p:31,c:0,f:3.6, u:'ฝ่ามือ',ug:120,max:250, src:'USDA 171534', conf:'verified'},
+    {th:'ไข่ไก่ทั้งฟอง', kcal:143,p:12.6,c:0.7,f:9.5, u:'ฟอง',ug:55,max:165, src:'USDA 748967', conf:'verified'},
+    {th:'ไข่ขาว', kcal:52,p:10.9,c:0.7,f:0.2, u:'ฟอง',ug:33,max:231, src:'USDA 747997', conf:'verified'},
+    {th:'ปลานิล (สุก)', kcal:96,p:20.1,c:0,f:1.7, u:'ฝ่ามือ',ug:120,max:250, src:'USDA 175179', conf:'verified'},
+    {th:'ปลาแซลมอน', kcal:208,p:20.4,c:0,f:13.4, u:'ชิ้น',ug:120,max:200, src:'USDA 175167', conf:'verified'},
+    {th:'หมูสันใน', kcal:120,p:20.7,c:0,f:3.4, u:'ฝ่ามือ',ug:120,max:250, src:'USDA 167903', conf:'verified'},
+    {th:'เนื้อวัวไม่ติดมัน', kcal:135,p:25,c:0,f:3.5, u:'ฝ่ามือ',ug:120,max:250, src:'Source anchor', conf:'verified'},
+    {th:'กุ้งขาว', kcal:85,p:20.1,c:0.9,f:0.5, u:'ตัว',ug:16,max:200, src:'USDA', conf:'verified'},
+    {th:'ทูน่ากระป๋องในน้ำ', kcal:116,p:25.5,c:0,f:0.8, u:'กระป๋อง',ug:100,max:200, src:'USDA 175159', conf:'verified'},
+    {th:'เต้าหู้แข็ง', kcal:144,p:17.3,c:2.8,f:8.7, u:'ก้อน',ug:150,max:300, src:'USDA 174291', conf:'verified'},
+    {th:'กรีกโยเกิร์ตจืด', kcal:59,p:10.2,c:3.6,f:0.4, u:'ถ้วย',ug:150,max:300, src:'USDA 170903', conf:'verified'},
+    {th:'เวย์โปรตีน', kcal:370,p:77,c:8,f:5, u:'สกู๊ป',ug:30,max:60, src:'ฉลาก', conf:'estimate'},
+  ],
+  carb:[
+    {th:'ข้าวสวย', kcal:130,p:2.7,c:28,f:0.3, u:'ทัพพี',ug:55,max:275, src:'USDA 169756', conf:'verified'},
+    {th:'ข้าวกล้อง', kcal:123,p:2.7,c:25.6,f:1, u:'ทัพพี',ug:55,max:275, src:'USDA 169704', conf:'verified'},
+    {th:'มันเทศ (สุก)', kcal:90,p:2,c:20.7,f:0.2, u:'หัวเล็ก',ug:130,max:300, src:'USDA 168483', conf:'verified'},
+    {th:'ข้าวโอ๊ต (ดิบ)', kcal:389,p:16.9,c:66.3,f:6.9, u:'ถ้วยตวง',ug:80,max:120, src:'USDA 173904', conf:'verified'},
+    {th:'ขนมปังโฮลวีต', kcal:247,p:13,c:41,f:3.4, u:'แผ่น',ug:30,max:120, src:'USDA 172686', conf:'verified'},
+    {th:'กล้วย', kcal:89,p:1.1,c:22.8,f:0.3, u:'ผล',ug:100,max:200, src:'USDA 173944', conf:'verified'},
+  ],
+  veg:[
+    {th:'บรอกโคลี', kcal:35,p:2.4,c:7.2,f:0.4, u:'ทัพพี',ug:80,max:250, src:'USDA 170380', conf:'verified'},
+    {th:'ผักบุ้ง', kcal:19,p:2.6,c:3.1,f:0.2, u:'ทัพพี',ug:80,max:250, src:'Thai FCD ~', conf:'estimate'},
+    {th:'คะน้า', kcal:35,p:2.7,c:5.6,f:0.6, u:'ทัพพี',ug:80,max:250, src:'Thai FCD ~', conf:'estimate'},
+    {th:'กะหล่ำปลี', kcal:25,p:1.3,c:5.8,f:0.1, u:'ทัพพี',ug:80,max:250, src:'USDA 169975', conf:'verified'},
+    {th:'เห็ดออรินจิ', kcal:33,p:3.3,c:6.1,f:0.4, u:'ทัพพี',ug:80,max:250, src:'USDA 169246', conf:'verified'},
+    {th:'ผักกาดขาว', kcal:16,p:1.2,c:3.2,f:0.2, u:'ทัพพี',ug:80,max:250, src:'USDA 170390', conf:'verified'},
+  ],
+  fat:[
+    {th:'น้ำมันมะกอก', kcal:884,p:0,c:0,f:100, u:'ช้อนโต๊ะ',ug:14,max:55, src:'USDA 171413', conf:'verified'},
+    {th:'น้ำมันรำข้าว', kcal:884,p:0,c:0,f:100, u:'ช้อนโต๊ะ',ug:14,max:55, src:'USDA', conf:'verified'},
+    {th:'อะโวคาโด', kcal:160,p:2,c:8.5,f:14.7, u:'ผล',ug:200,max:200, src:'USDA 171705', conf:'verified'},
+    {th:'อัลมอนด์', kcal:579,p:21.2,c:21.6,f:49.9, u:'กำมือ',ug:28,max:56, src:'USDA 170567', conf:'verified'},
+    {th:'เมล็ดฟักทอง', kcal:559,p:30.2,c:10.7,f:49, u:'ช้อนโต๊ะ',ug:14,max:42, src:'USDA 170556', conf:'verified'},
+  ],
+};
+
+const r1 = x => Math.round(x*10)/10;
+const clamp = (x,a,b) => Math.max(a, Math.min(b, x));
+const pick = (arr,n) => arr[((n%arr.length)+arr.length)%arr.length];
+
+// ===== คำนวณมาโครเป้าหมาย (ตรงตาม Protocol Lyon ที่ทดสอบแล้ว) =====
+function calcTargets(w,h,goal){
+  const hm=h/100, bmi=w/(hm*hm);
+  const ideal = bmi>=25 ? r1(22.9*hm*hm) : w;
+  let kcal,p,c,f,base,note;
+  if(goal==='loss'){ base=ideal; kcal=Math.round(27*ideal); p=r1(2.2*ideal); c=90; f=r1((kcal-p*4-c*4)/9);
+    note=`27 kcal × น้ำหนักที่เหมาะสม ${ideal} กก. · โปรตีน 2.2 ก./กก. · คาร์บ 30 ก./มื้อ · ไขมัน=ส่วนที่เหลือ`; }
+  else if(goal==='longevity'){ base=w; kcal=Math.round(34*w); p=r1(2.2*w); c=130; f=r1((kcal-p*4-c*4)/9);
+    note=`34 kcal × น้ำหนักปัจจุบัน ${w} กก. · โปรตีนสูง+คาร์บ≤130 → ไขมันดีสูงแบบเมดิเตอร์เรเนียน`; }
+  else { base=w; kcal=Math.round(40*w); p=r1(2.2*w); f=r1(1.0*w); c=r1((kcal-p*4-f*9)/4);
+    note=`40 kcal × น้ำหนักปัจจุบัน ${w} กก. · โปรตีน 2.2 ก./กก. · ไขมัน 1 ก./กก. · คาร์บ=ส่วนที่เหลือ`; }
+  return {bmi:r1(bmi), ideal, base, kcal, p, c, f, note};
+}
+
+function mealPlan(goal, even3){
+  if(even3) return [
+    {name:'มื้อเช้า',frac:0.34,carb:true},{name:'มื้อกลางวัน',frac:0.33,carb:true},{name:'มื้อเย็น',frac:0.33,carb:true}];
+  if(goal==='loss') return [
+    {name:'มื้อเช้า',frac:0.34,carb:true},{name:'มื้อกลางวัน',frac:0.33,carb:true},{name:'มื้อเย็น',frac:0.33,carb:true}];
+  if(goal==='longevity') return [
+    {name:'มื้อที่ 1',frac:0.42,carb:true,carbCap:30},{name:'มื้อที่ 2',frac:0.43,carb:true},{name:'ของว่าง',frac:0.15,carb:false,snack:true}];
+  return [
+    {name:'มื้อ 1 (เช้า)',frac:0.25,carb:true},{name:'มื้อ 2 (ก่อนเทรน)',frac:0.22,carb:true},
+    {name:'มื้อ 3 (หลังเทรน)',frac:0.30,carb:true},{name:'มื้อ 4 (เย็น)',frac:0.23,carb:true}];
+}
+
+const niceQty = x => { if(x>=3) return String(Math.round(x)); const h=Math.round(x*2)/2; return h<0.5?'':String(h); }; // 6.4→"6" · 1.9→"2" · 0.2→"" (เล็กไป ใช้กรัมแทน)
+const qtyLabel = it => { const q=niceQty(it.g/it.ug); return q?('≈ '+q+' '+it.u):''; };
+const mk = (food,g) => { const gg=Math.round(g); return {th:food.th,cat:food.cat||food._cat,
+  u:food.u, ug:food.ug, src:food.src,conf:food.conf, mx:food.max,
+  g:gg, p:r1(food.p*g/100), c:r1(food.c*g/100), f:r1(food.f*g/100), kcal:Math.round(food.kcal*g/100),
+  ref:{kcal:food.kcal,p:food.p,c:food.c,f:food.f}}; };
+const reTot = it => { const a=it.reduce((s,x)=>({p:s.p+x.p,c:s.c+x.c,f:s.f+x.f,kcal:s.kcal+x.kcal}),{p:0,c:0,f:0,kcal:0});
+  return {p:r1(a.p),c:r1(a.c),f:r1(a.f),kcal:Math.round(a.kcal)}; };
+const tag = (arr,cat)=>arr.map(o=>({...o,_cat:cat}));
+
+const STYLES=['ย่าง','ต้มยำ','ผัดกระเทียมพริกไทย','นึ่งซีอิ๊ว','อบสมุนไพร','ลวกจิ้มแจ่ว','ผัดพริกแกง','ต้มจืด'];
+function buildDay(t, goal, even3, seed){
+  const plan = mealPlan(goal, even3);
+  const dense = tag([DB.protein[0],DB.protein[8],DB.protein[6]],'protein'); // ไก่/ทูน่า/เนื้อวัว (โปรตีนแน่น ไขมันต่ำ ปิดส่วนต่างได้)
+  const fatFill = tag([DB.fat[0],DB.fat[1]],'fat');                          // น้ำมันมะกอก/รำข้าว (ไขมันบริสุทธิ์ ส่งถึงเป้าได้ทุกระดับ)
+  const carbFill = tag([DB.carb[0],DB.carb[1],DB.carb[2],DB.carb[5]],'carb'); // ข้าว/ข้าวกล้อง/มันเทศ/กล้วย (โปรตีนต่ำ)
+  const ord = {protein:0,carb:1,veg:2,fat:3};
+  const day = plan.map((m,i)=>{
+    const mP=t.p*m.frac, mC=(m.carb?t.c*m.frac:0), mF=t.f*m.frac;
+    let items=[];
+    const sP=()=>items.reduce((s,x)=>s+x.p,0), sC=()=>items.reduce((s,x)=>s+x.c,0), sF=()=>items.reduce((s,x)=>s+x.f,0);
+    // 1) คาร์บก่อน — ใช้คาร์บโปรตีนต่ำ จะได้ไม่ดันโปรตีนรวมเกินเป้า
+    if(m.carb){
+      let rC = mC; if(m.carbCap) rC = Math.min(rC, m.carbCap);
+      if(rC>4){ const carb=pick(carbFill, seed+i*3+1); items.push(mk(carb, clamp(rC/(carb.c/100), 15, carb.max))); }
+    }
+    // 2) ผักให้ปริมาตร
+    if(!m.snack){ const veg=pick(tag(DB.veg,'veg'), seed+i*3); items.push(mk(veg, 130)); }
+    // 3) โปรตีน — เติมให้ถึงเป้า (มีเพดานต่อชนิด=สมจริง จึงอาจต้อง 2 ชนิด ไม่ใช่ 6 ฟอง)
+    const protList = m.snack ? tag([DB.protein[10],DB.protein[11],DB.protein[1]],'protein') : tag(DB.protein,'protein');
+    const prot = pick(protList, seed+i*3);
+    if(mP - sP() > 2) items.push(mk(prot, clamp((mP-sP())/(prot.p/100), 20, prot.max)));
+    let guard=0;
+    while(sP() < mP*0.92 && guard<2){ const d=pick(dense, seed+i+1+guard); const n=(mP-sP())/(d.p/100); if(n>4) items.push(mk(d, clamp(n, 0, d.max))); guard++; }
+    // 4) ไขมัน = เติมส่วนที่เหลือ (ไขมันเกือบบริสุทธิ์; ของว่างใช้ถั่ว/เมล็ดได้)
+    let rF = mF - sF();
+    // ของว่าง = ถั่ว/เมล็ด (เข้ากับโยเกิร์ต/ผลไม้จริง) · มื้อคาว = น้ำมันปรุง
+    if(rF>2){ const fl=m.snack?tag([DB.fat[3],DB.fat[4]],'fat'):fatFill; const fat=pick(fl, seed+i*3+2); items.push(mk(fat, clamp(rF/(fat.f/100), 3, fat.max))); }
+    items.sort((a,b)=>ord[a.cat]-ord[b.cat]);
+    const mainP=items.filter(x=>x.cat==='protein').sort((a,b)=>b.g-a.g)[0];
+    const style=m.snack?'':pick(STYLES, seed+i*5+3);
+    const carb0=items.find(x=>x.cat==='carb');
+    return {name:m.name, snack:m.snack, style, main:mainP?mainP.th:'', items, tot:reTot(items),
+            tgt:{p:r1(mP),c:r1(mC),f:r1(mF)}, sig:(mainP?mainP.th:'')+'|'+style+'|'+(carb0?carb0.th:'')};
+  });
+  // 6) ปรับ portion ปิดส่วนต่าง kcal/วัน ภายในเพดานสมจริง (เกลี่ยน้ำมัน → ตามด้วยข้าว)
+  const adj=(it,ng)=>{ const rf=it.ref; Object.assign(it,{g:Math.round(ng),p:r1(rf.p*ng/100),c:r1(rf.c*ng/100),f:r1(rf.f*ng/100),kcal:Math.round(rf.kcal*ng/100)}); };
+  const dayK=()=>day.reduce((s,m)=>s+m.tot.kcal,0);
+  let gap = t.kcal - dayK();
+  if(gap > t.kcal*0.02){                       // ขาด → เติมน้ำมันก่อน แล้วข้าว (ไม่เกินเพดานต่อมื้อ)
+    for(const ad of [{f:DB.fat[0],cat:'fat'},{f:DB.carb[1],cat:'carb'}]){
+      for(const m of day){ if(gap < t.kcal*0.015) break; if(m.snack) continue; if(ad.cat==='carb' && m.carbCap) continue;
+        let it=m.items.find(x=>x.th===ad.f.th);
+        if(!it){ it=mk({...ad.f,_cat:ad.cat},0); m.items.push(it); m.items.sort((a,b)=>ord[a.cat]-ord[b.cat]); }
+        const room=it.mx-it.g; if(room<=1) continue;
+        const addG=Math.min(room, gap/(it.ref.kcal/100));
+        adj(it, it.g+addG); m.tot=reTot(m.items); gap=t.kcal-dayK();
+      }
+    }
+  } else if(gap < -t.kcal*0.025){              // เกิน → ลดน้ำมันก้อนใหญ่สุด
+    let best=null; day.forEach(m=>m.items.forEach(it=>{ if(it.cat==='fat' && (!best||it.g>best.it.g)) best={m,it}; }));
+    if(best){ adj(best.it, clamp(best.it.g + gap/(best.it.ref.kcal/100), 0, best.it.mx)); best.m.tot=reTot(best.m.items); }
+  }
+  return day;
+}
+
+// ===== เครื่องเจนแผนหลายวัน "ไม่ซ้ำ" =====
+function buildPlan(t, goal, even3, days, baseSeed){
+  const plan=[];
+  for(let d=0; d<days; d++) plan.push(buildDay(t, goal, even3, baseSeed + d*7 + 1));
+  return plan;
+}
+function planVariety(plan){
+  const sigs=[]; const proteins=new Set();
+  plan.forEach(day=>day.forEach(m=>{ if(!m.snack) sigs.push(m.sig); m.items.forEach(it=>{ if(it.cat==='protein') proteins.add(it.th); }); }));
+  const distinct=new Set(sigs).size;
+  return {total:sigs.length, distinct, pct:sigs.length?Math.round(distinct/sigs.length*100):0, proteins:proteins.size};
+}
+
+// ===== ภาพจานแสดง portion =====
+// รวมกรัมตามหมวด → ชิ้นสัดส่วน
+function catSlices(items){
+  const ord={protein:0,carb:1,veg:2,fat:3};
+  const groups={}; items.forEach(it=>{ groups[it.cat]=(groups[it.cat]||0)+it.g; });
+  const cats=Object.keys(groups).sort((a,b)=>ord[a]-ord[b]);
+  const total=cats.reduce((s,c)=>s+groups[c],0)||1;
+  return cats.map(c=>({cat:c,g:groups[c],pct:Math.round(groups[c]/total*100),color:(CAT[c]||{}).c||'#8A838E',label:(CAT[c]||{}).label||c}));
+}
+// จานกลม Healthy Plate — เฉพาะวงจาน (legend แยกไป component Legend)
+function Plate({items}){
+  const cx=80,cy=80,r=74, rad=a=>(a-90)*Math.PI/180;
+  const cats=catSlices(items); const total=cats.reduce((s,x)=>s+x.g,0)||1;
+  let acc=0; const slices=cats.map(c=>{ const a0=acc/total*360; acc+=c.g; return {...c,a0,a1:acc/total*360}; });
+  const arc=(a0,a1)=>{ const x0=cx+r*Math.cos(rad(a0)),y0=cy+r*Math.sin(rad(a0)),x1=cx+r*Math.cos(rad(a1)),y1=cy+r*Math.sin(rad(a1)),lg=a1-a0>180?1:0;
+    return `M${cx} ${cy} L${x0.toFixed(1)} ${y0.toFixed(1)} A${r} ${r} 0 ${lg} 1 ${x1.toFixed(1)} ${y1.toFixed(1)} Z`; };
+  return (
+    <svg viewBox="0 0 160 160" width="148" height="148" className="shrink-0" role="img" aria-label="จานสัดส่วนอาหารแนว Healthy Plate">
+      <circle cx={cx} cy={cy} r={r+3} fill="#FFFFFF" stroke="rgba(31,30,27,0.10)" strokeWidth="2"/>
+      {slices.length===1
+        ? <circle cx={cx} cy={cy} r={r} fill={slices[0].color} fillOpacity="0.9"/>
+        : slices.map((s,i)=><path key={i} d={arc(s.a0,s.a1)} fill={s.color} fillOpacity="0.9" stroke="#FFFFFF" strokeWidth="2"/>)}
+      {slices.map((s,i)=>{ if(s.pct<9) return null; const mid=(s.a0+s.a1)/2, lx=cx+r*0.6*Math.cos(rad(mid)), ly=cy+r*0.6*Math.sin(rad(mid));
+        return <text key={'p'+i} x={lx.toFixed(1)} y={(ly+4).toFixed(1)} textAnchor="middle" fontSize="13" fontWeight="700" fill="#FFFFFF">{s.pct}%</text>; })}
+    </svg>
+  );
+}
+// ป้ายสัดส่วน (Healthy Plate label) — วางทางซ้าย
+function Legend({items}){
+  return (<div className="space-y-2 min-w-[120px]">
+    {catSlices(items).map(s=>(
+      <div key={s.cat} className="flex items-center justify-between gap-3 text-sm">
+        <span className="flex items-center gap-2 text-ink"><span className="w-3 h-3 rounded-sm shrink-0" style={{background:s.color}}/>{s.label}</span>
+        <span className="text-ink-60 tabular-nums whitespace-nowrap">{s.g}g · {s.pct}%</span>
+      </div>))}
+  </div>);
+}
+function Bar({items}){
+  const total=items.reduce((s,x)=>s+x.g,0)||1;
+  return (<div className="flex w-full h-3 rounded-full overflow-hidden" style={{background:'rgba(31,30,27,0.07)'}}>
+    {items.map((it,i)=>(<div key={i} title={`${it.th} ${it.g}g`} style={{width:`${it.g/total*100}%`,background:(CAT[it.cat]||{}).c||'#8A838E',opacity:.9}}/>))}
+  </div>);
+}
+const Chip = ({c,children}) => (<span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{background:c+'1A',color:c,border:'1px solid '+c+'33'}}>{children}</span>);
+
+const COOK={'ย่าง':'grilled','ต้มยำ':'spicy tom-yum style','ผัดกระเทียมพริกไทย':'stir-fried with garlic and pepper','นึ่งซีอิ๊ว':'steamed with light soy sauce','อบสมุนไพร':'herb-roasted','ลวกจิ้มแจ่ว':'blanched, served with spicy nam-jim dip','ผัดพริกแกง':'stir-fried in red curry paste','ต้มจืด':'in a clear broth'};
+const EN={'อกไก่ (สุก)':'grilled chicken breast','ไข่ไก่ทั้งฟอง':'whole eggs','ไข่ขาว':'egg whites','ปลานิล (สุก)':'tilapia fillet','ปลาแซลมอน':'salmon','หมูสันใน':'pork tenderloin','เนื้อวัวไม่ติดมัน':'lean beef','กุ้งขาว':'shrimp','ทูน่ากระป๋องในน้ำ':'canned tuna','เต้าหู้แข็ง':'firm tofu','กรีกโยเกิร์ตจืด':'plain Greek yogurt','เวย์โปรตีน':'whey protein','ข้าวสวย':'steamed jasmine rice','ข้าวกล้อง':'brown rice','มันเทศ (สุก)':'sweet potato','ข้าวโอ๊ต (ดิบ)':'oats','ขนมปังโฮลวีต':'whole-wheat bread','กล้วย':'banana','บรอกโคลี':'broccoli','ผักบุ้ง':'morning glory','คะน้า':'Chinese kale','กะหล่ำปลี':'cabbage','เห็ดออรินจิ':'king oyster mushroom','ผักกาดขาว':'napa cabbage','น้ำมันมะกอก':'olive oil','น้ำมันรำข้าว':'rice bran oil','อะโวคาโด':'avocado','อัลมอนด์':'almonds','เมล็ดฟักทอง':'pumpkin seeds'};
+const en = it => EN[it.th] || it.th.replace(/\s*\(.*?\)\s*/g,'').trim();
+const FRUIT=new Set(['กล้วย','มะละกอ','ฝรั่ง','แอปเปิล','ส้ม']);
+const DAIRY=new Set(['กรีกโยเกิร์ตจืด','นมจืด']);
+const SEED=new Set(['อัลมอนด์','เมล็ดฟักทอง']);
+function buildImagePrompt(m){
+  const oils=m.items.filter(it=>/น้ำมัน/.test(it.th));
+  const fruit=m.items.filter(it=>FRUIT.has(it.th));
+  const dairy=m.items.filter(it=>DAIRY.has(it.th));
+  const seeds=m.items.filter(it=>SEED.has(it.th));
+  const savory=m.items.filter(it=>!oils.includes(it)&&!fruit.includes(it)&&!dairy.includes(it)&&!seeds.includes(it));
+  const parts=[];
+  if(savory.length){
+    const cook=m.style?(' '+(COOK[m.style]||m.style)):'';
+    const oilTxt=oils.length?`, lightly cooked with ${oils.map(o=>en(o)).join(' and ')}`:'';
+    parts.push(`a white ceramic plate of ${savory.map(it=>`${it.g}g ${en(it)}`).join(', ')}${cook}${oilTxt}, protein-first plating`);
+  }
+  if(dairy.length){
+    const top=seeds.length?` topped with ${seeds.map(s=>en(s)).join(' and ')}`:'';
+    parts.push(`a separate small bowl of ${dairy.map(d=>`${d.g}g ${en(d)}`).join(' and ')}${top}`);
+  } else if(seeds.length){
+    parts.push(`a small separate side dish of ${seeds.map(s=>en(s)).join(' and ')}`);
+  }
+  if(fruit.length) parts.push(`a separate small bowl of fresh ${fruit.map(f=>en(f)).join(' and ')} on the side`);
+  return `Minimalist top-down food photograph on a plain neutral light-wood table, soft natural daylight: ${parts.join('; and ')}. IMPORTANT: show ONLY these exact dishes and nothing else — no rice, no noodles, no extra plates, no additional food or garnish that is not listed above. Each dish sits in its own separate plate or bowl, placed clearly apart, never mixed together. Realistic true-to-life portions, fresh and appetizing, clean professional food photography, 50mm lens, shallow depth of field, high detail. No text, no hands, no cutlery clutter, not an illustration.`;
+}
+function MealCard({m}){
+  const [showP,setShowP]=useState(false);
+  const [img,setImg]=useState(null), [loading,setLoading]=useState(false), [err,setErr]=useState(null);
+  const genImage=()=>{ setLoading(true); setErr(null);
+    fetch('/api/image',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:buildImagePrompt(m),sig:m.sig})})
+      .then(r=>r.json()).then(d=>{ if(d.url) setImg(d.url); else setErr(d.error||'สร้างภาพไม่สำเร็จ'); })
+      .catch(()=>setErr('เรียกเซิร์ฟเวอร์ภาพไม่ได้ (ต้องรันผ่าน server.py)')).finally(()=>setLoading(false)); };
+  return (
+    <div className="glass rounded-2xl p-4 sm:p-5">
+      <div className="flex items-center justify-between mb-3">
+        <div><h3 className="text-lg font-head text-ink">{m.name}</h3>
+          {m.style && <div className="text-xs text-wellness">🍳 {m.main.replace(/\s*\(.*?\)/,'')} · {m.style}</div>}</div>
+        <div className="flex gap-1.5">
+          <Chip c={CAT.protein.c}>P {m.tot.p}</Chip><Chip c={CAT.carb.c}>C {m.tot.c}</Chip>
+          <Chip c={CAT.fat.c}>F {m.tot.f}</Chip><Chip c="#5C5660">{m.tot.kcal} kcal</Chip>
+        </div>
+      </div>
+      <div className="flex flex-wrap items-center gap-4 sm:gap-6 my-3">
+        <Legend items={m.items}/>
+        <div className="text-center"><Plate items={m.items}/><div className="text-[10px] text-ink-40 mt-0.5">สัดส่วนจาน</div></div>
+        <div className="shrink-0">
+          {img
+            ? <img src={img} alt="ภาพจานอาหารเสมือนจริง" className="w-[148px] h-[148px] object-cover rounded-xl border border-ink/10"/>
+            : <button onClick={genImage} disabled={loading} className="w-[148px] h-[148px] flex flex-col items-center justify-center gap-1 text-sm text-wellness glass glass-hover rounded-xl disabled:opacity-60">
+                {loading ? <span className="text-ink-60">⏳ กำลังสร้าง…</span> : <span className="flex flex-col items-center"><span className="text-2xl mb-1">🎨</span>สร้างภาพจริง</span>}
+              </button>}
+          <div className="text-[10px] text-ink-40 mt-0.5 text-center w-[148px]">{img?'ภาพ AI (เทียบได้)':'ภาพเสมือนจริง'}</div>
+        </div>
+      </div>
+      {img && <div className="text-[11px] text-ink-40 mb-2">📷 ภาพ AI ไว้เทียบหน้าตา · <span className="text-ink-60">ปริมาณจริงดูตารางด้านล่าง</span> · <button onClick={()=>setImg(null)} className="text-wellness underline">สร้างใหม่</button></div>}
+      {err && <div className="text-xs text-gold mb-2">{err}</div>}
+      <div className="space-y-1.5 border-t border-ink/5 pt-3">
+        {m.items.map((it,i)=>(
+          <div key={i} className="flex items-center justify-between text-sm py-1 border-b border-ink/5 last:border-0">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{background:(CAT[it.cat]||{}).c}}/>
+              <span className="text-ink truncate">{it.th}</span>
+              {qtyLabel(it) && <span className="text-ink-60 text-xs shrink-0">{qtyLabel(it)}</span>}
+              {it.conf==='estimate' && <span className="text-gold text-[10px] shrink-0" title={'ค่าประมาณ — '+it.src}>~ประมาณ</span>}
+            </div>
+            <div className="flex items-center gap-3 shrink-0">
+              <span className="font-medium text-ink tabular-nums">{it.g} g</span>
+              <span className="text-ink-60 text-xs tabular-nums w-28 text-right">P{it.p} C{it.c} F{it.f} · {it.kcal}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function GoalIcon({id,color}){
+  const p={width:24,height:24,viewBox:"0 0 24 24",fill:"none",stroke:color,strokeWidth:2,strokeLinecap:"round",strokeLinejoin:"round"};
+  if(id==='loss') return (<svg {...p}><polyline points="3 7 9 13 13 9 21 17"/><polyline points="21 13 21 17 17 17"/></svg>);       // กราฟน้ำหนักลดลง
+  if(id==='longevity') return (<svg {...p}><path d="M12 20.5l-7-7a4.5 4.5 0 0 1 6.4-6.3l.6.6.6-.6a4.5 4.5 0 0 1 6.4 6.3z"/></svg>); // หัวใจ (สุขภาพ/อายุยืน)
+  return (<svg {...p}><path d="M2.5 12h2M19.5 12h2M5.5 9v6M18.5 9v6M8.5 7.5v9M15.5 7.5v9M8.5 12h7"/></svg>);                          // ดัมเบล (กล้ามเนื้อ)
+}
+function GoalBtn({id,cur,set,icon,color,title,sub}){
+  const on=cur===id;
+  return (<button onClick={()=>set(id)} className="glass glass-hover rounded-2xl p-4 text-left transition" style={on?{boxShadow:'0 0 0 2px '+color}:{}}>
+    <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-2" style={{background:color+'18'}}><GoalIcon id={icon} color={color}/></div>
+    <div className="font-head text-ink">{title}</div>
+    <div className="text-xs text-ink-60 mt-0.5">{sub}</div></button>);
+}
+
+function App(){
+  const [w,setW]=useState(78), [h,setH]=useState(172), [goal,setGoal]=useState('longevity');
+  const [even3,setEven3]=useState(false), [seed,setSeed]=useState(1), [show,setShow]=useState(false);
+  const [planLen,setPlanLen]=useState(30), [dayIdx,setDayIdx]=useState(0);
+  const t = useMemo(()=>calcTargets(+w,+h,goal),[w,h,goal]);
+  const plan = useMemo(()=>show?buildPlan(t,goal,even3,planLen,seed):null,[t,goal,even3,planLen,seed,show]);
+  const variety = useMemo(()=>plan?planVariety(plan):null,[plan]);
+  const day = plan?plan[Math.min(dayIdx,plan.length-1)]:null;
+  const dtot = day && day.reduce((a,m)=>({p:a.p+m.tot.p,c:a.c+m.tot.c,f:a.f+m.tot.f,kcal:a.kcal+m.tot.kcal}),{p:0,c:0,f:0,kcal:0});
+  const recon = dtot ? Math.round(dtot.kcal/t.kcal*100) : 0;
+  const reconOK = recon>=95 && recon<=105;
+  const shop = useMemo(()=>{ if(!day) return null; const m={}; day.forEach(ml=>ml.items.forEach(it=>{m[it.th]=m[it.th]||{cat:it.cat,g:0};m[it.th].g+=it.g;})); return m; },[plan,dayIdx]);
+
+  const goalMeta={loss:{icon:'loss',c:'#2A7B8F',t:'ลดน้ำหนัก',s:'ลดไขมัน รักษากล้าม'},longevity:{icon:'longevity',c:'#396755',t:'Longevity',s:'สุขภาพดี อายุยืน'},muscle:{icon:'muscle',c:'#C47A2A',t:'เพิ่มกล้ามเนื้อ',s:'สร้างมวลกล้าม'}};
+
+  return (
+    <div className="max-w-4xl mx-auto px-4 py-8 sm:py-12">
+      <header className="mb-8">
+        <div className="flex items-center gap-2 text-wellness text-sm mb-1"><span>🍽️</span><span className="tracking-wide font-medium">PLATE PLANNER</span></div>
+        <h1 className="text-3xl sm:text-4xl font-head text-ink">วางแผนมื้ออาหารตามหลักกล้ามเนื้อ</h1>
+        <p className="text-ink-60 mt-2">สูตร Dr. Gabrielle Lyon (Forever Strong) · อาหารไทยหาง่าย · ตัวเลขจริงจากฐานข้อมูล USDA/Thai FCD — แก่ช้า เจ็บสั้น ตายดี</p>
+      </header>
+
+      <section className="glass rounded-3xl p-5 sm:p-6 mb-6">
+        <h2 className="font-head text-ink text-lg mb-4">1 · บอกข้อมูลตัวเอง</h2>
+        <div className="grid grid-cols-2 gap-4 mb-5">
+          <label className="block"><span className="text-sm text-ink-80">น้ำหนักปัจจุบัน (กก.)</span>
+            <input type="number" value={w} onChange={e=>setW(e.target.value)} className="mt-1 w-full glass rounded-xl px-3 py-2.5 text-ink outline-none focus:ring-2 ring-wellness/50"/></label>
+          <label className="block"><span className="text-sm text-ink-80">ส่วนสูง (ซม.)</span>
+            <input type="number" value={h} onChange={e=>setH(e.target.value)} className="mt-1 w-full glass rounded-xl px-3 py-2.5 text-ink outline-none focus:ring-2 ring-wellness/50"/></label>
+        </div>
+        <div className="text-sm text-ink-80 mb-2">เป้าหมาย</div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
+          {Object.keys(goalMeta).map(k=><GoalBtn key={k} id={k} cur={goal} set={setGoal} icon={goalMeta[k].icon} color={goalMeta[k].c} title={goalMeta[k].t} sub={goalMeta[k].s}/>)}
+        </div>
+        <label className="flex items-center gap-3 cursor-pointer select-none">
+          <input type="checkbox" checked={even3} onChange={e=>setEven3(e.target.checked)} className="w-4 h-4" style={{accentColor:'#396755'}}/>
+          <span className="text-sm text-ink-80">บังคับ 3 มื้อเท่ากันทุกเป้าหมาย <span className="text-ink-40">(ค่าเริ่มต้น = ตามเป้าหมาย: ลด 3 · Longevity 2+ของว่าง · กล้าม 4)</span></span>
+        </label>
+        <div className="mt-4">
+          <div className="text-sm text-ink-80 mb-2">ความยาวแผน (เมนูไม่ซ้ำ)</div>
+          <div className="flex flex-wrap gap-2">
+            {[[7,'7 วัน'],[30,'30 วัน'],[49,'49 วัน · 7 สัปดาห์']].map(o=>(
+              <button key={o[0]} onClick={()=>{setPlanLen(o[0]);setDayIdx(0);}} className={"glass glass-hover rounded-xl px-4 py-2 text-sm "+(planLen===o[0]?'ring-2 ring-wellness text-wellness font-medium':'text-ink-80')}>{o[1]}</button>))}
+          </div>
+        </div>
+        <button onClick={()=>{setShow(true);setDayIdx(0);setSeed(s=>s+1);}} className="mt-5 w-full sm:w-auto px-6 py-3 rounded-xl font-head text-white shadow-sm" style={{background:'linear-gradient(135deg,#396755,#244438)'}}>สร้างแผน {planLen} วัน →</button>
+      </section>
+
+      {show && (<>
+        <section className="glass rounded-3xl p-5 sm:p-6 mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-head text-ink text-lg">2 · เป้าหมายมาโครต่อวัน</h2>
+            <span className="text-xs text-ink-60">BMI {t.bmi} · ฐานคำนวณ {t.base} กก.</span>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {[['พลังงาน',t.kcal,'kcal','#5C5660'],['โปรตีน',t.p,'กรัม',CAT.protein.c],['คาร์บ',t.c,'กรัม',CAT.carb.c],['ไขมัน',t.f,'กรัม',CAT.fat.c]].map((x,i)=>(
+              <div key={i} className="glass rounded-2xl p-4 text-center">
+                <div className="text-3xl font-head" style={{color:x[3]}}>{x[1]}</div>
+                <div className="text-xs text-ink-60 mt-1">{x[0]} ({x[2]})</div></div>))}
+          </div>
+          <p className="text-xs text-ink-40 mt-3 leading-relaxed">📐 {t.note}</p>
+        </section>
+
+        <section className="mb-6">
+          <div className="flex items-center justify-between flex-wrap gap-3 mb-3">
+            <h2 className="font-head text-ink text-lg">3 · แผน {plan.length} วัน · เมนูไม่ซ้ำ</h2>
+            <button onClick={()=>{setSeed(s=>s+1);setDayIdx(0);}} className="glass glass-hover px-4 py-2 rounded-xl text-sm text-wellness font-medium">🎲 สุ่มแผนใหม่</button>
+          </div>
+          {variety && <div className="glass rounded-xl p-3 mb-3 text-sm text-ink-80 flex flex-wrap gap-x-5 gap-y-1">
+            <span>เมนูหลักไม่ซ้ำ <span className="text-optimal font-medium">{variety.pct}%</span> ({variety.distinct}/{variety.total} มื้อหลัก)</span>
+            <span>ใช้โปรตีน <span className="text-ink font-medium">{variety.proteins}</span> ชนิด × วิธีปรุง {STYLES.length} แบบ</span>
+          </div>}
+          <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-1">
+            <button onClick={()=>setDayIdx(i=>Math.max(0,i-1))} className="glass glass-hover rounded-lg px-3 py-1.5 text-ink-80 shrink-0">◀</button>
+            {plan.map((_,i)=>(<button key={i} onClick={()=>setDayIdx(i)} className={"rounded-lg px-3 py-1.5 text-sm shrink-0 "+(i===dayIdx?'text-white font-medium':'glass glass-hover text-ink-80')} style={i===dayIdx?{background:'#396755'}:{}}>{i+1}</button>))}
+            <button onClick={()=>setDayIdx(i=>Math.min(plan.length-1,i+1))} className="glass glass-hover rounded-lg px-3 py-1.5 text-ink-80 shrink-0">▶</button>
+          </div>
+          <div className="text-sm text-ink-60 mb-3">📅 วันที่ {dayIdx+1} / {plan.length} · {day.length} มื้อ</div>
+          <div className="grid gap-4">{day.map((m,i)=><MealCard key={i} m={m}/>)}</div>
+        </section>
+
+        <section className={"glass rounded-3xl p-5 sm:p-6 mb-6 "+(reconOK?'ring-1 ring-optimal/40':'ring-1 ring-gold/40')}>
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <h2 className="font-head text-ink text-lg">รวมทั้งวัน</h2>
+            <div className="flex gap-2 items-center">
+              <Chip c={CAT.protein.c}>P {r1(dtot.p)}</Chip><Chip c={CAT.carb.c}>C {r1(dtot.c)}</Chip>
+              <Chip c={CAT.fat.c}>F {r1(dtot.f)}</Chip><Chip c="#5C5660">{dtot.kcal} kcal</Chip>
+              <span className={"text-sm font-medium "+(reconOK?'text-optimal':'text-gold')}>{recon}% ของเป้า {reconOK?'✓ ผ่าน ±5%':'· ปรับ portion'}</span>
+            </div>
+          </div>
+        </section>
+
+        <section className="glass rounded-3xl p-5 sm:p-6 mb-6">
+          <h2 className="font-head text-ink text-lg mb-3">4 · รายการซื้อของ</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-2">
+            {Object.keys(CAT).map(cat=>{
+              const list=Object.keys(shop).filter(k=>shop[k].cat===cat);
+              if(!list.length) return null;
+              return (<div key={cat}><div className="text-xs font-medium mb-1" style={{color:CAT[cat].c}}>{CAT[cat].label}</div>
+                {list.map(k=><div key={k} className="text-sm text-ink-80 flex justify-between"><span className="truncate pr-2">{k}</span><span className="text-ink-60 tabular-nums">{shop[k].g}g</span></div>)}</div>);
+            })}
+          </div>
+        </section>
+
+        <footer className="text-xs text-ink-40 leading-relaxed glass rounded-2xl p-4">
+          <p className="mb-1">⚖️ <span className="text-ink-60">กันมั่ว:</span> ตัวเลขสารอาหารมาจาก USDA FoodData Central / Source-anchor (เนื้อวัว 25g) — รายการที่ติด <span className="text-gold">~ประมาณ</span> ยังรอยืนยันกับ Thai FCD (INMU). โมเดลเลือกจัดจาน แต่ตัวเลขดึงจากฐานข้อมูลจริง ไม่ปั้นเอง.</p>
+          <p>🚧 <span className="text-ink-60">prototype:</span> เจนแผนไม่ซ้ำ 7–49 วัน + กด <span className="text-wellness">🎨 สร้างรูปจานเหมือนจริง</span> ได้แล้ว · ของจริงจะต่อ Supabase (บันทึก/แก้) + เลือกสไตล์/แพ้อาหาร + overlay ป้าย portion บนภาพ · ไม่ใช่คำแนะนำทางการแพทย์</p>
+        </footer>
+      </>)}
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+<script>
+  (function(){
+    try{
+      var src = document.getElementById('appsrc').textContent;
+      var out = Babel.transform(src, {presets:[['react',{runtime:'classic'}]]}).code;
+      eval(out);
+    }catch(e){
+      console.error(e);
+      document.getElementById('root').innerHTML =
+        '<pre style="color:#b91c1c;padding:24px;white-space:pre-wrap;font-size:13px">'+(e&&e.stack||e)+'</pre>';
+    }
+  })();
+</script>
+</body>
+</html>
