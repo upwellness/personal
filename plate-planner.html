@@ -96,8 +96,8 @@ const DB = {
     {th:'ผักกาดขาว', kcal:16,p:1.2,c:3.2,f:0.2, u:'ทัพพี',ug:80,max:250, src:'USDA 170390', conf:'verified'},
   ],
   fat:[
-    {th:'น้ำมันมะกอก', kcal:884,p:0,c:0,f:100, u:'ช้อนโต๊ะ',ug:14,max:55, src:'USDA 171413', conf:'verified'},
-    {th:'น้ำมันรำข้าว', kcal:884,p:0,c:0,f:100, u:'ช้อนโต๊ะ',ug:14,max:55, src:'USDA', conf:'verified'},
+    {th:'น้ำมันมะกอก', kcal:884,p:0,c:0,f:100, u:'ช้อนโต๊ะ',ug:14,max:30, src:'USDA 171413', conf:'verified'},
+    {th:'น้ำมันรำข้าว', kcal:884,p:0,c:0,f:100, u:'ช้อนโต๊ะ',ug:14,max:30, src:'USDA', conf:'verified'},
     {th:'อะโวคาโด', kcal:160,p:2,c:8.5,f:14.7, u:'ผล',ug:200,max:200, src:'USDA 171705', conf:'verified'},
     {th:'อัลมอนด์', kcal:579,p:21.2,c:21.6,f:49.9, u:'กำมือ',ug:28,max:56, src:'USDA 170567', conf:'verified'},
     {th:'เมล็ดฟักทอง', kcal:559,p:30.2,c:10.7,f:49, u:'ช้อนโต๊ะ',ug:14,max:42, src:'USDA 170556', conf:'verified'},
@@ -145,11 +145,14 @@ const reTot = it => { const a=it.reduce((s,x)=>({p:s.p+x.p,c:s.c+x.c,f:s.f+x.f,k
 const tag = (arr,cat)=>arr.map(o=>({...o,_cat:cat}));
 
 const STYLES=['ย่าง','ต้มยำ','ผัดกระเทียมพริกไทย','นึ่งซีอิ๊ว','อบสมุนไพร','ลวกจิ้มแจ่ว','ผัดพริกแกง','ต้มจืด'];
+// วิธีปรุงที่ "เข้ากับ" โปรตีนหลักแต่ละชนิด (กัน "อบสมุนไพรเวย์" / "ลวกจิ้มแจ่วไข่ขาว")
+const PSTYLE={'อกไก่ (สุก)':['ย่าง','ผัดกระเทียมพริกไทย','ผัดพริกแกง','ต้มยำ','อบสมุนไพร'],'หมูสันใน':['ย่าง','ผัดกระเทียมพริกไทย','ผัดพริกแกง','ต้มจืด'],'เนื้อวัวไม่ติดมัน':['ย่าง','ผัดพริกแกง','ผัดกระเทียมพริกไทย','ต้มยำ'],'ปลานิล (สุก)':['ย่าง','นึ่งซีอิ๊ว','ต้มยำ','ผัดพริกแกง'],'ปลาแซลมอน':['ย่าง','นึ่งซีอิ๊ว','อบสมุนไพร'],'กุ้งขาว':['ย่าง','ต้มยำ','ผัดกระเทียมพริกไทย'],'ทูน่ากระป๋องในน้ำ':['ยำ'],'เต้าหู้แข็ง':['ผัดกระเทียมพริกไทย','ต้มจืด','นึ่งซีอิ๊ว'],'ไข่ไก่ทั้งฟอง':['เจียว','ดาว','ต้ม'],'ไข่ขาว':['เจียว','ต้ม']};
 function buildDay(t, goal, even3, seed){
   const plan = mealPlan(goal, even3);
-  const dense = tag([DB.protein[0],DB.protein[8],DB.protein[6]],'protein'); // ไก่/ทูน่า/เนื้อวัว (โปรตีนแน่น ไขมันต่ำ ปิดส่วนต่างได้)
-  const fatFill = tag([DB.fat[0],DB.fat[1]],'fat');                          // น้ำมันมะกอก/รำข้าว (ไขมันบริสุทธิ์ ส่งถึงเป้าได้ทุกระดับ)
-  const carbFill = tag([DB.carb[0],DB.carb[1],DB.carb[2],DB.carb[5]],'carb'); // ข้าว/ข้าวกล้อง/มันเทศ/กล้วย (โปรตีนต่ำ)
+  const mainProt = [DB.protein[0],DB.protein[3],DB.protein[4],DB.protein[5],DB.protein[6],DB.protein[7],DB.protein[8],DB.protein[9]]; // เนื้อแน่นเป็นพระเอกจานเท่านั้น (ไก่/ปลา/แซลมอน/หมู/เนื้อ/กุ้ง/ทูน่า/เต้าหู้) — ไข่/โยเกิร์ต/เวย์ ไม่เป็นพระเอกมื้อคาว
+  const egg = tag([DB.protein[1]],'protein')[0];                             // ไข่ = ตัวเสริมโปรตีนสากล (ไข่ดาว/ไข่ต้ม คู่ได้ทุกจาน)
+  const fatFill = tag([DB.fat[0],DB.fat[1]],'fat');                          // น้ำมันมะกอก/รำข้าว
+  const carbFill = tag([DB.carb[0],DB.carb[1],DB.carb[2]],'carb');           // ข้าว/ข้าวกล้อง/มันเทศ (ไม่มีกล้วยในมื้อคาว)
   const ord = {protein:0,carb:1,veg:2,fat:3};
   const day = plan.map((m,i)=>{
     const mP=t.p*m.frac, mC=(m.carb?t.c*m.frac:0), mF=t.f*m.frac;
@@ -163,18 +166,18 @@ function buildDay(t, goal, even3, seed){
     // 2) ผักให้ปริมาตร
     if(!m.snack){ const veg=pick(tag(DB.veg,'veg'), seed+i*3); items.push(mk(veg, 130)); }
     // 3) โปรตีน — เติมให้ถึงเป้า (มีเพดานต่อชนิด=สมจริง จึงอาจต้อง 2 ชนิด ไม่ใช่ 6 ฟอง)
-    const protList = m.snack ? tag([DB.protein[10],DB.protein[11],DB.protein[1]],'protein') : tag(DB.protein,'protein');
+    const protList = m.snack ? tag([DB.protein[10],DB.protein[11],DB.protein[1]],'protein') : tag(mainProt,'protein');
     const prot = pick(protList, seed+i*3);
     if(mP - sP() > 2) items.push(mk(prot, clamp((mP-sP())/(prot.p/100), 20, prot.max)));
-    let guard=0;
-    while(sP() < mP*0.92 && guard<2){ const d=pick(dense, seed+i+1+guard); const n=(mP-sP())/(d.p/100); if(n>4) items.push(mk(d, clamp(n, 0, d.max))); guard++; }
+    // เติม "ไข่" 1 ครั้งถ้าโปรตีนยังขาด >5g (ไข่ดาว/ไข่ต้มคู่จาน) ไม่ใช่โปรตีนชนิดที่ 2 มั่ว ๆ
+    if(!m.snack && sP() < mP-5){ const n=(mP-sP())/(egg.p/100); items.push(mk(egg, clamp(n, 55, egg.max))); }
     // 4) ไขมัน = เติมส่วนที่เหลือ (ไขมันเกือบบริสุทธิ์; ของว่างใช้ถั่ว/เมล็ดได้)
     let rF = mF - sF();
     // ของว่าง = ถั่ว/เมล็ด (เข้ากับโยเกิร์ต/ผลไม้จริง) · มื้อคาว = น้ำมันปรุง
     if(rF>2){ const fl=m.snack?tag([DB.fat[3],DB.fat[4]],'fat'):fatFill; const fat=pick(fl, seed+i*3+2); items.push(mk(fat, clamp(rF/(fat.f/100), 3, fat.max))); }
     items.sort((a,b)=>ord[a.cat]-ord[b.cat]);
     const mainP=items.filter(x=>x.cat==='protein').sort((a,b)=>b.g-a.g)[0];
-    const style=m.snack?'':pick(STYLES, seed+i*5+3);
+    const style=m.snack?'':pick(PSTYLE[mainP?mainP.th:'อกไก่ (สุก)']||['ย่าง'], seed+i*5+3);
     const carb0=items.find(x=>x.cat==='carb');
     return {name:m.name, snack:m.snack, style, main:mainP?mainP.th:'', items, tot:reTot(items),
             tgt:{p:r1(mP),c:r1(mC),f:r1(mF)}, sig:(mainP?mainP.th:'')+'|'+style+'|'+(carb0?carb0.th:'')};
@@ -183,15 +186,19 @@ function buildDay(t, goal, even3, seed){
   const adj=(it,ng)=>{ const rf=it.ref; Object.assign(it,{g:Math.round(ng),p:r1(rf.p*ng/100),c:r1(rf.c*ng/100),f:r1(rf.f*ng/100),kcal:Math.round(rf.kcal*ng/100)}); };
   const dayK=()=>day.reduce((s,m)=>s+m.tot.kcal,0);
   let gap = t.kcal - dayK();
-  if(gap > t.kcal*0.02){                       // ขาด → เติมน้ำมันก่อน แล้วข้าว (ไม่เกินเพดานต่อมื้อ)
-    for(const ad of [{f:DB.fat[0],cat:'fat'},{f:DB.carb[1],cat:'carb'}]){
-      for(const m of day){ if(gap < t.kcal*0.015) break; if(m.snack) continue; if(ad.cat==='carb' && m.carbCap) continue;
-        let it=m.items.find(x=>x.th===ad.f.th);
-        if(!it){ it=mk({...ad.f,_cat:ad.cat},0); m.items.push(it); m.items.sort((a,b)=>ord[a.cat]-ord[b.cat]); }
-        const room=it.mx-it.g; if(room<=1) continue;
-        const addG=Math.min(room, gap/(it.ref.kcal/100));
-        adj(it, it.g+addG); m.tot=reTot(m.items); gap=t.kcal-dayK();
-      }
+  if(gap > t.kcal*0.02){
+    // 1) เติมคาร์บก่อน (กินจริงได้กว่าเทน้ำมัน) — ข้าวเดิมเต็มแล้วเติม "มันเทศ" เป็นคาร์บที่ 2 (ข้าว+มันเทศ = ปกติ)
+    for(const m of day){ if(gap < t.kcal*0.015) break; if(m.snack || m.carbCap) continue;
+      let it=m.items.filter(x=>x.cat==='carb').find(x=>x.mx-x.g>1);
+      if(!it){ it=mk({...DB.carb[2],_cat:'carb'},0); m.items.push(it); m.items.sort((a,b)=>ord[a.cat]-ord[b.cat]); }
+      const room=it.mx-it.g; if(room<=1) continue;
+      const addG=Math.min(room, gap/(it.ref.kcal/100)); adj(it, it.g+addG); m.tot=reTot(m.items); gap=t.kcal-dayK();
+    }
+    // 2) ยังขาด → เพิ่ม "น้ำมันเดิม" ของมื้อ (ไม่เกินเพดาน 30g)
+    for(const m of day){ if(gap < t.kcal*0.015) break; if(m.snack) continue;
+      let it=m.items.find(x=>x.cat==='fat' && /น้ำมัน/.test(x.th)); if(!it) continue;
+      const room=it.mx-it.g; if(room<=1) continue;
+      const addG=Math.min(room, gap/(it.ref.kcal/100)); adj(it, it.g+addG); m.tot=reTot(m.items); gap=t.kcal-dayK();
     }
   } else if(gap < -t.kcal*0.025){              // เกิน → ลดน้ำมันก้อนใหญ่สุด
     let best=null; day.forEach(m=>m.items.forEach(it=>{ if(it.cat==='fat' && (!best||it.g>best.it.g)) best={m,it}; }));
@@ -258,7 +265,7 @@ function Bar({items}){
 }
 const Chip = ({c,children}) => (<span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{background:c+'1A',color:c,border:'1px solid '+c+'33'}}>{children}</span>);
 
-const COOK={'ย่าง':'grilled','ต้มยำ':'spicy tom-yum style','ผัดกระเทียมพริกไทย':'stir-fried with garlic and pepper','นึ่งซีอิ๊ว':'steamed with light soy sauce','อบสมุนไพร':'herb-roasted','ลวกจิ้มแจ่ว':'blanched, served with spicy nam-jim dip','ผัดพริกแกง':'stir-fried in red curry paste','ต้มจืด':'in a clear broth'};
+const COOK={'ย่าง':'grilled','ต้มยำ':'in spicy tom-yum soup','ผัดกระเทียมพริกไทย':'stir-fried with garlic and pepper','นึ่งซีอิ๊ว':'steamed with light soy sauce','อบสมุนไพร':'herb-roasted','ลวกจิ้มแจ่ว':'blanched, served with spicy nam-jim dip','ผัดพริกแกง':'stir-fried in red curry paste','ต้มจืด':'in a clear broth','ยำ':'in a spicy Thai salad (yum)','เจียว':'as a fluffy Thai omelette','ดาว':'as a fried egg','ต้ม':'boiled'};
 const EN={'อกไก่ (สุก)':'grilled chicken breast','ไข่ไก่ทั้งฟอง':'whole eggs','ไข่ขาว':'egg whites','ปลานิล (สุก)':'tilapia fillet','ปลาแซลมอน':'salmon','หมูสันใน':'pork tenderloin','เนื้อวัวไม่ติดมัน':'lean beef','กุ้งขาว':'shrimp','ทูน่ากระป๋องในน้ำ':'canned tuna','เต้าหู้แข็ง':'firm tofu','กรีกโยเกิร์ตจืด':'plain Greek yogurt','เวย์โปรตีน':'whey protein','ข้าวสวย':'steamed jasmine rice','ข้าวกล้อง':'brown rice','มันเทศ (สุก)':'sweet potato','ข้าวโอ๊ต (ดิบ)':'oats','ขนมปังโฮลวีต':'whole-wheat bread','กล้วย':'banana','บรอกโคลี':'broccoli','ผักบุ้ง':'morning glory','คะน้า':'Chinese kale','กะหล่ำปลี':'cabbage','เห็ดออรินจิ':'king oyster mushroom','ผักกาดขาว':'napa cabbage','น้ำมันมะกอก':'olive oil','น้ำมันรำข้าว':'rice bran oil','อะโวคาโด':'avocado','อัลมอนด์':'almonds','เมล็ดฟักทอง':'pumpkin seeds'};
 const en = it => EN[it.th] || it.th.replace(/\s*\(.*?\)\s*/g,'').trim();
 const FRUIT=new Set(['กล้วย','มะละกอ','ฝรั่ง','แอปเปิล','ส้ม']);
