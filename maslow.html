@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maslow x Freedom — Interactive Presentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,600;9..144,800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#f7efe0;--muted:#bcae9a;--black:#070605;--panel:#12100d;--panel2:#1b1712;--line:rgba(247,239,224,.16);
+      --gold:#f6c667;--amber:#ff9f45;--rose:#ff6f91;--blue:#71d1ff;--green:#79e7a4;--violet:#b18cff;--cyan:#76f4e8;
+      --shadow:0 26px 80px rgba(0,0,0,.45);--radius:28px;
+    }
+    *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--black);color:var(--ink);font-family:'Noto Sans Thai',sans-serif}
+    body:before{content:"";position:fixed;inset:-20%;background:radial-gradient(circle at 15% 20%,rgba(246,198,103,.22),transparent 27%),radial-gradient(circle at 82% 18%,rgba(113,209,255,.18),transparent 28%),radial-gradient(circle at 75% 85%,rgba(177,140,255,.18),transparent 28%),linear-gradient(135deg,#070605 0%,#15100c 48%,#050608 100%);z-index:-3}
+    body:after{content:"";position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");mix-blend-mode:overlay;opacity:.14;pointer-events:none;z-index:-2}
+    .deck{width:100vw;height:100vh;position:relative;overflow:hidden}.slide{position:absolute;inset:0;display:none;padding:58px 72px;animation:enter .45s ease both}.slide.active{display:flex}.slide-inner{width:100%;height:100%;display:flex;flex-direction:column;justify-content:center}.cover{align-items:center;text-align:center}.cover .slide-inner{align-items:center}.kicker{letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-size:.78rem;font-weight:900}.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:rgba(255,255,255,.06);border-radius:999px;padding:8px 14px;color:var(--muted);backdrop-filter:blur(14px)}
+    h1,h2,h3{margin:0;font-family:'Fraunces','Noto Sans Thai',serif;line-height:1.02}h1{font-size:clamp(4rem,9vw,8.7rem);letter-spacing:-.06em}h2{font-size:clamp(2.7rem,5.4vw,5.7rem);letter-spacing:-.045em}h3{font-size:1.7rem;letter-spacing:-.02em}p,li{font-size:clamp(1.02rem,1.35vw,1.35rem);line-height:1.7;color:#dacdb9}.lead{font-size:clamp(1.35rem,2.15vw,2.25rem);line-height:1.45;color:#f2e7d7;max-width:1060px}.small{font-size:.92rem;color:var(--muted)}.em{color:var(--gold)}.big{font-size:clamp(4.6rem,10vw,10rem);font-family:'Fraunces';letter-spacing:-.07em;color:var(--gold);line-height:.92}.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}.card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.035));border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);position:relative;overflow:hidden}.card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 0%,rgba(246,198,103,.10),transparent 36%);pointer-events:none}.card>*{position:relative}.divider{width:86px;height:6px;border-radius:10px;background:linear-gradient(90deg,var(--gold),var(--rose));margin:22px 0}.quote{font-family:'Fraunces';font-size:clamp(2rem,4.5vw,5rem);line-height:1.12;letter-spacing:-.045em;color:#fff5df}.two{display:grid;grid-template-columns:1.02fr .98fr;gap:44px;align-items:center}.pill{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:8px 12px;margin:4px;color:#f5e9d7;background:rgba(255,255,255,.05);font-size:.9rem}.nav{position:fixed;z-index:10;bottom:22px;left:28px;right:28px;display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:.84rem;pointer-events:none}.progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--rose),var(--blue));z-index:20;transition:width .3s}.ctrl{pointer-events:auto;display:flex;gap:8px}.btn{border:1px solid var(--line);background:rgba(18,16,13,.62);color:var(--ink);border-radius:999px;padding:9px 13px;cursor:pointer;backdrop-filter:blur(12px);font-family:inherit}.btn:hover,.btn.active{border-color:rgba(246,198,103,.62);background:rgba(246,198,103,.13)}.stage-map{display:grid;grid-template-columns:260px 1fr;gap:22px;height:70vh}.levels{display:flex;flex-direction:column-reverse;gap:8px}.level-tab{border:1px solid var(--line);border-radius:18px;padding:12px 14px;background:rgba(255,255,255,.04);cursor:pointer;transition:.2s}.level-tab:hover,.level-tab.active{background:rgba(246,198,103,.13);border-color:rgba(246,198,103,.65);transform:translateX(5px)}.matrix{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.cell{min-height:82px;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:10px;background:rgba(255,255,255,.04)}.cell strong{display:block;color:var(--gold);font-size:.84rem;margin-bottom:5px}.cell span{font-size:.78rem;color:#d7c9b6}.pyramid{height:520px;display:flex;flex-direction:column-reverse;clip-path:polygon(50% 0,100% 100%,0 100%);border-radius:22px;overflow:hidden;filter:drop-shadow(0 34px 55px rgba(0,0,0,.4))}.band{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;color:#100b07;text-shadow:0 1px rgba(255,255,255,.28)}.b1{background:#f6c667}.b2{background:#ff9f45}.b3{background:#ff6f91}.b4{background:#b18cff}.b5{background:#71d1ff}.b6{background:#79e7a4}.b7{background:#76f4e8}.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.step{border-left:4px solid var(--gold);padding:16px 18px;background:rgba(255,255,255,.05);border-radius:0 18px 18px 0}.source-list a{color:var(--blue);text-decoration:none}.source-list li{font-size:.98rem}.note-panel{position:fixed;z-index:30;right:24px;top:80px;width:min(520px,calc(100vw - 48px));max-height:70vh;overflow:auto;border:1px solid var(--line);border-radius:24px;background:rgba(10,8,6,.9);box-shadow:var(--shadow);padding:22px;display:none;backdrop-filter:blur(20px)}.note-panel.show{display:block}.speaker{color:#fff0d4;font-size:1.02rem}.watermark{position:absolute;right:50px;top:42px;color:rgba(255,255,255,.07);font-family:'Fraunces';font-size:9rem;letter-spacing:-.07em;pointer-events:none}.legend{display:flex;gap:10px;flex-wrap:wrap}.dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:7px}.freedom-stack{display:flex;flex-direction:column;gap:10px}.freedom-row{display:grid;grid-template-columns:160px 1fr 1.2fr;gap:12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.04)}.bar{height:12px;border-radius:20px;background:rgba(255,255,255,.08);overflow:hidden}.bar i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,var(--gold),var(--rose),var(--blue))}.print-only{display:none}@keyframes enter{from{opacity:0;transform:translateY(12px) scale(.995)}to{opacity:1;transform:none}}@media(max-width:900px){.slide{padding:42px 22px}.two,.g2,.g3,.g4,.stage-map,.matrix,.timeline{grid-template-columns:1fr}.matrix{max-height:48vh;overflow:auto}.pyramid{height:360px}.freedom-row{grid-template-columns:1fr}.nav{left:12px;right:12px}.btn{padding:8px 10px}.hide-sm{display:none}}@media print{body{overflow:visible;background:#111}.deck{height:auto;overflow:visible}.slide{display:flex!important;position:relative;height:100vh;page-break-after:always}.nav,.progress,.note-panel{display:none}.print-only{display:block}}
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <main class="deck" id="deck">
+    <section class="slide cover active" data-notes="เปิดด้วยประโยคใหญ่: Maslow ไม่ใช่แค่พีระมิด แต่เป็นแผนที่อิสรภาพหลายชั้น ใช้กับผู้ประกอบการและคนทำงานยุคใหม่ได้ดีมาก">
+      <div class="slide-inner">
+        <span class="badge">Maslow × Freedom OS</span>
+        <h1>อิสรภาพ<br><span class="em">ไม่ใช่ชั้นบนสุด</span></h1>
+        <p class="lead">Interactive presentation ที่ผนวก Maslow กับจิตวิทยา พัฒนาการมนุษย์ การเงิน จิตวิญญาณ และธุรกิจ เพื่อเห็น “อิสรภาพ” ในแต่ละ level</p>
+        <div class="divider" style="margin:28px auto"></div>
+        <p class="small">ใช้ปุ่ม ← → / Space เพื่อเลื่อน · กด F เพื่อ fullscreen · กด N ดู speaker notes</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="ตั้ง thesis ว่าอิสรภาพเป็น stack ไม่ใช่สถานะเดียว คนมักพูด financial freedom แต่จริงๆ ยังติดกับดักสุขภาพ ความสัมพันธ์ หรือ identity ได้">
+      <div class="slide-inner">
+        <div class="kicker">Core Thesis</div>
+        <h2>Freedom is a stack,<br>not a destination.</h2>
+        <div class="divider"></div>
+        <div class="g3 grid">
+          <div class="card"><h3>Freedom from</h3><p>ความหิว ความกลัว หนี้ ความโดดเดี่ยว validation และ ego loop</p></div>
+          <div class="card"><h3>Freedom to</h3><p>เลือก ออกแบบเวลา สร้างงาน ใช้ศักยภาพ และเป็นประโยชน์</p></div>
+          <div class="card"><h3>Freedom with</h3><p>คนที่รัก ทีม ชุมชน ระบบ และภารกิจที่ใหญ่กว่าตัวเอง</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="แก้ภาพจำพีระมิดแข็งๆ: Maslow ใช้ได้เป็น map แต่ไม่ควรสอนเหมือนทุกคนต้องไต่เหมือนกัน">
+      <div class="slide-inner two">
+        <div>
+          <div class="kicker">Maslow 1.0</div>
+          <h2>พีระมิดคือ<br>ภาษาง่ายของมนุษย์</h2>
+          <p class="lead">Physiology → Safety → Belonging → Esteem → Self-Actualization</p>
+          <p>แต่โลกจริงไม่ได้ linear: คนจนยังมีความรักได้ คนไม่ปลอดภัยยังสร้างงานศิลปะได้ และวัฒนธรรมต่างกันทำให้ลำดับความต้องการต่างกัน</p>
+        </div>
+        <div class="pyramid" aria-label="Maslow pyramid">
+          <div class="band b1">Physiology<br>ร่างกาย</div>
+          <div class="band b2">Safety<br>ความปลอดภัย</div>
+          <div class="band b3">Belonging<br>สัมพันธ์</div>
+          <div class="band b4">Esteem<br>คุณค่า</div>
+          <div class="band b5">Self-Actualization<br>ศักยภาพ</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="ใส่หลักฐานร่วมสมัย: Tay & Diener พบ need fulfillment สัมพันธ์กับ subjective well-being ทั่วโลก แต่ไม่ได้แปลว่าลำดับตายตัว">
+      <div class="slide-inner">
+        <div class="kicker">Modern Caveat</div>
+        <h2>ไม่ใช่บันไดตายตัว — เป็นระบบแรงดึง</h2>
+        <div class="g4 grid">
+          <div class="card"><h3>Basic Needs</h3><p>กระทบ life evaluation ชัด: เงิน อาหาร ที่พัก สุขภาพ</p></div>
+          <div class="card"><h3>Social Needs</h3><p>กระทบ positive feeling: ความรัก มิตรภาพ ทีม</p></div>
+          <div class="card"><h3>Mastery</h3><p>มนุษย์ต้องรู้สึกว่า “ฉันทำได้” ไม่ใช่แค่ “ฉันรอด”</p></div>
+          <div class="card"><h3>Meaning</h3><p>เมื่อพื้นฐานพอแล้ว คำถามเปลี่ยนเป็น “ชีวิตนี้เพื่ออะไร”</p></div>
+        </div>
+        <p class="small">Source anchor: Tay & Diener 2011; Maslow critique / modern extensions</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="นี่คือแกนสำคัญของเด็ค: 8 levels ของอิสรภาพ เพื่อเอาไป mapping กับหลายศาสตร์">
+      <div class="slide-inner">
+        <div class="kicker">Freedom Ladder</div>
+        <h2>8 Levels of Freedom</h2>
+        <div class="freedom-stack">
+          <div class="freedom-row"><strong>1 Body</strong><div class="bar"><i style="width:18%"></i></div><span>ไม่ถูกลากด้วยความเหนื่อย หิว ป่วย นอนไม่พอ</span></div>
+          <div class="freedom-row"><strong>2 Safety</strong><div class="bar"><i style="width:30%"></i></div><span>ไม่ตื่นมาพร้อม panic เรื่องเงิน ความเสี่ยง และความไม่มั่นคง</span></div>
+          <div class="freedom-row"><strong>3 Belonging</strong><div class="bar"><i style="width:43%"></i></div><span>มีพื้นที่ปลอดภัยทางใจ ความสัมพันธ์ และชุมชน</span></div>
+          <div class="freedom-row"><strong>4 Identity</strong><div class="bar"><i style="width:55%"></i></div><span>ไม่ต้องขายวิญญาณเพื่อ approval</span></div>
+          <div class="freedom-row"><strong>5 Capability</strong><div class="bar"><i style="width:68%"></i></div><span>มี skill, agency, leverage สร้างผลลัพธ์ได้</span></div>
+          <div class="freedom-row"><strong>6 Time</strong><div class="bar"><i style="width:80%"></i></div><span>ออกแบบ calendar / work / location ได้</span></div>
+          <div class="freedom-row"><strong>7 Meaning</strong><div class="bar"><i style="width:91%"></i></div><span>งาน ชีวิต เงิน และความสัมพันธ์เริ่ม align</span></div>
+          <div class="freedom-row"><strong>8 Transcend</strong><div class="bar"><i style="width:100%"></i></div><span>หลุดจาก ego-loop ไปสู่ service / compassion / systems view</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Interaction slide: ให้คนคลิก level เพื่อดู mapping รายละเอียดในหลายศาสตร์">
+      <div class="slide-inner">
+        <div class="kicker">Interactive Map</div>
+        <h2>คลิกดูแต่ละ Freedom Level</h2>
+        <div class="stage-map">
+          <div class="levels" id="levelTabs"></div>
+          <div class="card" id="levelDetail" style="min-height:100%"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="อธิบาย mapping table แบบภาพรวม ไม่ต้องอ่านทุกช่อง ให้ผู้ชมเห็นว่าศาสตร์ต่างๆ พูดเรื่องเดียวกันคนละภาษา">
+      <div class="slide-inner">
+        <div class="kicker">Cross-Discipline Mapping</div>
+        <h2>หลายศาสตร์ คนละภาษา — แกนเดียวกัน</h2>
+        <div class="matrix" id="matrix"></div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="เอา Price of Happiness ที่เพิ่งค้นมาเชื่อมกับ Maslow: เงินสำคัญ แต่สำคัญคนละแบบในแต่ละชั้น">
+      <div class="slide-inner two">
+        <div>
+          <div class="kicker">Money & Happiness</div>
+          <h2>เงินไม่ได้ซื้อความสุข<br>มันซื้อ <span class="em">option</span></h2>
+          <p class="lead">งานวิจัยล่าสุดไม่ควรสรุปด้วย $75k อีกแล้ว — รายได้ยังสัมพันธ์กับ well-being ต่อเนื่อง แต่ผลตอบแทนเปลี่ยนรูป</p>
+        </div>
+        <div class="grid">
+          <div class="card"><h3>Survival → Safety</h3><p>เงินลด stress สูงมาก: อาหาร บ้าน หนี้ สุขภาพ เงินสำรอง</p></div>
+          <div class="card"><h3>Safety → Freedom</h3><p>เงินซื้อ time buffer, bargaining power, no-panic zone</p></div>
+          <div class="card"><h3>Freedom → Meaning</h3><p>เงิน amplify ภารกิจ แต่แทนความสัมพันธ์/สุขภาพ/ความหมายไม่ได้</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="SDT เป็นสะพานที่ดีมาก: autonomy competence relatedness = อิสรภาพ 3 มิติที่วัด/ออกแบบได้">
+      <div class="slide-inner">
+        <div class="kicker">Self-Determination Theory</div>
+        <h2>อิสรภาพทางใจมี 3 เครื่องยนต์</h2>
+        <div class="g3 grid">
+          <div class="card"><div class="big">A</div><h3>Autonomy</h3><p>ฉันเลือกชีวิตตัวเองได้ ไม่ได้ถูกลากด้วย fear หรือ approval</p></div>
+          <div class="card"><div class="big">C</div><h3>Competence</h3><p>ฉันมี skill และ feedback loop ที่ทำให้ชนะเกมได้จริง</p></div>
+          <div class="card"><div class="big">R</div><h3>Relatedness</h3><p>ฉันไม่ได้สู้คนเดียว มีคนเห็นฉัน เข้าใจฉัน และเดินด้วยกัน</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="PERMA ใช้เป็น dashboard ของชีวิต: ไม่ใช่แค่หาความสุข แต่ต้องดู engagement relationships meaning accomplishment">
+      <div class="slide-inner">
+        <div class="kicker">PERMA Dashboard</div>
+        <h2>Flourishing ไม่ใช่แค่ “รู้สึกดี”</h2>
+        <div class="g5 grid" style="grid-template-columns:repeat(5,1fr)">
+          <div class="card"><h3>P</h3><p>Positive Emotion</p></div>
+          <div class="card"><h3>E</h3><p>Engagement / Flow</p></div>
+          <div class="card"><h3>R</h3><p>Relationships</p></div>
+          <div class="card"><h3>M</h3><p>Meaning</p></div>
+          <div class="card"><h3>A</h3><p>Accomplishment</p></div>
+        </div>
+        <p class="lead" style="margin-top:24px">ถ้า Maslow คือ “ต้องการอะไร” — PERMA คือ “ชีวิตกำลังเบ่งบานตรงไหน / แห้งตรงไหน”</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="Kegan ช่วยอธิบาย identity freedom: เราโตเมื่อสิ่งที่เคยครอบเรา กลายเป็นสิ่งที่เรามองเห็นและเลือกได้">
+      <div class="slide-inner two">
+        <div>
+          <div class="kicker">Adult Development</div>
+          <h2>Kegan: Freedom from invisible control</h2>
+          <p class="lead">การเติบโตคือการเปลี่ยนสิ่งที่เรา “เป็นโดยไม่รู้ตัว” ให้กลายเป็นสิ่งที่เรา “มองเห็นและเลือกได้”</p>
+        </div>
+        <div class="timeline">
+          <div class="step"><strong>Impulse</strong><p>ถูกความต้องการเฉพาะหน้าใช้ชีวิต</p></div>
+          <div class="step"><strong>Approval</strong><p>ถูกสายตาคนอื่นกำหนดตัวตน</p></div>
+          <div class="step"><strong>Self-authoring</strong><p>มีหลักการของตัวเอง</p></div>
+          <div class="step"><strong>Self-transforming</strong><p>ถือหลายกรอบพร้อมกันได้</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="ใช้ Spiral Dynamics เป็นภาษาของระบบคุณค่า ไม่เอาไปตัดสินคนสูงต่ำ แต่ช่วยเห็นว่าคนติด freedom คนละแบบ">
+      <div class="slide-inner">
+        <div class="kicker">Values & Systems</div>
+        <h2>Spiral Dynamics: อิสรภาพของแต่ละโลกทัศน์</h2>
+        <div class="g4 grid">
+          <div class="card"><h3><span class="dot" style="background:#c0a070"></span>Beige</h3><p>รอดชีวิต</p></div>
+          <div class="card"><h3><span class="dot" style="background:#7e57c2"></span>Purple</h3><p>ปลอดภัยในเผ่า</p></div>
+          <div class="card"><h3><span class="dot" style="background:#ef4444"></span>Red</h3><p>มีอำนาจ ไม่ถูกกด</p></div>
+          <div class="card"><h3><span class="dot" style="background:#3b82f6"></span>Blue</h3><p>ระเบียบ ความถูกต้อง</p></div>
+          <div class="card"><h3><span class="dot" style="background:#f97316"></span>Orange</h3><p>สำเร็จ แข่งขัน ชนะ</p></div>
+          <div class="card"><h3><span class="dot" style="background:#22c55e"></span>Green</h3><p>ความเท่าเทียม ชุมชน</p></div>
+          <div class="card"><h3><span class="dot" style="background:#eab308"></span>Yellow</h3><p>ระบบซับซ้อน เลือกกรอบได้</p></div>
+          <div class="card"><h3><span class="dot" style="background:#14b8a6"></span>Turquoise</h3><p>องค์รวม โลกเป็นระบบเดียว</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="ผนวก Buddhist lens: ยิ่งสูงขึ้น อิสรภาพไม่ใช่การได้เพิ่ม แต่เป็นการถูกครอบน้อยลง">
+      <div class="slide-inner two">
+        <div>
+          <div class="kicker">Buddhist Lens</div>
+          <h2>อิสรภาพลึกสุดคือ<br>ไม่ถูก craving ขับ</h2>
+          <p class="lead">Maslow พูดเรื่อง need fulfillment; พุทธพูดเรื่องเห็น craving, suffering, cessation และ path</p>
+        </div>
+        <div class="grid">
+          <div class="card"><h3>ทุกข์</h3><p>ความไม่พอ ความกลัว ความยึด</p></div>
+          <div class="card"><h3>เหตุ</h3><p>craving: อยากได้ อยากเป็น ไม่อยากเป็น</p></div>
+          <div class="card"><h3>ดับ</h3><p>หลุดจากการถูก impulse และ ego ใช้งาน</p></div>
+          <div class="card"><h3>ทาง</h3><p>wisdom · ethics · mental discipline</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="จักระใช้เป็น symbolic map ไม่อ้างเชิงแพทย์ ให้เห็นว่าหลายวัฒนธรรม map ร่างกายไปสู่จิตวิญญาณคล้ายๆกัน">
+      <div class="slide-inner">
+        <div class="kicker">Symbolic Body Map</div>
+        <h2>Chakra as metaphor: จากรากสู่ฟ้า</h2>
+        <div class="g7 grid" style="grid-template-columns:repeat(7,1fr)">
+          <div class="card"><h3>Root</h3><p>survival</p></div><div class="card"><h3>Sacral</h3><p>emotion</p></div><div class="card"><h3>Solar</h3><p>power</p></div><div class="card"><h3>Heart</h3><p>love</p></div><div class="card"><h3>Throat</h3><p>voice</p></div><div class="card"><h3>Third Eye</h3><p>insight</p></div><div class="card"><h3>Crown</h3><p>transcend</p></div>
+        </div>
+        <p class="small">ใช้เป็นภาษาสัญลักษณ์ ไม่ใช่ claim ทางการแพทย์</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="นี่คือ slide สำหรับธุรกิจ: product/service ไม่ควรขาย feature แต่ขาย next freedom level">
+      <div class="slide-inner">
+        <div class="kicker">Business Translation</div>
+        <h2>อย่าขาย Product — ขาย Next Freedom</h2>
+        <div class="g3 grid">
+          <div class="card"><h3>Wellness</h3><p>ขาย Body/Safety Freedom: พลังงาน สุขภาพ การนอน การฟื้นตัว ความมั่นใจในร่างกาย</p></div>
+          <div class="card"><h3>AI / Automation</h3><p>ขาย Time/Capability Freedom: ลดงานซ้ำ เพิ่ม leverage ให้ one-person business</p></div>
+          <div class="card"><h3>Community / Coaching</h3><p>ขาย Belonging/Identity Freedom: ไม่ต้องเดินคนเดียว มีภาษาใหม่ให้ชีวิต</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="ใช้เป็น offer map สำหรับต้นโดยตรง: AI, wellness, Amway, teaching, content สามารถวางใน freedom ladder ได้">
+      <div class="slide-inner">
+        <div class="kicker">Offer Architecture</div>
+        <h2>Freedom Ladder → Offer Ladder</h2>
+        <div class="g4 grid">
+          <div class="card"><h3>1. Diagnose</h3><p>Freedom Audit: ติดอยู่ level ไหน — money, body, time, identity, meaning?</p></div>
+          <div class="card"><h3>2. Stabilize</h3><p>Wellness + cashflow + routines ให้กลับมามีพลังและพื้นที่หายใจ</p></div>
+          <div class="card"><h3>3. Leverage</h3><p>AI OS / Linechat Bot / automation เพื่อซื้อเวลาคืน</p></div>
+          <div class="card"><h3>4. Transcend</h3><p>mission, community, contribution, legacy</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="สรุปให้จำง่ายและมี punchline">
+      <div class="slide-inner cover">
+        <span class="badge">Final Message</span>
+        <p class="quote">Maslow is not the pyramid.<br><span class="em">Maslow is the launchpad.</span></p>
+        <p class="lead">เป้าหมายไม่ใช่ “ขึ้นไปให้สูงที่สุด” แต่คือ “หลุดจากพันธนาการทีละชั้น แล้วใช้ชีวิตให้เป็นอิสระมากขึ้น”</p>
+      </div>
+    </section>
+
+    <section class="slide" data-notes="ให้เครดิตแหล่งอ้างอิงหลัก ไม่ต้องอ่านหมด แต่ทำให้ deck credible">
+      <div class="slide-inner">
+        <div class="kicker">Sources</div>
+        <h2>Research Anchors</h2>
+        <ul class="source-list">
+          <li>Maslow / self-actualization overview — Britannica: <a href="https://www.britannica.com/science/self-actualization">britannica.com</a></li>
+          <li>Kenrick et al., Renovating the Pyramid of Needs — PMC: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3161123/">pmc.ncbi.nlm.nih.gov</a></li>
+          <li>Tay & Diener 2011, Needs and SWB around the world — APA: <a href="https://www.apa.org/pubs/journals/releases/psp-101-2-354.pdf">apa.org</a></li>
+          <li>Self-Determination Theory — APA / Deci & Ryan: <a href="https://www.apa.org/research-practice/conduct-research/self-determination-theory">apa.org</a></li>
+          <li>PERMA — UPenn Positive Psychology Center: <a href="https://ppc.sas.upenn.edu/learn-more/perma-theory-well-being-and-perma-workshops">ppc.sas.upenn.edu</a></li>
+          <li>Income & well-being — Kahneman, Killingsworth & Mellers 2023: <a href="https://pubmed.ncbi.nlm.nih.gov/36857342/">PubMed</a></li>
+          <li>World Happiness / income satiation — Jebb et al. 2018: <a href="https://www.nature.com/articles/s41562-017-0277-0">Nature Human Behaviour</a></li>
+          <li>Buddhist Four Noble Truths — Britannica: <a href="https://www.britannica.com/topic/Buddhism/The-Four-Noble-Truths">britannica.com</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <aside class="note-panel" id="notes"><strong>Speaker Notes</strong><p class="speaker" id="noteText"></p></aside>
+  <div class="nav">
+    <div><span id="current">1</span> / <span id="total">17</span> · <span class="hide-sm">← → Space · F fullscreen · N notes</span></div>
+    <div class="ctrl"><button class="btn" id="prev">←</button><button class="btn" id="next">→</button><button class="btn" id="noteBtn">Notes</button><button class="btn" id="fullBtn">Full</button></div>
+  </div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];let current=0;const $=s=>document.querySelector(s);$('#total').textContent=slides.length;
+function show(n){slides[current].classList.remove('active');current=(n+slides.length)%slides.length;slides[current].classList.add('active');$('#current').textContent=current+1;$('#progress').style.width=((current+1)/slides.length*100)+'%';updateNotes();}
+function next(){show(current+1)}function prev(){show(current-1)}
+document.addEventListener('keydown',e=>{if(['ArrowRight',' '].includes(e.key)){e.preventDefault();next()} if(e.key==='ArrowLeft'){prev()} if(e.key.toLowerCase()==='f'){document.documentElement.requestFullscreen?.()} if(e.key.toLowerCase()==='n'){toggleNotes()}});
+$('#next').onclick=next;$('#prev').onclick=prev;$('#fullBtn').onclick=()=>document.documentElement.requestFullscreen?.();$('#noteBtn').onclick=toggleNotes;
+document.getElementById('deck').addEventListener('click',e=>{if(e.target.closest('a,button,.level-tab'))return; e.clientX>innerWidth/2?next():prev()});
+function toggleNotes(){document.getElementById('notes').classList.toggle('show');updateNotes()}function updateNotes(){document.getElementById('noteText').textContent=slides[current].dataset.notes||'—'}
+
+const levels=[
+ {n:'Body Freedom',maslow:'Physiology',sdt:'ร่างกายพร้อมก่อน autonomy',perma:'Positive Emotion พื้นฐาน',kegan:'Impulse regulation',spiral:'Beige',chakra:'Root',money:'survival cashflow',line:'ฉันไม่ถูกความหิว เหนื่อย ป่วย ใช้ชีวิตแทนฉัน'},
+ {n:'Safety Freedom',maslow:'Safety',sdt:'autonomy เริ่มเกิดเมื่อไม่ panic',perma:'ความสงบ / resilience',kegan:'จาก impulse สู่ planning',spiral:'Purple/Blue',chakra:'Root → Solar',money:'emergency buffer / debt control',line:'ฉันมีพื้นที่หายใจและไม่ต้องตัดสินใจจากความกลัว'},
+ {n:'Belonging Freedom',maslow:'Love / Belonging',sdt:'Relatedness',perma:'Relationships',kegan:'Socialized mind',spiral:'Purple/Green',chakra:'Heart',money:'community safety net',line:'ฉันไม่ต้องเป็น lone wolf เพื่อพิสูจน์คุณค่า'},
+ {n:'Identity Freedom',maslow:'Esteem',sdt:'autonomy + self-respect',perma:'Accomplishment',kegan:'เริ่ม self-authoring',spiral:'Red/Blue/Orange',chakra:'Solar Plexus',money:'income confidence',line:'ฉันไม่ต้องแลกตัวตนกับการยอมรับ'},
+ {n:'Capability Freedom',maslow:'Esteem → Actualization',sdt:'Competence',perma:'Engagement / flow',kegan:'Self-authoring',spiral:'Orange',chakra:'Throat / Solar',money:'skill monetization',line:'ฉันสร้างผลลัพธ์ได้ ไม่ใช่แค่มีความฝัน'},
+ {n:'Time & Choice Freedom',maslow:'Self-Actualization',sdt:'Autonomy',perma:'Engagement + Accomplishment',kegan:'Self-authored system',spiral:'Orange → Yellow',chakra:'Throat',money:'work optional runway',line:'ฉันเลือกเกม เลือกเวลา เลือกคน เลือกวิธีเล่น'},
+ {n:'Meaning Freedom',maslow:'Actualization',sdt:'integrated motivation',perma:'Meaning',kegan:'Self-transforming begins',spiral:'Green/Yellow',chakra:'Third Eye',money:'capital serves mission',line:'ชีวิตไม่ใช่แค่สำเร็จ แต่สอดคล้อง'},
+ {n:'Transcendence Freedom',maslow:'Self-Transcendence',sdt:'beyond egoic autonomy',perma:'Meaning + Mattering',kegan:'Perspective-holding',spiral:'Yellow/Turquoise',chakra:'Crown',money:'legacy / contribution',line:'ฉันไม่ได้ถามแค่ ฉันได้อะไร — แต่ถามว่า ระบบนี้ดีขึ้นอย่างไร'}
+];
+function renderLevel(i){document.querySelectorAll('.level-tab').forEach((b,idx)=>b.classList.toggle('active',idx===i));const l=levels[i];$('#levelDetail').innerHTML=`<span class="badge">${i+1}/8</span><h2 style="font-size:3rem;margin:16px 0">${l.n}</h2><p class="lead">${l.line}</p><div class="g3 grid"><div><strong class="em">Maslow</strong><p>${l.maslow}</p></div><div><strong class="em">SDT</strong><p>${l.sdt}</p></div><div><strong class="em">PERMA</strong><p>${l.perma}</p></div><div><strong class="em">Kegan</strong><p>${l.kegan}</p></div><div><strong class="em">Spiral</strong><p>${l.spiral}</p></div><div><strong class="em">Money Lens</strong><p>${l.money}</p></div></div><p class="small">Symbolic chakra mapping: ${l.chakra}</p>`}
+function initInteractive(){const tabs=$('#levelTabs');levels.forEach((l,i)=>{const b=document.createElement('button');b.className='level-tab';b.innerHTML=`<strong>${i+1}. ${l.n}</strong><br><span class="small">${l.maslow}</span>`;b.onclick=()=>renderLevel(i);tabs.appendChild(b)});renderLevel(0);
+ const cols=['Level','Maslow','SDT','PERMA','Kegan','Money','Freedom Question'];const matrix=$('#matrix');cols.forEach(c=>{const d=document.createElement('div');d.className='cell';d.style.background='rgba(246,198,103,.12)';d.innerHTML=`<strong>${c}</strong>`;matrix.appendChild(d)});levels.forEach((l,i)=>{[`${i+1}. ${l.n}`,l.maslow,l.sdt,l.perma,l.kegan,l.money,l.line].forEach((v,j)=>{const d=document.createElement('div');d.className='cell';d.innerHTML=j===0?`<strong>${v}</strong>`:`<span>${v}</span>`;matrix.appendChild(d)})})}
+initInteractive();show(0);
+</script>
+</body>
+</html>
