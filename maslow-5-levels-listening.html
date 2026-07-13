@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Maslow 5 ระดับ — ฉบับ "ฟังให้ได้ยิน" (v3)</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.6/babel.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{--bg:#070a16;--ink:#eaeeff;--muted:#a9b2d6;--faint:#8b93bd;
+    --violet:#a78bfa;--indigo:#818cf8;--cyan:#22d3ee;--amber:#fbbf24;--rose:#fb7185;--emerald:#34d399;--sky:#38bdf8;--orange:#fb923c;}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);overflow:hidden}
+  body{font-family:'Noto Sans Thai',system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .display{font-family:'Anuphan','Noto Sans Thai',sans-serif}
+  .viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(1200px 800px at 50% -10%,#0f1330,#070a16 70%)}
+  .stage{position:relative;width:1280px;height:720px;border-radius:26px;overflow:hidden;transform-origin:center center;box-shadow:0 40px 120px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.06)}
+  .stage-bg{position:absolute;inset:0;background:
+      radial-gradient(1200px 700px at 14% 8%,rgba(129,140,248,.22),transparent 60%),
+      radial-gradient(1000px 640px at 88% 92%,rgba(34,211,238,.15),transparent 55%),
+      radial-gradient(900px 600px at 92% 6%,rgba(167,139,250,.14),transparent 55%),
+      linear-gradient(135deg,#0a0e20 0%,#0c1026 55%,#130a26 100%)}
+  .orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;animation:float 16s ease-in-out infinite}
+  .orb.a{width:360px;height:360px;background:#7c3aed;left:-60px;top:-40px}
+  .orb.b{width:320px;height:320px;background:#0891b2;right:-40px;bottom:-60px;animation-delay:-5s}
+  .orb.c{width:240px;height:240px;background:#f59e0b;right:34%;top:-70px;opacity:.28;animation-delay:-9s}
+  @keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(24px,20px)}}
+  .grid-tex{position:absolute;inset:0;opacity:.05;background-image:linear-gradient(rgba(255,255,255,.7) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.7) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(circle at 50% 40%,#000,transparent 78%)}
+  .glass{background:rgba(255,255,255,.055);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);border:1px solid rgba(255,255,255,.12);box-shadow:0 12px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08)}
+  .glass-2{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.09)}
+  .chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14)}
+  .slidewrap{position:absolute;inset:0}
+  .safe{position:absolute;left:56px;right:56px;top:80px;bottom:64px}
+  .anim{animation:enter .5s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes enter{from{opacity:0;transform:translateY(14px) scale(.99)}to{opacity:1;transform:none}}
+  .anim-2{animation:enter .6s cubic-bezier(.2,.7,.2,1) .06s both}
+  .anim-3{animation:enter .6s cubic-bezier(.2,.7,.2,1) .12s both}
+  .kicker{position:absolute;left:56px;top:38px;display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .kdot{width:8px;height:8px;border-radius:50%;background:linear-gradient(90deg,var(--violet),var(--cyan))}
+  .progress{position:absolute;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--violet),var(--cyan),var(--emerald));box-shadow:0 0 18px rgba(124,58,237,.6);transition:width .45s cubic-bezier(.2,.7,.2,1);z-index:20}
+  .nav{position:absolute;right:30px;bottom:26px;display:flex;align-items:center;gap:10px;z-index:20}
+  .navbtn{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#dfe4ff;transition:.18s;user-select:none}
+  .navbtn:hover{background:rgba(255,255,255,.12);transform:translateY(-1px)}
+  .pageno{position:absolute;right:34px;top:38px;font-size:12px;color:var(--muted);z-index:20;letter-spacing:.06em}
+  .pageno b{color:#eef1ff;font-weight:600}
+  .dots{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);display:flex;gap:5px;z-index:20;flex-wrap:wrap;justify-content:center;max-width:60%}
+  .dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.22);cursor:pointer;transition:.2s}
+  .dot.on{width:18px;border-radius:6px;background:linear-gradient(90deg,var(--violet),var(--cyan))}
+  .tagpill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;font-size:14px}
+  .num-badge{border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Anuphan';font-weight:700;flex:none}
+  .hl{background:linear-gradient(90deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hl-amber{background:linear-gradient(90deg,#fcd34d,#fb923c);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hl-green{background:linear-gradient(90deg,#34d399,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const {useState,useEffect,useCallback} = React;
+
+const LEVELS=[
+  {n:1,name:"ร่างกาย",en:"Physical",emoji:"🔴",c:"#fb7185",
+   def:"หิว \"เอาตัวรอดวันนี้\" — ร่างกาย + กระเป๋ากำลังร้อง คิดเรื่องอื่นไม่ออก",
+   health:["เหนื่อยจนไม่มีแรงจะทำอะไร","นอนเท่าไหร่ก็ไม่พอ ตื่นมาเพลีย","ปวดหัวปวดตัวบ่อย กินยาประจำ","ไม่มีเวลาดูแลตัวเองเลย","ป่วยง่าย เป็นหวัดบ่อยมาก"],
+   money:["เงินเดือนชนเดือน ไม่เหลือเก็บ","สิ้นเดือนทีลุ้นทุกที","มีรายจ่ายเข้ามาก็จุกเลย","หาเช้ากินค่ำ หยุดไม่ได้","หนี้บัตรหมุนไม่ทัน"],
+   biz:["ตอนนี้ยังไม่พร้อม เหนื่อยอยู่","ขอแค่มีงาน มีเงินเข้าก็พอ","ไม่มีเวลาไปทำอย่างอื่นแล้ว","มีอะไรได้เงินเร็วๆ ไหม","ลงทุนเยอะไม่ได้ ไม่มีเงิน"],
+   dream:["ไม่ได้ฝันอะไร ขอแค่ผ่านไปวันๆ","ขอแค่มีพอใช้ไม่ขาดก็พอ","อยากได้แค่หยุดพักบ้าง","อยากมีวันที่ไม่ต้องคิดเรื่องเงิน","ฝันไกลไม่ไหว เอาให้รอดก่อน"],
+   open:"นำด้วยสินค้าที่ช่วยให้อาการดีขึ้นเร็ว (แรง/นอน) เป็นหลัก · ถ้าพูดรายได้ พูดแค่ \"เริ่มเล็ก รายได้ตามแรงที่ลงจริง\"",
+   ban:"ห้ามการันตีตัวเลข/ความเร็ว · ห้ามพูดอิสรภาพ/วิสัยทัศน์",
+   stop:"🛑 เกณฑ์ถอย: ถ้าพูด \"หนี้บัตรหมุนไม่ทัน\" / \"มีอะไรได้เงินเร็วๆ ไหม\" — คนจมหนี้ยังไม่ใช่เวลาชวนธุรกิจที่มีต้นทุน ช่วยด้วยสินค้า/คำแนะนำก่อน อย่าเห็นเป็น \"ดีลปิดง่าย\""},
+  {n:2,name:"ปลอดภัย มั่นคง",en:"Safety",emoji:"🟠",c:"#fb923c",
+   def:"หิว \"ความมั่นคง\" — กลัวอนาคต อยากมีหลักประกัน (เจอได้ทั้งคนเงินเหลือและเงินตึง — ไม่ต้อง \"พ้น\" ระดับ 1 ก่อน)",
+   health:["กลัวป่วยหนักแล้วเป็นภาระลูก","เห็นคนรอบตัวเป็นโรค เริ่มกลัว","อยากตรวจสุขภาพไว้ก่อน เผื่อเจออะไร","อยากดูแลตัวเองก่อนจะสาย","กลัวแก่ไปช่วยตัวเองไม่ได้"],
+   money:["อยากมีเงินสำรองเผื่อฉุกเฉิน","กลัวเกษียณไปเงินไม่พอ","รายได้ทางเดียวมันเสี่ยง","อยากมีหลักประกันให้ครอบครัว","อยากมีอะไรมั่นคงกว่านี้"],
+   biz:["อยากมีรายได้เสริมไว้อีกทาง","งานประจำอย่างเดียวไม่พอแล้ว","อยากทำอะไรมั่นคงระยะยาว","ขอแบบไม่เสี่ยงมากนะ ค่อยเป็นค่อยไป","อยากมีอะไรรองรับตอนแก่"],
+   dream:["อยากมีชีวิตที่ไม่ต้องกังวลเรื่องเงิน","อยากเกษียณสบายๆ","อยากให้ลูกไม่ลำบากแบบเรา","ขอแค่มั่นคง ไม่ต้องรวยมาก","อยากนอนหลับไม่ต้องห่วงอนาคต"],
+   open:"แผนระยะยาว/ลดความเสี่ยง — รายได้ = หลักประกันเพิ่ม, สุขภาพ = ประกันที่กินได้",ban:"ห้ามพูดรวยเร็ว (ยิ่งพูดยิ่งดูเสี่ยง เขาถอย)",stop:null},
+  {n:3,name:"สังคม การมีพวก",en:"Belonging",emoji:"🟡",c:"#fbbf24",
+   def:"หิว \"การมีพวก\" — เหงา อยากเป็นส่วนหนึ่ง (คนเงินเหลือหรือเงินขาดก็เหงาได้เท่ากัน)",
+   health:["อยากหากลุ่มออกกำลังด้วยกัน","ออกกำลังคนเดียวไม่สนุก ไม่ค่อยได้ทำ","เพื่อนชวนเข้าคลาส เลยลองดู","อยากมีเพื่อนคอยดูแลสุขภาพไปด้วยกัน","ชอบกลุ่มที่คอยเชียร์กัน"],
+   money:["เรื่องเงินพอไปได้ แต่มันเหงา","ไม่ได้เดือดร้อนเงิน แค่อยากมีอะไรทำ","อยากได้กิจกรรม มากกว่ารายได้","เงินไม่ใช่เรื่องหลัก อยากมีสังคมมากกว่า","มีก็ดี แต่ที่มาเพราะชอบคนในกลุ่ม"],
+   biz:["ชอบทีมนี้จัง คนน่ารักดี","อยากมาช่วยงาน อยากมีส่วนร่วม","มางานแล้วอบอุ่น เลยอยากมาอีก","ทำคนเดียวไม่ไหว แต่มีทีมก็เอา","อยากรู้จักคนเยอะๆ ในวงการนี้"],
+   dream:["อยากมีกลุ่มเพื่อนไปไหนมาไหนด้วยกัน","อยากได้ที่ที่รู้สึกเป็นส่วนหนึ่ง","อยากมีคนคุย ไม่อยากอยู่บ้านเงียบๆ","อยากใช้เวลากับคนที่คิดเหมือนกัน","อยากมีสังคมอบอุ่นแบบครอบครัว"],
+   open:"ชวนมาเป็นส่วนหนึ่งของทีม/กิจกรรมก่อน ค่อยคุยเรื่องอื่น",ban:"ห้าม hard sell นัดแรก (เขามาหาคน ไม่ได้มาหาของ)",stop:null},
+  {n:4,name:"การยอมรับ ตัวตน",en:"Esteem",emoji:"🟢",c:"#34d399",
+   def:"หิว \"การยอมรับ\" — อยากเป็นคนสำคัญ อยากพิสูจน์ อยากมีตัวตน (อยากได้แม้ยังเหงาหรือเงินยังไม่นิ่งก็ได้)",
+   health:["อยากหุ่นดี ใส่อะไรก็สวย","อยากให้คนทักว่าดูเด็กลง","อยากเป็นแรงบันดาลใจสุขภาพให้คนอื่น","อยากดูดีในงานสำคัญ/วันรวมรุ่น","ดูแลตัวเองแล้วมั่นใจขึ้นเยอะ"],
+   money:["เงินไม่ใช่ปัญหา แต่อยากมีที่มาจากฝีมือตัวเอง","อยากพิสูจน์ว่าหาเองได้ ไม่ต้องพึ่งใคร","อยากมีรายได้ที่ภูมิใจว่าสร้างเอง","อยากมีอิสระทางการเงินของตัวเอง","อยากพิสูจน์ให้ที่บ้านเห็นว่าเลือกไม่ผิด"],
+   biz:["เบื่อเป็นลูกน้อง อยากมีของตัวเอง","อยากทำอะไรให้คนเห็นว่าเราก็ทำได้","อยากมีตำแหน่ง มีทีมของตัวเอง","อยากเก่งเรื่องนี้ อยากเป็นที่ยอมรับ","อยากขึ้นเวที อยากมีคนรู้จัก"],
+   dream:["อยากเป็นคนที่ประสบความสำเร็จ","อยากให้คนพูดถึงในทางที่ดี","อยากเป็นตัวอย่างให้คนอื่น","อยากมีชื่อเสียงในสิ่งที่ทำ","อยากภูมิใจในตัวเองสักเรื่อง"],
+   open:"โอกาสได้เป็นตัวเอง + เวที + เส้นทางเติบโต/ตำแหน่ง · ให้ recognition เยอะๆ",ban:"ห้ามลดเขาเหลือแค่ \"ยอดขาย\"",
+   note:"คำว่า \"อิสรภาพทางการเงิน\" — ระดับ 4 พูดเองได้ (เป็นสัญญาณ) แต่ถ้าเราไปพูดกับคนระดับ 1–2 เขาแปลว่าแชร์ลูกโซ่ ระวัง",stop:null},
+  {n:5,name:"เติมเต็ม ส่งต่อ",en:"Self-Actualization",emoji:"🔵",c:"#38bdf8",
+   def:"หิว \"ความหมาย\" — ถามว่า \"ชีวิตนี้เพื่ออะไร\" อยากช่วยคน อยากส่งต่อ (ที่แยกจริงคือ \"แรงที่ดัง\" ไม่ใช่ลำดับที่มาถึง)",
+   health:["อยากแข็งแรงไว้ช่วยคนอื่นได้นานๆ","ดูแลสุขภาพเพื่ออยู่กับคนที่รักไปนานๆ","อยากส่งต่อเรื่องสุขภาพดีให้คนอื่น","อยากเป็นตัวอย่างการใช้ชีวิตที่ดี","แข็งแรงเพื่อทำสิ่งที่ตั้งใจให้จบ"],
+   money:["เงินพอแล้ว อยากเอาไปทำอะไรที่มีค่า","อยากใช้เงินสร้างประโยชน์ให้คนอื่น","เงินไม่ใช่เป้าแล้ว ความหมายสำคัญกว่า","อยากส่งต่อสิ่งที่มีให้คนรุ่นหลัง","อยากมีเวลาไปช่วยคน มากกว่าหาเงิน"],
+   biz:["อยากสร้างทีมที่ช่วยให้คนอื่นชีวิตดีขึ้น","อยากทำธุรกิจที่มีความหมาย ไม่ใช่แค่กำไร","อยากเห็นคนที่เราช่วยเติบโต","อยากทิ้งอะไรดีๆ ไว้ให้วงการ","อยากใช้สิ่งที่มีสร้าง impact"],
+   dream:["อยากให้ชีวิตมีความหมายกับคนอื่น","อยากเห็นคนรอบตัวดีขึ้นเพราะเรา","อยากส่งต่อสิ่งดีๆ ให้โลกนี้","อยากทำสิ่งที่อยู่ต่อแม้เราไม่อยู่","อยากใช้เวลาที่เหลือทำสิ่งที่ใช่"],
+   open:"vision การช่วยคน/ส่งต่อ · ธุรกิจ = เครื่องมือสร้าง impact · ชวนมาสร้างทีม",ban:"ห้ามเน้นเงิน/ตำแหน่ง (เขาข้ามมาแล้ว)",stop:null},
+];
+
+const SLIDES=[
+  {k:"cover"},{k:"core"},{k:"ethics"},{k:"form"},{k:"radar"},
+  {k:"level",lv:LEVELS[0]},{k:"level",lv:LEVELS[1]},{k:"level",lv:LEVELS[2]},{k:"level",lv:LEVELS[3]},{k:"level",lv:LEVELS[4]},
+  {k:"bridge"},{k:"mapping"},{k:"case1"},{k:"case2"},{k:"case3a"},{k:"case3b"},{k:"roleplay"},{k:"rules"},
+];
+const SECTIONS=[
+  {tag:"แก่นเรื่อง + กติกาเหล็ก",r:[0,2]},{tag:"เครื่องมือฟัง",r:[3,4]},
+  {tag:"Maslow 5 ระดับ",r:[5,9]},{tag:"เปิดเรื่อง + แผนที่",r:[10,11]},
+  {tag:"เคสจริง 3 คน",r:[12,16]},{tag:"กติกาการฟัง",r:[17,17]},
+];
+
+function Kicker({i}){const s=SECTIONS.find(x=>i>=x.r[0]&&i<=x.r[1])||SECTIONS[0];
+  return(<div className="kicker anim"><span className="kdot"></span>ฟังให้ได้ยิน · {s.tag}</div>);}
+function Badge({n,c,size=34,fs=16}){return(<div className="num-badge" style={{width:size,height:size,fontSize:fs,background:c+"22",color:c,border:`1px solid ${c}55`}}>{n}</div>);}
+
+function Cover(){return(<div className="safe flex flex-col items-center justify-center text-center">
+  <div className="tagpill chip anim mb-6"><span>🎧</span><span className="text-[var(--muted)]">TONPALEARN × UP Wellness · สัมมนาทีม</span></div>
+  <h1 className="display anim-2 font-bold leading-[1.15] text-[52px] max-w-[920px]">Maslow 5 ระดับ<br/><span className="hl">ฉบับ "ฟังให้ได้ยิน"</span></h1>
+  <p className="anim-3 mt-6 text-[19px] text-[var(--muted)] max-w-[820px]">5 ระดับ + วิธีฟังคน + คำพูดจริงเยอะๆ + <b className="text-white">เคสจริง 3 คน + role play</b></p>
+  <div className="anim-3 mt-8 text-[13.5px] text-[var(--faint)]">โดย ต้น (Toni) · Emerald · 2569 · v3 (ผ่านรีวิวสภา Angiris)</div>
+  <div className="anim-3 mt-6 flex gap-3">{LEVELS.map((l,i)=>(<div key={i} style={{width:52,height:12,borderRadius:6,background:l.c}}></div>))}</div>
+</div>);}
+
+function Core(){return(<div className="safe flex flex-col justify-center">
+  <h2 className="display anim font-bold text-[36px] leading-snug max-w-[980px]">คนไม่ค่อยพูดสิ่งที่ต้องการจริงตรงๆ<br/>เขาพูด <span className="hl-amber">"ภาพที่คิดว่าฟังดูดี"</span></h2>
+  <p className="anim-2 mt-3 text-[18px] text-[var(--muted)] max-w-[880px]">แต่แรงที่ผลักเขาจริง ซ่อนอยู่ 1 ใน 5 ระดับ — หน้าที่เราไม่ใช่ "พูดให้เก่ง" แต่คือ…</p>
+  <div className="glass anim-2 mt-6 rounded-2xl px-10 py-6 max-w-[880px]"><div className="display text-[30px] font-bold"><span className="hl">"ฟังให้ออกว่าเขาหิวระดับไหน"</span></div></div>
+  <div className="anim-3 mt-6 grid grid-cols-2 gap-5 max-w-[880px]">
+    <div className="glass-2 rounded-2xl p-5 flex items-center gap-4"><span className="text-[26px]">✅</span><div><div className="font-semibold text-[18px]">ขายตรงระดับที่เขาหิว</div><div className="text-[var(--emerald)] text-[16px]">= ปิดง่ายขึ้น</div></div></div>
+    <div className="glass-2 rounded-2xl p-5 flex items-center gap-4"><span className="text-[26px]">❌</span><div><div className="font-semibold text-[18px]">ขายผิดระดับ</div><div className="text-[var(--rose)] text-[16px]">= พูดดีแค่ไหนก็ไม่ซื้อ</div></div></div>
+  </div>
+</div>);}
+
+function Ethics(){const R=[
+  {t:"เครื่องมือ \"ฟังเพื่อช่วย\" ไม่ใช่ \"จับจุดอ่อนเพื่อยัดของ\"",d:"อ่านว่าเขาหิวอะไร เพื่อเสนอสิ่งที่แก้ปัญหาเขาจริง — วันไหนเอาไปกดจุดอ่อนคน = ใช้ผิดวิธี ทำลายทั้งเขาและชื่อเรา",pin:"ถ้ารู้ว่า \"สิ่งที่เรามีไม่ได้ช่วยเขา\" — หน้าที่คือบอกตรงหรือถอย ไม่ใช่หาช่องปิดการขาย",c:"#fb7185"},
+  {t:"เช็คตัวเองก่อนนัดทุกครั้ง",d:"ถ้าตอนนั้นเราเองกำลังหิวระดับ 1–2 (กังวลเงิน ยอดไม่ถึง) ลูกค้าจะอ่าน desperation ออกใน 3 นาที แล้วถอย",pin:"ปรับใจเป็น \"ไปฟังปัญหาเขา\" ก่อนเสมอ — ไม่ใช่ \"ไปเอายอดจากเขา\"",c:"#22d3ee"}];
+  return(<div className="safe flex flex-col justify-center">
+    <h2 className="display anim font-bold text-[32px] mb-6">🧭 กติกาเหล็ก 2 ข้อ — อ่านก่อนใช้เครื่องมือนี้ทุกครั้ง</h2>
+    <div className="flex flex-col gap-5">{R.map((r,i)=>(
+      <div key={i} className={"anim-2 rounded-2xl px-7 py-6 flex gap-5 "+(i===0?"glass":"glass-2")}>
+        <Badge n={i+1} c={r.c} size={52} fs={24}/>
+        <div className="flex-1">
+          <div className="font-bold text-[20px]">{r.t}</div>
+          <div className="mt-2 text-[16px] text-[#dde3ff] leading-relaxed">{r.d}</div>
+          <div className="mt-2.5 text-[15px] italic" style={{color:r.c}}>💬 {r.pin}</div>
+        </div>
+      </div>))}</div>
+  </div>);}
+
+function Form(){const rows=[
+  {k:"F",t:"ชีวิต",q:"\"ช่วงนี้ทุกอย่างโอเคไหม\"",lv:"1–2",c:"#fb7185"},
+  {k:"O",t:"งาน",q:"\"ทำงานอะไร ที่โอเค–ไม่โอเคคืออะไร\"",lv:"2–4",c:"#fbbf24"},
+  {k:"R",t:"พักผ่อน",q:"\"ว่างๆ ชอบทำอะไร อยู่กับใคร\"",lv:"3",c:"#34d399"},
+  {k:"M",t:"ถ้าทำได้จริง",q:"\"อยากให้ชีวิตเป็นยังไง\"",lv:"4–5",c:"#38bdf8"}];
+  return(<div className="safe flex flex-col justify-center">
+    <h2 className="display anim font-bold text-[32px]">เครื่องมือฟัง: <span className="hl">FORM</span> — ถามให้เขาพูด แล้วเราจับระดับ</h2>
+    <p className="anim-2 mt-2 text-[16px] text-[var(--muted)]">FORM ไม่ใช่ทฤษฎี — เป็นชุดคำถามเปิด ให้เขาเล่า แล้วเราฟังหา Maslow</p>
+    <div className="anim-2 mt-5 flex flex-col gap-3">{rows.map((r,i)=>(
+      <div key={i} className="glass-2 rounded-2xl px-6 py-4 flex items-center gap-6">
+        <Badge n={r.k} c={r.c} size={44} fs={17}/>
+        <div className="w-[190px] font-semibold text-[17px]">{r.t}</div>
+        <div className="flex-1 text-[17px] text-[#c9d1f5]">{r.q}</div>
+        <div className="tagpill chip text-[14px]" style={{color:r.c}}>มักเผยระดับ {r.lv}</div>
+      </div>))}</div>
+    <div className="glass anim-3 mt-5 rounded-2xl px-7 py-4 flex items-center gap-4">
+      <span className="text-[24px]">🤫</span>
+      <div className="text-[17px]"><b className="hl-amber">กติกา:</b> ถามแล้ว <b>หุบปากฟัง</b> — จับ "คำที่บ่นก่อน" + "คำที่พูดซ้ำ" = ระดับที่หิวจริง</div>
+    </div>
+  </div>);}
+
+function Radar(){const rows=[
+  {n:1,name:"ร่างกาย",e:"🔴",c:"#fb7185",kw:"\"เหนื่อย\" \"ไม่ไหว\" \"ชนเดือน\" \"ป่วย\" \"ขอแค่…\"",tone:"อ่อนล้า หมดแรง"},
+  {n:2,name:"มั่นคง",e:"🟠",c:"#fb923c",kw:"\"กลัว\" \"เผื่อ\" \"สำรอง\" \"ระยะยาว\" \"ถ้าเกิด…\"",tone:"กังวล ระวังตัว"},
+  {n:3,name:"สังคม",e:"🟡",c:"#fbbf24",kw:"\"เหงา\" \"คนเดียว\" \"อยากเจอคน\" \"เบื่อ อยู่บ้าน\"",tone:"โหยหา อยากมีพวก"},
+  {n:4,name:"ตัวตน",e:"🟢",c:"#34d399",kw:"\"พิสูจน์\" \"ของตัวเอง\" \"เก่งขึ้น\" \"ดูดี\" \"ตำแหน่ง\"",tone:"ฮึด อยากเด่น"},
+  {n:5,name:"ความหมาย",e:"🔵",c:"#38bdf8",kw:"\"ความหมาย\" \"ส่งต่อ\" \"ช่วยคน\" \"คุณค่า\" \"legacy\"",tone:"สงบ มองไกล"}];
+  const amb=[{w:"\"ไม่มีเวลา\"",o:"1 (เหนื่อยจริง) / 2 (กลัวหยุดแล้วขาด) / 4 (ยุ่งเพราะกำลังพิสูจน์)"},
+    {w:"\"อยากมีอิสระ\"",o:"2 (อยากมั่นคงไม่ต้องดิ้น) / 4 (อยากเป็นเจ้าของตัวเอง)"},
+    {w:"\"อยากช่วยคน\"",o:"4 (ให้คนเห็นว่าเราเก่ง) / 5 (ให้เขาดีขึ้นจริง)"}];
+  return(<div className="safe">
+    <h2 className="display anim font-bold text-[30px]">⚡ QUICK RADAR — ได้ยิน keyword นี้ ตั้งสมมติฐานระดับได้เร็ว</h2>
+    <p className="anim-2 mt-1.5 text-[15px] text-[var(--muted)]">ฟังแล้วเดาระดับได้ไว — แล้ว<b className="text-white">ถามยืนยันเสมอ</b> (RADAR = สมมติฐานแรก ไม่ใช่คำตัดสิน)</p>
+    <div className="grid grid-cols-[1fr_400px] gap-5 mt-4 h-[460px]">
+      <div className="flex flex-col gap-2.5">
+        {rows.map((r,i)=>(<div key={i} className="glass-2 anim-2 rounded-xl px-4 py-2.5 flex items-center gap-3.5" style={{borderLeft:`3px solid ${r.c}`}}>
+          <Badge n={r.n} c={r.c} size={30} fs={13}/>
+          <div className="w-[110px] font-semibold text-[15px]">{r.e} {r.name}</div>
+          <div className="flex-1 text-[13px] text-[#c9d1f5]">{r.kw}</div>
+          <div className="text-[12px]" style={{color:r.c}}>{r.tone}</div>
+        </div>))}
+        <div className="text-[13px] italic text-[var(--muted)] mt-1">🎧 ถ้าพูดคำระดับสูงแต่น้ำเสียง/พฤติกรรมเป็นระดับล่าง → เชื่อพฤติกรรม ไม่ใช่คำพูด</div>
+      </div>
+      <div className="flex flex-col gap-3">
+        <div className="glass anim-3 rounded-2xl p-4">
+          <div className="font-bold text-[15px] text-[var(--amber)] mb-2">⚠️ คำกำกวม — ห้ามฟันจากคำเดียว</div>
+          {amb.map((a,i)=>(<div key={i} className="mb-2 text-[13px]"><b className="text-white">{a.w}</b> <span className="text-[#c9d1f5]">→ {a.o}</span></div>))}
+        </div>
+        <div className="glass-2 anim-3 rounded-2xl p-4 flex-1">
+          <div className="font-bold text-[15px] text-[var(--emerald)] mb-1.5">📌 หิวหลายระดับพร้อมกัน</div>
+          <div className="text-[13.5px] text-[#dde3ff] leading-relaxed">คนหนึ่งหิวได้หลายระดับพร้อมกัน (ดูเคส 3 พี่แอน หิว 3+4) — เลือกเปิดช่องที่ "ดังสุด" ช่องเดียวก่อน อย่ายัดคนลงกล่องเดียว</div>
+        </div>
+      </div>
+    </div>
+  </div>);}
+
+function Level({lv}){const cols=[{k:"💪 สุขภาพ",d:lv.health,c:"#fb7185"},{k:"💰 เงิน",d:lv.money,c:"#fbbf24"},{k:"📈 ธุรกิจ",d:lv.biz,c:"#34d399"},{k:"✨ ความฝัน",d:lv.dream,c:"#a78bfa"}];
+  return(<div className="safe">
+    <div className="anim flex items-center gap-4 mb-2.5">
+      <Badge n={lv.n} c={lv.c} size={48} fs={24}/>
+      <div><h2 className="display font-bold text-[26px] leading-tight">{lv.emoji} LEVEL {lv.n} — {lv.name}</h2><div className="text-[12px] text-[var(--faint)]">{lv.en}</div></div>
+    </div>
+    <div className="glass anim-2 rounded-xl px-5 py-2.5 mb-3"><span style={{color:lv.c}} className="font-bold text-[15px]">คือ: </span><span className="text-[15px] text-[#dde3ff]">{lv.def}</span></div>
+    <div className="grid grid-cols-4 gap-3 mb-3">{cols.map((col,i)=>(
+      <div key={i} className="glass-2 anim-2 rounded-xl p-3.5">
+        <div className="font-bold text-[15px] mb-2" style={{color:col.c}}>{col.k}</div>
+        <div className="flex flex-col gap-1.5">{col.d.map((q,j)=>(<div key={j} className="text-[12px] text-[#d3daff] leading-snug">"{q}"</div>))}</div>
+      </div>))}</div>
+    <div className="glass anim-3 rounded-xl px-5 py-3">
+      <div className="text-[14.5px]"><span className="hl-green font-bold">เปิดยังไง: </span><span className="text-[#dde3ff]">{lv.open}</span></div>
+      <div className="text-[13.5px] mt-1.5" style={{color:"#fda4af"}}>⛔ ห้าม {lv.ban}</div>
+      {lv.note&&<div className="text-[13px] mt-1.5 italic" style={{color:"#fcd34d"}}>⚠️ {lv.note}</div>}
+      {lv.stop&&<div className="text-[13px] mt-1.5" style={{color:"#fda4af"}}>{lv.stop}</div>}
+    </div>
+  </div>);}
+
+function Bridge(){const steps=[
+  {t:"สะท้อน",d:"ให้เขารู้ว่าเราได้ยิน",ex:"\"ฟังดูช่วงนี้เรื่อง…หนักสุดใช่ไหมครับ\""},
+  {t:"ขออนุญาต",d:"กันอาการเปิดแข็ง",ex:"\"เรื่องนี้ผมมีอะไรอยากเล่าให้ฟังสัก 10 นาที สะดวกไหม\""},
+  {t:"ก้าวเล็ก",d:"นัดถัดไป — ดีลปิดที่นัดถัดไป ไม่ใช่ประโยคเปิด",ex:"ดูตาราง MAPPING คอลัมน์ \"ก้าวเล็กที่ชวน\""}];
+  return(<div className="safe flex flex-col justify-center">
+    <h2 className="display anim font-bold text-[32px]">🌉 สะพาน 3 จังหวะ — ฟังออกแล้ว "เปิดเรื่องยังไงไม่ให้แข็ง"</h2>
+    <p className="anim-2 mt-2 text-[16px] text-[var(--muted)]">ปัญหาที่เจอบ่อย: ฟังออกว่าเขาหิวระดับไหน <b className="text-white">แล้วค้าง</b> ไม่รู้จะต่อยังไง — ใช้ 3 จังหวะนี้</p>
+    <div className="mt-6 flex flex-col gap-4">{steps.map((s,i)=>(
+      <div key={i} className={"anim-2 rounded-2xl px-7 py-5 flex items-center gap-5 "+(i===2?"glass":"glass-2")}>
+        <Badge n={i+1} c="#22d3ee" size={52} fs={22}/>
+        <div className="flex-1"><span className="font-bold text-[20px]">{s.t}</span><span className="text-[15px] text-[var(--muted)]"> ({s.d})</span><div className="text-[17px] italic mt-1.5" style={{color:"#22d3ee"}}>{s.ex}</div></div>
+      </div>))}</div>
+  </div>);}
+
+function Mapping(){const rows=[
+  {hear:"\"เหนื่อย เงินไม่พอ ไม่ไหว\"",n:1,c:"#fb7185",open:"\"เอาที่เห็นผลเร็วๆ ก่อน ค่อยเป็นค่อยไป\"",step:"ให้ลองสินค้า / นัดสั้นๆ ไม่ผูกมัด"},
+  {hear:"\"กลัว เผื่ออนาคต อยากมั่นคง\"",n:2,c:"#fb923c",open:"\"เริ่มเล็ก ความเสี่ยงต่ำ ทำเสริมไว้อีกทาง\"",step:"นัดดูแผน 20 นาที ไม่ผูกมัด"},
+  {hear:"\"เหงา เบื่อ อยากเจอคน\"",n:3,c:"#fbbf24",open:"\"มาร่วมกลุ่มก่อน มาเจอเพื่อนใหม่\"",step:"ชวนมางาน/กลุ่มครั้งหน้า"},
+  {hear:"\"อยากพิสูจน์ อยากมีของตัวเอง\"",n:4,c:"#34d399",open:"\"มีเวทีให้ได้โชว์ ได้เป็นตัวเอง\"",step:"ชวนคุยเส้นทาง + รู้จักผู้นำ"},
+  {hear:"\"อยากมีความหมาย อยากช่วยคน\"",n:5,c:"#38bdf8",open:"\"มาสร้างทีมช่วยคนไปด้วยกัน\"",step:"ชวนคุย vision ตัวต่อตัว"}];
+  return(<div className="safe flex flex-col justify-center">
+    <h2 className="display anim font-bold text-[30px] mb-4">🗺️ ตาราง MAPPING — ได้ยิน → ระดับ → เปิด → ก้าวเล็ก</h2>
+    <div className="anim-2 flex px-4 mb-1.5 text-[13px] text-[var(--faint)] font-semibold">
+      <div className="w-[280px]">ได้ยินแนวนี้</div><div className="w-[70px]">ระดับ</div><div className="flex-1">ประโยคเปิดของเรา</div><div className="w-[250px]">ก้าวเล็กที่ชวน</div></div>
+    <div className="flex flex-col gap-2.5">{rows.map((r,i)=>(
+      <div key={i} className="glass-2 anim-2 rounded-xl px-4 py-3 flex items-center" style={{borderLeft:`3px solid ${r.c}`}}>
+        <div className="w-[280px] text-[15px] text-[#dde3ff]">{r.hear}</div>
+        <div className="w-[70px]"><Badge n={r.n} c={r.c} size={32} fs={14}/></div>
+        <div className="flex-1 text-[14.5px]">{r.open}</div>
+        <div className="w-[250px] text-[13.5px]" style={{color:r.c}}>→ {r.step}</div>
+      </div>))}</div>
+  </div>);}
+
+function Case1(){return(<div className="safe flex flex-col justify-center">
+  <h2 className="display anim font-bold text-[30px] mb-4">🔎 เคส 1 — น้องที่ FORM มา</h2>
+  <div className="glass-2 anim-2 rounded-2xl p-5 mb-3"><div className="text-[13px] uppercase tracking-widest text-[var(--faint)] mb-2">สิ่งที่ได้ยิน</div>
+    <div className="text-[16px] text-[#dde3ff] leading-relaxed"><b>F:</b> "ไม่โอเค เงินไม่พอใช้ ไม่อยากทำงานนี้ไปตลอด"<br/><b>O:</b> "อยากมีเงินกลับไปเปิดร้านที่บ้าน ตจว." · ต้นถาม <b className="hl-amber">"เชื่อไหม?"</b></div></div>
+  <div className="glass anim-2 rounded-2xl p-5 mb-3"><div className="text-[13px] uppercase tracking-widest text-[var(--faint)] mb-2">อ่าน (อย่าเดาเกินหลักฐาน)</div>
+    <div className="text-[15.5px] text-[#dde3ff] leading-relaxed"><b className="text-white">"เปิดร้าน" = ภาพปลายทาง — ยังไม่รู้ระดับ</b> (อาจ 3 ครอบครัว/ชุมชน หรือ 4 อยากเป็นเจ้าของ ต้องถามต่อ) แต่<b style={{color:"#fda4af"}}>แรงที่ดันตอนนี้ค่อนข้างชัดว่าอยู่ระดับ 1–2</b> เพราะเขาบ่นเงินก่อน</div></div>
+  <div className="grid grid-cols-2 gap-3">
+    <div className="glass-2 anim-3 rounded-2xl p-4"><b className="text-[var(--cyan)]">เช็ก:</b> <span className="text-[14px] text-[#c9d1f5]">"ถ้ามีเงินก้อนพรุ่งนี้ เปิดเลยไหม / อะไรทำให้ยังไม่เริ่ม?" → ตอบมีแผนชัด = เป้าจริง · ตอบลอยๆ = แค่ทางหนีจากงานที่เบื่อ</span></div>
+    <div className="glass anim-3 rounded-2xl p-4"><b className="hl-green">วิธีเข้า:</b> <span className="text-[14px] text-[#dde3ff]">ปิดช่องเงินเฉพาะหน้า (1–2) ก่อน ให้เห็นผลจริง → ค่อยชี้ร้านเป็นปลายทางที่เดินไปด้วยกัน</span></div>
+  </div>
+</div>);}
+
+function Case2(){const reads=[
+  {c:"#fda4af",t:"แรงขาด (2/4)",d:"กลัวหยุดแล้วขาด หรือ ต้องพิสูจน์/ยังไม่พอ → \"ชอบขายของ\" = ป้ายแปะทับ"},
+  {c:"#34d399",t:"แรงใน — ชอบขายจริง",d:"บางคนขายแล้วลื่น/สนุก/รู้สึกเก่ง (competence) มีเงินล้านก็ยังทำ → ห้ามไปยัดว่าเขา \"ขาดอะไร\""}];
+  return(<div className="safe flex flex-col justify-center">
+    <h2 className="display anim font-bold text-[30px] mb-4">🔎 เคส 2 — เพื่อนของเพื่อน "ชอบขายของ"</h2>
+    <div className="glass-2 anim-2 rounded-2xl p-5 mb-3"><div className="text-[13px] uppercase tracking-widest text-[var(--faint)] mb-2">สิ่งที่ได้ยิน</div>
+      <div className="text-[16px] text-[#dde3ff]">ทำงานเยอะ หยุดไม่ได้ · ถามทำไม → "ชอบขายของ" · ต้นถาม <b className="hl-amber">"ถ้ามีเงินล้าน/เดือน จะยังขายไหม?"</b></div></div>
+    <div className="text-[13px] uppercase tracking-widest text-[var(--faint)] mb-2">อ่าน (มี 3 ทาง — อย่าฟันธงทางเดียว)</div>
+    <div className="flex flex-col gap-3 mb-3">{reads.map((r,i)=>(
+      <div key={i} className="glass anim-2 rounded-2xl px-5 py-3.5"><b style={{color:r.c}} className="text-[16px]">{r.t}:</b> <span className="text-[15px] text-[#dde3ff]">{r.d}</span></div>))}</div>
+    <div className="glass-2 anim-3 rounded-2xl p-4 mb-2.5"><b className="text-[var(--cyan)]">เช็ก:</b> <span className="text-[14.5px] text-[#c9d1f5]">"ถ้าเงินไม่ใช่ปัญหา อยากทำอะไร / การขายให้อะไรมากที่สุด (เงิน/สนุก/เจอคน/รู้สึกเก่ง)"</span></div>
+    <div className="text-[13.5px] italic" style={{color:"#fcd34d"}}>⚠️ คำถาม "ถ้ามีเงินล้าน…" เป็นแค่เครื่องช่วยเปิดบทสนทนา ไม่ใช่เครื่องตัดสินขาด — คำตอบสมมติเชื่อ 100% ไม่ได้ ต้องดูพฤติกรรมจริงประกอบ</div>
+  </div>);}
+
+function Case3a(){return(<div className="safe">
+  <h2 className="display anim font-bold text-[28px] mb-3">⭐ เคส 3 — "พี่แอน ที่ดูมีทุกอย่างแล้ว" (เคสที่มักอ่านผิด)</h2>
+  <div className="glass-2 anim rounded-xl px-5 py-3 mb-3"><b className="text-[var(--faint)]">โปรไฟล์:</b> <span className="text-[15px] text-[#dde3ff]">ผู้หญิง ~45 สามีธุรกิจดี ลูกโตเข้ามหาลัยหมด ชีวิตสบาย เพื่อนชวนมางาน</span></div>
+  <div className="grid grid-cols-2 gap-3 mb-3">
+    <div className="glass anim-2 rounded-2xl p-4"><div className="text-[12px] uppercase tracking-widest text-[var(--faint)] mb-1.5">เปิดตัว</div><div className="text-[16px] italic">"มาดูเฉยๆ นะ ไม่ได้อยากได้อะไร พี่ไม่ได้เดือดร้อนเรื่องเงิน"</div></div>
+    <div className="glass anim-2 rounded-2xl p-4"><div className="text-[12px] uppercase tracking-widest text-[var(--faint)] mb-1.5">พูดซ้ำระหว่างคุย</div><div className="text-[15px] italic">"อยู่บ้านก็เบื่อ ลูกโตแล้ว ไม่รู้จะทำอะไร" · "เมื่อก่อนทำแบงค์ พอออกมาเลี้ยงลูกก็หายไปเลย"</div></div>
+  </div>
+  <div className="glass-2 anim-3 rounded-2xl p-4 mb-3"><b style={{color:"#fb7185"}}>❌ พลาดที่พบบ่อย:</b> <span className="text-[15px] text-[#dde3ff]">sponsor มือใหม่ได้ยิน "ไม่เดือดร้อนเงิน" แล้วตัดทิ้ง ("พี่รวยแล้ว ไม่ใช่ลูกค้า")</span></div>
+  <div className="glass anim-3 rounded-2xl p-4"><b style={{color:"#34d399"}}>✅ อ่านจริง:</b> <span className="text-[15px] text-[#dde3ff]">เขาไม่หิวเงิน (ตัด 1–2) — แต่หิว <b>ระดับ 3 (เหงา ลูกโต หมดบทบาท)</b> + <b>ระดับ 4 (อยากมีตัวตน ไม่ใช่แค่ "เมียของ…" "แม่ของ…")</b> — คนหิว 2 ระดับพร้อมกันได้</span>
+    <div className="mt-2 text-[13px] italic" style={{color:"#fcd34d"}}>💡 ตัด 1–2 ได้เพราะหลักฐานแวดล้อมสอดคล้อง (สามีธุรกิจดี + ไม่บ่นเรื่องเงินซ้ำเลย) ไม่ใช่จากคำเดียว</div></div>
+</div>);}
+
+function Case3b(){const rows=[
+  {say:"\"มาดูเฉยๆ ไม่อยากได้อะไร\" (ครั้งแรก)",mean:"อาจเป็นกำแพงมารยาท",move:"\"ได้เลยพี่ ไม่ต้องรีบ มาทำความรู้จักกันก่อน\" — แต่ถ้าพูดซ้ำ 2–3 ครั้ง = คำตอบจริง ต้องเคารพ ไม่ดันต่อ"},
+  {say:"\"พี่ไม่เดือดร้อนเรื่องเงิน\"",mean:"ตัดระดับ 1–2",move:"\"ขอถามอีกมุม — ช่วงนี้ว่างๆ พี่ทำอะไรบ้าง\" (เบนไปสังคม)"},
+  {say:"\"อยู่บ้านเบื่อ ลูกโตแล้ว\"",mean:"ระดับ 3",move:"\"หลายพี่พอลูกโตก็รู้สึกแบบนี้ ที่นี่มีกลุ่มเจอกันประจำ\" (เสนอสังคม)"},
+  {say:"\"เมื่อก่อนทำแบงค์ ออกมาก็หายไป\"",mean:"ระดับ 4",move:"\"ฟังแล้วรู้เลยพี่เคยเก่งมาก่อน ที่นี่มีเวทีให้ได้เป็นตัวเองอีกครั้ง\" (คืนตัวตน)"}];
+  return(<div className="safe">
+    <h2 className="display anim font-bold text-[26px] mb-3">⭐ พี่แอน — ตาราง เขาพูด → ระดับ → เราพูดต่อ</h2>
+    <div className="anim-2 flex flex-col gap-2 mb-3">{rows.map((r,i)=>(
+      <div key={i} className="glass-2 rounded-xl px-4 py-2.5 flex items-center gap-3">
+        <div className="w-[280px] text-[13px] text-[#dde3ff]">"{r.say}"</div>
+        <div className="w-[95px] text-[12.5px] font-bold" style={{color:"#fcd34d"}}>{r.mean}</div>
+        <div className="flex-1 text-[12.5px] text-[#c9d1f5]">{r.move}</div>
+      </div>))}</div>
+    <div className="grid grid-cols-2 gap-3">
+      <div className="glass anim-3 rounded-2xl p-4"><b className="hl-green">บทเรียน:</b> <span className="text-[14px] text-[#dde3ff]">อย่าตัด "คนรวยแล้ว/บอกไม่เอา" ทิ้ง — เขาไม่หิวเงิน แต่หิว สังคม + ตัวตน ซึ่งธุรกิจนี้ให้ได้เต็มๆ</span></div>
+      <div className="glass-2 anim-3 rounded-2xl p-4"><b className="text-[var(--cyan)]">→ จบวันนี้แค่นี้:</b> <span className="text-[14px] text-[#dde3ff]">ชวนเข้ากลุ่ม (ระดับ 3) ก่อน ยังไม่ขายของ/ไม่พูดเงิน — ให้พี่แอนเลือกก้าวต่อเอง</span></div>
+    </div>
+  </div>);}
+
+function RolePlay(){const lines=[
+  {who:"เรา",t:"พี่แอน วันนี้ดีใจที่มานะครับ ไม่ต้องรีบอะไรเลย มาทำความรู้จักกันก่อน",tag:null},
+  {who:"พี่แอน",t:"อือ พี่มาดูเฉยๆ นะ ไม่ได้อยากได้อะไร พี่ไม่ได้เดือดร้อนเรื่องเงิน",tag:null},
+  {who:"เรา",t:"เข้าใจเลยครับ ขอถามอีกมุม — ช่วงนี้ว่างๆ พี่ทำอะไรบ้างครับ",tag:null},
+  {who:"พี่แอน",t:"ก็…อยู่บ้านนี่แหละ ลูกโตเข้ามหาลัยหมดแล้ว บางทีก็เบื่อ ไม่รู้จะทำอะไร",tag:"ระดับ 3"},
+  {who:"เรา",t:"ได้ยินหลายพี่พูดแบบนี้เลย พอลูกโต บ้านมันเงียบลง… เมื่อก่อนพี่ทำงานอะไรครับ",tag:null},
+  {who:"พี่แอน",t:"เมื่อก่อนพี่ทำแบงค์ ตำแหน่งดีนะ แต่พอมีลูกก็ออกมาเลี้ยงลูก…หายไปเลย",tag:"ระดับ 4"},
+  {who:"เรา",t:"ฟังแล้วรู้เลยว่าพี่เก่งมาก่อน… ที่นี่มีหลายพี่กลับมาเจอ 'ตัวเอง' อีกครั้ง ไม่ใช่ในฐานะแม่ใครเมียใคร",tag:null},
+  {who:"พี่แอน",t:"…จริงเหรอ แต่พี่ไม่ได้ทำอะไรมานานแล้ว จะทำได้ไหม",tag:"ระดับ 4 กลัวไม่เก่งพอ"},
+  {who:"เรา",t:"เริ่มจากมาร่วมกลุ่มก่อนก็ได้ มีทีมช่วยตั้งแต่ต้น ลองมางานหน้าดูก่อนไหม",tag:null},
+  {who:"พี่แอน",t:"อืม…แบบนั้นก็ดีนะ",tag:null}];
+  return(<div className="safe">
+    <h2 className="display anim font-bold text-[26px] mb-2.5">🎭 Role Play เต็ม — จำลองบทสนทนา</h2>
+    <div className="flex flex-col gap-1.5">{lines.map((l,i)=>{const us=l.who==="เรา";return(
+      <div key={i} className="anim flex items-center gap-2.5">
+        <div className="w-[58px] text-[12px] font-bold flex-none" style={{color:us?"#22d3ee":"#fbbf24"}}>{l.who}</div>
+        <div className={"rounded-lg px-3.5 py-1.5 flex-1 text-[13px] "+(us?"glass-2":"glass")} style={{color:"#e7ebff"}}>{l.t}</div>
+        {l.tag&&<div className="flex-none text-[10.5px] font-bold px-2.5 py-1 rounded-md" style={{background:"rgba(52,211,153,.16)",color:"#34d399",border:"1px solid rgba(52,211,153,.4)"}}>{l.tag}</div>}
+      </div>);})}</div>
+    <div className="mt-3 text-[14px] font-bold" style={{color:"#22d3ee"}}>→ จบวันนี้แค่นี้: ชวนเข้ากลุ่ม (ระดับ 3) ก่อน · ยังไม่ขายของ/ไม่พูดเงิน · ให้พี่แอนเลือกก้าวต่อเอง</div>
+  </div>);}
+
+function Rules(){const items=[
+  {t:"คำแรก = ภาพ ไม่ใช่แรงจริง",d:"ฟังต่อเสมอ"},
+  {t:"จับ \"คำที่บ่นก่อน\" + \"คำที่พูดซ้ำ\"",d:"= ระดับที่หิวจริง"},
+  {t:"เทสต์ \"ถ้า…จะยังทำไหม\"",d:"แต่เป็นแค่เครื่องเปิดบทสนทนา ไม่ใช่คำตัดสิน"},
+  {t:"ปิดช่องที่ \"หิวตอนนี้\" ก่อน",d:"อย่าขายปลายทางให้คนติดฐานล่าง"},
+  {t:"เชื่อพฤติกรรม/น้ำเสียง มากกว่าคำพูด",d:"เมื่อมันขัดกัน"},
+  {t:"ไม่ชัวร์ = ถามต่อ ไม่เดาเหมา",d:"RADAR = สมมติฐาน ไม่ใช่คำตัดสิน"},
+  {t:"คนหิวได้หลายระดับพร้อมกัน",d:"เลือกช่องที่ \"ดังสุด\" ช่องเดียวก่อน"},
+  {t:"กลับไปอ่านกติกาเหล็ก 2 ข้อเสมอ",d:"ฟังเพื่อช่วย · เช็คใจตัวเองก่อนนัด"}];
+  return(<div className="safe flex flex-col justify-center">
+    <h2 className="display anim font-bold text-[32px] mb-5">✅ กติกาการฟัง (สรุป) — <span className="hl">8 ข้อ จำไปใช้เลย</span></h2>
+    <div className="grid grid-cols-2 gap-3">{items.map((r,i)=>(
+      <div key={i} className={"anim-2 rounded-xl px-5 py-3.5 flex items-center gap-4 "+(i>=6?"glass":"glass-2")}>
+        <Badge n={i+1} c={i>=6?"#fb7185":"#a78bfa"} size={40} fs={15}/>
+        <div className="flex-1"><span className="font-semibold text-[15.5px]">{r.t}</span><span className="text-[13.5px] text-[var(--muted)]"> — {r.d}</span></div>
+      </div>))}</div>
+    <div className="glass anim-3 mt-5 rounded-2xl px-6 py-3.5 text-center text-[17px] font-bold">💚 ฟังก่อนขาย — framework นี้เป็น<span className="hl">เครื่องมือฟัง</span> ไม่ใช่เครื่องมือกดจุดอ่อนคน</div>
+  </div>);}
+
+function Body({s}){switch(s.k){
+  case "cover":return <Cover/>;case "core":return <Core/>;case "ethics":return <Ethics/>;
+  case "form":return <Form/>;case "radar":return <Radar/>;case "level":return <Level lv={s.lv}/>;
+  case "bridge":return <Bridge/>;case "mapping":return <Mapping/>;case "case1":return <Case1/>;
+  case "case2":return <Case2/>;case "case3a":return <Case3a/>;case "case3b":return <Case3b/>;
+  case "roleplay":return <RolePlay/>;case "rules":return <Rules/>;default:return null;}}
+
+function Deck(){const [i,setI]=useState(0);const [scale,setScale]=useState(1);const total=SLIDES.length;
+  useEffect(()=>{const fit=()=>setScale(Math.min(window.innerWidth/1280,window.innerHeight/720));fit();window.addEventListener("resize",fit);return()=>window.removeEventListener("resize",fit);},[]);
+  const go=useCallback(d=>setI(p=>Math.max(0,Math.min(total-1,p+d))),[total]);
+  const jump=useCallback(n=>setI(Math.max(0,Math.min(total-1,n))),[total]);
+  useEffect(()=>{const onKey=e=>{if(["ArrowRight"," ","PageDown","ArrowDown"].includes(e.key)){e.preventDefault();go(1);}else if(["ArrowLeft","PageUp","ArrowUp"].includes(e.key)){e.preventDefault();go(-1);}else if(e.key==="Home")jump(0);else if(e.key==="End")jump(total-1);else if(e.key==="f"||e.key==="F"){const el=document.documentElement;if(!document.fullscreenElement)el.requestFullscreen&&el.requestFullscreen();else document.exitFullscreen&&document.exitFullscreen();}};window.addEventListener("keydown",onKey);return()=>window.removeEventListener("keydown",onKey);},[go,jump,total]);
+  const s=SLIDES[i];
+  return(<div className="viewport"><div className="stage" style={{transform:`scale(${scale})`}}>
+    <div className="stage-bg"><div className="orb a"></div><div className="orb b"></div><div className="orb c"></div><div className="grid-tex"></div></div>
+    <div className="progress" style={{width:(i/(total-1)*100)+"%"}}></div>
+    <div key={i} className="slidewrap"><Kicker i={i}/><div className="pageno"><b>{String(i+1).padStart(2,"0")}</b> / {String(total).padStart(2,"0")}</div><Body s={s}/></div>
+    <div className="dots">{SLIDES.map((_,k)=>(<div key={k} className={"dot"+(k===i?" on":"")} onClick={()=>jump(k)}></div>))}</div>
+    <div className="nav">
+      <div className="navbtn glass" onClick={()=>go(-1)}><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg></div>
+      <div className="navbtn glass" onClick={()=>go(1)}><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg></div>
+    </div>
+  </div></div>);}
+ReactDOM.createRoot(document.getElementById("root")).render(<Deck/>);
+</script>
+</body>
+</html>
