@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="สรุปปากกาลดน้ำหนัก 3 หน้า: ชนิด แบรนด์ในไทย วิธีใช้ สิ่งที่ต้องทำควบคู่ และข้อควรระวัง">
-  <title>ปากกาลดน้ำหนัก — สรุปคุยง่าย 3 หน้า</title>
+  <meta name="description" content="สรุปปากกาลดน้ำหนัก 5 หน้า: ชนิด แบรนด์ในไทย ตารางโดส วิธีใช้ปากกา สิ่งที่ต้องทำควบคู่ และข้อควรระวัง">
+  <title>ปากกาลดน้ำหนัก — สรุปคุยง่าย 5 หน้า</title>
   <style>
     :root {
       --navy:#102a43; --navy-2:#173f5f; --green:#0b7a62; --mint:#dff5ed;
@@ -47,6 +47,13 @@
     .habit-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:10px; }
     .habit { background:#f3f7f5; border-radius:14px; padding:12px; font-size:clamp(.76rem,1vw,.94rem); line-height:1.35; }
     .habit b { color:var(--green); display:block; margin-bottom:3px; }
+    .dose-path { display:flex; flex-wrap:wrap; gap:6px; margin:9px 0 11px; }
+    .dose-path span { padding:5px 8px; border-radius:9px; background:var(--mint); color:#075e4b; font-size:clamp(.68rem,.84vw,.8rem); font-weight:800; }
+    .dose-path span::after { content:" →"; color:#73958a; margin-left:5px; }
+    .dose-path span:last-child::after { content:""; }
+    .device-list { margin:7px 0 0; padding-left:1.15rem; }
+    .device-list li { font-size:clamp(.72rem,.93vw,.9rem); line-height:1.38; margin:.28rem 0; }
+    .device-note { margin-top:9px; padding:9px 11px; border-radius:11px; background:#f3f7f5; color:var(--muted); font-size:clamp(.68rem,.86vw,.82rem); line-height:1.35; }
     .warning-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; flex:1; min-height:0; }
     .warning { background:var(--white); border:1px solid #efcfcb; border-left:5px solid var(--red); border-radius:16px; padding:14px 17px; }
     .warning h3 { color:#8e2929; margin-bottom:5px; }
@@ -79,7 +86,7 @@
   </style>
 </head>
 <body>
-  <main class="deck" id="deck" aria-label="สรุปปากกาลดน้ำหนัก 3 หน้า">
+  <main class="deck" id="deck" aria-label="สรุปปากกาลดน้ำหนัก 5 หน้า">
     <section class="slide active" data-title="มีกี่ชนิด และแบรนด์ใดอยู่ในไทย">
       <div class="slide-inner">
         <div class="eyebrow">หน้า 1 · ภาพรวมตลาดไทย</div>
@@ -144,9 +151,97 @@
       </div>
     </section>
 
+    <section class="slide" data-title="โดสของปากกาแต่ละแบบ">
+      <div class="slide-inner">
+        <div class="eyebrow">หน้า 3 · ตารางโดสตามฉลาก</div>
+        <h2>โดสต่างกันทั้ง “ตัวยา–ความถี่–อุปกรณ์”</h2>
+        <div class="grid grid-3">
+          <article class="card drug">
+            <div class="brand">Wegovy · Semaglutide</div>
+            <h3>ฉีดสัปดาห์ละ 1 ครั้ง</h3>
+            <div class="dose-path"><span>0.25</span><span>0.5</span><span>1.0</span><span>1.7</span><span>2.4 มก.</span></div>
+            <ul class="device-list">
+              <li>แต่ละขั้นโดยทั่วไป 4 สัปดาห์</li>
+              <li>สัปดาห์ 17+ จึงถึง 2.4 มก. หากทนได้</li>
+              <li>FlexTouch ไทย 1 ด้าม = 4 โดสของความแรงประจำด้าม</li>
+            </ul>
+            <div class="device-note">อย่าประกอบโดส 7.2 มก. ตามฉลากต่างประเทศ และห้ามนับคลิกสร้างโดสนอกฉลากไทย</div>
+          </article>
+          <article class="card drug">
+            <div class="brand">Saxenda · Liraglutide</div>
+            <h3>ฉีดทุกวัน วันละ 1 ครั้ง</h3>
+            <div class="dose-path"><span>0.6</span><span>1.2</span><span>1.8</span><span>2.4</span><span>3.0 มก.</span></div>
+            <ul class="device-list">
+              <li>เพิ่มตามสัปดาห์: สัปดาห์ 1 → 5</li>
+              <li>3.0 มก./วันเป็นขนาดเป้าหมายผู้ใหญ่ตามฉลากทั่วไป</li>
+              <li>1 ด้ามมี 18 มก.; ที่ 3 มก. ใช้ได้ 6 วัน</li>
+            </ul>
+            <div class="device-note">ถ้ายาเหลือไม่พอโดสเต็ม ให้เริ่มด้ามใหม่ ไม่เดาจากสเกล ไม่ตั้งขนาดต่ำค้างเองเพื่อประหยัดยา</div>
+          </article>
+          <article class="card drug">
+            <div class="brand">Mounjaro · Tirzepatide</div>
+            <h3>ฉีดสัปดาห์ละ 1 ครั้ง</h3>
+            <div class="dose-path"><span>2.5</span><span>5</span><span>7.5</span><span>10</span><span>12.5</span><span>15 มก.</span></div>
+            <ul class="device-list">
+              <li>2.5 มก. 4 สัปดาห์แรก → 5 มก.</li>
+              <li>เพิ่มครั้งละ 2.5 มก. หลังอยู่ขนาดเดิมอย่างน้อย 4 สัปดาห์</li>
+              <li>เร็วที่สุดเริ่ม 15 มก. ได้ในสัปดาห์ 21; ไม่จำเป็นต้องถึงทุกคน</li>
+            </ul>
+            <div class="device-note">ในไทยต้องยึดข้อบ่งใช้และคู่มือของกล่องจริง เพราะสถานะ weight management และชนิดปากกาอาจไม่เหมือน EU/US</div>
+          </article>
+        </div>
+        <div class="redline">ตัวเลขนี้คือ “ตารางไต่ขนาดตามฉลาก” ไม่ใช่คำสั่งให้ปรับยาเอง หากคลื่นไส้ อาเจียน หรือกินไม่ได้ แพทย์อาจชะลอการเพิ่มขนาด</div>
+        <div class="talk"><b>จำง่าย:</b> Wegovy = รายสัปดาห์ 5 ขั้น · Saxenda = รายวัน 5 ขั้น · Mounjaro = รายสัปดาห์ 6 ความแรง แต่ขึ้นทีละขั้นเมื่อแพทย์เห็นว่าจำเป็น</div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="วิธีเตรียมและฉีดแต่ละแบบ">
+      <div class="slide-inner">
+        <div class="eyebrow">หน้า 4 · วิธีใช้ปากกา</div>
+        <h2>หน้าตาคล้ายกัน แต่วิธีเตรียมปากกาไม่เหมือนกัน</h2>
+        <div class="grid grid-3">
+          <article class="card">
+            <h3>Wegovy FlexTouch · 4 โดส/ด้าม</h3>
+            <ol class="device-list">
+              <li>ตรวจชื่อยา ความแรง น้ำยา และวันหมดอายุ</li>
+              <li>ใส่เข็มใหม่; ด้ามใหม่ทำ flow check ตามคู่มือ</li>
+              <li>หมุนเลือก <b>โดสประจำด้ามตามที่แพทย์สั่ง</b></li>
+              <li>แทงใต้ผิวหนัง กดปุ่มจนตัวเลขกลับ 0 และคาเข็มตามเวลาที่คู่มือระบุ</li>
+              <li>ถอนเข็ม ถอดเข็มทิ้งในภาชนะทนแทง แล้วปิดฝา</li>
+            </ol>
+            <div class="device-note">หนึ่งด้ามมีความแรงประจำด้าม ห้ามใช้ “จำนวนคลิก” เพื่อสร้างความแรงอื่น</div>
+          </article>
+          <article class="card">
+            <h3>Saxenda FlexTouch · หมุนได้หลายโดส</h3>
+            <ol class="device-list">
+              <li>ตรวจน้ำยาใส ไม่มีสี และปากกาถูกต้อง</li>
+              <li>ใส่เข็มใหม่; ทำ flow check เมื่อเริ่มด้ามใหม่</li>
+              <li>หมุนตัวเลือกไปยัง 0.6/1.2/1.8/2.4/3.0 มก. ตามแผนแพทย์</li>
+              <li>แทงใต้ผิวหนัง กดจนตัวเลขกลับ 0 และคาเข็มตามคู่มือ</li>
+              <li>ถอดเข็มทุกครั้ง ห้ามเก็บปากกาโดยมีเข็มคาอยู่</li>
+            </ol>
+            <div class="device-note">ถ้าตัวเลือกหมุนไม่ถึงโดสเต็ม แปลว่ายาไม่พอ ให้ใช้ด้ามใหม่ ห้ามแบ่งโดสครึ่งเก่า–ครึ่งใหม่เองโดยไม่ทำตามคู่มือ</div>
+          </article>
+          <article class="card">
+            <h3>Mounjaro · ต้องดูชนิดอุปกรณ์</h3>
+            <ol class="device-list">
+              <li><b>Single-dose pen:</b> 1 ด้าม = 1 โดส เปิดล็อก วางฐานแนบผิว และกดตามคู่มือรุ่นนั้น</li>
+              <li><b>KwikPen:</b> 1 ด้าม = 4 โดสคงที่รายสัปดาห์ ใส่เข็มใหม่และ prime ตามคู่มือ</li>
+              <li><b>Vial:</b> ใช้เข็ม/ไซริงจ์ที่เหมาะสมหลังบุคลากรสอน ไม่กะปริมาตรเอง</li>
+              <li>ทุกแบบฉีดใต้ผิวหนังหน้าท้อง ต้นขา หรือหลังต้นแขน และสลับจุดฉีด</li>
+              <li>ห้ามแชร์อุปกรณ์หรือถ่ายยาแบ่งใส่ภาชนะอื่น</li>
+            </ol>
+            <div class="device-note">อุปกรณ์ที่จำหน่ายต่างกันตามประเทศ รูปจากออนไลน์อาจไม่ใช่รุ่นที่ถืออยู่ ต้องอ่าน IFU ในกล่องจริง</div>
+          </article>
+        </div>
+        <div class="generic"><b>กติกากลาง:</b> ฉีดใต้ผิวหนังเท่านั้น · ใช้เข็มใหม่ทุกครั้ง · เปลี่ยนตำแหน่งฉีด · ไม่ฉีดผ่านเสื้อผ้า · ไม่ใช้ปากกาที่ขุ่น เปลี่ยนสี แช่แข็ง หรือเก็บผิดอุณหภูมิ</div>
+        <div class="talk"><b>ก่อนฉีดครั้งแรก:</b> ให้แพทย์ พยาบาล หรือเภสัชกรสาธิตด้วยอุปกรณ์รุ่นจริง เพราะปุ่มล็อก การ prime และจำนวนโดสต่อด้ามไม่เหมือนกัน</div>
+      </div>
+    </section>
+
     <section class="slide" data-title="ข้อควรระวังและสัญญาณอันตราย">
       <div class="slide-inner">
-        <div class="eyebrow">หน้า 3 · ความปลอดภัยก่อนความเร็ว</div>
+        <div class="eyebrow">หน้า 5 · ความปลอดภัยก่อนความเร็ว</div>
         <h2>ใครต้องระวัง — และเมื่อไรต้องหยุดคุยแล้วไปโรงพยาบาล</h2>
         <div class="warning-grid">
           <article class="warning">
@@ -173,7 +268,7 @@
     </section>
   </main>
 
-  <div class="counter" aria-live="polite"><span id="current">1</span> / <span id="total">3</span></div>
+  <div class="counter" aria-live="polite"><span id="current">1</span> / <span id="total">5</span></div>
   <div class="controls" aria-label="ตัวควบคุมสไลด์">
     <a href="weight-loss-pen-research.html" title="เปิดรายงานฉบับเต็ม" aria-label="เปิดรายงานฉบับเต็ม">↗</a>
     <button id="prev" title="หน้าก่อน" aria-label="หน้าก่อน">←</button>
@@ -196,7 +291,7 @@
       slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
       current.textContent = index + 1;
       progress.style.width = `${((index + 1) / slides.length) * 100}%`;
-      document.title = `${index + 1}/3 · ${slides[index].dataset.title}`;
+      document.title = `${index + 1}/${slides.length} · ${slides[index].dataset.title}`;
       history.replaceState(null, '', `#${index + 1}`);
     }
     function toggleFullscreen() {
