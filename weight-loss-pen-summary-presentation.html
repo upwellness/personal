@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="สรุปปากกาลดน้ำหนัก 3 หน้า: ชนิด แบรนด์ในไทย วิธีใช้ สิ่งที่ต้องทำควบคู่ และข้อควรระวัง">
+  <title>ปากกาลดน้ำหนัก — สรุปคุยง่าย 3 หน้า</title>
+  <style>
+    :root {
+      --navy:#102a43; --navy-2:#173f5f; --green:#0b7a62; --mint:#dff5ed;
+      --cream:#fbfaf5; --ink:#17231f; --muted:#5d6b66; --line:#d9e3dc;
+      --amber:#f4b942; --red:#b63b3b; --red-soft:#fff0ee; --white:#fff;
+    }
+    * { box-sizing:border-box; }
+    html, body { margin:0; width:100%; height:100%; overflow:hidden; }
+    body { font-family:"Noto Sans Thai","Leelawadee UI",Tahoma,Arial,sans-serif; color:var(--ink); background:#071a2b; }
+    button, a { font:inherit; }
+    .deck { width:100vw; height:100vh; position:relative; overflow:hidden; }
+    .slide { position:absolute; inset:0; display:none; background:var(--cream); animation:fade .25s ease; }
+    .slide.active { display:flex; }
+    .slide-inner { width:100%; height:100%; padding:clamp(28px,4vw,64px) clamp(30px,5.5vw,90px) clamp(58px,6vw,82px); display:flex; flex-direction:column; position:relative; overflow:hidden; }
+    .slide-inner::after { content:""; position:absolute; width:420px; height:420px; border-radius:50%; right:-210px; top:-230px; background:radial-gradient(circle,rgba(11,122,98,.16),transparent 67%); pointer-events:none; }
+    .eyebrow { color:var(--green); font-size:clamp(.72rem,1vw,.9rem); font-weight:800; letter-spacing:.08em; text-transform:uppercase; margin-bottom:8px; }
+    h1, h2, h3, p { margin-top:0; }
+    h1 { color:var(--navy); font-size:clamp(2.05rem,4.4vw,4.3rem); line-height:1.12; letter-spacing:-.045em; margin-bottom:12px; }
+    h2 { color:var(--navy); font-size:clamp(1.65rem,3.2vw,3.1rem); line-height:1.18; letter-spacing:-.035em; margin-bottom:18px; }
+    h3 { font-size:clamp(.98rem,1.35vw,1.3rem); line-height:1.25; margin-bottom:8px; color:var(--navy-2); }
+    p, li { font-size:clamp(.82rem,1.13vw,1.08rem); line-height:1.48; }
+    .lede { color:var(--muted); font-size:clamp(1rem,1.45vw,1.34rem); max-width:950px; margin-bottom:24px; }
+    .metric-row { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:6px 0 18px; }
+    .metric { background:var(--white); border:1px solid var(--line); border-radius:20px; padding:18px 20px; box-shadow:0 14px 34px rgba(16,42,67,.06); }
+    .metric strong { display:block; color:var(--green); font-size:clamp(1.55rem,2.5vw,2.6rem); line-height:1; margin-bottom:7px; }
+    .metric span { color:var(--muted); font-size:clamp(.75rem,1vw,.96rem); }
+    .grid { display:grid; gap:16px; min-height:0; flex:1; }
+    .grid-3 { grid-template-columns:repeat(3,1fr); }
+    .grid-2 { grid-template-columns:1.1fr .9fr; }
+    .card { background:rgba(255,255,255,.9); border:1px solid var(--line); border-radius:20px; padding:clamp(14px,1.7vw,22px); box-shadow:0 13px 32px rgba(16,42,67,.055); min-height:0; }
+    .card ul { padding-left:1.18rem; margin:7px 0 0; }
+    .card li { margin:.28rem 0; }
+    .drug { border-top:5px solid var(--green); }
+    .drug .brand { display:inline-flex; background:var(--mint); color:var(--green); border-radius:999px; padding:4px 10px; font-weight:800; font-size:.76rem; margin-bottom:10px; }
+    .status { padding:13px 16px; border-radius:14px; background:#edf6fb; border-left:5px solid #2d7ca6; font-size:clamp(.76rem,1vw,.94rem); line-height:1.45; margin-top:12px; }
+    .generic { padding:14px 16px; border-radius:14px; background:#fff7df; border:1px solid #f2d58b; color:#684b0b; font-size:clamp(.76rem,1vw,.94rem); line-height:1.45; margin-top:14px; }
+    .timeline { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-top:12px; }
+    .step { position:relative; padding:12px 8px; border-radius:13px; text-align:center; background:var(--mint); color:#075e4b; font-weight:800; font-size:clamp(.7rem,.92vw,.87rem); }
+    .step small { display:block; color:var(--muted); font-weight:500; margin-top:4px; }
+    .habit-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:10px; }
+    .habit { background:#f3f7f5; border-radius:14px; padding:12px; font-size:clamp(.76rem,1vw,.94rem); line-height:1.35; }
+    .habit b { color:var(--green); display:block; margin-bottom:3px; }
+    .warning-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; flex:1; min-height:0; }
+    .warning { background:var(--white); border:1px solid #efcfcb; border-left:5px solid var(--red); border-radius:16px; padding:14px 17px; }
+    .warning h3 { color:#8e2929; margin-bottom:5px; }
+    .warning p { margin:0; color:#5a3b38; }
+    .redline { background:var(--red-soft); color:#7a2525; border:1px solid #edc0bb; border-radius:16px; padding:13px 17px; margin-top:12px; font-weight:700; font-size:clamp(.78rem,1vw,.96rem); }
+    .talk { position:absolute; left:clamp(30px,5.5vw,90px); right:clamp(30px,5.5vw,90px); bottom:18px; color:var(--muted); font-size:clamp(.7rem,.9vw,.86rem); border-top:1px solid var(--line); padding-top:9px; }
+    .talk b { color:var(--green); }
+    .controls { position:fixed; z-index:10; right:18px; bottom:16px; display:flex; gap:8px; align-items:center; }
+    .controls button, .controls a { width:38px; height:38px; display:grid; place-items:center; border-radius:50%; border:1px solid rgba(255,255,255,.2); background:rgba(16,42,67,.88); color:white; text-decoration:none; cursor:pointer; backdrop-filter:blur(8px); }
+    .counter { position:fixed; z-index:10; left:18px; bottom:16px; color:white; background:rgba(16,42,67,.88); padding:8px 13px; border-radius:999px; font-size:.8rem; }
+    .progress { position:fixed; z-index:11; left:0; bottom:0; height:4px; background:var(--green); transition:width .2s ease; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    @keyframes fade { from{opacity:.3;transform:translateY(6px)} to{opacity:1;transform:none} }
+    @media (max-width:800px), (max-height:620px) {
+      .slide-inner { padding:22px 22px 55px; overflow:auto; }
+      .metric-row, .grid-3, .grid-2, .warning-grid { grid-template-columns:1fr; }
+      .timeline { grid-template-columns:repeat(5,minmax(90px,1fr)); overflow-x:auto; }
+      .talk { position:static; margin-top:14px; }
+      html,body,.deck { overflow:hidden; }
+    }
+    @media print {
+      html, body { overflow:visible; background:white; width:auto; height:auto; }
+      .deck { width:auto; height:auto; overflow:visible; }
+      .slide { display:flex !important; position:relative; width:297mm; height:167mm; break-after:page; page-break-after:always; }
+      .slide-inner { padding:14mm 18mm 16mm; overflow:hidden; }
+      .controls, .counter, .progress { display:none; }
+      .talk { left:18mm; right:18mm; bottom:6mm; }
+      @page { size:A4 landscape; margin:0; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" id="deck" aria-label="สรุปปากกาลดน้ำหนัก 3 หน้า">
+    <section class="slide active" data-title="มีกี่ชนิด และแบรนด์ใดอยู่ในไทย">
+      <div class="slide-inner">
+        <div class="eyebrow">หน้า 1 · ภาพรวมตลาดไทย</div>
+        <h1>ปากกาลดน้ำหนัก มีอะไรบ้าง?</h1>
+        <p class="lede">สำหรับโรคอ้วนทั่วไปมี <b>3 ตัวยาหลัก</b> แต่ข้อมูลสาธารณะที่รายงานยืนยันข้อบ่งใช้ลดน้ำหนักในไทยได้ชัดมีเพียง <b>2 แบรนด์</b></p>
+        <div class="grid grid-3">
+          <article class="card drug">
+            <div class="brand">GLP-1 · ฉีดทุกวัน</div>
+            <h3>Liraglutide</h3>
+            <p><b>Saxenda</b> — ยืนยันเอกสารไทย<br>ไต่ 0.6 → 3.0 มก./วัน</p>
+            <div class="status">ปากกา 18 มก.; เมื่อถึง 3 มก. ใช้ได้ประมาณ 6 วัน</div>
+          </article>
+          <article class="card drug">
+            <div class="brand">GLP-1 · สัปดาห์ละครั้ง</div>
+            <h3>Semaglutide</h3>
+            <p><b>Wegovy FlexTouch</b> — ยืนยันเอกสารไทย<br>มี 5 ความแรง 0.25–2.4 มก.</p>
+            <div class="status">แต่ละด้ามไทยมี 4 โดส; <b>Ozempic</b> เป็นแบรนด์เบาหวาน ไม่ใช่ Wegovy</div>
+          </article>
+          <article class="card drug">
+            <div class="brand">GIP/GLP-1 · สัปดาห์ละครั้ง</div>
+            <h3>Tirzepatide</h3>
+            <p><b>Mounjaro</b> พบทะเบียนไทย แต่หน้าสาธารณะที่ตรวจยังยืนยันข้อบ่งใช้ลดน้ำหนักไม่ได้</p>
+            <div class="status"><b>Zepbound</b> คือแบรนด์โรคอ้วนในสหรัฐฯ; อย่านำฉลากต่างประเทศมาแทนไทย</div>
+          </article>
+        </div>
+        <div class="generic"><b>แล้ว “เจเนริก” ล่ะ?</b> รายงานนี้ยังไม่ยืนยันปากกาลดน้ำหนักเจเนริกที่ได้รับอนุมัติในไทย ชื่อตัวยา เช่น semaglutide ไม่ได้แปลว่าผลิตภัณฑ์ออนไลน์/ยาผสมเป็นเจเนริกที่เทียบเท่าแบรนด์ ยาแบ่ง ยานับคลิก และผลิตภัณฑ์ไม่มีเลขทะเบียนมีความเสี่ยง</div>
+        <div class="talk"><b>ประโยคใช้คุย:</b> “มี 3 ตัวยาหลัก แต่ในไทยที่ยืนยันข้อบ่งใช้ชัดจากรายงานคือ Wegovy และ Saxenda; Mounjaro ต้องเช็กฉลากไทยล่าสุดก่อนเรียกว่ายาลดน้ำหนัก”</div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="ใช้อย่างไร และต้องทำอะไรควบคู่">
+      <div class="slide-inner">
+        <div class="eyebrow">หน้า 2 · วิธีใช้แบบเข้าใจง่าย</div>
+        <h2>ยาเป็น “ตัวช่วยคุมความหิว” ไม่ใช่คอร์สละลายไขมัน</h2>
+        <div class="grid grid-2">
+          <article class="card">
+            <h3>Wegovy · สัปดาห์ละครั้ง</h3>
+            <div class="timeline" aria-label="ตารางไต่ขนาด Wegovy">
+              <div class="step">0.25 มก.<small>สัปดาห์ 1–4</small></div>
+              <div class="step">0.5 มก.<small>สัปดาห์ 5–8</small></div>
+              <div class="step">1.0 มก.<small>สัปดาห์ 9–12</small></div>
+              <div class="step">1.7 มก.<small>สัปดาห์ 13–16</small></div>
+              <div class="step">2.4 มก.<small>สัปดาห์ 17+</small></div>
+            </div>
+            <p style="margin:14px 0 0"><b>Saxenda · วันละครั้ง:</b> 0.6 → 1.2 → 1.8 → 2.4 → 3.0 มก. เพิ่มตามสัปดาห์ ภายใต้แพทย์ดูแล</p>
+            <div class="status"><b>หลักร่วม:</b> ฉีดใต้ผิวหนังหน้าท้อง/ต้นขา/ต้นแขน เปลี่ยนจุดฉีด ใช้เข็มใหม่ ไม่แชร์ปากกา และห้ามเดาโดสจาก “จำนวนคลิก”</div>
+          </article>
+          <article class="card">
+            <h3>5 อย่างที่ต้องทำควบคู่</h3>
+            <div class="habit-grid">
+              <div class="habit"><b>1 · อาหาร</b>ลดพลังงานอย่างพอดี เน้นอาหารจริง</div>
+              <div class="habit"><b>2 · โปรตีน</b>กินให้พอ เพื่อลดการสูญเสียกล้ามเนื้อ</div>
+              <div class="habit"><b>3 · เวทเทรนนิง</b>ฝึกแรงต้านสม่ำเสมอ ไม่ดูแต่น้ำหนัก</div>
+              <div class="habit"><b>4 · การนอน/การขยับ</b>นอนพอ เดินและเคลื่อนไหวทุกวัน</div>
+              <div class="habit"><b>5 · ติดตามผล</b>น้ำหนัก รอบเอว น้ำตาล ความดัน อาการ และมวลกล้ามเนื้อ</div>
+              <div class="habit"><b>แพทย์เป็นคนปรับ</b>ชะลอไต่/หยุด/เปลี่ยนยาเมื่อจำเป็น</div>
+            </div>
+          </article>
+        </div>
+        <div class="redline">ไม่มี “หนึ่งกล่องแล้วจบคอร์ส” — 4 สัปดาห์มักเป็นเพียงหนึ่งขั้นไต่ขนาด โรคอ้วนเป็นโรคเรื้อรัง ต้องประเมินประโยชน์ ผลข้างเคียง และแผนระยะยาวเป็นระยะ</div>
+        <div class="talk"><b>ประโยคใช้คุย:</b> “อย่าแข่งขึ้นโดส ยิ่งเร็วไม่ได้ยิ่งดี เป้าหมายคือใช้ขนาดที่เหมาะ พร้อมรักษากล้ามเนื้อและติดตามสุขภาพ ไม่ใช่ดูแค่ตัวเลขบนตาชั่ง”</div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="ข้อควรระวังและสัญญาณอันตราย">
+      <div class="slide-inner">
+        <div class="eyebrow">หน้า 3 · ความปลอดภัยก่อนความเร็ว</div>
+        <h2>ใครต้องระวัง — และเมื่อไรต้องหยุดคุยแล้วไปโรงพยาบาล</h2>
+        <div class="warning-grid">
+          <article class="warning">
+            <h3>ห้ามใช้/หลีกเลี่ยง</h3>
+            <p>ตั้งครรภ์, แพ้ยารุนแรง, หรือมีประวัติตนเอง/ครอบครัวเป็น MTC หรือ MEN2 ตามข้อห้ามในฉลากสหรัฐฯ ของผลิตภัณฑ์หลัก ต้องยึดฉลากไทยของยาที่ได้รับจริง</p>
+          </article>
+          <article class="warning">
+            <h3>ต้องให้แพทย์ประเมินใกล้ชิด</h3>
+            <p>เคยตับอ่อนอักเสบ/นิ่วถุงน้ำดี, โรคไต, กระเพาะเคลื่อนไหวช้า, เบาหวานมีจอประสาทตา, ใช้อินซูลินหรือ sulfonylurea, ผู้สูงอายุ/มวลกล้ามเนื้อน้อย</p>
+          </article>
+          <article class="warning">
+            <h3>ก่อนผ่าตัด–ส่องกล้อง–ดมยาสลบ</h3>
+            <p>ต้องแจ้งทีมรักษา เพราะกระเพาะอาจว่างช้าและเสี่ยงสำลัก อย่าหยุดยาเอง ให้ทีมประเมินช่วงไต่ยา อาการทางท้อง และความเสี่ยงน้ำตาล</p>
+          </article>
+          <article class="warning">
+            <h3>ไปฉุกเฉินเมื่อมี Red flags</h3>
+            <p>ปวดท้องรุนแรงร้าวหลัง, ปวดชายโครงขวาร่วมไข้/ตัวเหลือง, อาเจียนจนดื่มไม่ได้/ปัสสาวะน้อย, ท้องโป่งไม่ถ่ายไม่ผายลม, หน้าคอบวม หายใจลำบาก หรือมองเห็นเปลี่ยนฉับพลัน</p>
+          </article>
+        </div>
+        <div class="redline">ผลข้างเคียงที่พบบ่อยคือ คลื่นไส้ อาเจียน ท้องเสีย/ท้องผูก และท้องอืด โดยเฉพาะช่วงเริ่มหรือเพิ่มขนาด — <b>อาการข้างเคียงไม่ใช่หลักฐานว่ายาได้ผล</b></div>
+        <div class="generic" style="margin-top:10px"><b>เช็กก่อนซื้อ:</b> เลขทะเบียน อย.ไทย แหล่งขายที่มีใบอนุญาต ฉลาก/ความแรงชัดเจน และ cold chain หลีกเลี่ยงยาแบ่งใส่หลอด ยาผสมไม่ทราบความเข้มข้น ของราคาต่ำผิดปกติ และผู้ขายที่ไม่คัดกรองโรคหรือยาร่วม</div>
+        <div class="talk"><b>สรุปสุดท้าย:</b> “เลือกจากข้อบ่งใช้และความปลอดภัย ไม่ใช่เลือกจากยี่ห้อที่ดังที่สุด — และต้องมีแพทย์ดูแลตั้งแต่เริ่มยา ระหว่างไต่โดส จนถึงแผนหยุดหรือใช้ต่อ”</div>
+      </div>
+    </section>
+  </main>
+
+  <div class="counter" aria-live="polite"><span id="current">1</span> / <span id="total">3</span></div>
+  <div class="controls" aria-label="ตัวควบคุมสไลด์">
+    <a href="weight-loss-pen-research.html" title="เปิดรายงานฉบับเต็ม" aria-label="เปิดรายงานฉบับเต็ม">↗</a>
+    <button id="prev" title="หน้าก่อน" aria-label="หน้าก่อน">←</button>
+    <button id="next" title="หน้าถัดไป" aria-label="หน้าถัดไป">→</button>
+    <button id="full" title="เต็มจอ (F)" aria-label="เต็มจอ">⛶</button>
+  </div>
+  <div class="progress" id="progress"></div>
+  <p class="sr-only">ใช้ปุ่มลูกศรซ้ายขวา Space หรือ Page Up Page Down เพื่อเปลี่ยนหน้า กด F เพื่อเต็มจอ</p>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    const current = document.getElementById('current');
+    const total = document.getElementById('total');
+    const progress = document.getElementById('progress');
+    let index = 0;
+    total.textContent = slides.length;
+
+    function show(nextIndex) {
+      index = Math.max(0, Math.min(slides.length - 1, nextIndex));
+      slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+      current.textContent = index + 1;
+      progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+      document.title = `${index + 1}/3 · ${slides[index].dataset.title}`;
+      history.replaceState(null, '', `#${index + 1}`);
+    }
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+      else document.exitFullscreen?.();
+    }
+    document.getElementById('prev').addEventListener('click', () => show(index - 1));
+    document.getElementById('next').addEventListener('click', () => show(index + 1));
+    document.getElementById('full').addEventListener('click', toggleFullscreen);
+    document.addEventListener('keydown', (event) => {
+      if (['ArrowRight','PageDown',' ','Enter'].includes(event.key)) { event.preventDefault(); show(index + 1); }
+      if (['ArrowLeft','PageUp','Backspace'].includes(event.key)) { event.preventDefault(); show(index - 1); }
+      if (event.key === 'Home') show(0);
+      if (event.key === 'End') show(slides.length - 1);
+      if (event.key.toLowerCase() === 'f') toggleFullscreen();
+    });
+    const hashIndex = Number(location.hash.slice(1)) - 1;
+    show(Number.isInteger(hashIndex) && hashIndex >= 0 ? hashIndex : 0);
+  </script>
+</body>
+</html>
