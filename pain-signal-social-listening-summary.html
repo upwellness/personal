@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="บทสรุปผู้บริหาร Social Listening สำหรับตามต่อ (TamTor) จาก decision corpus v2.2 จำนวน 513 รายการ">
+  <title>Social Listening Executive Summary — ตามต่อ (TamTor)</title>
+  <style>
+    :root {
+      --navy: #17324d;
+      --navy-deep: #0d2438;
+      --teal: #168b87;
+      --teal-soft: #d9eeea;
+      --paper: #f5efe3;
+      --paper-light: #fffdf8;
+      --warm: #db7b57;
+      --ink: #1d2b35;
+      --muted: #66747c;
+      --line: #d8d2c5;
+      --white: #ffffff;
+      --shadow: 0 16px 42px rgba(13, 36, 56, .11);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 5%, rgba(22,139,135,.09), transparent 25rem),
+        var(--paper);
+      font-family: "Noto Sans Thai", "Leelawadee UI", Tahoma, Arial, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    a:focus-visible, button:focus-visible { outline: 3px solid #f2b775; outline-offset: 3px; }
+    .skip-link {
+      position: fixed; top: 8px; left: 8px; z-index: 20;
+      padding: 9px 14px; border-radius: 8px; background: var(--white); color: var(--navy);
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .page { width: min(1240px, calc(100% - 32px)); margin: 24px auto 36px; }
+
+    .hero {
+      position: relative; overflow: hidden;
+      display: grid; grid-template-columns: 1.55fr .8fr; gap: 28px;
+      padding: 34px 38px;
+      color: var(--white); background: var(--navy-deep); border-radius: 26px;
+      box-shadow: var(--shadow);
+    }
+    .hero::after {
+      content: ""; position: absolute; width: 340px; height: 340px; right: -120px; top: -175px;
+      border: 58px solid rgba(59, 193, 184, .16); border-radius: 50%; pointer-events: none;
+    }
+    .eyebrow { margin: 0 0 10px; color: #8edbd3; font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { margin: 0; max-width: 760px; font-size: clamp(2rem, 4vw, 3.65rem); line-height: 1.08; letter-spacing: -.04em; }
+    .hero-lead { max-width: 760px; margin: 16px 0 0; color: #d7e3e8; font-size: 1.05rem; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .pill { padding: 6px 11px; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; color: #e8f4f4; background: rgba(255,255,255,.07); font-size: .78rem; }
+    .score {
+      position: relative; z-index: 1; align-self: stretch; display: flex; flex-direction: column; justify-content: center;
+      min-height: 190px; padding: 22px; border: 1px solid rgba(255,255,255,.16); border-radius: 18px;
+      background: rgba(255,255,255,.075); backdrop-filter: blur(5px);
+    }
+    .score strong { display: block; color: #83d8d0; font-size: clamp(3.2rem, 7vw, 5.4rem); line-height: .95; letter-spacing: -.06em; }
+    .score b { margin-top: 10px; font-size: 1rem; }
+    .score span { margin-top: 5px; color: #c5d3da; font-size: .78rem; }
+
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; margin-top: 16px; }
+    .card { padding: 22px; background: rgba(255,253,248,.94); border: 1px solid rgba(23,50,77,.10); border-radius: var(--radius); box-shadow: 0 8px 24px rgba(13,36,56,.055); }
+    .scope { grid-column: span 5; }
+    .themes { grid-column: span 7; }
+    .insight { grid-column: span 7; background: var(--navy); color: var(--white); }
+    .product { grid-column: span 5; }
+    .action { grid-column: span 8; }
+    .limits { grid-column: span 4; background: #fbf2e8; }
+
+    .section-tag { margin: 0 0 7px; color: var(--teal); font-size: .7rem; font-weight: 850; letter-spacing: .11em; text-transform: uppercase; }
+    h2 { margin: 0 0 12px; color: var(--navy); font-size: 1.18rem; line-height: 1.3; letter-spacing: -.015em; }
+    .insight h2 { color: var(--white); }
+    p { margin: 0; }
+    .muted { color: var(--muted); font-size: .82rem; }
+
+    .source-total { display: flex; align-items: end; gap: 10px; margin-bottom: 15px; }
+    .source-total strong { color: var(--navy); font-size: 2.8rem; line-height: 1; letter-spacing: -.05em; }
+    .source-total span { padding-bottom: 4px; color: var(--muted); font-size: .8rem; }
+    .source-list { display: grid; gap: 9px; margin: 0; }
+    .source-row { display: grid; grid-template-columns: minmax(138px, 1fr) 2fr 44px; align-items: center; gap: 9px; font-size: .76rem; }
+    .track { height: 7px; overflow: hidden; border-radius: 99px; background: #e9e4da; }
+    .fill { width: var(--w); height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--teal), #5cbab1); transform-origin: left; animation: grow .8s ease-out both; }
+    @keyframes grow { from { transform: scaleX(0); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; } }
+
+    .audit-note { margin-top: 15px; padding: 12px 14px; border-left: 3px solid var(--teal); border-radius: 0 10px 10px 0; background: var(--teal-soft); font-size: .77rem; }
+    .audit-note strong { color: var(--navy); }
+
+    .theme-list { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 18px; margin: 0; padding: 0; list-style: none; }
+    .theme-item { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: end; padding-bottom: 7px; border-bottom: 1px solid var(--line); }
+    .theme-item span { font-size: .79rem; }
+    .theme-item strong { color: var(--navy); font-size: 1.2rem; line-height: 1; }
+    .recurrence {
+      margin-top: 14px; padding: 11px 13px; border: 1px dashed #c4aa8d; border-radius: 11px;
+      background: #fff8ee; color: #604b3a; font-size: .76rem;
+    }
+
+    .quote-mark { color: #68c8bf; font: 700 2.8rem/1 Georgia, serif; }
+    .insight-text { margin-top: -9px; max-width: 800px; font-size: clamp(1.18rem, 2.2vw, 1.75rem); line-height: 1.42; letter-spacing: -.02em; }
+    .insight-sub { margin-top: 14px; color: #c8d7de; font-size: .82rem; }
+
+    .product-name { display: flex; gap: 12px; align-items: center; margin-bottom: 10px; }
+    .mark { display: grid; place-items: center; width: 44px; height: 44px; flex: 0 0 auto; border-radius: 13px; color: var(--white); background: var(--teal); font-weight: 900; }
+    .product-name strong { display: block; color: var(--navy); font-size: 1.28rem; }
+    .product-name small { display: block; color: var(--muted); }
+    .feature-line { margin: 13px 0 0; color: var(--ink); font-size: .8rem; }
+    .boundary { margin-top: 12px; color: #78513e; font-size: .75rem; font-weight: 700; }
+
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; counter-reset: plan; }
+    .step { position: relative; min-height: 118px; padding: 14px 14px 14px 47px; border-radius: 14px; background: #f1f6f4; counter-increment: plan; }
+    .step::before { content: counter(plan); position: absolute; left: 13px; top: 13px; display: grid; place-items: center; width: 25px; height: 25px; border-radius: 50%; color: white; background: var(--teal); font-size: .72rem; font-weight: 900; }
+    .step strong { display: block; color: var(--navy); font-size: .84rem; }
+    .step span { display: block; margin-top: 5px; color: var(--muted); font-size: .74rem; }
+
+    .limits ul { margin: 0; padding-left: 19px; }
+    .limits li { margin: 6px 0; font-size: .76rem; }
+    .no-proof { display: inline-block; margin-top: 10px; padding: 7px 9px; border-radius: 8px; color: #75432f; background: #f5d9cb; font-size: .72rem; font-weight: 800; }
+
+    footer { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-top: 16px; padding: 13px 4px 0; border-top: 1px solid rgba(23,50,77,.17); }
+    .links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .link, .print-btn { display: inline-flex; align-items: center; min-height: 40px; padding: 8px 13px; border: 1px solid #b9b3a8; border-radius: 999px; color: var(--navy); background: transparent; font: inherit; font-size: .76rem; font-weight: 800; text-decoration: none; cursor: pointer; }
+    .link:hover, .print-btn:hover { background: var(--white); border-color: var(--teal); }
+    .link.primary { border-color: var(--teal); color: var(--white); background: var(--teal); }
+    .prepared { text-align: right; color: var(--muted); font-size: .7rem; white-space: nowrap; }
+
+    @media (max-width: 860px) {
+      .page { width: min(100% - 20px, 680px); margin-top: 10px; }
+      .hero { grid-template-columns: 1fr; padding: 27px 23px; }
+      .score { min-height: auto; }
+      .score strong { font-size: 3.7rem; }
+      .scope, .themes, .insight, .product, .action, .limits { grid-column: 1 / -1; }
+      .steps { grid-template-columns: 1fr; }
+      footer { align-items: flex-start; flex-direction: column; }
+      .prepared { text-align: left; }
+    }
+    @media (max-width: 500px) {
+      .page { width: calc(100% - 14px); }
+      .hero, .card { border-radius: 16px; }
+      .card { padding: 18px; }
+      .theme-list { grid-template-columns: 1fr; }
+      .source-row { grid-template-columns: minmax(122px, 1.2fr) 1fr 42px; }
+    }
+
+    @page { size: A4 landscape; margin: 8mm; }
+    @media print {
+      :root { --shadow: none; }
+      body { background: white; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .skip-link, .print-btn { display: none !important; }
+      .page { width: 100%; margin: 0; }
+      .hero { grid-template-columns: 1.55fr .8fr; min-height: 0; padding: 15px 19px; border-radius: 14px; box-shadow: none; }
+      h1 { font-size: 2rem; }
+      .hero-lead { margin-top: 8px; font-size: .8rem; }
+      .hero-meta { margin-top: 9px; }
+      .score { min-height: 110px; padding: 13px; }
+      .score strong { font-size: 3rem; }
+      .grid { gap: 8px; margin-top: 8px; }
+      .card { padding: 12px 14px; border-radius: 12px; box-shadow: none; break-inside: avoid; }
+      h2 { margin-bottom: 7px; font-size: .94rem; }
+      .source-total { margin-bottom: 8px; }
+      .source-total strong { font-size: 2rem; }
+      .source-list { gap: 4px; }
+      .audit-note, .recurrence { margin-top: 7px; padding: 6px 8px; }
+      .theme-list { gap: 5px 13px; }
+      .theme-item { padding-bottom: 3px; }
+      .theme-item strong { font-size: 1rem; }
+      .insight-text { font-size: 1.18rem; }
+      .insight-sub, .feature-line, .boundary { margin-top: 6px; }
+      .steps { gap: 7px; }
+      .step { min-height: 74px; padding: 8px 8px 8px 38px; }
+      .step::before { left: 8px; top: 8px; }
+      .limits li { margin: 2px 0; }
+      footer { margin-top: 7px; padding-top: 7px; }
+      .link { min-height: 30px; padding: 5px 9px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">ข้ามไปเนื้อหาหลัก</a>
+  <div class="page">
+    <header class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Social Listening · Executive Brief</p>
+        <h1 id="page-title">สัญญาณชี้ไปที่ “คิวงานถัดไป”<br>ไม่ใช่ CRM ที่ใหญ่กว่า</h1>
+        <p class="hero-lead">บทสรุปสำหรับ Toni จาก decision corpus v2.2: ใช้ social listening เพื่อเลือกสิ่งที่ควรทดสอบต่ออย่างมีวินัย—not เพื่ออ้างขนาดตลาดหรือยอดขาย</p>
+        <div class="hero-meta" aria-label="ข้อมูลชุดหลักฐาน">
+          <span class="pill">513 รายการ</span>
+          <span class="pill">5 แหล่งข้อมูล</span>
+          <span class="pill">Final v2.2 · 19 ก.ค. 2026</span>
+        </div>
+      </div>
+      <aside class="score" aria-label="ผลตรวจคุณภาพข้อมูล V5">
+        <strong>94%</strong>
+        <b>V5 PASS · bounded precision</b>
+        <span>47/50 ในตัวอย่างแบบแบ่งชั้นเท่ากัน เกินเกณฑ์ 90% — ไม่ใช่ค่าความแม่นยำของ corpus ทั้งหมด</span>
+      </aside>
+    </header>
+
+    <main id="main" class="grid">
+      <section class="card scope" aria-labelledby="scope-title">
+        <p class="section-tag">01 · Evidence scope</p>
+        <h2 id="scope-title">ขอบเขตและส่วนผสมของแหล่งข้อมูล</h2>
+        <div class="source-total"><strong>513</strong><span>records หลังตัด semantic fail 17 รายการ<br>และลบ duplicate ระหว่าง build 1 รายการ</span></div>
+        <div class="source-list" aria-label="สัดส่วนแหล่งข้อมูล">
+          <div class="source-row"><span>Google Play</span><div class="track"><div class="fill" style="--w:97.5%"></div></div><b>150</b></div>
+          <div class="source-row"><span>Trusted OSS Issues</span><div class="track"><div class="fill" style="--w:89.7%"></div></div><b>138</b></div>
+          <div class="source-row"><span>Apple App Store</span><div class="track"><div class="fill" style="--w:86.4%"></div></div><b>133</b></div>
+          <div class="source-row"><span>Stack Exchange</span><div class="track"><div class="fill" style="--w:51.3%"></div></div><b>79</b></div>
+          <div class="source-row"><span>Thai Public Web</span><div class="track"><div class="fill" style="--w:8.4%"></div></div><b>13</b></div>
+        </div>
+        <div class="audit-note"><strong>สมดุลผ่านเกณฑ์:</strong> แหล่งใหญ่สุด 29.24% (&lt;30%); native ID และ record hash ครบ 513/513</div>
+      </section>
+
+      <section class="card themes" aria-labelledby="themes-title">
+        <p class="section-tag">02 · Recurring signals</p>
+        <h2 id="themes-title">ธีมเด่น · จำนวนที่พบใน final corpus</h2>
+        <ul class="theme-list">
+          <li class="theme-item"><span>CRM ซับซ้อน / ต้นทุนสูง</span><strong>127</strong></li>
+          <li class="theme-item"><span>ระบบอัตโนมัติไม่น่าเชื่อถือ</span><strong>106</strong></li>
+          <li class="theme-item"><span>นัดหมาย / no-show</span><strong>99</strong></li>
+          <li class="theme-item"><span>ออกใบแจ้งหนี้ / เก็บเงิน</span><strong>94</strong></li>
+          <li class="theme-item"><span>Inbox กระจัดกระจาย</span><strong>37</strong></li>
+          <li class="theme-item"><span>Lead / follow-up</span><strong>25</strong></li>
+          <li class="theme-item"><span>งานแอดมิน / กรอกมือ</span><strong>14</strong></li>
+          <li class="theme-item"><span>ความรับผิดชอบในทีม</span><strong>8</strong></li>
+        </ul>
+        <p class="recurrence"><strong>อ่านตัวเลขอย่างไร:</strong> นี่คือ “การเกิดซ้ำ” จาก multi-label regex บน title + text ใน corpus ที่คัดด้วย query; 1 รายการอยู่ได้หลายธีม จึงห้ามแปลงเป็น prevalence, TAM, market share หรือร้อยละของ SME ไทย</p>
+      </section>
+
+      <section class="card insight" aria-labelledby="insight-title">
+        <p class="section-tag">03 · Key insight</p>
+        <h2 id="insight-title">ข้อสรุปเชิงออกแบบ</h2>
+        <div class="quote-mark" aria-hidden="true">“</div>
+        <p class="insight-text">Pain ไม่ได้จบที่ “ข้อมูลอยู่หลายที่” แต่เกิดเมื่อบทสนทนาจบแล้ว <strong>ไม่มี next action, เจ้าของงาน และเวลาที่ชัด</strong>—ขณะที่เครื่องมือใหญ่เพิ่มขั้นตอนจนผู้ใช้ไม่กลับไปบันทึก</p>
+        <p class="insight-sub">โอกาสจึงเป็น exception queue ที่เริ่มจากงานต้องทำ, บันทึกได้เร็วจากมือถือ และใช้สถานะที่ซื่อสัตย์—not dashboard ใหญ่, inbox ใหม่ หรือ automation ที่มองไม่เห็นว่า fail.</p>
+      </section>
+
+      <section class="card product" aria-labelledby="product-title">
+        <p class="section-tag">04 · Selected product</p>
+        <h2 id="product-title">คำตอบที่เลือกทดสอบ</h2>
+        <div class="product-name">
+          <div class="mark" aria-hidden="true">ต</div>
+          <div><strong>ตามต่อ · TamTor</strong><small>Lightweight Follow-up Companion</small></div>
+        </div>
+        <p class="feature-line">Quick capture + customer timeline + next action + due date + คิว Today/Overdue + CSV import พร้อม concierge setup</p>
+        <p class="boundary">ขอบเขต MVP: ไม่ใช่ full CRM · ไม่ดึง inbox · ไม่ส่งข้อความอัตโนมัติ · ไม่อ้าง sent/delivered/read</p>
+      </section>
+
+      <section class="card action" aria-labelledby="action-title">
+        <p class="section-tag">05 · Next 30 days</p>
+        <h2 id="action-title">เปลี่ยนสัญญาณเป็นหลักฐานซื้อจริง—ก่อนขยาย build</h2>
+        <div class="steps">
+          <div class="step"><strong>วัน 1–10 · Discovery</strong><span>สัมภาษณ์ SME ไทยที่เข้าเกณฑ์ 15 ราย; ผ่านเมื่อ ≥8 รายเล่าเหตุการณ์ follow-up หลุดใน 30 วัน พร้อม workflow/artifact จริง</span></div>
+          <div class="step"><strong>วัน 11–20 · Demo &amp; offer</strong><span>ทดสอบ flow คิว/quick capture และยื่นข้อเสนอที่เข้าเกณฑ์ 10 ราย; บันทึก must-have, permission concern และเหตุผลปฏิเสธตามจริง</span></div>
+          <div class="step"><strong>วัน 21–30 · Commercial gate</strong><span>เป้าหมาย ≥3 paid pilots; ถ้าได้ 0 ให้หยุด build และทบทวน problem/ICP—ห้ามสรุปเองว่าเป็นเพราะราคาอย่างเดียว</span></div>
+        </div>
+      </section>
+
+      <aside class="card limits" aria-labelledby="limits-title">
+        <p class="section-tag">Decision guardrails</p>
+        <h2 id="limits-title">สิ่งที่ข้อมูลนี้ยังไม่พิสูจน์</h2>
+        <ul>
+          <li>ไม่ใช่ random sample และไม่ประมาณ prevalence</li>
+          <li>App reviews เอนเอียงไปยังผู้ไม่พอใจ; OSS/Stack Exchange เอน technical/global</li>
+          <li>Thai subset มีเพียง 13 discovery snippets และห้ามใช้เป็นคำพูด firsthand แบบ verbatim</li>
+          <li>ยังไม่มี paid pilot, conversion, retention หรือ causal outcome</li>
+        </ul>
+        <span class="no-proof">WTP / ราคา = ยังไม่ validated</span>
+      </aside>
+    </main>
+
+    <footer aria-label="เอกสารและลิงก์ที่เกี่ยวข้อง">
+      <nav class="links" aria-label="ลิงก์รายละเอียด">
+        <a class="link" href="pain-signal-social-listening-report.html">รายงาน Insight ฉบับละเอียด</a>
+        <a class="link" href="pain-signal-social-listening-report.html#method">หลักฐาน Audit V5</a>
+        <a class="link" href="tamtorr-spec.html">Product Spec</a>
+        <a class="link primary" href="https://tamtorr.vercel.app/demo" target="_blank" rel="noopener noreferrer">เปิด Live Demo ↗</a>
+        <button class="print-btn" type="button" onclick="window.print()">พิมพ์ / บันทึก PDF</button>
+      </nav>
+      <p class="prepared">Prepared for Toni<br>Decision corpus v2.2 · 19 July 2026</p>
+    </footer>
+  </div>
+  <script>
+    document.documentElement.classList.add('js');
+  </script>
+</body>
+</html>
