@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="th" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VWN Center — Financial Board v4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script>
+  /* Babel standalone รุ่นใหม่ default เป็น automatic runtime → จะพ่น import statement ทำให้จอว่าง
+     ต้อง register preset ที่บังคับ classic runtime (React.createElement) ก่อน DOMContentLoaded */
+  Babel.registerPreset('classic-react',{presets:[[Babel.availablePresets['react'],{runtime:'classic'}]]});
+</script>
+<style>
+  :root{ --ink:#E8EEF5; --ink2:#93A4B8; --ink3:#5D7085; }
+  html,body{height:100%;margin:0;overflow:hidden;background:#05080D}
+  body{font-family:"Noto Sans Thai","Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .num{font-family:"Inter",sans-serif;font-variant-numeric:tabular-nums}
+  .glass{background:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.028));
+         border:1px solid rgba(255,255,255,.10);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+  .glass-hi{background:linear-gradient(160deg,rgba(16,185,129,.16),rgba(16,185,129,.04));
+            border:1px solid rgba(16,185,129,.30)}
+  .glass-warn{background:linear-gradient(160deg,rgba(244,63,94,.15),rgba(244,63,94,.04));
+              border:1px solid rgba(244,63,94,.30)}
+  .glass-gold{background:linear-gradient(160deg,rgba(245,158,11,.16),rgba(245,158,11,.04));
+              border:1px solid rgba(245,158,11,.32)}
+  ::-webkit-scrollbar{width:7px;height:7px}
+  ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:9px}
+  ::-webkit-scrollbar-track{background:transparent}
+  input[type=range]{-webkit-appearance:none;height:6px;border-radius:99px;background:linear-gradient(90deg,#10B981,#F59E0B);outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;
+    background:#fff;border:4px solid #F59E0B;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.5)}
+  input[type=range]:focus-visible{outline:2px solid #F59E0B;outline-offset:4px}
+  .fade{animation:f .45s cubic-bezier(.22,.8,.3,1)}
+  @keyframes f{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.fade{animation:none} *{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="root" class="w-full h-full"></div>
+
+<script type="text/babel" data-presets="env,classic-react">
+const {useState,useMemo,useEffect,useRef} = React;
+
+/* ══════════ DATA — จากชีท 2 (MASTER ที่ต้น review แล้ว) ══════════ */
+const DATA = {"pre":["24.10","24.11","24.12","25.01","25.02","25.03","25.04","25.05","25.06","25.07","25.08","25.09","25.10","25.11","25.12"],"post":["26.01","26.02","26.03","26.04","26.05","26.06"],"rows":[{"n":"ทีมนัตต์-เบลล์","pre":[620,540,620,500,500,500,500,500,0,500,500,500,500,500,500],"post":[500,500,500,450,450,450],"jul":0},{"n":"ต้น-จิ้น","pre":[300,300,300,500,500,500,500,500,500,500,500,500,500,500,500],"post":[500,500,500,500,500,500],"jul":0},{"n":"ป๊อก-หนึ่ง","pre":[300,300,300,300,300,300,300,300,500,500,500,500,500,500,500],"post":[500,500,500,500,500,500],"jul":500},{"n":"รุจิ-เฟิร์น","pre":[300,300,300,300,300,400,400,400,400,400,400,400,400,400,400],"post":[0,400,400,400,400,400],"jul":400},{"n":"Wor-อ้อ","pre":[300,300,300,600,600,300,400,300,500,400,400,400,400,400,400],"post":[400,400,400,400,400,400],"jul":0},{"n":"บี-ธนู","pre":[300,300,300,300,300,300,300,300,300,300,300,300,300,300,300],"post":[300,300,300,300,400,400],"jul":400},{"n":"พี่ติว","pre":[300,300,300,300,300,300,300,300,300,300,300,300,300,300,300],"post":[300,300,300,300,300,300],"jul":300},{"n":"พี่นาง","pre":[300,300,300,300,300,300,300,300,300,300,300,300,300,300,300],"post":[300,300,300,300,300,300],"jul":300},{"n":"อาพัฒน์-อาแดง","pre":[300,300,300,500,500,500,500,500,0,0,0,0,0,0,0],"post":[0,0,0,0,0,0],"jul":0},{"n":"พี่ชาย","pre":[200,200,200,200,200,200,200,0,200,0,0,200,200,200,200],"post":[0,0,0,0,200,300],"jul":0},{"n":"พี่สุภนิตย์","pre":[300,300,300,0,0,0,0,0,0,0,0,0,0,0,0],"post":[0,0,0,0,0,0],"jul":0},{"n":"บุญถม","pre":[300,300,300,0,0,0,0,0,0,0,0,0,0,0,0],"post":[0,0,0,0,0,0],"jul":0},{"n":"แก้ว-พล-ผอ.","pre":[0,0,0,0,0,0,0,0,100,100,0,100,0,0,0],"post":[0,100,100,0,0,0],"jul":0},{"n":"เฟิร์น(แยก)","pre":[100,100,100,0,0,0,0,0,0,0,0,0,0,0,0],"post":[0,0,0,0,0,0],"jul":0},{"n":"เกศ","pre":[0,0,0,0,0,100,0,0,100,100,0,0,0,0,0],"post":[0,0,0,0,0,0],"jul":0},{"n":"รชดา","pre":[0,300,100,0,0,0,0,0,0,0,0,0,0,0,0],"post":[0,0,0,0,0,0],"jul":0}]};
+
+const MONTHS = [...DATA.pre.map(m=>({k:m,phase:"pre"})), ...DATA.post.map(m=>({k:m,phase:"post"}))];
+const THMON = {"10":"ต.ค.","11":"พ.ย.","12":"ธ.ค.","01":"ม.ค.","02":"ก.พ.","03":"มี.ค.","04":"เม.ย.","05":"พ.ค.","06":"มิ.ย.","07":"ก.ค.","08":"ส.ค.","09":"ก.ย."};
+const lbl = k => THMON[k.slice(3)] + " " + k.slice(0,2);
+const yearOf = k => k.slice(0,2);
+
+const PEOPLE = DATA.rows.map(r=>{
+  const all=[...r.pre,...r.post];
+  return {...r, all, total:all.reduce((a,b)=>a+b,0),
+          qpre:r.pre.reduce((a,b)=>a+b,0), qpost:r.post.reduce((a,b)=>a+b,0),
+          rounds:all.filter(x=>x>0).length};
+}).sort((a,b)=>b.total-a.total);
+
+const GRAND   = PEOPLE.reduce((a,p)=>a+p.total,0);   // 73,530
+const CUT_PRE = PEOPLE.reduce((a,p)=>a+p.qpre,0);    // 53,980
+const CUT_POST= PEOPLE.reduce((a,p)=>a+p.qpost,0);   // 19,550
+const JULY    = PEOPLE.reduce((a,p)=>a+p.jul,0);     // 1,900
+const CONFIRMED = 41541;
+const GAP     = CUT_PRE - CONFIRMED;                 // 12,439
+const FIX_DEFAULT = 700*6, SPECIAL_DEFAULT = 2572+855;
+
+const CORE = PEOPLE.slice(0,8).map(p=>p.n);
+const PALETTE = ["#10B981","#F59E0B","#38BDF8","#A78BFA","#F43F5E","#34D399","#FBBF24","#60A5FA",
+                 "#C084FC","#FB7185","#6EE7B7","#FCD34D","#93C5FD","#DDD6FE","#FDA4AF","#5EEAD4"];
+const colorOf = n => PALETTE[PEOPLE.findIndex(p=>p.n===n) % PALETTE.length];
+
+const B = n => "฿" + Math.round(n).toLocaleString("th-TH");
+const N = n => Math.round(n).toLocaleString("th-TH");
+const P = n => n.toFixed(2) + "%";
+
+/* ══════════ CHARTS ══════════ */
+function Donut({data,size=300,thick=42,center}){
+  const R=size/2, r=R-thick/2-4, C=2*Math.PI*r;
+  const tot=data.reduce((a,d)=>a+d.v,0)||1;
+  let off=0;
+  const [hov,setHov]=useState(-1);
+  return (
+    <div className="relative grid place-items-center" style={{width:size,height:size}}>
+      <svg width={size} height={size} style={{transform:"rotate(-90deg)"}}>
+        {data.map((d,i)=>{
+          const len=C*d.v/tot, dash=`${len} ${C-len}`, o=-off; off+=len;
+          return <circle key={i} cx={R} cy={R} r={r} fill="none" stroke={d.c}
+            strokeWidth={hov===i?thick+8:thick} strokeDasharray={dash} strokeDashoffset={o}
+            style={{transition:"stroke-width .2s",cursor:"pointer",opacity:hov===-1||hov===i?1:.35}}
+            onMouseEnter={()=>setHov(i)} onMouseLeave={()=>setHov(-1)}/>;
+        })}
+      </svg>
+      <div className="absolute text-center pointer-events-none">
+        {hov>=0
+          ? <><div className="text-[13px] text-slate-300 max-w-[130px] leading-tight">{data[hov].n}</div>
+              <div className="num text-2xl font-extrabold text-white mt-1">{P(data[hov].v/tot*100)}</div>
+              <div className="num text-[13px] text-emerald-300">{B(data[hov].v)}</div></>
+          : center}
+      </div>
+    </div>
+  );
+}
+
+function LineChart({series,labels,h=250,fmt=N}){
+  const w=1000, pad={l:56,r:14,t:16,b:34};
+  const max=Math.max(...series.flatMap(s=>s.pts),1)*1.12;
+  const X=i=> pad.l + i*(w-pad.l-pad.r)/Math.max(labels.length-1,1);
+  const Y=v=> pad.t + (1-v/max)*(h-pad.t-pad.b);
+  const ticks=[0,.25,.5,.75,1].map(t=>Math.round(max*t/100)*100);
+  const [hov,setHov]=useState(-1);
+  return (
+    <div className="relative w-full">
+      <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{height:h}}
+           onMouseLeave={()=>setHov(-1)}>
+        {ticks.map((t,i)=>(
+          <g key={i}>
+            <line x1={pad.l} x2={w-pad.r} y1={Y(t)} y2={Y(t)} stroke="rgba(255,255,255,.07)"/>
+            <text x={pad.l-9} y={Y(t)+4} textAnchor="end" fontSize="11" fill="#5D7085" className="num">{N(t)}</text>
+          </g>))}
+        {labels.map((L,i)=>(
+          <g key={i}>
+            <rect x={X(i)-14} y={0} width={28} height={h-pad.b} fill="transparent"
+                  onMouseEnter={()=>setHov(i)} style={{cursor:"pointer"}}/>
+            <text x={X(i)} y={h-12} textAnchor="middle" fontSize="10.5"
+                  fill={hov===i?"#E8EEF5":"#5D7085"} className="num">{L}</text>
+          </g>))}
+        {hov>=0 && <line x1={X(hov)} x2={X(hov)} y1={pad.t} y2={h-pad.b} stroke="rgba(245,158,11,.5)" strokeDasharray="4 4"/>}
+        {series.map((s,si)=>{
+          const d=s.pts.map((v,i)=>`${i?"L":"M"}${X(i)},${Y(v)}`).join(" ");
+          const area=`${d} L${X(s.pts.length-1)},${Y(0)} L${X(0)},${Y(0)} Z`;
+          return <g key={si}>
+            {s.fill && <path d={area} fill={s.c} opacity=".10"/>}
+            <path d={d} fill="none" stroke={s.c} strokeWidth="2.6" strokeLinejoin="round" strokeLinecap="round"/>
+            {s.pts.map((v,i)=><circle key={i} cx={X(i)} cy={Y(v)} r={hov===i?5.5:3} fill="#05080D" stroke={s.c} strokeWidth="2.4"/>)}
+          </g>;
+        })}
+      </svg>
+      {hov>=0 && (
+        <div className="absolute glass rounded-xl px-3 py-2 pointer-events-none text-[12px] shadow-2xl"
+             style={{left:`calc(${(pad.l+hov*(w-pad.l-pad.r)/Math.max(labels.length-1,1))/w*100}% - 52px)`,top:-6}}>
+          <div className="text-slate-400 num">{labels[hov]}</div>
+          {series.map((s,i)=><div key={i} className="num font-bold" style={{color:s.c}}>{fmt(s.pts[hov])}</div>)}
+        </div>)}
+    </div>
+  );
+}
+
+function Bars({rows,max,h=16,money=true}){
+  return <div className="space-y-2">
+    {rows.map((r,i)=>(
+      <div key={i} className="flex items-center gap-3 group">
+        <div className="w-[124px] text-[13px] truncate text-slate-300 group-hover:text-white transition">{r.n}</div>
+        <div className="flex-1 rounded-full bg-white/[.05] overflow-hidden" style={{height:h}}>
+          <div className="h-full rounded-full transition-all duration-700"
+               style={{width:(r.v/max*100)+"%",background:`linear-gradient(90deg,${r.c},${r.c}77)`}}/>
+        </div>
+        <div className="num w-[86px] text-right text-[13px] font-bold text-white">{money?B(r.v):N(r.v)}</div>
+        {r.pct!=null && <div className="num w-[58px] text-right text-[12px] text-slate-400">{P(r.pct)}</div>}
+      </div>))}
+  </div>;
+}
+
+/* ══════════ UI BITS ══════════ */
+const Chip = ({on,onClick,children,tone="emerald"}) => (
+  <button onClick={onClick}
+    className={"px-3.5 py-1.5 rounded-lg text-[13px] font-medium transition-all cursor-pointer border "+
+      (on ? (tone==="amber"?"bg-amber-400 text-slate-900 border-amber-400 font-semibold"
+                           :"bg-emerald-400 text-slate-900 border-emerald-400 font-semibold")
+          : "bg-white/[.04] text-slate-300 border-white/10 hover:border-white/30 hover:text-white")}>
+    {children}
+  </button>
+);
+
+const Kpi = ({label,value,sub,tone}) => (
+  <div className={"rounded-2xl p-5 "+(tone==="hi"?"glass-hi":tone==="warn"?"glass-warn":tone==="gold"?"glass-gold":"glass")}>
+    <div className="text-[12px] uppercase tracking-[.14em] text-slate-400 font-semibold">{label}</div>
+    <div className="num text-[38px] leading-none font-extrabold text-white mt-2.5">{value}</div>
+    {sub && <div className="text-[12.5px] text-slate-400 mt-2 leading-snug">{sub}</div>}
+  </div>
+);
+
+const Title = ({kicker,children,right}) => (
+  <div className="flex items-end justify-between mb-5">
+    <div>
+      <div className="flex items-center gap-2.5 mb-2">
+        <span className="h-[2px] w-8 bg-amber-400 rounded"/>
+        <span className="text-[12.5px] font-semibold tracking-[.16em] uppercase text-amber-400">{kicker}</span>
+      </div>
+      <h2 className="text-[34px] font-bold text-white leading-tight">{children}</h2>
+    </div>
+    {right}
+  </div>
+);
+
+/* ══════════ FILTER BAR ══════════ */
+function Filters({f,set}){
+  const years=[["all","ทุกปี"],["24","2567"],["25","2568"],["26","2569"]];
+  const phases=[["all","ทั้งหมด"],["pre","ก่อน Cut-off"],["post","หลัง Cut-off"]];
+  const groups=[["all","ทุกคน"],["core","แกนหลัก 8"],["small","รายย่อย"],["active","ยังจ่ายอยู่"],["left","หยุดไปแล้ว"]];
+  const G=({label,opts,val,k,tone})=>(
+    <div className="flex items-center gap-2">
+      <span className="text-[11.5px] uppercase tracking-wider text-slate-500 font-semibold">{label}</span>
+      <div className="flex gap-1.5">{opts.map(([v,t])=>
+        <Chip key={v} on={val===v} tone={tone} onClick={()=>set({...f,[k]:v})}>{t}</Chip>)}</div>
+    </div>);
+  return (
+    <div className="glass rounded-2xl px-5 py-3 flex items-center gap-7 flex-wrap">
+      <G label="ปี" opts={years} val={f.year} k="year"/>
+      <G label="ช่วง" opts={phases} val={f.phase} k="phase" tone="amber"/>
+      <G label="กลุ่ม" opts={groups} val={f.group} k="group"/>
+    </div>);
+}
+
+function useFiltered(f){
+  return useMemo(()=>{
+    const idx = MONTHS.map((m,i)=>({...m,i}))
+      .filter(m => (f.year==="all"||yearOf(m.k)===f.year) && (f.phase==="all"||m.phase===f.phase));
+    const inGroup = p =>
+      f.group==="all" ? true :
+      f.group==="core" ? CORE.includes(p.n) :
+      f.group==="small" ? !CORE.includes(p.n) :
+      f.group==="active" ? p.post.reduce((a,b)=>a+b,0)>0 :
+      p.post.reduce((a,b)=>a+b,0)===0;
+    const people = PEOPLE.filter(inGroup).map(p=>({
+      ...p, sum: idx.reduce((a,m)=>a+p.all[m.i],0)
+    })).filter(p=>p.sum>0).sort((a,b)=>b.sum-a.sum);
+    const total = people.reduce((a,p)=>a+p.sum,0);
+    const monthly = idx.map(m=>({k:m.k, phase:m.phase,
+      v: people.reduce((a,p)=>a+p.all[m.i],0),
+      heads: people.filter(p=>p.all[m.i]>0).length}));
+    return {idx,people,total,monthly};
+  },[f.year,f.phase,f.group]);
+}
+
+/* ══════════ SLIDES ══════════ */
+function S1(){
+  const wf=[["เก็บได้ก่อน Cut-off",CUT_PRE,"#38BDF8"],["ใช้ไปก่อน Cut-off",-GAP,"#F43F5E"],
+            ["ยอดยืนยัน 23 ธ.ค.68",CONFIRMED,"#F59E0B"],["เก็บได้หลัง Cut-off",CUT_POST,"#10B981"]];
+  const maxW=Math.max(...wf.map(w=>Math.abs(w[1])));
+  return (
+    <div className="h-full flex flex-col">
+      <div className="flex items-start justify-between">
+        <div>
+          <div className="flex items-center gap-2.5 mb-3">
+            <span className="h-[2px] w-8 bg-amber-400 rounded"/>
+            <span className="text-[12.5px] font-semibold tracking-[.16em] uppercase text-amber-400">V Wellness Center · Financial Board</span>
+          </div>
+          <h1 className="text-[56px] font-extrabold text-white leading-[1.06]">
+            ค่า Center <span className="text-amber-400">21 รอบ</span><br/>ต.ค. 2567 – มิ.ย. 2569
+          </h1>
+          <p className="text-slate-400 text-[17px] mt-4 leading-relaxed max-w-[560px]">
+            reconcile จากแชทกลุ่ม 9,461 ข้อความ · ผ่านการ review และยืนยันโดยที่ประชุมผู้นำแล้ว
+          </p>
+        </div>
+        <div className="glass-gold rounded-2xl px-7 py-6 text-right">
+          <div className="text-[12px] uppercase tracking-[.14em] text-amber-300/80 font-semibold">เงินเหลือปัจจุบัน</div>
+          <div className="num text-[52px] leading-none font-extrabold text-white mt-2">{B(CONFIRMED+CUT_POST-FIX_DEFAULT-SPECIAL_DEFAULT)}</div>
+          <div className="text-[12.5px] text-slate-400 mt-2">หลังหัก Fix Cost + รายจ่ายพิเศษ</div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-4 gap-4 mt-7">
+        <Kpi label="เก็บได้ทั้งหมด" value={B(GRAND)} sub="21 รอบ · 16 หน่วยผู้ลงขัน" tone="hi"/>
+        <Kpi label="ก่อน Cut-off" value={B(CUT_PRE)} sub="ต.ค.67 – ธ.ค.68 (15 รอบ)"/>
+        <Kpi label="หลัง Cut-off" value={B(CUT_POST)} sub="ม.ค. – มิ.ย.69 (6 รอบ)"/>
+        <Kpi label="รอบ ก.ค.69" value={B(JULY)} sub="ยังไม่ปิด — เก็บมาแล้ว 4 หน่วย" tone="warn"/>
+      </div>
+
+      <div className="glass rounded-2xl p-6 mt-5 flex-1">
+        <div className="text-[13px] uppercase tracking-[.14em] text-slate-400 font-semibold mb-5">เส้นทางเงิน</div>
+        <div className="space-y-3.5">
+          {wf.map(([n,v,c],i)=>(
+            <div key={i} className="flex items-center gap-4">
+              <div className="w-[190px] text-[14.5px] text-slate-300">{n}</div>
+              <div className="flex-1 h-7 rounded-lg bg-white/[.04] overflow-hidden">
+                <div className="h-full rounded-lg transition-all duration-700 flex items-center justify-end pr-3"
+                     style={{width:(Math.abs(v)/maxW*100)+"%",background:`linear-gradient(90deg,${c}dd,${c}55)`}}>
+                  <span className="num text-[13px] font-bold text-white">{v<0?"−":""}{B(Math.abs(v))}</span>
+                </div>
+              </div>
+            </div>))}
+        </div>
+        <div className="mt-5 pt-4 border-t border-white/10 flex items-center gap-3">
+          <span className="glass-warn rounded-lg px-3 py-1.5 text-[13px] font-semibold text-rose-300">ต้องเคลียร์</span>
+          <span className="text-[14.5px] text-slate-300">
+            ก่อน Cut-off เก็บได้ <b className="num text-white">{B(CUT_PRE)}</b> แต่ยอดคงเหลือที่แจ้งคือ <b className="num text-white">{B(CONFIRMED)}</b> —
+            ต่างกัน <b className="num text-rose-300">{B(GAP)}</b> (มัดจำ OPP 10,112 อธิบายได้ส่วนหนึ่ง)
+          </span>
+        </div>
+      </div>
+    </div>);
+}
+
+function S2({f,set}){
+  const {monthly,total,people} = useFiltered(f);
+  const avg = monthly.length? total/monthly.length : 0;
+  const peak = monthly.reduce((a,m)=>m.v>a.v?m:a,{v:0,k:"—"});
+  const low  = monthly.filter(m=>m.v>0).reduce((a,m)=>m.v<a.v?m:a,{v:1e9,k:"—"});
+  return (
+    <div className="h-full flex flex-col">
+      <Title kicker="แนวโน้มรายเดือน">เก็บได้เดือนละเท่าไร</Title>
+      <Filters f={f} set={set}/>
+      <div className="grid grid-cols-4 gap-4 mt-4">
+        <Kpi label="รวมช่วงที่เลือก" value={B(total)} sub={`${monthly.length} รอบ · ${people.length} หน่วย`} tone="hi"/>
+        <Kpi label="เฉลี่ยต่อรอบ" value={B(avg)}/>
+        <Kpi label="สูงสุด" value={B(peak.v)} sub={peak.k!=="—"?lbl(peak.k):"—"} tone="gold"/>
+        <Kpi label="ต่ำสุด" value={low.v<1e9?B(low.v):"—"} sub={low.k!=="—"?lbl(low.k):"—"}/>
+      </div>
+      <div className="glass rounded-2xl p-6 mt-4 flex-1 flex flex-col">
+        <div className="flex items-center justify-between mb-3">
+          <div className="text-[13px] uppercase tracking-[.14em] text-slate-400 font-semibold">ยอดเก็บรายเดือน</div>
+          <div className="flex items-center gap-5 text-[12.5px]">
+            <span className="flex items-center gap-2 text-slate-300"><i className="w-3 h-[3px] rounded bg-emerald-400 inline-block"/>ยอดเก็บ (บาท)</span>
+            <span className="flex items-center gap-2 text-slate-300"><i className="w-3 h-[3px] rounded bg-sky-400 inline-block"/>จำนวนหน่วยที่จ่าย</span>
+          </div>
+        </div>
+        {monthly.length ? <>
+          <LineChart labels={monthly.map(m=>lbl(m.k))} h={272}
+            series={[{pts:monthly.map(m=>m.v),c:"#10B981",fill:true}]}/>
+          <div className="mt-2"/>
+          <LineChart labels={monthly.map(m=>lbl(m.k))} h={150} fmt={v=>v+" หน่วย"}
+            series={[{pts:monthly.map(m=>m.heads),c:"#38BDF8",fill:true}]}/>
+        </> : <div className="flex-1 grid place-items-center text-slate-500">ไม่มีข้อมูลในตัวกรองนี้</div>}
+      </div>
+    </div>);
+}
+
+function S3({f,set}){
+  const {people,total} = useFiltered(f);
+  const top=people.slice(0,9), rest=people.slice(9);
+  const donut=[...top.map(p=>({n:p.n,v:p.sum,c:colorOf(p.n)}))];
+  if(rest.length) donut.push({n:`อื่น ๆ (${rest.length})`,v:rest.reduce((a,p)=>a+p.sum,0),c:"#3A4A5C"});
+  const coreShare = people.filter(p=>CORE.includes(p.n)).reduce((a,p)=>a+p.sum,0)/(total||1)*100;
+  return (
+    <div className="h-full flex flex-col">
+      <Title kicker="สัดส่วนผู้ลงขัน">ถ้าเปรียบเป็นหุ้น ใครถือกี่ %</Title>
+      <Filters f={f} set={set}/>
+      <div className="grid grid-cols-[380px_1fr] gap-6 mt-4 flex-1">
+        <div className="glass rounded-2xl p-5 flex flex-col items-center justify-center">
+          <Donut data={donut} size={290}
+            center={<><div className="num text-[34px] font-extrabold text-white">{P(coreShare)}</div>
+                      <div className="text-[12.5px] text-slate-400 leading-tight mt-1">แกนหลัก 8 หน่วย<br/>ถือรวมกัน</div></>}/>
+          <div className="num text-[13px] text-slate-400 mt-4">รวม {B(total)} · {people.length} หน่วย</div>
+          <div className="text-[12px] text-slate-500 mt-1">ชี้ที่วงเพื่อดูรายละเอียด</div>
+        </div>
+        <div className="glass rounded-2xl p-5 overflow-auto">
+          <div className="flex items-center justify-between mb-4">
+            <div className="text-[13px] uppercase tracking-[.14em] text-slate-400 font-semibold">อันดับผู้ลงขัน</div>
+            <div className="text-[12.5px] text-slate-500">ยอดลงขัน · % หุ้น</div>
+          </div>
+          <Bars max={people[0]?.sum||1}
+            rows={people.map(p=>({n:p.n,v:p.sum,c:colorOf(p.n),pct:p.sum/(total||1)*100}))}/>
+          <div className="mt-5 pt-4 border-t border-white/10 text-[13.5px] text-slate-400 leading-relaxed">
+            แกนหลัก 8 หน่วยเกาะกลุ่มกันแน่นมาก — ห่างกันเพียง {P(people[0]?.sum/(total||1)*100)} ถึง{" "}
+            {P(people[Math.min(7,people.length-1)]?.sum/(total||1)*100)} · <b className="text-slate-200">ไม่มีใครเป็นเจ้าของศูนย์คนเดียว</b>
+          </div>
+        </div>
+      </div>
+    </div>);
+}
+
+function S4(){
+  const [fund,setFund]=useState(CONFIRMED+CUT_POST-FIX_DEFAULT-SPECIAL_DEFAULT);
+  const [fix,setFix]=useState(FIX_DEFAULT), [sp,setSp]=useState(SPECIAL_DEFAULT);
+  useEffect(()=>{ setFund(CONFIRMED+CUT_POST-fix-sp); },[fix,sp]);
+  const presets=[[CONFIRMED,"ยอดยืนยัน 23 ธ.ค.68"],[CONFIRMED+CUT_POST,"ก่อนหักรายจ่าย"],
+                 [CONFIRMED+CUT_POST-FIX_DEFAULT-SPECIAL_DEFAULT,"ตามชีท 5 ปัจจุบัน"]];
+  return (
+    <div className="h-full flex flex-col">
+      <Title kicker="★ NPV — มูลค่าหุ้น ณ ตอนนี้">ถ้าแบ่งเงินกองกลางวันนี้ ใครได้เท่าไร</Title>
+      <div className="grid grid-cols-[400px_1fr] gap-6 flex-1">
+        <div className="space-y-4">
+          <div className="glass-gold rounded-2xl p-5">
+            <div className="text-[12px] uppercase tracking-[.14em] text-amber-300/80 font-semibold">เงินกองกลางที่นำมาแบ่ง</div>
+            <div className="num text-[46px] leading-none font-extrabold text-white my-3">{B(fund)}</div>
+            <input type="range" min="0" max="80000" step="500" value={fund}
+                   onChange={e=>setFund(+e.target.value)} className="w-full"/>
+            <div className="flex justify-between num text-[11.5px] text-slate-500 mt-1.5"><span>฿0</span><span>฿80,000</span></div>
+            <div className="flex flex-wrap gap-2 mt-4">
+              {presets.map(([v,t])=>
+                <Chip key={t} tone="amber" on={fund===v} onClick={()=>setFund(v)}>{t}</Chip>)}
+            </div>
+          </div>
+          <div className="glass rounded-2xl p-5 space-y-4">
+            <div className="text-[12px] uppercase tracking-[.14em] text-slate-400 font-semibold">ปรับรายจ่ายสด ๆ ในที่ประชุม</div>
+            {[["Fix Cost รวม",fix,setFix,0,20000,100],["รายจ่ายพิเศษ",sp,setSp,0,30000,100]].map(([t,v,s,mn,mx,st])=>(
+              <div key={t}>
+                <div className="flex justify-between text-[13px] mb-1.5">
+                  <span className="text-slate-300">{t}</span>
+                  <span className="num font-bold text-rose-300">−{B(v)}</span>
+                </div>
+                <input type="range" min={mn} max={mx} step={st} value={v} onChange={e=>s(+e.target.value)} className="w-full"/>
+              </div>))}
+            <div className="pt-3 border-t border-white/10 text-[12.5px] text-slate-500 leading-relaxed">
+              เงินได้รวม {B(CONFIRMED+CUT_POST)} − Fix Cost − รายจ่ายพิเศษ = เงินเหลือ
+            </div>
+          </div>
+          <div className="glass-warn rounded-2xl p-4 text-[12.5px] text-slate-300 leading-relaxed">
+            <b className="text-rose-300">หมายเหตุ</b> — ค่า Center เป็นเงินลงขันเพื่อใช้ร่วมกัน
+            <b className="text-white"> ไม่ใช่หุ้นที่ถอนคืนได้</b> ตัวเลขนี้ใช้ดูสัดส่วนการมีส่วนร่วมเท่านั้น
+          </div>
+        </div>
+        <div className="glass rounded-2xl p-5 overflow-auto">
+          <table className="w-full text-[14px]">
+            <thead>
+              <tr className="text-[11.5px] uppercase tracking-wider text-slate-500">
+                <th className="text-left pb-3 font-semibold">#</th>
+                <th className="text-left pb-3 font-semibold">ผู้ลงขัน</th>
+                <th className="text-right pb-3 font-semibold">ลงขันแล้ว</th>
+                <th className="text-right pb-3 font-semibold">รอบ</th>
+                <th className="text-right pb-3 font-semibold">Share %</th>
+                <th className="text-right pb-3 font-semibold pl-4">NPV มูลค่าหุ้น</th>
+              </tr>
+            </thead>
+            <tbody>
+              {PEOPLE.map((p,i)=>{
+                const pct=p.total/GRAND*100, me=p.n==="ต้น-จิ้น";
+                return (
+                  <tr key={p.n} className={"border-t border-white/[.06] "+(me?"bg-amber-400/10":"")}>
+                    <td className="py-[5px]">
+                      <span className={"num inline-grid place-items-center w-7 h-7 rounded-lg text-[12px] font-bold "+
+                        (me?"bg-amber-400 text-slate-900":"bg-white/[.06] text-slate-400")}>{i+1}</span>
+                    </td>
+                    <td className={"py-[5px] font-semibold "+(me?"text-amber-300":"text-slate-200")}>{p.n}</td>
+                    <td className="py-[5px] text-right num text-slate-400">{N(p.total)}</td>
+                    <td className="py-[5px] text-right num text-slate-500 text-[12.5px]">{p.rounds}/21</td>
+                    <td className="py-[5px] text-right num font-semibold text-slate-200">{P(pct)}</td>
+                    <td className={"py-[5px] text-right num font-extrabold text-[17px] pl-4 "+(me?"text-amber-300":"text-emerald-300")}>
+                      {B(fund*pct/100)}</td>
+                  </tr>);
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>);
+}
+
+function S5(){
+  const rows=[
+    ["⚠ เงินหายไปก่อน Cut-off", B(GAP), "เก็บได้ 53,980 แต่ยอดที่แจ้ง 41,541 · มัดจำ OPP 10,112 อธิบายได้ส่วนหนึ่ง ที่เหลือยังไม่มีรายละเอียด","warn"],
+    ["⚠ รายจ่าย 7 เดือนหลัง Cut-off","ยังไม่แจ้ง","หลัง 23 ธ.ค.68 มีเงินเข้าอีก 21,450 แต่ยังไม่เคยแจ้งรายจ่ายในกลุ่ม","warn"],
+    ["✅ หล่นหายตอนก๊อปลิสต์","฿500","ธ.ค.68 ต้น-จิ้น จิ้นติ๊กไว้ 15 ธ.ค. 12:34 แต่คนถัดไปก๊อปต่อโดย ✅ หายไปจนปิดเดือน","warn"],
+    ["รอบ ก.ค.69 ยังเก็บไม่ครบ","฿1,550","ยังขาด ต้น-จิ้น 500 · ทีมนัตต์-เบลล์ 450 · Wor-อ้อ 400 · พี่ชาย 200","n"],
+    ["Fix Cost 700/เดือน ยังไม่ยืนยัน","฿4,200","เป็นตัวเลขสมมติ ต้องยืนยันค่าใช้จ่ายประจำจริง","n"],
+    ["อาพัฒน์-อาแดง หายไป 13 รอบ","฿3,400","เคยเป็นผู้ลงขันอันดับ 9 — ควรถามไถ่ ไม่ใช่แค่เรื่องเงิน","n"],
+  ];
+  const acts=[
+    ["1","ตามรอบ ก.ค.69 ให้ครบ","ยังขาด 4 หน่วย รวม ฿1,550","ทุกคน","ก่อน 21 ก.ค."],
+    ["2","ขอสรุปรายจ่าย ม.ค.–ก.ค.69","แล้วกรอกลงชีท 5 — เงินเหลือคำนวณเอง","ป๊อก","ในที่ประชุม"],
+    ["3","ยืนยันเงินที่ใช้ไปก่อน Cut-off","ส่วนต่าง ฿12,439 ที่ยังไม่มีรายละเอียด","ป๊อก","ในที่ประชุม"],
+    ["4","แก้ปัญหา ✅ หล่นตอนก๊อปลิสต์","เปลี่ยนเป็นหน้าเว็บ ติ๊กแล้วไม่หาย รวมยอดเอง","ต้น เสนอ","ในที่ประชุม"],
+    ["5","กระทบยอดกับ statement ธนาคาร","ตัวเลขทั้งหมดมาจากแชท ยังไม่เคยทาบบัญชีจริง","ป๊อก","เมื่อสะดวก"],
+  ];
+  return (
+    <div className="h-full flex flex-col">
+      <Title kicker="ประเด็น + สิ่งที่ต้องทำ">6 ประเด็นที่ต้องเคลียร์ · 5 เรื่องที่เสนอ</Title>
+      <div className="grid grid-cols-2 gap-6 flex-1">
+        <div className="space-y-2.5 overflow-auto pr-1">
+          {rows.map(([t,v,d,k],i)=>(
+            <div key={i} className={"rounded-xl p-4 "+(k==="warn"?"glass-warn":"glass")}>
+              <div className="flex items-start justify-between gap-3">
+                <div className="text-[15px] font-semibold text-white leading-snug">{t}</div>
+                <div className={"num text-[15px] font-bold whitespace-nowrap "+(k==="warn"?"text-rose-300":"text-amber-300")}>{v}</div>
+              </div>
+              <div className="text-[12.5px] text-slate-400 mt-1.5 leading-relaxed">{d}</div>
+            </div>))}
+        </div>
+        <div className="space-y-2.5 overflow-auto pr-1">
+          {acts.map(([n,t,d,who,when])=>(
+            <div key={n} className="glass rounded-xl p-4 flex items-center gap-4">
+              <div className="num w-9 h-9 shrink-0 rounded-xl bg-amber-400 text-slate-900 grid place-items-center font-extrabold">{n}</div>
+              <div className="flex-1 min-w-0">
+                <div className="text-[15px] font-semibold text-white">{t}</div>
+                <div className="text-[12.5px] text-slate-400 mt-0.5 leading-snug">{d}</div>
+              </div>
+              <div className="text-right shrink-0">
+                <div className="text-[11px] uppercase tracking-wider text-slate-500">{who}</div>
+                <div className="text-[13px] font-semibold text-amber-300">{when}</div>
+              </div>
+            </div>))}
+          <div className="glass rounded-xl p-4 text-[12px] text-slate-500 leading-relaxed italic">
+            ที่มา: [LINE]V Leader.txt — 9,461 ข้อความ · 14 ส.ค.2567 – 19 ก.ค.2569 · ตัวเลขผ่านการ review และยืนยันแล้ว (ชีท 2 = MASTER) · ยังไม่ได้กระทบยอดกับ statement ธนาคาร
+          </div>
+        </div>
+      </div>
+    </div>);
+}
+
+/* ══════════ APP ══════════ */
+const SLIDES=[
+  {t:"ภาพรวม",C:S1},{t:"แนวโน้ม",C:S2},{t:"สัดส่วนหุ้น",C:S3},{t:"NPV มูลค่าหุ้น",C:S4},{t:"ประเด็น + Action",C:S5}
+];
+
+function App(){
+  const [i,setI]=useState(0);
+  const [f,setF]=useState({year:"all",phase:"all",group:"all"});
+  const [scale,setScale]=useState(1);
+  const go=n=>setI(Math.max(0,Math.min(SLIDES.length-1,n)));
+  useEffect(()=>{
+    const fit=()=>setScale(Math.min(innerWidth/1600,innerHeight/900)*0.955);
+    fit(); addEventListener("resize",fit); return ()=>removeEventListener("resize",fit);
+  },[]);
+  useEffect(()=>{
+    const k=e=>{
+      if(["INPUT","BUTTON"].includes(e.target.tagName)) return;
+      if(["ArrowRight","PageDown"," "].includes(e.key)){e.preventDefault();go(i+1);}
+      if(["ArrowLeft","PageUp"].includes(e.key)){e.preventDefault();go(i-1);}
+      if(e.key==="Home")go(0); if(e.key==="End")go(SLIDES.length-1);
+      if(e.key.toLowerCase()==="f")document.documentElement.requestFullscreen?.();
+    };
+    addEventListener("keydown",k); return ()=>removeEventListener("keydown",k);
+  },[i]);
+  const Cur=SLIDES[i].C;
+  return (
+    <div className="w-full h-full grid place-items-center relative"
+      style={{background:"radial-gradient(1100px 700px at 78% -8%,rgba(16,185,129,.13),transparent 62%),radial-gradient(900px 600px at -6% 106%,rgba(245,158,11,.10),transparent 62%),#05080D"}}>
+      <div className="fixed top-0 left-0 h-[3px] z-50 transition-all duration-300"
+           style={{width:((i+1)/SLIDES.length*100)+"%",background:"linear-gradient(90deg,#10B981,#F59E0B)"}}/>
+      <div style={{width:1600,height:900,position:"fixed",left:"50%",top:"50%",
+                   transform:`translate(-50%,-50%) scale(${scale})`}}
+           className="rounded-[24px] p-11 overflow-hidden
+                      bg-[#0A0F16]/80 border border-white/[.07] shadow-[0_30px_90px_rgba(0,0,0,.6)] backdrop-blur-xl">
+        <div key={i} className="fade h-full">
+          <Cur f={f} set={setF}/>
+        </div>
+      </div>
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-2.5 py-2 flex items-center gap-1.5">
+        <button onClick={()=>go(i-1)} disabled={i===0}
+          className="px-3 py-1.5 rounded-full text-[13px] text-slate-300 hover:bg-white/10 hover:text-white disabled:opacity-25 transition cursor-pointer">‹</button>
+        {SLIDES.map((s,k)=>(
+          <button key={k} onClick={()=>go(k)}
+            className={"px-3.5 py-1.5 rounded-full text-[13px] transition cursor-pointer "+
+              (i===k?"bg-amber-400 text-slate-900 font-semibold":"text-slate-400 hover:text-white hover:bg-white/10")}>
+            {s.t}</button>))}
+        <button onClick={()=>go(i+1)} disabled={i===SLIDES.length-1}
+          className="px-3 py-1.5 rounded-full text-[13px] text-slate-300 hover:bg-white/10 hover:text-white disabled:opacity-25 transition cursor-pointer">›</button>
+        <span className="num text-[12px] text-slate-500 px-2 border-l border-white/10 ml-1">{i+1}/{SLIDES.length}</span>
+      </div>
+    </div>);
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
