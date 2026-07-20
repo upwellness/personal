@@ -68,7 +68,7 @@ const CUT_POST= PEOPLE.reduce((a,p)=>a+p.qpost,0);   // 19,550
 const JULY    = PEOPLE.reduce((a,p)=>a+p.jul,0);     // 1,900
 const CONFIRMED = 41541;
 const GAP     = CUT_PRE - CONFIRMED;                 // 12,439
-const FIX_DEFAULT = 700*6, SPECIAL_DEFAULT = 2572+855;
+const FIX_DEFAULT = 700*6, SPECIAL_DEFAULT = 2572+855+2300;  // sync ชีท 5: Guest เพชร + พี่วี + วาวา
 
 const CORE = PEOPLE.slice(0,8).map(p=>p.n);
 const PALETTE = ["#10B981","#F59E0B","#38BDF8","#A78BFA","#F43F5E","#34D399","#FBBF24","#60A5FA",
