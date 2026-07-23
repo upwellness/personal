@@ -69,6 +69,8 @@ const JULY    = PEOPLE.reduce((a,p)=>a+p.jul,0);     // 1,900
 const CONFIRMED = 41541;
 const GAP     = CUT_PRE - CONFIRMED;                 // 12,439
 const FIX_DEFAULT = 700*6, SPECIAL_DEFAULT = 2572+855+2300;  // sync ชีท 5: Guest เพชร + พี่วี + วาวา
+const BALANCE = 52914;                        // ★ ยอดเงินคงเหลือสุดท้ายที่ยืนยันแล้ว (override การคำนวณ)
+const EXPENSE = CONFIRMED + CUT_POST - BALANCE; // รายจ่ายรวมที่หักออก = 8,177
 
 const CORE = PEOPLE.slice(0,8).map(p=>p.n);
 const PALETTE = ["#10B981","#F59E0B","#38BDF8","#A78BFA","#F43F5E","#34D399","#FBBF24","#60A5FA",
@@ -260,7 +262,7 @@ function S1(){
         </div>
         <div className="glass-gold rounded-2xl px-7 py-6 text-right">
           <div className="text-[12px] uppercase tracking-[.14em] text-amber-300/80 font-semibold">เงินเหลือปัจจุบัน</div>
-          <div className="num text-[52px] leading-none font-extrabold text-white mt-2">{B(CONFIRMED+CUT_POST-FIX_DEFAULT-SPECIAL_DEFAULT)}</div>
+          <div className="num text-[52px] leading-none font-extrabold text-white mt-2">{B(BALANCE)}</div>
           <div className="text-[12.5px] text-slate-400 mt-2">หลังหัก Fix Cost + รายจ่ายพิเศษ</div>
         </div>
       </div>
@@ -366,11 +368,10 @@ function S3({f,set}){
 }
 
 function S4(){
-  const [fund,setFund]=useState(CONFIRMED+CUT_POST-FIX_DEFAULT-SPECIAL_DEFAULT);
-  const [fix,setFix]=useState(FIX_DEFAULT), [sp,setSp]=useState(SPECIAL_DEFAULT);
-  useEffect(()=>{ setFund(CONFIRMED+CUT_POST-fix-sp); },[fix,sp]);
-  const presets=[[CONFIRMED,"ยอดยืนยัน 23 ธ.ค.68"],[CONFIRMED+CUT_POST,"ก่อนหักรายจ่าย"],
-                 [CONFIRMED+CUT_POST-FIX_DEFAULT-SPECIAL_DEFAULT,"ตามชีท 5 ปัจจุบัน"]];
+  const [fund,setFund]=useState(BALANCE);
+  const presets=[[BALANCE,"ยอดล่าสุด (ยืนยัน)"],[CONFIRMED,"ยอดยืนยัน 23 ธ.ค.68"],[CONFIRMED+CUT_POST,"ก่อนหักรายจ่าย"]];
+  const breakdown=[["ยอดยืนยัน 23 ธ.ค. 68",CONFIRMED,"n"],["+ เก็บได้หลัง Cut-off",CUT_POST,"n"],
+                   ["− รายจ่าย (Fix + พิเศษ)",-EXPENSE,"exp"],["= เงินเหลือปัจจุบัน",BALANCE,"sum"]];
   return (
     <div className="h-full flex flex-col">
       <Title kicker="★ NPV — มูลค่าหุ้น ณ ตอนนี้">ถ้าแบ่งเงินกองกลางวันนี้ ใครได้เท่าไร</Title>
@@ -387,18 +388,15 @@ function S4(){
                 <Chip key={t} tone="amber" on={fund===v} onClick={()=>setFund(v)}>{t}</Chip>)}
             </div>
           </div>
-          <div className="glass rounded-2xl p-5 space-y-4">
-            <div className="text-[12px] uppercase tracking-[.14em] text-slate-400 font-semibold">ปรับรายจ่ายสด ๆ ในที่ประชุม</div>
-            {[["Fix Cost รวม",fix,setFix,0,20000,100],["รายจ่ายพิเศษ",sp,setSp,0,30000,100]].map(([t,v,s,mn,mx,st])=>(
-              <div key={t}>
-                <div className="flex justify-between text-[13px] mb-1.5">
-                  <span className="text-slate-300">{t}</span>
-                  <span className="num font-bold text-rose-300">−{B(v)}</span>
-                </div>
-                <input type="range" min={mn} max={mx} step={st} value={v} onChange={e=>s(+e.target.value)} className="w-full"/>
-              </div>))}
-            <div className="pt-3 border-t border-white/10 text-[12.5px] text-slate-500 leading-relaxed">
-              เงินได้รวม {B(CONFIRMED+CUT_POST)} − Fix Cost − รายจ่ายพิเศษ = เงินเหลือ
+          <div className="glass rounded-2xl p-5">
+            <div className="text-[12px] uppercase tracking-[.14em] text-slate-400 font-semibold mb-3">ที่มาของยอดเงินคงเหลือ</div>
+            <div className="space-y-2.5">
+              {breakdown.map(([t,v,k])=>(
+                <div key={t} className={"flex justify-between items-center text-[14px] "+(k==="sum"?"pt-2.5 mt-1 border-t border-white/10":"")}>
+                  <span className={k==="sum"?"font-semibold text-white":"text-slate-300"}>{t}</span>
+                  <span className={"num font-bold "+(k==="exp"?"text-rose-300":k==="sum"?"text-amber-300 text-[18px]":"text-slate-200")}>
+                    {v<0?"−":""}{B(Math.abs(v))}</span>
+                </div>))}
             </div>
           </div>
         </div>
@@ -495,7 +493,10 @@ const SLIDES=[
 ];
 
 function App(){
-  const [i,setI]=useState(0);
+  const q=new URLSearchParams(location.search);
+  const start=Math.max(0,Math.min(SLIDES.length-1,parseInt(q.get("s"))||0));
+  const shot=q.get("shot")==="1";     // โหมด export: ซ่อนแถบเมนู
+  const [i,setI]=useState(start);
   const [f,setF]=useState({year:"all",phase:"all",group:"all"});
   const [scale,setScale]=useState(1);
   const go=n=>setI(Math.max(0,Math.min(SLIDES.length-1,n)));
@@ -517,8 +518,8 @@ function App(){
   return (
     <div className="w-full h-full grid place-items-center relative"
       style={{background:"radial-gradient(1100px 700px at 78% -8%,rgba(16,185,129,.13),transparent 62%),radial-gradient(900px 600px at -6% 106%,rgba(245,158,11,.10),transparent 62%),#05080D"}}>
-      <div className="fixed top-0 left-0 h-[3px] z-50 transition-all duration-300"
-           style={{width:((i+1)/SLIDES.length*100)+"%",background:"linear-gradient(90deg,#10B981,#F59E0B)"}}/>
+      {!shot && <div className="fixed top-0 left-0 h-[3px] z-50 transition-all duration-300"
+           style={{width:((i+1)/SLIDES.length*100)+"%",background:"linear-gradient(90deg,#10B981,#F59E0B)"}}/>}
       <div style={{width:1600,height:900,position:"fixed",left:"50%",top:"50%",
                    transform:`translate(-50%,-50%) scale(${scale})`}}
            className="rounded-[24px] p-11 overflow-hidden
@@ -527,7 +528,7 @@ function App(){
           <Cur f={f} set={setF}/>
         </div>
       </div>
-      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-2.5 py-2 flex items-center gap-1.5">
+      {!shot && <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-2.5 py-2 flex items-center gap-1.5">
         <button onClick={()=>go(i-1)} disabled={i===0}
           className="px-3 py-1.5 rounded-full text-[13px] text-slate-300 hover:bg-white/10 hover:text-white disabled:opacity-25 transition cursor-pointer">‹</button>
         {SLIDES.map((s,k)=>(
@@ -538,7 +539,7 @@ function App(){
         <button onClick={()=>go(i+1)} disabled={i===SLIDES.length-1}
           className="px-3 py-1.5 rounded-full text-[13px] text-slate-300 hover:bg-white/10 hover:text-white disabled:opacity-25 transition cursor-pointer">›</button>
         <span className="num text-[12px] text-slate-500 px-2 border-l border-white/10 ml-1">{i+1}/{SLIDES.length}</span>
-      </div>
+      </div>}
     </div>);
 }
 ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
