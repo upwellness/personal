@@ -1,0 +1,21 @@
+id,type,title,organization_or_journal,url,claim_scope,retrieved
+S01,Consensus,Clinical Targets for Continuous Glucose Monitoring Data Interpretation,Diabetes Care,https://pmc.ncbi.nlm.nih.gov/articles/PMC6973648/,TIR TAR TBR CV targets and 14-day data sufficiency,2026-07-24
+S02,Guideline,7. Diabetes Technology: Standards of Care in Diabetes—2026,American Diabetes Association,https://pmc.ncbi.nlm.nih.gov/articles/PMC12690173/,CGM recommendations device education and safety context,2026-07-24
+S03,Methods,Glucose Management Indicator (GMI): A New Term for Estimating A1C From CGM,Diabetes Care,https://doi.org/10.2337/dc18-1581,GMI formula and interpretation limits,2026-07-24
+S04,RCT,Effect of CGM on Glycemic Control in Adults With Type 1 Diabetes Using Insulin Injections (DIAMOND),JAMA,https://doi.org/10.1001/jama.2016.19975,T1D HbA1c and hypoglycemia outcomes,2026-07-24
+S05,RCT,Continuous Glucose Monitoring vs Conventional Therapy for Glycemic Control in Adults With Type 1 Diabetes (GOLD),JAMA,https://pubmed.ncbi.nlm.nih.gov/28118454/,T1D crossover trial outcomes,2026-07-24
+S06,RCT,Effect of CGM on Hypoglycemia in Older Adults With Type 1 Diabetes (WISDM),JAMA,https://pubmed.ncbi.nlm.nih.gov/32543682/,Older adults T1D time below range,2026-07-24
+S07,RCT,Effect of CGM on Glycemic Control in Patients With Type 2 Diabetes Treated With Basal Insulin (MOBILE),JAMA,https://pubmed.ncbi.nlm.nih.gov/34077499/,T2D basal insulin HbA1c and TIR,2026-07-24
+S08,Systematic review,Continuous glucose monitoring in adults with type 2 diabetes: systematic review and meta-analysis,Diabetologia,https://doi.org/10.1007/s00125-024-06107-6,T2D pooled HbA1c TIR TAR TBR effects,2026-07-24
+S09,Observational,Continuous Glucose Monitoring Profiles in Healthy Nondiabetic Participants,Journal of Clinical Endocrinology and Metabolism,https://pmc.ncbi.nlm.nih.gov/articles/PMC7296129/,Reference patterns; a CGM-defined low event alone does not confirm hypoglycemia or disease,2026-07-24
+S10,Systematic review,CGM feedback in people without diabetes,European Journal of Medical Research,https://pubmed.ncbi.nlm.nih.gov/41588451/,Evidence limits in non-diabetic populations,2026-07-24
+S11,Thai study,Preliminary clinical outcomes and adoption of CGM following reimbursement implementation in Thailand,Annals of Pediatric Endocrinology & Metabolism,https://pubmed.ncbi.nlm.nih.gov/41354744/,Thai T1D adoption and reimbursement context,2026-07-24
+S12,Thai study,Self-Calibrating CGM Practicality and Accuracy in Noncritically Ill COVID-19 Hospitalized Patients,Mahidol University research group,https://pubmed.ncbi.nlm.nih.gov/40893589/,Thai inpatient feasibility and accuracy,2026-07-24
+S13,Device study,Switching from intermittently scanned CGM to Dexcom G7,International study with a Siriraj-affiliated coauthor,https://pubmed.ncbi.nlm.nih.gov/38315504/,Not evidence of a Thai cohort; device-switching experience only,2026-07-24
+S14,Official documentation,FAQ about Google Trends data,Google,https://support.google.com/trends/answer/4365533?hl=en,Trends normalization and 0-100 interpretation,2026-07-24
+S15,Official documentation,Get started with Search Console,Google Search Central,https://developers.google.com/search/docs/monitor-debug/search-console-start,Site-specific clicks impressions and queries,2026-07-24
+S16,Official tool,Google Ads Keyword Planner,Google,https://business.google.com/en-all/ad-tools/keyword-planner/,Search volume estimates and forecasts require account access,2026-07-24
+S17,Thai authority,Continuous Glucose Monitoring project,Diabetes Association of Thailand,https://www.dmthai.org/new/index.php/activities-and-news/2025-t1ddar-cgm,Thai service and reimbursement signal; not a trial,2026-07-24
+S18,Methods,International Consensus on Use of Continuous Glucose Monitoring,Diabetes Care,https://pubmed.ncbi.nlm.nih.gov/29162583/,Standardized CGM metrics and data sufficiency,2026-07-24
+S19,Review,Ambulatory glucose profile interpretation review,Peer-reviewed review,https://pmc.ncbi.nlm.nih.gov/articles/PMC9805111/,AGP reading sequence and practical interpretation,2026-07-24
+S20,Methods,Discordance Between HbA1c and GMI,Diabetes Technology & Therapeutics,https://pmc.ncbi.nlm.nih.gov/articles/PMC8255314/,GMI and laboratory HbA1c can differ,2026-07-24
