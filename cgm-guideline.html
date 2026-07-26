@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CGM · เข้าใจน้ำตาลในเลือดแบบเห็นทั้งวัน | UP Wellness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&family=Lora:ital@1&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --olive:#3D5826; --olive-lt:#5C7A3F; --olive-dk:#2E4420;
+  --gold:#C99D2F; --gold-lt:#E0B94E;
+  --cream:#F7F4EE; --cream2:#FBF9F4; --panel:#fff;
+  --ink:#2A2E22; --ink70:rgba(42,46,34,.72); --ink50:rgba(42,46,34,.5); --ink30:rgba(42,46,34,.3);
+  --line:rgba(42,46,34,.12); --line2:rgba(42,46,34,.06);
+  --inrange:#3E8E5A; --inrange-bg:#E6F0E7;
+  --high:#C98A1E; --high-bg:#F7EDD6;
+  --vhigh:#B4472F; --vhigh-bg:#F3E1DB;
+  --low:#3A6E86; --low-bg:#E2EDF2;
+  --shadow:0 18px 50px rgba(42,46,34,.13);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%;background:#20241C;font-family:'Sarabun',system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;overflow:hidden}
+h1,h2,h3,h4,.k{font-family:'Kanit',sans-serif;font-weight:600;margin:0;letter-spacing:.2px}
+.num{font-variant-numeric:tabular-nums}
+
+/* ===== stage: fixed 1280x720 scaled to fit ===== */
+#stage{position:fixed;left:50%;top:50%;width:1280px;height:720px;transform-origin:center center}
+.slide{position:absolute;inset:0;background:linear-gradient(180deg,var(--cream2),var(--cream));
+  border-radius:14px;overflow:hidden;padding:46px 58px 62px;display:none;box-shadow:var(--shadow)}
+.slide.on{display:block}
+.slide::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;
+  background:linear-gradient(90deg,var(--olive),var(--gold) 55%,var(--olive-lt))}
+
+/* header */
+.eyebrow{font-family:'Kanit';font-weight:600;font-size:12px;letter-spacing:3.2px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px}
+.eyebrow i{width:26px;height:2px;background:var(--gold);display:inline-block}
+h2.title{font-size:37px;line-height:1.2;margin:9px 0 3px;color:var(--olive-dk)}
+.subtitle{font-size:15.5px;color:var(--ink50);margin-bottom:20px}
+.foot{position:absolute;left:58px;right:58px;bottom:20px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;font-size:11.5px;color:var(--ink30)}
+.foot b{font-family:'Kanit';font-weight:500;color:var(--ink50);flex:none}
+.src{font-size:10.5px;color:var(--ink30);line-height:1.5;max-width:1090px;text-align:right}
+
+/* cover */
+.cover{background:linear-gradient(135deg,var(--olive),var(--olive-dk) 70%);color:#F3F1E8;padding:0;display:none}
+.cover.on{display:grid}
+.cover{grid-template-columns:1.15fr .85fr;align-items:center}
+.cover::before{content:"";position:absolute;right:-120px;top:-140px;width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,157,47,.30),transparent 68%)}
+.cover .l{padding:0 0 0 62px;position:relative;z-index:2}
+.cover .eyebrow{color:var(--gold-lt)}.cover .eyebrow i{background:var(--gold-lt)}
+.cover h1{font-size:58px;line-height:1.1;color:#fff;margin:14px 0 12px}
+.cover .lead{font-size:18px;color:rgba(243,241,232,.86);line-height:1.6;max-width:520px}
+.cover .tag{font-family:'Lora',serif;font-style:italic;color:var(--gold-lt);font-size:19px;margin-top:24px}
+.cover .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:26px;max-width:540px}
+.cover .chips span{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:6px 14px;font-size:12.5px}
+.cover .r{position:relative;z-index:2;padding-right:52px;height:100%;display:flex;align-items:center;min-width:0}
+/* fixed px width — a percentage inside a flex item lets Chart.js grow the canvas without bound */
+.cover .cw{width:452px;height:330px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:14px 12px 8px}
+.cw>canvas{display:block;max-width:100%}
+.row>*,.mgrid>*{min-width:0}
+
+/* layout helpers */
+.row{display:grid;gap:16px}
+.c2{grid-template-columns:1fr 1fr}.c3{grid-template-columns:repeat(3,1fr)}.c4{grid-template-columns:repeat(4,1fr)}
+.c-3-2{grid-template-columns:1.42fr 1fr}
+.card{background:var(--panel);border:1px solid var(--line2);border-radius:16px;padding:17px 19px;box-shadow:0 5px 18px rgba(42,46,34,.055)}
+.card h4{font-size:16px;color:var(--olive-dk);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13.5px;color:var(--ink70);line-height:1.62;margin:0}
+.card .big{font-family:'Kanit';font-weight:700;font-size:40px;line-height:1;color:var(--olive)}
+.card .big u{font-style:normal;text-decoration:none;font-size:15px;color:var(--ink50);font-weight:400;margin-left:4px}
+.pill{font-family:'Kanit';font-weight:600;font-size:10.5px;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.p-in{background:var(--inrange-bg);color:var(--inrange)} .p-hi{background:var(--high-bg);color:var(--high)}
+.p-vhi{background:var(--vhigh-bg);color:var(--vhigh)} .p-lo{background:var(--low-bg);color:var(--low)}
+.p-gold{background:#F6EFDC;color:#9A7620}
+
+.chartbox{background:var(--panel);border:1px solid var(--line2);border-radius:16px;padding:14px 14px 6px;box-shadow:0 5px 18px rgba(42,46,34,.055)}
+.chartbox h4{font-size:13.5px;color:var(--ink70);font-weight:500;margin-bottom:6px}
+.cw{position:relative;width:100%}
+
+/* metric grid */
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.m{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:14px 15px;position:relative;overflow:hidden}
+.m::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--olive-lt)}
+.m.hi::before{background:var(--high)}.m.vhi::before{background:var(--vhigh)}.m.lo::before{background:var(--low)}.m.in::before{background:var(--inrange)}.m.gd::before{background:var(--gold)}
+.m .mk{font-family:'Kanit';font-weight:700;font-size:15px;color:var(--olive-dk)}
+.m .mu{font-size:11px;color:var(--ink50);margin-top:1px}
+.m .md{font-size:12.5px;color:var(--ink70);line-height:1.5;margin-top:6px}
+
+/* table */
+table.t{width:100%;border-collapse:collapse;font-size:14px;background:var(--panel);border-radius:14px;overflow:hidden;box-shadow:0 5px 18px rgba(42,46,34,.055)}
+table.t th{background:var(--olive);color:#fff;font-family:'Kanit';font-weight:500;font-size:13px;padding:11px 14px;text-align:left}
+table.t td{padding:10px 14px;border-top:1px solid var(--line2);color:var(--ink70)}
+table.t td:first-child{font-family:'Kanit';font-weight:500;color:var(--ink)}
+table.t td b{font-family:'Kanit';font-weight:700;color:var(--olive)}
+table.t tr:nth-child(even) td{background:var(--cream2)}
+
+/* callouts */
+.note{border-left:4px solid var(--gold);background:var(--cream2);border-radius:0 12px 12px 0;padding:12px 16px;font-size:14px;line-height:1.6}
+.note b{color:var(--olive)}
+.note.warn{border-left-color:var(--vhigh);background:var(--vhigh-bg)}.note.warn b{color:var(--vhigh)}
+.note.good{border-left-color:var(--inrange);background:var(--inrange-bg)}.note.good b{color:var(--inrange)}
+.teach{position:absolute;left:58px;right:58px;bottom:40px;background:linear-gradient(90deg,rgba(201,157,47,.16),rgba(62,142,90,.10));
+  border:1px solid rgba(201,157,47,.30);border-radius:12px;padding:9px 15px;font-size:13.5px;color:var(--ink);line-height:1.5}
+.teach b{font-family:'Kanit';font-weight:600;color:#9A7620}
+
+/* big statement */
+.stat{display:flex;align-items:baseline;gap:12px}
+.stat .v{font-family:'Kanit';font-weight:700;font-size:56px;line-height:1;color:var(--vhigh)}
+.stat .v.g{color:var(--inrange)}.stat .v.o{color:var(--olive)}
+.stat .t{font-size:14.5px;color:var(--ink70);line-height:1.5}
+
+ul.bul{margin:0;padding-left:19px}
+ul.bul li{font-size:14px;line-height:1.72;color:var(--ink70);margin-bottom:6px}
+ul.bul li b{color:var(--olive-dk)}
+ol.bul{margin:0;padding-left:22px}
+ol.bul li{font-size:14px;line-height:1.72;color:var(--ink70);margin-bottom:7px}
+ol.bul li b{color:var(--olive-dk)}
+
+/* nav */
+#bar{position:fixed;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.10);z-index:60}
+#bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-lt));transition:width .3s}
+#hud{position:fixed;right:16px;bottom:14px;z-index:61;display:flex;gap:7px;align-items:center;
+  font-family:'Kanit';font-size:12px;color:rgba(255,255,255,.62)}
+#hud button{font-family:'Kanit';font-size:12px;background:rgba(255,255,255,.10);color:#fff;border:1px solid rgba(255,255,255,.18);
+  border-radius:8px;padding:5px 11px;cursor:pointer;transition:background .2s}
+#hud button:hover{background:rgba(255,255,255,.2)}
+#hud button:focus-visible{outline:2px solid var(--gold-lt);outline-offset:2px}
+#idx{min-width:56px;text-align:center}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media print{
+  html,body{overflow:visible;background:#fff}
+  #stage{position:static;transform:none!important;width:100%;height:auto;left:auto;top:auto}
+  .slide{display:block!important;position:relative;inset:auto;width:1280px;height:720px;page-break-after:always;box-shadow:none;border-radius:0;margin:0 auto}
+  .cover.on,.cover{display:grid!important}
+  #hud,#bar{display:none}
+  @page{size:1280px 720px;margin:0}
+}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- ============ 1 COVER ============ -->
+<section class="slide cover on">
+  <div class="l">
+    <div class="eyebrow"><i></i> UP WELLNESS · LONGEVITY CARE</div>
+    <h1>CGM<br>เห็นน้ำตาลทั้งวัน<br>ไม่ใช่แค่จุดเดียว</h1>
+    <div class="lead">เครื่องติดตามน้ำตาลต่อเนื่อง วัดให้เรา <b>288 ครั้งต่อวัน</b> — แล้วบอกอะไรได้มากกว่าค่าน้ำตาลสะสมที่เราคุ้นเคย</div>
+    <div class="chips">
+      <span>TIR · เวลาอยู่ในเป้า</span><span>CV · ความแกว่ง</span><span>GMI · ประมาณ A1c</span><span>AGP · กราฟ 24 ชม.</span>
+    </div>
+    <div class="tag">แก่ช้า · เจ็บสั้น · ตายดี</div>
+  </div>
+  <div class="r"><div class="cw"><canvas id="cCover"></canvas></div></div>
+</section>
+
+<!-- ============ 2 PROBLEM ============ -->
+<section class="slide">
+  <div class="eyebrow"><i></i> ปัญหา</div>
+  <h2 class="title">ค่าน้ำตาลสะสมคือ “รูปถ่ายใบเดียว” · CGM คือ “วิดีโอทั้งเรื่อง”</h2>
+  <p class="subtitle">สองคนนี้มีค่าเฉลี่ยน้ำตาลเท่ากัน ค่าประมาณ A1c เท่ากัน — แต่ชีวิตในหนึ่งวันต่างกันคนละโลก</p>
+  <div class="row c-3-2">
+    <div class="chartbox"><h4>น้ำตาลใน 1 วัน · ตัวอย่างเพื่อการสอน (mg/dL)</h4><div class="cw" style="height:296px"><canvas id="cTwo"></canvas></div></div>
+    <div class="row" style="gap:13px">
+      <div class="card"><h4>คุณ ก · น้ำตาลนิ่ง</h4>
+        <div class="stat"><div class="v g">100<span style="font-size:26px">%</span></div><div class="t">เวลาอยู่ในเป้า (TIR)<br>ความแกว่ง (CV) <b>11%</b></div></div>
+      </div>
+      <div class="card"><h4>คุณ ข · น้ำตาลแกว่ง</h4>
+        <div class="stat"><div class="v">60<span style="font-size:26px">%</span></div><div class="t">เวลาอยู่ในเป้า (TIR)<br>ความแกว่ง (CV) <b>44%</b> · น้ำตาลตก 8%</div></div>
+      </div>
+      <div class="note warn" style="font-size:13px"><b>ทั้งคู่ค่าประมาณ A1c = 6.8%</b> — ถ้าดูแค่เลขนี้ เราจะไม่เห็นเลยว่าคุณ ข น้ำตาลตกตอนดึกและพุ่งเกิน 250 วันละ 3 ครั้ง</div>
+    </div>
+  </div>
+  <div class="teach"><b>ประโยคที่ใช้สอน:</b> “ค่าเฉลี่ยที่สวย ไม่ได้แปลว่าวันนั้นสงบ — คนที่ขึ้นสุดลงสุดกับคนที่นิ่งทั้งวัน ได้เลขเดียวกันได้”</div>
+  <div class="foot"><b>02</b><span class="src">ค่า A1c ประมาณจากสูตร GMI = 3.31 + 0.02392 × ค่าเฉลี่ยน้ำตาล · ข้อมูลกราฟเป็นตัวอย่างสมมติเพื่อการสอน ไม่ใช่ผู้ป่วยจริง</span></div>
+</section>
+
+<!-- ============ 3 WHAT IS CGM ============ -->
+<section class="slide">
+  <div class="eyebrow"><i></i> พื้นฐาน</div>
+  <h2 class="title">CGM วัดอะไร และวัดอย่างไร</h2>
+  <p class="subtitle">Continuous Glucose Monitoring — เซนเซอร์ติดที่ต้นแขนหรือหน้าท้อง อ่านค่าอัตโนมัติทุก 5 นาที</p>
+  <div class="mgrid" style="grid-template-columns:repeat(4,1fr)">
+    <div class="m in"><div class="mk">288 ค่า / วัน</div><div class="mu">ทุก 5 นาที ตลอด 24 ชม.</div><div class="md">เจาะปลายนิ้ววันละ 2 ครั้ง = 2 จุด · CGM = 288 จุด เห็นทั้งเส้น ไม่ใช่แค่จุด</div></div>
+    <div class="m gd"><div class="mk">10–15 วัน / เซนเซอร์</div><div class="mu">แล้วแต่รุ่น</div><div class="md">ติดครั้งเดียวใช้ต่อเนื่อง ไม่ต้องเจาะซ้ำทุกครั้งที่อยากรู้</div></div>
+    <div class="m lo"><div class="mk">น้ำระหว่างเซลล์</div><div class="mu">interstitial fluid</div><div class="md">ไม่ได้วัดในเส้นเลือดโดยตรง จึง<b>ตามหลังเลือดจริงเล็กน้อย</b> — สำคัญตอนน้ำตาลขึ้นลงเร็ว</div></div>
+    <div class="m vhi"><div class="mk">14 วัน · ข้อมูล ≥ 70%</div><div class="mu">เกณฑ์ก่อนแปลผล</div><div class="md">ต้องมีข้อมูลครบพอ ไม่งั้นตัวเลขที่ได้เชื่อไม่ได้ (มาตรฐาน ADA)</div></div>
+  </div>
+  <div class="row c2" style="margin-top:17px">
+    <div class="card"><h4>ทำงานยังไง</h4>
+      <ol class="bul">
+        <li>เข็มเล็กใต้ผิวหนังอ่านระดับน้ำตาลในน้ำระหว่างเซลล์</li>
+        <li>ส่งค่าเข้ามือถือทุก 5 นาที (บางรุ่นเตือนเมื่อสูง/ต่ำ)</li>
+        <li>รวมเป็นรายงานมาตรฐาน <b>AGP</b> — กราฟ 24 ชม. + ตัวเลขสรุป</li>
+      </ol>
+    </div>
+    <div class="card"><h4>สิ่งที่ต้องบอกให้ชัดตั้งแต่ต้น</h4>
+      <p>CGM <b>ไม่ใช่เครื่องวินิจฉัยโรค</b> · ถ้าค่าที่เห็นไม่ตรงกับอาการ (เช่น เตือนว่าต่ำแต่รู้สึกปกติ) ให้<b>ยืนยันด้วยการเจาะปลายนิ้ว</b> · การตัดสินใจเรื่องยาเป็นของแพทย์เท่านั้น</p>
+    </div>
+  </div>
+  <div class="foot"><b>03</b><span class="src">ADA Standards of Care in Diabetes — 2026, บทที่ 7 Diabetes Technology (แนวทาง AGP 14 วัน)</span></div>
+</section>
+
+<!-- ============ 4 METRICS ============ -->
+<section class="slide">
+  <div class="eyebrow"><i></i> หัวใจของเรื่อง</div>
+  <h2 class="title">8 ค่าที่ CGM บอกได้ (และค่าน้ำตาลสะสมบอกไม่ได้)</h2>
+  <p class="subtitle">ทั้งหมดมาจากรายงานมาตรฐานเดียวกัน — จำ 4 ตัวแรกให้ได้ก่อน ก็ใช้งานได้จริงแล้ว</p>
+  <div class="mgrid">
+    <div class="m in"><div class="mk">TIR</div><div class="mu">Time in Range · 70–180 mg/dL</div><div class="md"><b>เวลาที่อยู่ในเป้า</b> คิดเป็น % ของวัน — ตัวชี้วัดหลักที่ใช้แทน A1c ได้</div></div>
+    <div class="m vhi"><div class="mk">TAR</div><div class="mu">Time Above Range · &gt;180 และ &gt;250</div><div class="md"><b>เวลาที่น้ำตาลสูงเกิน</b> แยก 2 ระดับ เพราะเกิน 250 อันตรายกว่ามาก</div></div>
+    <div class="m lo"><div class="mk">TBR</div><div class="mu">Time Below Range · &lt;70 และ &lt;54</div><div class="md"><b>เวลาที่น้ำตาลต่ำ</b> — ตัวที่ A1c ซ่อนไว้มิดที่สุด และเป็นตัวที่เสี่ยงเฉียบพลัน</div></div>
+    <div class="m gd"><div class="mk">CV</div><div class="mu">Coefficient of Variation · %</div><div class="md"><b>ความแกว่งของน้ำตาล</b> เป้า ≤ 36% = ถือว่านิ่ง</div></div>
+    <div class="m"><div class="mk">Mean Glucose</div><div class="mu">ค่าเฉลี่ย mg/dL</div><div class="md">ฐานของการคำนวณ GMI ทั้งหมด</div></div>
+    <div class="m hi"><div class="mk">GMI</div><div class="mu">Glucose Management Indicator</div><div class="md"><b>ค่าประมาณ A1c จาก CGM</b> — คนละค่ากับ A1c ที่เจาะเลือด (ดูสไลด์ 12)</div></div>
+    <div class="m in"><div class="mk">TITR</div><div class="mu">Time in Tight Range · 70–140</div><div class="md">ตัวชี้วัดใหม่ เป้าที่แคบกว่า ใกล้เคียงคนไม่เป็นเบาหวาน</div></div>
+    <div class="m gd"><div class="mk">GRI</div><div class="mu">Glycemia Risk Index · 0–100</div><div class="md">คะแนนรวมใบเดียว ยิ่งต่ำยิ่งดี ถ่วงน้ำหนักค่าสุดขั้วมากกว่า</div></div>
+  </div>
+  <div class="note" style="margin-top:16px"><b>เคล็ดการสอน:</b> เรียงให้ผู้เรียนเห็นเป็นเรื่องเดียวกัน — <b>อยู่ในเป้านานแค่ไหน (TIR)</b> · <b>หลุดขึ้นไปเท่าไร (TAR)</b> · <b>หลุดลงมาเท่าไร (TBR)</b> · <b>แกว่งแรงแค่ไหน (CV)</b> · สี่ข้อนี้ครบเรื่องแล้ว</div>
+  <div class="foot"><b>04</b><span class="src">ATTD International Consensus on Time in Range (Battelino et al., Diabetes Care 2019) · ADCES danatech glycemic metrics · TITR/GRI: Diabetes Technol Ther</span></div>
+</section>
+
+<!-- ============ 5 AGP ============ -->
+<section class="slide">
+  <div class="eyebrow"><i></i> กราฟที่ต้องอ่านให้เป็น</div>
+  <h2 class="title">AGP — รวม 14 วันมาซ้อนกันเป็น “หนึ่งวันมาตรฐาน”</h2>
+  <p class="subtitle">เส้นกลางคือค่ากลางของทุกวัน · แถบจางคือช่วงที่ค่าเหวี่ยงไปได้ · แถบสีคือโซนเป้าหมาย</p>
+  <div class="chartbox"><h4>Ambulatory Glucose Profile · ตัวอย่างเพื่อการสอน</h4><div class="cw" style="height:330px"><canvas id="cAgp"></canvas></div></div>
+  <div class="row c4" style="margin-top:14px">
+    <div class="card" style="padding:12px 15px"><h4 style="font-size:14px">แถบยิ่งกว้าง = ยิ่งเดาไม่ได้</h4><p style="font-size:12.5px">วันแต่ละวันไม่เหมือนกัน มักมาจากอาหาร/เวลากินไม่คงที่</p></div>
+    <div class="card" style="padding:12px 15px"><h4 style="font-size:14px">โหนกหลังมื้อ</h4><p style="font-size:12.5px">ดูว่าพุ่งช่วงไหน จะรู้ว่ามื้อไหนต้องแก้ก่อน</p></div>
+    <div class="card" style="padding:12px 15px"><h4 style="font-size:14px">ช่วงกลางคืน</h4><p style="font-size:12.5px">ถ้าเส้นจุ่มต่ำตอนดึก = น้ำตาลตกตอนหลับ ซึ่งคนไข้ไม่รู้ตัว</p></div>
+    <div class="card" style="padding:12px 15px"><h4 style="font-size:14px">ตี 4 – 8 โมง</h4><p style="font-size:12.5px">ถ้าไต่ขึ้นเองก่อนกินอะไร = ปรากฏการณ์รุ่งอรุณ (dawn phenomenon)</p></div>
+  </div>
+  <div class="foot"><b>05</b><span class="src">รูปแบบรายงาน AGP สามแผงตามที่ ADA Standards of Care 2026 รับรอง · ข้อมูลในกราฟเป็นตัวอย่างสมมติ</span></div>
+</section>
+
+<!-- ============ 6 TIR ============ -->
+<section class="slide">
+  <div class="eyebrow"><i></i> ตัวชี้วัดหลัก</div>
+  <h2 class="title">TIR — “วันนี้อยู่ในเป้ากี่ชั่วโมง”</h2>
+  <p class="subtitle">แปลงเป็นเวลาแล้วคนเข้าใจทันที · 1% = 14.4 นาทีของวัน</p>
+  <div class="row c-3-2">
+    <div class="chartbox"><h4>สัดส่วนเวลาในหนึ่งวัน (%)</h4><div class="cw" style="height:250px"><canvas id="cTir"></canvas></div></div>
+    <div class="row" style="gap:12px">
+      <div class="card"><h4>คิดเป็นเวลาจริง</h4>
+        <ul class="bul" style="margin-top:2px">
+          <li><b>1% TIR = 14.4 นาที/วัน</b></li>
+          <li><b>5% TIR = 1 ชั่วโมง 12 นาที/วัน</b></li>
+          <li>ขยับ TIR ได้ 10% = ได้เวลาในเป้าคืนมา <b>เกือบ 2 ชั่วโมงครึ่งทุกวัน</b></li>
+        </ul>
+      </div>
+      <div class="note good"><b>เชื่อมกับค่าที่คนคุ้นเคย:</b> ทุก ๆ TIR ที่เปลี่ยน 10 จุด ค่าน้ำตาลสะสมเปลี่ยนราว <b>0.8%</b> — ทำให้คุยกับคนที่ยึด A1c ได้ในภาษาเดียวกัน</div>
+    </div>
+  </div>
+  <div class="teach"><b>ประโยคที่ใช้สอน:</b> “ไม่ต้องดีขึ้นทั้งวัน — ขอแค่คืนเวลาในเป้ามาวันละ 1 ชั่วโมง ก็เห็นผลในเลขจริงแล้ว”</div>
+  <div class="foot"><b>06</b><span class="src">TIR ↔ A1c: Vigersky &amp; McMahon, Diabetes Technol Ther 2019 (ทุก 10% TIR ≈ 0.8% A1c · R = −0.84)</span></div>
+</section>
+
+<!-- ============ 7 TARGETS ============ -->
+<section class="slide">
+  <div class="eyebrow"><i></i> เกณฑ์มาตรฐาน</div>
+  <h2 class="title">เป้าหมายที่ยึดกันทั่วโลก</h2>
+  <p class="subtitle">ผู้ใหญ่ทั่วไปที่เป็นเบาหวานชนิดที่ 1 หรือ 2 — และเป้าที่ผ่อนให้ผู้สูงอายุ/กลุ่มเสี่ยงสูง</p>
+  <div class="row c-3-2">
+    <table class="t">
+      <tr><th style="width:34%">ค่า</th><th style="width:33%">เป้าผู้ใหญ่ทั่วไป</th><th>ผู้สูงอายุ / เสี่ยงสูง</th></tr>
+      <tr><td>TIR 70–180</td><td><b>&gt; 70%</b> <span class="pill p-in">หลัก</span></td><td><b>&gt; 50%</b></td></tr>
+      <tr><td>TAR &gt; 180</td><td>&lt; 25%</td><td>ผ่อนได้</td></tr>
+      <tr><td>TAR &gt; 250</td><td>&lt; 5%</td><td>&lt; 10%</td></tr>
+      <tr><td>TBR &lt; 70</td><td><b>&lt; 4%</b> <span class="pill p-lo">ห้ามมองข้าม</span></td><td>&lt; 1%</td></tr>
+      <tr><td>TBR &lt; 54</td><td><b>&lt; 1%</b></td><td>ไม่ควรมีเลย</td></tr>
+      <tr><td>CV</td><td>≤ 36%</td><td>≤ 36%</td></tr>
+    </table>
+    <div class="row" style="gap:12px">
+      <div class="note warn"><b>เรียงลำดับความสำคัญให้ถูก:</b> แก้ <b>น้ำตาลต่ำ (TBR) ก่อนเสมอ</b> แล้วจึงไปไล่ค่าที่สูง — เพราะน้ำตาลต่ำอันตรายเฉียบพลันกว่า และเป็นตัวที่ค่าน้ำตาลสะสมมองไม่เห็น</div>
+      <div class="card"><h4>อ่านคู่กันเสมอ</h4><p>TIR สูงอย่างเดียวไม่พอ — ถ้า TIR 75% แต่ TBR 8% แปลว่าเป้าที่ดูดีนั้นซื้อมาด้วยการปล่อยให้น้ำตาลตก · <b>เป้าคือดีทั้ง 3 ค่าไปพร้อมกัน</b></p></div>
+      <div class="card"><h4>ตั้งครรภ์</h4><p>ใช้เป้าที่แคบกว่านี้ ต้องอยู่ในการดูแลของแพทย์เฉพาะทาง</p></div>
+    </div>
+  </div>
+  <div class="foot"><b>07</b><span class="src">ATTD International Consensus on Time in Range (Battelino et al., Diabetes Care 2019;42:1593) · ADA Standards of Care in Diabetes 2026</span></div>
+</section>
+
+<!-- ============ 8 EVIDENCE ============ -->
+<section class="slide">
+  <div class="eyebrow"><i></i> หลักฐาน</div>
+  <h2 class="title">ทำไมต้องแคร์ TIR — มันผูกกับภาวะแทรกซ้อนจริง</h2>
+  <p class="subtitle">ข้อมูลจากการวิเคราะห์ซ้ำงานวิจัย DCCT ซึ่งเป็นงานอ้างอิงหลักของวงการเบาหวาน</p>
+  <div class="row c2" style="margin-bottom:16px">
+    <div class="card" style="padding:22px 24px">
+      <h4>ทุก ๆ TIR ที่ลดลง 10 จุด</h4>
+      <div class="stat" style="margin-top:10px"><div class="v">+64%</div><div class="t">ความเสี่ยง<b> เบาหวานขึ้นตาแย่ลง</b><br>(diabetic retinopathy progression)</div></div>
+    </div>
+    <div class="card" style="padding:22px 24px">
+      <h4>ทุก ๆ TIR ที่ลดลง 10 จุด</h4>
+      <div class="stat" style="margin-top:10px"><div class="v">+40%</div><div class="t">ความเสี่ยง<b> ไข่ขาวรั่วในปัสสาวะ</b><br>(สัญญาณแรกของไตเสียจากเบาหวาน)</div></div>
+    </div>
+  </div>
+  <div class="row c2">
+    <div class="note good"><b>อ่านกลับด้าน:</b> การทำ TIR ให้ดีขึ้น 10 จุด ไม่ใช่แค่ตัวเลขสวยขึ้น — มันคือการลดความเสี่ยงตาและไตในระยะยาว ซึ่งเป็นเหตุผลที่วงการยอมรับ TIR เป็นตัวชี้วัดผลการรักษาได้</div>
+    <div class="card"><h4>ใช้พูดกับใครที่ยังไม่เชื่อ</h4><p>“TIR ไม่ใช่ศัพท์การตลาดของคนขายเครื่อง — มันมีงานวิจัยระดับ DCCT รองรับ และอยู่ในแนวทางเวชปฏิบัติของสมาคมโรคเบาหวานอเมริกา ปี 2026”</p></div>
+  </div>
+  <div class="foot"><b>08</b><span class="src">Beck RW et al. Validation of Time in Range as an Outcome Measure for Diabetes Clinical Trials. Diabetes Care 2019;42:400 · Diabetes Care 2022;45:2445</span></div>
+</section>
+
+<!-- ============ 9 WHAT A1C CANNOT SEE ============ -->
+<section class="slide">
+  <div class="eyebrow"><i></i> จุดขายที่แท้จริง</div>
+  <h2 class="title">4 เรื่องที่ CGM เห็น แต่การเจาะเลือดครั้งเดียวไม่เห็น</h2>
+  <p class="subtitle">นี่คือเหตุผลที่คนได้ประโยชน์จาก CGM แม้ค่าน้ำตาลสะสมจะ “ดูปกติ”</p>
+  <div class="row c-3-2">
+    <div class="chartbox"><h4>หนึ่งวันที่เล่าเรื่องได้ 4 อย่าง · ตัวอย่างเพื่อการสอน</h4><div class="cw" style="height:290px"><canvas id="cStory"></canvas></div></div>
+    <div class="row" style="gap:11px">
+      <div class="card" style="padding:13px 16px"><h4 style="font-size:14.5px"><span class="pill p-lo">1</span> น้ำตาลตกตอนหลับ</h4><p style="font-size:12.5px">เกิดตอนนอน ไม่มีใครรู้ตัว ตื่นมาก็ปกติ — ค่าเฉลี่ยกลืนมันไปหมด</p></div>
+      <div class="card" style="padding:13px 16px"><h4 style="font-size:14.5px"><span class="pill p-vhi">2</span> น้ำตาลพุ่งหลังมื้อ</h4><p style="font-size:12.5px">เห็นเป็นรายมื้อว่า “ข้าวเหนียวหมูปิ้ง” ดันขึ้นเท่าไร ปรับได้ตรงจุด ไม่ต้องเดา</p></div>
+      <div class="card" style="padding:13px 16px"><h4 style="font-size:14.5px"><span class="pill p-hi">3</span> ปรากฏการณ์รุ่งอรุณ</h4><p style="font-size:12.5px">น้ำตาลไต่ขึ้นเองตอนเช้าก่อนกินอะไร เป็นเรื่องของฮอร์โมน ไม่ใช่ “กินผิด”</p></div>
+      <div class="card" style="padding:13px 16px"><h4 style="font-size:14.5px"><span class="pill p-in">4</span> ผลของนอน · เครียด · ออกกำลังกาย</h4><p style="font-size:12.5px">เห็นผลภายในวันเดียว จึงเป็นเครื่องมือ<b>เปลี่ยนพฤติกรรม</b> ไม่ใช่แค่เครื่องวัด</p></div>
+    </div>
+  </div>
+  <div class="foot"><b>09</b><span class="src">ข้อจำกัดของ HbA1c ที่ปิดบังภาวะน้ำตาลต่ำและความแกว่ง: Gomez-Peralta et al., Diabetes Obes Metab 2022 · กราฟเป็นตัวอย่างสมมติ</span></div>
+</section>
+
+<!-- ============ 10 CV ============ -->
+<section class="slide">
+  <div class="eyebrow"><i></i> ความแกว่ง</div>
+  <h2 class="title">CV — ตัวที่บอกว่า “น้ำตาลนิ่งหรือขึ้นสุดลงสุด”</h2>
+  <p class="subtitle">ค่าเดียวกันได้ด้วยสองวิถีชีวิตที่ต่างกันมาก · CV คือตัวแยกสองอย่างนั้นออกจากกัน</p>
+  <div class="row c3">
+    <div class="card"><h4><span class="pill p-in">นิ่ง</span> CV ≤ 36%</h4><p>ถือว่าน้ำตาลค่อนข้างเสถียร · เป็นเป้าที่ฉันทามติสากลเสนอไว้ (เริ่มจากเบาหวานชนิดที่ 1)</p></div>
+    <div class="card"><h4><span class="pill p-hi">แกว่ง</span> CV &gt; 36%</h4><p>ขึ้นลงแรง เสี่ยงทั้งน้ำตาลตกและน้ำตาลพุ่งในวันเดียวกัน · มักมาจากอาหารและเวลากินไม่คงที่</p></div>
+    <div class="card"><h4>สูตรง่าย ๆ</h4><p>CV = (ส่วนเบี่ยงเบนมาตรฐาน ÷ ค่าเฉลี่ย) × 100 · <b>ไม่ต้องคำนวณเอง</b> เครื่องคิดให้ในรายงาน</p></div>
+  </div>
+  <div class="row c2" style="margin-top:16px">
+    <div class="chartbox"><h4>ค่าเฉลี่ยเท่ากัน แต่คนละเรื่อง (mg/dL)</h4><div class="cw" style="height:216px"><canvas id="cCv"></canvas></div></div>
+    <div class="row" style="gap:12px">
+      <div class="note"><b>ทำไมความแกว่งสำคัญ:</b> ร่างกายไม่ได้แค่แคร์ “ค่าเฉลี่ย” — การขึ้นลงแรงซ้ำ ๆ สร้างความเครียดต่อผนังหลอดเลือด และในทางปฏิบัติมันคือช่วงที่คนรู้สึกเพลีย หิวจัด หรือใจสั่นโดยไม่รู้สาเหตุ</div>
+      <div class="card"><h4>ปรับ CV ด้วยอะไรก่อน</h4><p>กินผัก/โปรตีนก่อนคาร์บ · ลดคาร์บที่ดูดซึมเร็ว · เดินหลังอาหาร 10–15 นาที · กินเวลาเดิมทุกวัน · นอนให้พอ</p></div>
+    </div>
+  </div>
+  <div class="foot"><b>10</b><span class="src">เป้า %CV ≤ 36%: ATTD International Consensus 2019 · ADCES danatech</span></div>
+</section>
+
+<!-- ============ 11 GMI ============ -->
+<section class="slide">
+  <div class="eyebrow"><i></i> จุดที่คนเข้าใจผิดบ่อยที่สุด</div>
+  <h2 class="title">GMI ไม่ใช่ HbA1c — และไม่ควรใช้แทนกัน</h2>
+  <p class="subtitle">GMI คือ “ค่าประมาณ A1c ที่คำนวณจากน้ำตาลเฉลี่ยของ CGM” ไม่ใช่ค่าที่วัดจากเม็ดเลือดแดง</p>
+  <div class="row c-3-2">
+    <div class="row" style="gap:13px">
+      <div class="card" style="padding:19px 22px">
+        <h4>สูตรที่ใช้กันทั่วโลก</h4>
+        <p style="font-family:'Kanit';font-weight:600;font-size:19px;color:var(--olive);margin-top:8px">GMI (%) = 3.31 + 0.02392 × ค่าเฉลี่ยน้ำตาล (mg/dL)</p>
+        <p style="margin-top:8px">ได้จากการถดถอยระหว่าง A1c จริงกับค่าเฉลี่ยเซนเซอร์ในกลุ่มประชากรหนึ่ง — จึงเป็น <b>ค่าประมาณระดับประชากร</b> ไม่ใช่ค่าเฉพาะบุคคล</p>
+      </div>
+      <div class="note warn"><b>สองค่านี้ต่างกันได้จริงและบ่อย:</b> ในคนที่ยังไม่เป็นเบาหวาน พบว่า GMI สูงกว่า A1c ที่เจาะเลือดเฉลี่ย <b>0.59%</b> และมีถึง <b>71%</b> ที่ต่างกันตั้งแต่ 0.4% ขึ้นไป</div>
+    </div>
+    <div class="row" style="gap:12px">
+      <div class="card"><h4>ทำไมต่าง</h4>
+        <ul class="bul" style="margin-top:2px">
+          <li>A1c ขึ้นกับ<b>อายุขัยเม็ดเลือดแดง</b> · โรคเลือด ธาลัสซีเมีย ภาวะซีด ทำให้เพี้ยนได้</li>
+          <li>GMI ไม่เกี่ยวกับเม็ดเลือดแดงเลย แต่ขึ้นกับ<b>ความครบของข้อมูลเซนเซอร์</b></li>
+          <li>GMI มักต่ำกว่า A1c ในคนที่ A1c สูง และสูงกว่าในคนที่ A1c ต่ำ</li>
+        </ul>
+      </div>
+      <div class="note good"><b>วิธีพูดที่ถูก:</b> “ค่านี้คือ<b>ค่าประมาณ</b> จากเครื่อง ถ้าต่างจากผลเลือดที่หมอเจาะ ไม่ได้แปลว่าอันใดผิด — เอาไปคุยกับหมอว่าทำไมต่าง จะได้ข้อมูลเพิ่มด้วย”</div>
+    </div>
+  </div>
+  <div class="foot"><b>11</b><span class="src">Bergenstal et al. (สูตร GMI) · Gomez-Peralta et al., Diabetes Obes Metab 2022 · Discordance in people without diabetes, PubMed 36790875 · “GMI: Time to Change Course?” Diabetes Care 2024;47:906</span></div>
+</section>
+
+<!-- ============ 12 NEW METRICS ============ -->
+<section class="slide">
+  <div class="eyebrow"><i></i> ของใหม่ที่กำลังมา</div>
+  <h2 class="title">TITR และ GRI — ละเอียดขึ้นอีกขั้น</h2>
+  <p class="subtitle">สองตัวนี้เริ่มโผล่ในรายงานและงานวิจัยปีหลัง ๆ ควรรู้ไว้ก่อนลูกค้าถาม</p>
+  <div class="row c2">
+    <div class="card" style="padding:21px 24px">
+      <h4><span class="pill p-in">TITR</span> Time in Tight Range · 70–140 mg/dL</h4>
+      <p style="margin-top:9px">เป้าที่<b>แคบกว่า TIR</b> เพราะ 70–180 ยังกว้างเมื่อเทียบกับคนที่ไม่เป็นเบาหวาน · เหมาะกับคนที่คุมได้ดีอยู่แล้วและอยากไปต่อ</p>
+      <ul class="bul" style="margin-top:9px">
+        <li>ยัง<b>ไม่มีเป้าที่เป็นทางการ</b> — งานวิจัยบางส่วนเสนอไว้ราว 45–50% ในเบาหวานชนิดที่ 1</li>
+        <li>ในคนสุขภาพดี ค่านี้จะสูงกว่านั้นมาก</li>
+        <li>ใช้เป็น “ขั้นถัดไป” หลังทำ TIR &gt; 70% ได้แล้ว</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:21px 24px">
+      <h4><span class="pill p-gold">GRI</span> Glycemia Risk Index · คะแนน 0–100</h4>
+      <p style="margin-top:9px">ย่อทุกอย่างเป็น<b>เลขเดียว ยิ่งต่ำยิ่งดี</b> คำนวณจากเวลาที่ต่ำ (&lt;70) และเวลาที่สูง (&gt;180) โดย<b>ถ่วงน้ำหนักค่าสุดขั้วมากกว่า</b></p>
+      <ul class="bul" style="margin-top:9px">
+        <li>ข้อดี: สื่อสารง่าย ใช้ติดตามความคืบหน้าได้เร็ว</li>
+        <li>ข้อควรระวัง: เลขเดียวย่อมกลืนรายละเอียด — <b>ยังต้องดู TBR แยกเสมอ</b></li>
+      </ul>
+    </div>
+  </div>
+  <div class="teach"><b>ประโยคที่ใช้สอน:</b> “TIR คือเกรดเฉลี่ย · TITR คือเกรดเฉลี่ยแบบเข้มงวด · GRI คือคะแนนความเสี่ยงรวม — ดูด้วยกันได้ แต่อย่าทิ้งเวลาที่น้ำตาลตก”</div>
+  <div class="foot"><b>12</b><span class="src">TITR: Diabetes Technol Ther (real-world &gt;20,000 users) · GRI: Klonoff et al. · ADCES danatech GRI overview</span></div>
+</section>
+
+<!-- ============ 13 WHO / HOW TO USE ============ -->
+<section class="slide">
+  <div class="eyebrow"><i></i> การใช้งานจริง</div>
+  <h2 class="title">ใครใช้ได้ และต้องอ่านอย่างไรให้เชื่อถือได้</h2>
+  <p class="subtitle">แนวทางสมาคมโรคเบาหวานอเมริกา ฉบับปี 2026 ขยายกลุ่มที่ควรใช้กว้างขึ้นกว่าเดิม</p>
+  <div class="row c3">
+    <div class="card"><h4>ขยายกลุ่มผู้ใช้</h4><p>ปี 2026 ขยายให้ครอบคลุม<b>ทุกคนที่ใช้อินซูลิน</b> และ<b>ผู้ที่ใช้ยาอื่นซึ่ง CGM ช่วยการดูแลได้</b> — ไม่จำกัดแค่เบาหวานชนิดที่ 1 แล้ว</p></div>
+    <div class="card"><h4>ก่อนแปลผล</h4><p>ใช้ข้อมูล <b>14 วัน</b> และต้องมีข้อมูล <b>ไม่น้อยกว่า 70%</b> ของช่วงเวลานั้น · ถ้าเซนเซอร์หลุดบ่อยหรือใส่ไม่ครบ ตัวเลขจะหลอกตา</p></div>
+    <div class="card"><h4>ลำดับการอ่าน</h4><p>1) ดู <b>TBR</b> ก่อน มีน้ำตาลตกไหม<br>2) ดู <b>TIR</b> ว่าห่างเป้าเท่าไร<br>3) ดู <b>CV</b> ว่าแกว่งไหม<br>4) ค่อยดู GMI</p></div>
+  </div>
+  <div class="row c2" style="margin-top:16px">
+    <div class="card"><h4>ในคนที่ยังไม่เป็นเบาหวาน — พูดให้ตรง</h4>
+      <p>การทบทวนงานวิจัยแบบ meta-analysis พบว่าการใช้ CGM ในฐานะ<b>เครื่องมือเปลี่ยนพฤติกรรม</b> ช่วยลดค่าน้ำตาลสะสมได้ <b>0.28%</b> และเพิ่ม TIR ได้ <b>7.4%</b> เทียบกับกลุ่มควบคุม<br>
+      <span style="color:var(--ink50)">= มีผลจริง แต่เป็นผลระดับ “ช่วยให้เห็นและปรับตัว” ไม่ใช่การรักษา · ยังไม่มีเกณฑ์ TIR ทางการสำหรับคนไม่เป็นเบาหวาน</span></p>
+    </div>
+    <div class="note warn"><b>ขอบเขตที่ต้องพูดทุกครั้ง:</b> CGM ไม่ใช่การวินิจฉัย · ค่าผิดปกติต้องส่งพบแพทย์ · ห้ามใช้ตัวเลขจากเครื่องไปปรับยาเอง · ถ้าค่าไม่ตรงกับอาการ ให้ยืนยันด้วยการเจาะปลายนิ้ว</div>
+  </div>
+  <div class="foot"><b>13</b><span class="src">ADA Standards of Care in Diabetes 2026 บทที่ 7 · Systematic review &amp; meta-analysis of CGM as behaviour change tool, PMC11668089</span></div>
+</section>
+
+<!-- ============ 14 INTEREST ============ -->
+<section class="slide">
+  <div class="eyebrow"><i></i> คนสนใจแค่ไหน</div>
+  <h2 class="title">CGM ยังเป็นเรื่อง “ใหม่” สำหรับคนทั่วไป — และนั่นคือช่องว่าง</h2>
+  <p class="subtitle">เทียบยอดเข้าอ่านสารานุกรมออนไลน์ภาษาอังกฤษ 12 เดือนล่าสุด (ก.ค. 2568 – มิ.ย. 2569) เป็นตัวแทนความอยากรู้ของคนทั่วไป</p>
+  <div class="row c-3-2">
+    <div class="chartbox"><h4>ยอดเข้าอ่านรวม 12 เดือน (ครั้ง)</h4><div class="cw" style="height:262px"><canvas id="cInterest"></canvas></div></div>
+    <div class="row" style="gap:12px">
+      <div class="card" style="padding:16px 19px"><h4>ตัวเลขที่ต้องจำ</h4>
+        <div class="stat" style="margin-top:6px"><div class="v o">4.2<span style="font-size:24px">×</span></div><div class="t">คนอยากรู้เรื่อง<b> “เบาหวานชนิดที่ 2”</b> มากกว่าเรื่อง <b>CGM</b> ถึงสี่เท่ากว่า</div></div>
+      </div>
+      <div class="note"><b>แปลเป็นกลยุทธ์การสอน:</b> คนไม่ได้ค้นหาชื่อเครื่องมือ — เขาค้นหา<b>ปัญหาของตัวเอง</b> (เบาหวาน · ลดน้ำหนัก · คีโต · ฟาสติ้ง) · เวลาสื่อสาร ให้เริ่มจากปัญหาที่เขามี แล้วค่อยพา CGM เข้ามาเป็นเครื่องมือตอบ</div>
+      <div class="card" style="padding:13px 17px"><h4 style="font-size:14px">แต่ฝั่งคนใช้จริง โตชัดเจน</h4><p style="font-size:12.5px">FreeStyle Libre มีผู้ใช้ <b>7 ล้านคนทั่วโลก</b> ต้นปี 2568 · สหรัฐไฟเขียวขายแบบไม่ต้องมีใบสั่งแพทย์ปี 2567 (Stelo, Lingo, Libre Rio) · ตลาด CGM สาย wellness <b>3.8 พันล้านดอลลาร์ (2568) → 11.6 พันล้าน (2577)</b></p></div>
+    </div>
+  </div>
+  <div class="foot"><b>14</b><span class="src">ยอดเข้าอ่าน: Wikimedia Pageviews API (en.wikipedia, all-access/user, ก.ค.2025–มิ.ย.2026 · ดึงข้อมูล 25 ก.ค. 2026) — เป็นตัวแทนความสนใจ ไม่ใช่ยอดค้นหาบน Google · ยอดหน้า “Ozempic” ไม่รวมหน้า semaglutide แยก · ยอดเข้าอ่านทุกหัวข้อลดลงทั้งกระดานในช่วงนี้ จึงควรอ่านเป็น “สัดส่วนเทียบกัน” ไม่ใช่แนวโน้มขาลงของเรื่องใดเรื่องเดียว · ตลาด: Astute Analytica, Dataintelo</span></div>
+</section>
+
+<!-- ============ 15 THAILAND ============ -->
+<section class="slide">
+  <div class="eyebrow"><i></i> บริบทไทย</div>
+  <h2 class="title">ในไทย ปัญหาไม่ใช่ “ไม่มีเครื่องมือ” แต่คือ “ไม่รู้ตัว และคุมไม่ได้”</h2>
+  <p class="subtitle">ข้อมูลจากการสำรวจสุขภาพประชาชนไทย เทียบปี 2547 กับ 2563</p>
+  <div class="row c4">
+    <div class="card" style="text-align:center;padding:20px 14px"><div class="card"><div class="big" style="border:0;box-shadow:none">10.1<u>%</u></div></div><p style="margin-top:8px">ผู้ใหญ่ไทยเป็นเบาหวาน (ปี 2563)<br><span style="color:var(--ink50)">เพิ่มจาก 7.5% ในปี 2547</span></p></div>
+    <div class="card" style="text-align:center;padding:20px 14px"><div class="big">62.8<u>%</u></div><p style="margin-top:8px"><b>รู้ตัว</b>ว่าเป็นเบาหวาน<br><span style="color:var(--vhigh)">แปลว่า 1 ใน 3 ยังไม่รู้ตัว</span></p></div>
+    <div class="card" style="text-align:center;padding:20px 14px"><div class="big">42.9<u>%</u></div><p style="margin-top:8px">ได้รับ<b>การรักษา</b><br><span style="color:var(--ink50)">รู้ตัวแล้วแต่ยังไม่ได้เข้าระบบ</span></p></div>
+    <div class="card" style="text-align:center;padding:20px 14px"><div class="big" style="color:var(--vhigh)">20.5<u>%</u></div><p style="margin-top:8px"><b>คุมน้ำตาลได้</b><br><span style="color:var(--vhigh)">1 ใน 5 เท่านั้น</span></p></div>
+  </div>
+  <div class="row c2" style="margin-top:17px">
+    <div class="note warn"><b>ตีความให้ตรง:</b> คน 100 คนที่เป็นเบาหวาน มีเพียงราว 20 คนที่คุมน้ำตาลได้ · ช่องว่างที่ใหญ่ที่สุดไม่ใช่เรื่องยา แต่คือ <b>“เห็นข้อมูลของตัวเองไม่ทัน”</b> — ซึ่งเป็นสิ่งที่ CGM ตอบได้ตรงที่สุด</div>
+    <div class="note good"><b>บทบาทที่เหมาะกับเรา:</b> เราไม่ได้แทนหมอ · เราทำหน้าที่ <b>ทำให้คนเห็นตัวเลขของตัวเองและเข้าใจมัน</b> แล้วส่งต่อให้แพทย์เมื่อเกินขอบเขต — นั่นคือช่องที่ยังว่างและวัดผลได้</div>
+  </div>
+  <div class="foot"><b>15</b><span class="src">Diabetes trends and determinants among Thai adults from 2004 to 2020, Scientific Reports 2025 (nature.com/articles/s41598-025-17619-5) — จากการสำรวจสุขภาพประชาชนไทย (NHES)</span></div>
+</section>
+
+<!-- ============ 16 SUMMARY ============ -->
+<section class="slide">
+  <div class="eyebrow"><i></i> สรุป</div>
+  <h2 class="title">5 ข้อที่ต้องได้กลับบ้าน</h2>
+  <p class="subtitle">ถ้าจำได้แค่สไลด์นี้ ก็ถือว่าใช้งานได้</p>
+  <div class="row c2" style="align-items:start">
+    <div class="row" style="gap:11px">
+      <div class="card" style="padding:14px 18px"><h4>1 · ค่าเฉลี่ยไม่ได้บอกทั้งเรื่อง</h4><p>คนสองคนได้ค่าน้ำตาลสะสมเท่ากันได้ ทั้งที่วันหนึ่งของเขาต่างกันสุดขั้ว</p></div>
+      <div class="card" style="padding:14px 18px"><h4>2 · จำ 4 ค่าให้ได้</h4><p><b>TIR</b> อยู่ในเป้านานแค่ไหน · <b>TAR</b> สูงเท่าไร · <b>TBR</b> ต่ำเท่าไร · <b>CV</b> แกว่งแรงแค่ไหน</p></div>
+      <div class="card" style="padding:14px 18px"><h4>3 · เป้าที่ยึด</h4><p>TIR &gt; 70% · TBR &lt; 4% · CV ≤ 36% (ผู้สูงอายุ/เสี่ยงสูง TIR &gt; 50%)</p></div>
+      <div class="card" style="padding:14px 18px"><h4>4 · แก้น้ำตาลต่ำก่อนน้ำตาลสูง</h4><p>เพราะอันตรายเฉียบพลันกว่า และเป็นสิ่งที่การเจาะเลือดครั้งเดียวมองไม่เห็น</p></div>
+      <div class="card" style="padding:14px 18px"><h4>5 · GMI คือค่าประมาณ ไม่ใช่ผลเลือด</h4><p>ต่างจาก A1c ได้จริง ถ้าต่างให้เอาไปคุยกับแพทย์ ไม่ใช่เลือกเชื่ออันที่ถูกใจ</p></div>
+    </div>
+    <div class="row" style="gap:12px">
+      <div class="note warn"><b>ข้อจำกัดที่ต้องพูดเสมอ</b>
+        <ul class="bul" style="margin-top:7px">
+          <li>วัดน้ำในระหว่างเซลล์ → <b>ตามหลังเลือดจริงเล็กน้อย</b> ตอนน้ำตาลขึ้นลงเร็ว</li>
+          <li>ค่าไม่ตรงกับอาการ → <b>ยืนยันด้วยการเจาะปลายนิ้ว</b></li>
+          <li>ข้อมูลไม่ถึง 14 วัน / ไม่ถึง 70% → <b>ยังไม่ควรสรุป</b></li>
+          <li><b>ไม่ใช่การวินิจฉัยหรือการรักษา</b> · เรื่องยาเป็นของแพทย์</li>
+        </ul>
+      </div>
+      <div class="card"><h4>ขั้นต่อไปสำหรับผู้เรียน</h4><p>ลองใส่ CGM 14 วัน แล้วตอบ 3 คำถามนี้ให้ได้ — <b>มื้อไหนดันน้ำตาลผมสูงสุด · ผมมีน้ำตาลตกตอนหลับไหม · เดินหลังอาหารเปลี่ยนกราฟผมได้แค่ไหน</b></p></div>
+    </div>
+  </div>
+  <div class="foot"><b>16</b><span class="src">UP Wellness · Longevity Care — เอกสารเพื่อการให้ความรู้ ไม่ใช่คำแนะนำทางการแพทย์เฉพาะบุคคล</span></div>
+</section>
+
+<!-- ============ 17 SOURCES ============ -->
+<section class="slide">
+  <div class="eyebrow"><i></i> ที่มาของทุกตัวเลขในชุดนี้</div>
+  <h2 class="title">แหล่งอ้างอิง</h2>
+  <p class="subtitle">แยกให้ชัดว่าอะไรมาจากงานวิจัย/แนวทางเวชปฏิบัติ และอะไรเป็นตัวอย่างที่เราสร้างขึ้นเพื่อสอน</p>
+  <div class="row c2">
+    <div class="card">
+      <h4>เกณฑ์และตัวเลขทางคลินิก</h4>
+      <ul class="bul" style="margin-top:4px;font-size:12.5px">
+        <li><b>เป้า TIR/TBR/TAR/CV:</b> Battelino T, et al. Clinical Targets for CGM Data Interpretation — International Consensus on Time in Range. <i>Diabetes Care</i> 2019;42(8):1593</li>
+        <li><b>แนวทางล่าสุด + รูปแบบ AGP + 14 วัน/70%:</b> ADA. Diabetes Technology: Standards of Care in Diabetes—2026 (บทที่ 7)</li>
+        <li><b>TIR กับภาวะแทรกซ้อน:</b> Beck RW, et al. Validation of Time in Range as an Outcome Measure. <i>Diabetes Care</i> 2019;42:400 · <i>Diabetes Care</i> 2022;45:2445</li>
+        <li><b>TIR ↔ A1c (10% ≈ 0.8%):</b> Vigersky RA, McMahon C. <i>Diabetes Technol Ther</i> 2019;21:81</li>
+        <li><b>สูตร GMI:</b> Bergenstal RM, et al. · <b>ความต่าง GMI–A1c:</b> Gomez-Peralta F, et al. <i>Diabetes Obes Metab</i> 2022 · <i>Diabetes Care</i> 2024;47:906</li>
+        <li><b>TITR:</b> Is It Time to Move Beyond TIR to TITR? <i>Diabetes Technol Ther</i> (real-world &gt;20,000 users) · <b>GRI:</b> Klonoff DC, et al.</li>
+        <li><b>CGM ในคนไม่เป็นเบาหวาน:</b> systematic review &amp; meta-analysis, PMC11668089</li>
+        <li><b>สถิติไทย:</b> Diabetes trends and determinants among Thai adults 2004–2020. <i>Scientific Reports</i> 2025</li>
+      </ul>
+    </div>
+    <div class="row" style="gap:12px">
+      <div class="card"><h4>ตลาดและความสนใจ</h4>
+        <ul class="bul" style="margin-top:4px;font-size:12.5px">
+          <li><b>ยอดเข้าอ่านสารานุกรม:</b> Wikimedia Pageviews API (en.wikipedia · all-access/user · รายเดือน ก.ค.2025–มิ.ย.2026 · ดึง 25 ก.ค. 2026)</li>
+          <li><b>ผู้ใช้ FreeStyle Libre 7 ล้านคน + OTC 2024:</b> Astute Analytica (biohacking market)</li>
+          <li><b>ตลาด CGM สาย wellness:</b> Dataintelo, CGM for Wellness Market Report</li>
+        </ul>
+      </div>
+      <div class="note warn"><b>สิ่งที่เป็นตัวอย่างสมมติ (ไม่ใช่ข้อมูลผู้ป่วยจริง)</b><br>
+        กราฟน้ำตาลทุกเส้นในสไลด์ 1, 2, 5, 9 และ 10 เป็นชุดข้อมูลที่สร้างขึ้นเพื่อการสอน · ค่า TIR/CV/GMI ที่แสดงคู่กัน<b>คำนวณจากชุดข้อมูลตัวอย่างนั้นจริง</b> เพื่อให้ตัวเลขสอดคล้องกับกราฟ</div>
+      <div class="note"><b>ข้อควรระวังของตัวเลขความสนใจ:</b> ยอดเข้าอ่านสารานุกรมไม่เท่ากับยอดค้นหาบน Google และช่วงนี้ยอดเข้าอ่านลดลงทั้งกระดานในทุกหัวข้อ จึงใช้ได้ในฐานะ<b>การเทียบสัดส่วนระหว่างหัวข้อ</b> เท่านั้น</div>
+    </div>
+  </div>
+  <div class="foot"><b>17</b><span class="src">จัดทำโดย UP Wellness · Longevity Care · 25 กรกฎาคม 2569</span></div>
+</section>
+
+</div>
+
+<div id="bar"><i style="width:0"></i></div>
+<div id="hud">
+  <button id="prev" aria-label="สไลด์ก่อนหน้า">‹ ก่อน</button>
+  <span id="idx">1 / 17</span>
+  <button id="next" aria-label="สไลด์ถัดไป">ถัดไป ›</button>
+  <button id="pr" aria-label="พิมพ์หรือบันทึกเป็น PDF">PDF</button>
+</div>
+
+<script>
+/* ---------- scale stage to viewport (fixed 16:9) ---------- */
+const W=1280,H=720,stage=document.getElementById('stage');
+function fit(){const s=Math.min(innerWidth/(W+48),innerHeight/(H+48));
+  stage.style.transform=`translate(-50%,-50%) scale(${s})`;}
+addEventListener('resize',fit);fit();
+
+/* ---------- slides ---------- */
+const slides=[...document.querySelectorAll('.slide')];let cur=0;
+const idx=document.getElementById('idx'),barI=document.querySelector('#bar i');
+function show(n){
+  cur=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,i)=>s.classList.toggle('on',i===cur));
+  idx.textContent=`${cur+1} / ${slides.length}`;
+  barI.style.width=((cur+1)/slides.length*100)+'%';
+  build(cur);
+}
+document.getElementById('next').onclick=()=>show(cur+1);
+document.getElementById('prev').onclick=()=>show(cur-1);
+document.getElementById('pr').onclick=()=>window.print();
+addEventListener('keydown',e=>{
+  if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(cur+1);}
+  if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(cur-1);}
+  if(e.key==='Home')show(0); if(e.key==='End')show(slides.length-1);
+});
+
+/* ---------- chart helpers ---------- */
+Chart.defaults.font.family='Sarabun';Chart.defaults.color='rgba(42,46,34,.62)';
+const HOURS=['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24'];
+const IN='#3E8E5A',HI='#C98A1E',VHI='#B4472F',LO='#3A6E86',OLIVE='#3D5826',GOLD='#C99D2F';
+
+/* glucose zone bands behind the plot */
+const zones={id:'z',beforeDatasetsDraw(c){const {ctx,chartArea:a,scales:{y}}=c;if(!a)return;ctx.save();
+  const band=(lo,hi,col)=>{const y1=y.getPixelForValue(hi),y2=y.getPixelForValue(lo);
+    ctx.fillStyle=col;ctx.fillRect(a.left,Math.max(y1,a.top),a.right-a.left,Math.min(y2,a.bottom)-Math.max(y1,a.top));};
+  band(70,180,'rgba(62,142,90,.11)');band(180,250,'rgba(201,138,30,.10)');
+  band(250,420,'rgba(180,71,47,.10)');band(0,70,'rgba(58,110,134,.13)');ctx.restore();}};
+
+const lineOpts=(max=300,legend=true)=>({responsive:true,maintainAspectRatio:false,
+  interaction:{mode:'index',intersect:false},
+  plugins:{legend:{display:legend,labels:{boxWidth:11,font:{size:11.5},usePointStyle:true}},
+    tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${c.parsed.y} mg/dL`}}},
+  elements:{point:{radius:0,hitRadius:8},line:{borderWidth:2.6,tension:.38}},
+  scales:{y:{min:40,max:max,ticks:{stepSize:60,font:{size:10.5}},title:{display:true,text:'mg/dL',font:{size:10.5}},grid:{color:'rgba(42,46,34,.055)'}},
+          x:{ticks:{maxRotation:0,autoSkip:true,maxTicksLimit:13,font:{size:10}},grid:{display:false},title:{display:true,text:'เวลา (นาฬิกา)',font:{size:10.5}}}}});
+
+/* example datasets (synthetic, for teaching) */
+const STABLE=[129,126,123,121,123,129,141,161,176,161,149,141,156,171,161,149,143,139,151,169,161,151,143,135,129];
+const SWINGY=[95,80,68,62,75,110,150,215,250,190,130,95,140,235,255,185,120,88,130,240,255,180,120,90,78];
+const STORY =[110,100,85,58,62,85,120,140,225,175,130,115,205,240,170,125,118,112,150,235,190,140,120,112,105];
+const MED   =[112,108,104,102,105,112,125,150,168,148,132,124,142,165,152,132,126,122,138,160,148,134,126,118,112];
+const P95=MED.map((v,i)=>v+[38,34,32,30,34,42,55,72,86,70,54,46,64,84,72,54,46,42,58,80,70,54,44,40,38][i]);
+const P05=MED.map((v,i)=>v-[26,24,24,24,26,28,30,34,36,34,30,28,32,36,34,30,28,26,30,34,32,30,26,24,26][i]);
+
+const made={};
+function build(n){
+  const mk=(id,fn)=>{const el=document.getElementById(id);if(el&&!made[id]){made[id]=new Chart(el,fn());}else if(made[id]){made[id].resize();}};
+  if(n===0)mk('cCover',()=>({type:'line',plugins:[zones],
+    data:{labels:HOURS,datasets:[{label:'ตัวอย่างหนึ่งวัน',data:SWINGY,borderColor:'#F0E4C0',backgroundColor:'rgba(240,228,192,.14)',fill:true}]},
+    options:{...lineOpts(300,false),scales:{y:{min:40,max:300,ticks:{color:'rgba(243,241,232,.6)',stepSize:60,font:{size:10}},grid:{color:'rgba(255,255,255,.08)'},title:{display:true,text:'mg/dL',color:'rgba(243,241,232,.6)',font:{size:10}}},
+      x:{ticks:{color:'rgba(243,241,232,.55)',maxTicksLimit:9,font:{size:9.5}},grid:{display:false}}}}}));
+  if(n===1)mk('cTwo',()=>({type:'line',plugins:[zones],
+    data:{labels:HOURS,datasets:[
+      {label:'คุณ ก · นิ่ง (TIR 100% · CV 11%)',data:STABLE,borderColor:IN,backgroundColor:'rgba(62,142,90,.08)',fill:true},
+      {label:'คุณ ข · แกว่ง (TIR 60% · CV 44%)',data:SWINGY,borderColor:VHI,borderDash:[6,4]}]},
+    options:lineOpts(300)}));
+  if(n===4)mk('cAgp',()=>({type:'line',plugins:[zones],
+    data:{labels:HOURS,datasets:[
+      {label:'ช่วงบน (95%)',data:P95,borderColor:'rgba(61,88,38,.28)',borderWidth:1.4,backgroundColor:'rgba(61,88,38,.14)',fill:'+1'},
+      {label:'ช่วงล่าง (5%)',data:P05,borderColor:'rgba(61,88,38,.28)',borderWidth:1.4,fill:false},
+      {label:'ค่ากลางของ 14 วัน',data:MED,borderColor:OLIVE,borderWidth:3.4}]},
+    options:lineOpts(300)}));
+  if(n===5)mk('cTir',()=>({type:'bar',
+    data:{labels:['เป้าหมายมาตรฐาน','ตัวอย่างคนที่ยังไม่ถึงเป้า'],
+      datasets:[
+        {label:'ต่ำกว่า 70 (TBR)',data:[3,8],backgroundColor:LO,stack:'s'},
+        {label:'ในเป้า 70–180 (TIR)',data:[75,60],backgroundColor:IN,stack:'s'},
+        {label:'สูงกว่า 180 (TAR)',data:[19,27],backgroundColor:HI,stack:'s'},
+        {label:'สูงกว่า 250',data:[3,5],backgroundColor:VHI,stack:'s'}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{boxWidth:11,font:{size:11}}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${c.parsed.x}% (${Math.round(c.parsed.x*14.4)} นาที/วัน)`}}},
+      scales:{x:{stacked:true,max:100,ticks:{callback:v=>v+'%',font:{size:10.5}},grid:{color:'rgba(42,46,34,.055)'}},
+              y:{stacked:true,grid:{display:false},ticks:{font:{size:11.5}}}}}}));
+  if(n===8)mk('cStory',()=>({type:'line',plugins:[zones],
+    data:{labels:HOURS,datasets:[{label:'น้ำตาลหนึ่งวัน',data:STORY,borderColor:OLIVE,backgroundColor:'rgba(61,88,38,.08)',fill:true}]},
+    options:{...lineOpts(300,false),plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:c=>`${c.parsed.y} mg/dL`,afterLabel:c=>{
+        const t=['น้ำตาลตกตอนหลับ','พุ่งหลังมื้อเช้า','ไต่ขึ้นเองตอนเช้า','พุ่งหลังมื้อเย็น'];
+        if(c.dataIndex===3)return t[0]; if(c.dataIndex===8)return t[1];
+        if(c.dataIndex===6)return t[2]; if(c.dataIndex===19)return t[3]; return '';}}}}}}));
+  if(n===9)mk('cCv',()=>({type:'line',plugins:[zones],
+    data:{labels:HOURS,datasets:[
+      {label:'CV 11% · นิ่ง',data:STABLE,borderColor:IN},
+      {label:'CV 44% · แกว่ง',data:SWINGY,borderColor:VHI,borderDash:[6,4]}]},
+    options:lineOpts(300)}));
+  if(n===13)mk('cInterest',()=>({type:'bar',
+    data:{labels:['เบาหวานชนิดที่ 2','คีโตเจนิก','ฟาสติ้ง (IF)','CGM','Ozempic'],
+      datasets:[{label:'ยอดเข้าอ่าน 12 เดือน',
+        data:[272135,162013,131571,64501,39024],
+        backgroundColor:[OLIVE,'#7A9455','#9CB07A',GOLD,'#D9C489'],borderRadius:7,barPercentage:.68}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.x.toLocaleString('th-TH')+' ครั้ง'}}},
+      scales:{x:{ticks:{callback:v=>(v/1000)+'k',font:{size:10.5}},grid:{color:'rgba(42,46,34,.055)'},title:{display:true,text:'ครั้ง (พัน)',font:{size:10.5}}},
+              y:{grid:{display:false},ticks:{font:{size:12}}}}}}));
+}
+show(0);
+if(window.matchMedia)window.matchMedia('print').addListener?.(()=>{slides.forEach((s,i)=>build(i));});
+</script>
+</body>
+</html>
