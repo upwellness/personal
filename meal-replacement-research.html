@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ตรวจสอบงานวิจัย ILM + Meal Replacement (3 ฉบับ) | UP Wellness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&family=Lora:ital@1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --olive:#3D5826; --olive-lt:#5C7A3F; --olive-dk:#2E4420;
+  --gold:#C99D2F; --gold-lt:#E0B94E;
+  --cream:#F7F4EE; --cream2:#FBF9F4; --panel:#fff;
+  --ink:#2A2E22; --ink70:rgba(42,46,34,.74); --ink50:rgba(42,46,34,.52); --ink30:rgba(42,46,34,.3);
+  --line:rgba(42,46,34,.12); --line2:rgba(42,46,34,.06);
+  --green:#3E8E5A; --green-bg:#E6F0E7;
+  --amber:#C98A1E; --amber-bg:#F7EDD6;
+  --red:#B4472F; --red-bg:#F3E1DB;
+  --blue:#3A6E86; --blue-bg:#E2EDF2;
+  --shadow:0 10px 30px rgba(42,46,34,.08);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;color:var(--ink);font-family:'Sarabun',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{background:radial-gradient(1100px 640px at 50% -8%,rgba(61,88,38,.10),transparent 60%),linear-gradient(180deg,var(--cream2),var(--cream));min-height:100vh}
+h1,h2,h3,h4,.k{font-family:'Kanit',sans-serif;font-weight:600;margin:0;letter-spacing:.2px}
+.wrap{max-width:1000px;margin:0 auto;padding:0 18px 90px}
+
+/* hero */
+.hero{background:linear-gradient(135deg,var(--olive),var(--olive-dk));color:#F3F1E8;border-radius:24px;margin-top:22px;padding:32px 34px 28px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-70px;top:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(201,157,47,.28),transparent 70%)}
+.hero .eyebrow{font-family:'Kanit';font-weight:600;letter-spacing:3px;text-transform:uppercase;font-size:11.5px;color:var(--gold-lt)}
+.hero h1{font-size:31px;line-height:1.25;margin:8px 0 8px;color:#fff;max-width:760px}
+.hero .sub{color:rgba(243,241,232,.84);font-size:14.5px;line-height:1.65;max-width:730px}
+.hero .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}
+.hero .chips span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.19);border-radius:20px;padding:5px 13px;font-size:12.5px}
+
+/* tabs */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;position:sticky;top:0;z-index:20;
+  background:linear-gradient(180deg,var(--cream2) 62%,rgba(251,249,244,.86));padding:12px 0 11px;backdrop-filter:blur(6px)}
+.tab{font-family:'Kanit';font-weight:500;font-size:13.5px;border:1px solid var(--line);background:var(--panel);color:var(--ink70);
+  border-radius:13px;padding:9px 15px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px}
+.tab:hover{border-color:var(--olive-lt);color:var(--olive-dk)}
+.tab:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.tab[aria-selected="true"]{background:var(--olive);border-color:var(--olive);color:#fff;box-shadow:0 6px 16px rgba(61,88,38,.25)}
+.tab .n{font-weight:700;font-size:11px;opacity:.75}
+.tab .dot{width:8px;height:8px;border-radius:50%;flex:none}
+.d-red{background:var(--red)}.d-amber{background:var(--amber)}.d-green{background:var(--green)}
+
+.panel{display:none;animation:fade .25s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+section{background:var(--panel);border:1px solid var(--line2);border-radius:20px;padding:24px 26px;margin-top:15px;box-shadow:var(--shadow)}
+section > h3{font-size:19px;color:var(--olive-dk);display:flex;align-items:center;gap:10px;margin-bottom:5px}
+section > h3 .no{font-family:'Kanit';font-weight:700;font-size:11.5px;color:#fff;background:var(--olive);width:27px;height:27px;border-radius:8px;display:grid;place-items:center;flex:none}
+.sub{color:var(--ink50);font-size:13px;margin:0 0 15px 37px}
+@media(max-width:560px){.sub{margin-left:0}}
+p{font-size:14.5px;line-height:1.75;color:var(--ink70);margin:0 0 11px}
+p b,li b{color:var(--olive-dk)}
+
+table.t{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:6px;border-radius:12px;overflow:hidden;border:1px solid var(--line2)}
+table.t th{background:var(--olive);color:#fff;font-family:'Kanit';font-weight:500;font-size:12.5px;padding:10px 13px;text-align:left}
+table.t td{padding:9px 13px;border-top:1px solid var(--line2);color:var(--ink70);vertical-align:top}
+table.t td:first-child{font-family:'Kanit';font-weight:500;color:var(--ink)}
+table.t tr:nth-child(even) td{background:var(--cream2)}
+table.t td b{color:var(--olive-dk)}
+.tw{overflow-x:auto}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:720px){.grid2,.grid3,.grid4{grid-template-columns:1fr 1fr}}
+@media(max-width:440px){.grid2,.grid3,.grid4{grid-template-columns:1fr}}
+.grid2>*,.grid3>*,.grid4>*{min-width:0}
+
+.stat{border:1px solid var(--line);border-radius:14px;padding:13px 15px;background:var(--cream2)}
+.stat .lbl{font-size:12px;color:var(--ink50)}
+.stat .val{font-family:'Kanit';font-weight:700;font-size:26px;line-height:1.15;margin-top:3px;color:var(--olive)}
+.stat .val.r{color:var(--red)}.stat .val.a{color:var(--amber)}.stat .val.g{color:var(--green)}
+.stat .val u{text-decoration:none;font-style:normal;font-size:13px;color:var(--ink50);font-weight:400;margin-left:3px}
+.stat .note{font-size:11.5px;color:var(--ink50);margin-top:3px;line-height:1.5}
+
+.box{border-left:4px solid var(--gold);background:var(--cream2);border-radius:0 12px 12px 0;padding:13px 16px;margin-top:13px;font-size:14px;line-height:1.7}
+.box b{color:var(--olive)}
+.box.red{border-left-color:var(--red);background:var(--red-bg)}.box.red b{color:var(--red)}
+.box.green{border-left-color:var(--green);background:var(--green-bg)}.box.green b{color:var(--green)}
+.box.blue{border-left-color:var(--blue);background:var(--blue-bg)}.box.blue b{color:var(--blue)}
+
+.flag{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:11px;background:var(--panel)}
+.flag .num{font-family:'Kanit';font-weight:700;font-size:13px;color:#fff;background:var(--red);width:26px;height:26px;border-radius:8px;display:grid;place-items:center;flex:none;margin-top:2px}
+.flag.ok .num{background:var(--green)}
+.flag.warn .num{background:var(--amber)}
+.flag .ft{font-family:'Kanit';font-weight:600;font-size:15px;color:var(--ink);margin-bottom:3px}
+.flag .fb{font-size:13.5px;color:var(--ink70);line-height:1.68}
+.flag .fb code{background:var(--cream2);border:1px solid var(--line2);border-radius:5px;padding:1px 6px;font-size:12.5px;font-family:ui-monospace,Menlo,monospace;color:var(--red)}
+.flag .ev{display:block;margin-top:6px;font-size:12.5px;color:var(--ink50);border-top:1px dashed var(--line);padding-top:6px}
+.flag .ev b{color:var(--olive-dk)}
+
+.pill{display:inline-block;font-family:'Kanit';font-weight:600;font-size:11px;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.p-red{background:var(--red-bg);color:var(--red)}.p-amber{background:var(--amber-bg);color:var(--amber)}
+.p-green{background:var(--green-bg);color:var(--green)}.p-blue{background:var(--blue-bg);color:var(--blue)}
+
+ul.bul,ol.bul{margin:6px 0;padding-left:20px}
+ul.bul li,ol.bul li{font-size:14px;line-height:1.75;color:var(--ink70);margin-bottom:6px}
+
+.ladder{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.rung{display:flex;align-items:center;gap:11px;border-radius:10px;padding:8px 13px;font-size:13px;background:var(--cream2);border:1px solid var(--line2);color:var(--ink50)}
+.rung.here{background:var(--red-bg);border-color:rgba(180,71,47,.28);color:var(--red);font-weight:600}
+.rung .lv{font-family:'Kanit';font-weight:700;font-size:11px;width:22px;flex:none}
+
+a{color:var(--olive);text-decoration-color:rgba(61,88,38,.35);text-underline-offset:3px}
+a:hover{color:var(--olive-dk)}
+.disc{font-size:11.5px;color:var(--ink50);line-height:1.8;margin-top:24px;text-align:center;max-width:800px;margin-left:auto;margin-right:auto}
+.foot{text-align:center;margin-top:16px;color:var(--ink30);font-size:12px}
+.foot .tag{font-family:'Lora',serif;font-style:italic;color:var(--olive-lt);font-size:15px;display:block;margin-bottom:4px}
+@media print{
+  body{background:#fff}.tabs{display:none}.panel{display:block!important}
+  section{break-inside:avoid;box-shadow:none}
+  .panel{page-break-before:always}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">UP Wellness · เอกสารตรวจสอบงานวิจัย</div>
+    <h1>ตรวจงานวิจัย “ปรับพฤติกรรมเข้มข้น + อาหารทดแทนมื้อ” ทั้ง 3 ฉบับ</h1>
+    <div class="sub">อ่านฉบับเต็มทุกฉบับ เทียบตัวเลขในตารางกับสิ่งที่บทคัดย่อสรุป และตรวจสถานะวารสารที่ตีพิมพ์ — เพื่อให้ใช้อ้างอิงได้อย่างรู้เท่าทัน ไม่ใช่เพื่อโจมตีผู้ใด</div>
+    <div class="chips">
+      <span>ทีมวิจัยเดียวกันทั้ง 3 ฉบับ</span>
+      <span>ข้อมูลชุดเดียวกัน (โครงการปี 2565–2566)</span>
+      <span>ตรวจเมื่อ 27 ก.ค. 2569</span>
+    </div>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-p="p0"><span class="n">ภาพรวม</span></button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p1"><span class="dot d-red"></span><span class="n">①</span> Cohort 702 คน</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p2"><span class="dot d-red"></span><span class="n">②</span> Case Series 12 ราย</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p3"><span class="dot d-amber"></span><span class="n">③</span> Case Report 4 ปี</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="p4"><span class="n">สรุป &amp; เอาไปใช้ยังไง</span></button>
+  </div>
+
+<!-- ============================== ภาพรวม ============================== -->
+<div class="panel on" id="p0">
+
+  <section>
+    <h3><span class="no">i</span>ทั้ง 3 ฉบับคือเรื่องเดียวกัน</h3>
+    <p class="sub">ไม่ใช่งานวิจัย 3 ชิ้นที่ยืนยันกันเอง — แต่คือข้อมูลชุดเดียว ตัดมาเล่า 3 มุม</p>
+    <p>ทั้งสามฉบับมาจาก<b>โครงการเดียวกัน</b> คือโปรแกรมปรับพฤติกรรมเข้มข้น (Intensive Lifestyle Modification — ILM) ร่วมกับอาหารทดแทนมื้อ (Meal Replacement — MR) ที่เก็บข้อมูลระหว่างปี 2565–2566 และมี<b>ทีมผู้แต่งชุดเดียวกัน</b></p>
+    <div class="box blue"><b>เรื่องนี้สำคัญเวลาใครบอกว่า “มีงานวิจัยรองรับถึง 3 ฉบับ”</b> — ในทางวิชาการ การเอาข้อมูลชุดเดียวมาตัดเป็นหลายบทความ (เรียกว่า salami slicing) <b>ไม่นับเป็นหลักฐาน 3 ชิ้นที่อิสระต่อกัน</b> น้ำหนักหลักฐานเท่ากับงานเดียว</div>
+  </section>
+
+  <section>
+    <h3><span class="no">ท</span>ทีมผู้วิจัย</h3>
+    <p class="sub">เป็นแพทย์จริง มีตัวตนตรวจสอบได้ และมีการรับรองจริยธรรมวิจัยจริง</p>
+    <div class="grid2">
+      <div class="stat"><div class="lbl">ผู้วิจัยหลัก</div><div class="val" style="font-size:19px">พญ.นวินดา วาณิชกุลธาดา</div><div class="note">แพทยศาสตร์ จุฬาฯ 2548 · กุมารเวชศาสตร์ จุฬาฯ 2553 · อาจารย์วิทยาลัยแพทยศาสตร์และการสาธารณสุข ม.อุบลราชธานี · ผู้อำนวยการโรงพยาบาล ม.อุบลราชธานี</div></div>
+      <div class="stat"><div class="lbl">ผู้ร่วมวิจัย</div><div class="val" style="font-size:19px">4–5 ท่าน</div><div class="note">สูตินรีแพทย์ รพ.สุรินทร์ · กุมารแพทย์ รพ.พระมงกุฎเกล้า · กุมารแพทย์ รพ.ปิยะเวท · นักวิจัยอิสระ</div></div>
+    </div>
+    <div class="box"><b>จริยธรรมวิจัย:</b> ฉบับ Case Series ระบุเลขรับรองจากคณะกรรมการจริยธรรมการวิจัยในมนุษย์ ม.อุบลราชธานี <b>UBU-REC-103/2567</b> — เป็นของจริงและระบุได้ ต่างจากงานปลอมที่มักไม่มีข้อนี้</div>
+  </section>
+
+  <section>
+    <h3><span class="no">โ</span>โปรแกรมที่ใช้ — เหมือนกันทั้ง 3 ฉบับ</h3>
+    <div class="grid4">
+      <div class="stat"><div class="lbl">อาหารทดแทนมื้อ</div><div class="val">220<u>กิโลแคลอรี</u></div><div class="note">สูตรถั่วเหลือง · โปรตีน 15 ก. คาร์บ 30 ก. ไขมัน 3 ก.</div></div>
+      <div class="stat"><div class="lbl">ความถี่</div><div class="val">2<u>มื้อ/วัน</u></div><div class="note">แทนมื้อเช้าและมื้อเย็น</div></div>
+      <div class="stat"><div class="lbl">ระยะที่ใช้ผง</div><div class="val">8<u>สัปดาห์</u></div><div class="note">เฉพาะช่วงแรกเท่านั้น หลังจากนั้นกลับไปกินอาหารปกติ</div></div>
+      <div class="stat"><div class="lbl">องค์ประกอบอื่น</div><div class="val" style="font-size:17px">4 อย่าง</div><div class="note">ให้คำปรึกษาโภชนาการ · กลุ่มบำบัด · เดินหลังอาหาร · จัดการความเครียด+การนอน</div></div>
+    </div>
+    <div class="box red"><b>ไม่มีฉบับไหนระบุยี่ห้อผลิตภัณฑ์</b> — บอกเพียง “สูตรถั่วเหลือง 220 กิโลแคลอรี” ทำให้<b>ทำซ้ำไม่ได้</b> และตรวจสอบส่วนประกอบจริงไม่ได้ ขณะที่ฉบับหลักระบุผู้ให้ทุนเป็นบริษัทเอกชน (ดูแท็บ ①)</div>
+  </section>
+
+  <section>
+    <h3><span class="no">!</span>สรุปผลการตรวจ · 3 บรรทัด</h3>
+    <div class="flag"><div class="num">1</div><div><div class="ft">วารสารที่ตีพิมพ์ถูกขึ้นบัญชีวารสารล่าเหยื่อ</div><div class="fb">ทั้ง OASK Publishers (ฉบับ ① และ ③) และ Journal of Biomedical Research &amp; Environmental Sciences (ฉบับที่โชว์ในคลิป) ปรากฏในรายชื่อ predatory journal — วารสารประเภทนี้เก็บค่าตีพิมพ์แล้วลงให้ โดยแทบไม่มีการตรวจทานโดยผู้เชี่ยวชาญจริง</div></div></div>
+    <div class="flag"><div class="num">2</div><div><div class="ft">ตัวเลขในบทคัดย่อไม่ตรงกับตารางในเนื้อเรื่อง</div><div class="fb">บทคัดย่อสรุปว่าดีขึ้นอย่างมีนัยสำคัญ แต่ตารางเปรียบเทียบระหว่างกลุ่มที่ 8 สัปดาห์ให้ค่า <code>p = 0.056</code> · <code>p = 0.389</code> · <code>p = 0.795</code> = <b>ไม่มีนัยสำคัญทางสถิติ</b></div></div></div>
+    <div class="flag warn"><div class="num">3</div><div><div class="ft">ตัวเลขที่เอาไปโฆษณาไม่ใช่ค่าเฉลี่ยจริงของโครงการ</div><div class="fb">ค่าเฉลี่ยจริงของคนทั้งโครงการคือ <b>ลด 14.43 กก.</b> แต่ตัวเลขที่ถูกหยิบมาเล่าคือ <b>38.2 กก. (35.3%)</b> ซึ่งมาจากการ<b>เลือก 12 คนจาก 702 คน</b></div></div></div>
+    <div class="box green"><b>แต่ไม่ใช่ว่าทั้งหมดมั่ว</b> — แนวคิด “ปรับพฤติกรรมเข้มข้น + อาหารทดแทนมื้อ” มีหลักฐานระดับสูงรองรับจริงจากงานระดับโลก (DPP · Look AHEAD · DiRECT) เพียงแต่<b>นั่นเป็นงานของทีมอื่น</b> ที่งานชุดนี้อ้างอิงถึง ไม่ใช่สิ่งที่งานชุดนี้พิสูจน์เอง</div>
+  </section>
+
+  <section>
+    <h3><span class="no">ล</span>ระดับความน่าเชื่อถือของหลักฐาน</h3>
+    <p class="sub">ยิ่งอยู่บนสุดยิ่งเชื่อถือได้มาก · ตำแหน่งสีแดง = ที่งานชุดนี้อยู่</p>
+    <div class="ladder">
+      <div class="rung"><span class="lv">1</span> การทบทวนอย่างเป็นระบบ + การวิเคราะห์อภิมาน (Systematic review / Meta-analysis)</div>
+      <div class="rung"><span class="lv">2</span> การทดลองแบบสุ่มมีกลุ่มควบคุม (RCT) — มาตรฐานทองคำ</div>
+      <div class="rung"><span class="lv">3</span> การศึกษาไปข้างหน้าแบบมีกลุ่มเทียบ (Prospective cohort)</div>
+      <div class="rung here"><span class="lv">4</span> การศึกษาย้อนหลัง (Retrospective cohort) ← <b>ฉบับ ①</b></div>
+      <div class="rung here"><span class="lv">5</span> รายงานชุดผู้ป่วย / รายงานผู้ป่วยรายเดียว ← <b>ฉบับ ② และ ③</b></div>
+      <div class="rung"><span class="lv">6</span> ความเห็นผู้เชี่ยวชาญ / ประสบการณ์ส่วนตัว</div>
+    </div>
+    <div class="box"><b>อ่านง่าย ๆ:</b> งานชุดนี้อยู่ระดับ 4–5 จาก 6 คือ<b>บอกได้ว่า “เกิดอะไรขึ้นกับคนกลุ่มนี้” แต่พิสูจน์ไม่ได้ว่า “ผงเป็นเหตุ”</b> เพราะไม่มีการสุ่ม คนเลือกกลุ่มเอง — คนที่ยอมจ่ายค่าผงและเข้ากลุ่มบำบัดย่อมมีแรงจูงใจสูงกว่าตั้งแต่ต้นอยู่แล้ว</div>
+  </section>
+</div>
+
+<!-- ============================== ฉบับ 1 ============================== -->
+<div class="panel" id="p1">
+  <section>
+    <h3><span class="no">①</span>งานแม่ · การศึกษาย้อนหลัง 702 คน</h3>
+    <p class="sub">เป็นฐานของอีก 2 ฉบับ — ถ้าจะอ้างอิงอะไร ต้องอ้างตัวเลขจากฉบับนี้</p>
+    <div class="tw"><table class="t">
+      <tr><th style="width:26%">รายการ</th><th>รายละเอียด</th></tr>
+      <tr><td>ชื่อเรื่อง</td><td>Efficacy of Intensive Lifestyle Modification with Meal Replacement for Sustainable Weight Loss and Improved Body Composition in Obese Adults: A Retrospective Cohort Study</td></tr>
+      <tr><td>วารสาร</td><td>Open Access Journal of Clinical Pathology Research (OASK Publishers) · ISSN 2755-6468 · 2025;1(2):1-9 <span class="pill p-red">อยู่ในบัญชี predatory</span></td></tr>
+      <tr><td>วันที่</td><td>ส่ง 19 พ.ย. 2568 → <b>ตอบรับ 26 พ.ย. 2568</b> → เผยแพร่ 2 ธ.ค. 2568</td></tr>
+      <tr><td>รูปแบบ</td><td>การศึกษาย้อนหลังแบบมีกลุ่มเปรียบเทียบ (retrospective cohort) · เก็บข้อมูลปี 2565–2566</td></tr>
+      <tr><td>ผู้เข้าร่วม</td><td>702 คน · อายุ 18–80 ปี · เกณฑ์อ้วน BMI ≥ 25 หรือรอบเอวเกิน (ช. 90 ซม. / ญ. 80 ซม.)</td></tr>
+      <tr><td>แบ่งกลุ่ม</td><td>ILM + MR = 230 · ILM อย่างเดียว = 229 · กลุ่มควบคุม = 219</td></tr>
+      <tr><td>เครื่องมือวัด</td><td>เครื่องวิเคราะห์องค์ประกอบร่างกาย Omron HBF-375 (วัดด้วยกระแสไฟฟ้าอ่อน)</td></tr>
+      <tr><td>ผู้ให้ทุน</td><td><b>Fitter Limited Partnership, Chiang Mai</b></td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h3><span class="no">ผ</span>ผลที่รายงาน</h3>
+    <p class="sub">กลุ่ม ILM + MR ที่ 52 สัปดาห์</p>
+    <div class="grid4">
+      <div class="stat"><div class="lbl">น้ำหนัก</div><div class="val g">−14.43<u>กก.</u></div><div class="note">71.31 → 56.89 กก. (n = 160)</div></div>
+      <div class="stat"><div class="lbl">รอบเอว</div><div class="val g">−7.41<u>นิ้ว</u></div><div class="note">36.38 → 28.97 นิ้ว (n = 154)</div></div>
+      <div class="stat"><div class="lbl">มวลกล้ามเนื้อ</div><div class="val g">+1.91<u>%</u></div><div class="note">26.32 → 28.24% (n = 30)</div></div>
+      <div class="stat"><div class="lbl">ไขมันช่องท้อง</div><div class="val g">−4.25</div><div class="note">ระดับ 11.23 → 6.98 (n = 38)</div></div>
+    </div>
+    <div class="tw" style="margin-top:14px"><table class="t">
+      <tr><th>ที่ 8 สัปดาห์</th><th>ILM + MR</th><th>ILM อย่างเดียว</th><th>กลุ่มควบคุม</th></tr>
+      <tr><td>น้ำหนัก</td><td><b>−7.58 กก.</b></td><td>−6.96 กก.</td><td>+0.34 กก.</td></tr>
+      <tr><td>BMI</td><td>−2.94</td><td>−2.68</td><td>+0.14</td></tr>
+      <tr><td>รอบเอว</td><td>−4.37 นิ้ว</td><td>−3.52 นิ้ว</td><td>+0.09 นิ้ว</td></tr>
+      <tr><td>มวลกล้ามเนื้อ</td><td>+1.88%</td><td>+1.22%</td><td>−1.92%</td></tr>
+      <tr><td>คนที่ทำตามโปรแกรม</td><td>94%</td><td>87%</td><td>—</td></tr>
+    </table></div>
+    <div class="box green"><b>สิ่งที่น่าสนใจและน่าจะจริง:</b> กลุ่มที่ใช้ผงกับกลุ่มที่ไม่ใช้ผง ลดน้ำหนักที่ 8 สัปดาห์ต่างกันแค่ <b>0.62 กก.</b> (7.58 vs 6.96) — แปลว่า<b>ตัวโปรแกรมปรับพฤติกรรมทำงานเกือบทั้งหมด ส่วนผงเพิ่มขึ้นมาเล็กน้อย</b> ซึ่งสอดคล้องกับงานวิจัยระดับโลกที่ว่าอาหารทดแทนมื้อช่วยเรื่อง “ทำตามง่ายขึ้น” มากกว่าจะเป็นตัวลดน้ำหนักในตัวเอง</div>
+  </section>
+
+  <section>
+    <h3><span class="no">🔍</span>บทวิเคราะห์ฉบับ ①</h3>
+    <p class="sub">ทุกข้อตรวจสอบได้จากตัวเอกสารเอง — ไม่ใช่ความเห็น</p>
+
+    <div class="flag"><div class="num">1</div><div><div class="ft">บทคัดย่อกับตารางขัดกันเรื่องนัยสำคัญ</div>
+      <div class="fb">บทคัดย่อสรุปว่ากลุ่ม ILM+MR ดีขึ้น “อย่างมีนัยสำคัญ (p &lt; 0.001)” แต่ตารางที่ 3 ซึ่งเป็นการ<b>เปรียบเทียบระหว่างกลุ่ม</b>ที่ 8 สัปดาห์ กลับได้ผลตรงข้าม
+        <span class="ev"><b>หลักฐานในเอกสาร:</b> น้ำหนัก <code>p = 0.056</code> · ไขมันช่องท้อง <code>p = 0.389</code> · เปอร์เซ็นต์ไขมัน <code>p = 0.795</code> · และ ILM+MR เทียบกลุ่มควบคุมโดยตรง <code>p = 0.245</code> — ทั้งหมด<b>ไม่ถึงเกณฑ์มีนัยสำคัญ</b></span></div></div></div>
+
+    <div class="flag"><div class="num">2</div><div><div class="ft">อ้างว่าจุดเริ่มต้นทุกกลุ่มเท่ากัน แต่ตารางบอกว่าไม่เท่า</div>
+      <div class="fb">ใต้ตารางที่ 1 เขียนว่า “ไม่พบความแตกต่างอย่างมีนัยสำคัญของลักษณะพื้นฐานทุกตัว (p &gt; 0.05)” แต่ตารางที่ 2 หน้าถัดมาแสดงตรงกันข้าม
+        <span class="ev"><b>หลักฐานในเอกสาร:</b> ILM+MR เทียบกลุ่มควบคุม — น้ำหนัก <code>p = 0.013</code> · รอบเอว <code>p = 0.001</code> · BMI <code>p = 0.001</code> · ไขมันช่องท้อง <code>p &lt; 0.001</code><br>ผลคือ<b>กลุ่มควบคุมผอมกว่าตั้งแต่ต้น</b> (BMI 25.14 เทียบ 26.85 และ 27.58) จึงมีที่ให้ลดน้อยกว่าโดยธรรมชาติ ทำให้การเทียบไม่ยุติธรรม</span></div></div></div>
+
+    <div class="flag"><div class="num">3</div><div><div class="ft">มีค่าที่เป็นไปไม่ได้ทางกายภาพ</div>
+      <div class="fb">เปอร์เซ็นต์ไขมันของกลุ่ม ILM+MR ที่ 8 สัปดาห์ รายงานเป็น <b>32.91 ส่วนเบี่ยงเบนมาตรฐาน 37.98</b> — ถ้าเป็นจริงจะแปลว่ามีผู้เข้าร่วมที่มีไขมันติดลบ ซึ่งเป็นไปไม่ได้
+        <span class="ev"><b>ทำไมสำคัญ:</b> ความผิดพลาดระดับนี้เป็นสิ่งที่<b>ผู้ตรวจทานต้องจับได้ตั้งแต่รอบแรก</b> การที่มันหลุดออกมาตีพิมพ์ เป็นสัญญาณว่ากระบวนการตรวจทานไม่ได้ทำงานจริง</span></div></div></div>
+
+    <div class="flag"><div class="num">4</div><div><div class="ft">ตัวเลขสวย ๆ มาจากคนไม่กี่คน</div>
+      <div class="fb">ค่าองค์ประกอบร่างกายไม่ได้วัดครบทุกคน และเหลือน้อยลงเรื่อย ๆ ตามเวลา
+        <span class="ev"><b>หลักฐานในเอกสาร (กลุ่ม ILM+MR จาก 230 คน):</b> ไขมันช่องท้องตอนเริ่มวัดได้ 107 คน → เหลือ <b>38 คน</b> ที่ 52 สัปดาห์ · เปอร์เซ็นต์ไขมันเริ่มที่ 84 คน → เหลือ <b>30 คน (13%)</b> · และกลุ่มควบคุมที่ 8 สัปดาห์เหลือ <b>87 จาก 219 คน</b><br>แต่เอกสารระบุอัตราคนออกจากโครงการเพียง 6% / 10% / 18% ซึ่ง<b>ไม่ตรงกับจำนวนคนในตารางของตัวเอง</b></span></div></div></div>
+
+    <div class="flag"><div class="num">5</div><div><div class="ft">ระบุผู้ให้ทุนเป็นบริษัท แต่ประกาศว่าไม่มีผลประโยชน์ทับซ้อน</div>
+      <div class="fb">หน้าเดียวกันของเอกสารเขียนว่า “การศึกษานี้ได้รับการสนับสนุนจาก Fitter Limited Partnership, Chiang Mai” แล้วบรรทัดถัดมาเขียนว่า “ผู้แต่งประกาศว่าไม่มีผลประโยชน์ทับซ้อน”
+        <span class="ev"><b>หมายเหตุที่เป็นธรรม:</b> การมีผู้สนับสนุนเชิงพาณิชย์<b>ไม่ใช่เรื่องผิด</b> — งานวิจัยโภชนาการจำนวนมากมีผู้สนับสนุน สิ่งที่เป็นปัญหาคือการ<b>ประกาศไม่ตรงกัน</b> ซึ่งทำให้ผู้อ่านประเมินอคติที่อาจเกิดขึ้นไม่ได้</span></div></div></div>
+
+    <div class="flag warn"><div class="num">6</div><div><div class="ft">รอบตรวจทาน 7 วัน</div>
+      <div class="fb">ส่ง 19 พ.ย. → ตอบรับ 26 พ.ย. 2568 · วารสารที่มีการตรวจทานโดยผู้เชี่ยวชาญจริงมักใช้เวลา <b>1–6 เดือน</b> เพราะต้องส่งให้ผู้ตรวจอ่าน รอความเห็น และให้ผู้แต่งแก้กลับ</div></div></div>
+
+    <div class="flag warn"><div class="num">7</div><div><div class="ft">คำว่า “obese” อาจทำให้เข้าใจผิด</div>
+      <div class="fb">ค่า BMI เฉลี่ยตอนเริ่มคือ 26.85 / 27.58 / 25.14 ซึ่งตามเกณฑ์เอเชียนับเป็นน้ำหนักเกินถึงอ้วนระดับ 1 — <b>ไม่ใช่อ้วนรุนแรง</b>อย่างที่คนทั่วไปนึกภาพเมื่อได้ยินคำว่า obese</div></div></div>
+  </section>
+</div>
+
+<!-- ============================== ฉบับ 2 ============================== -->
+<div class="panel" id="p2">
+  <section>
+    <h3><span class="no">②</span>รายงานชุดผู้ป่วย 12 ราย</h3>
+    <p class="sub">ฉบับที่เป็นต้นทางของตัวเลข “ลด 35%” ที่ถูกนำไปเผยแพร่</p>
+    <div class="tw"><table class="t">
+      <tr><th style="width:26%">รายการ</th><th>รายละเอียด</th></tr>
+      <tr><td>ชื่อเรื่อง</td><td>Sustainable Weight Loss and Body Composition Improvement through Intensive Lifestyle Modification with Meal Replacement: A 12-Case Series with International Perspectives</td></tr>
+      <tr><td>วารสาร</td><td>Annals of Clinical Endocrinology and Metabolism (HSPI) · ISSN 2640-2843 · 2026;10(1):017-025 · DOI 10.29328/journal.acem.1001034</td></tr>
+      <tr><td>วันที่</td><td>ส่ง 26 มี.ค. 2569 → ตอบรับ 10 เม.ย. 2569 → เผยแพร่ 13 เม.ย. 2569 <span class="pill p-amber">15 วัน</span></td></tr>
+      <tr><td>รูปแบบ</td><td>รายงานชุดผู้ป่วย (case series) — <b>ไม่มีกลุ่มเปรียบเทียบ</b></td></tr>
+      <tr><td>ผู้เข้าร่วม</td><td>12 คน (หญิง 9 ชาย 3) <b>คัดเลือกจากกลุ่ม ILM+MR ในงานฉบับ ① (n = 702)</b> โดยใช้เกณฑ์ “มีข้อมูลครบและเป็นตัวแทนที่ดี”</td></tr>
+      <tr><td>จริยธรรมวิจัย</td><td>UBU-REC-103/2567 (ม.อุบลราชธานี) <span class="pill p-green">ระบุชัด</span></td></tr>
+      <tr><td>ผู้ให้ทุน</td><td>“ไม่ได้รับทุนจากภายนอก”</td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h3><span class="no">ผ</span>ผลที่รายงาน</h3>
+    <div class="tw"><table class="t">
+      <tr><th>ค่าเฉลี่ยของ 12 คน</th><th>เริ่มต้น</th><th>8 สัปดาห์</th><th>52 สัปดาห์</th></tr>
+      <tr><td>น้ำหนัก</td><td>103.0 กก.</td><td>89.0 กก.</td><td><b>64.8 กก.</b></td></tr>
+      <tr><td>ลดสะสม</td><td>—</td><td>−14.0 กก.</td><td><b>−38.2 กก. (35.3%)</b></td></tr>
+      <tr><td>รอบเอว</td><td>44.7 นิ้ว</td><td>39.1 นิ้ว</td><td><b>31.7 นิ้ว</b> (−13 นิ้ว / 33 ซม.)</td></tr>
+    </table></div>
+    <div class="box"><b>ทั้ง 12 คนอยู่ครบ 52 สัปดาห์</b> และทุกคนลดได้เกิน 5% ซึ่งเป็นเกณฑ์ที่แนวทางสากลถือว่ามีความหมายทางคลินิก</div>
+  </section>
+
+  <section>
+    <h3><span class="no">🔍</span>บทวิเคราะห์ฉบับ ②</h3>
+    <p class="sub">ฉบับนี้มีข้อค้นพบที่น่าสนใจซ่อนอยู่ ซึ่งบทคัดย่อไม่ได้ชี้ให้เห็น</p>
+
+    <div class="flag"><div class="num">1</div><div><div class="ft">เป็นการเลือกเคสที่ดีที่สุดมาเล่า ไม่ใช่ค่าทั่วไป</div>
+      <div class="fb">12 คนนี้ถูก<b>คัดเลือกจาก 702 คน</b> ผลจึงไม่ใช่สิ่งที่คนทั่วไปในโครงการได้รับ
+        <span class="ev"><b>เทียบให้เห็นภาพ:</b> ค่าเฉลี่ยของทั้งโครงการ = <b>ลด 14.43 กก.</b> · ค่าเฉลี่ยของ 12 คนที่ถูกเลือก = <b>ลด 38.2 กก.</b> = <b>สูงกว่า 2.6 เท่า</b><br>และน้ำหนักตั้งต้นของ 12 คนนี้ (103.0 กก.) สูงกว่าค่าเฉลี่ยของโครงการ (71.3 กก.) อย่างมาก — <b>จึงไม่ใช่ “ตัวแทน” ของกลุ่มอย่างที่เอกสารอ้าง</b></span></div></div></div>
+
+    <div class="flag ok"><div class="num">★</div><div><div class="ft">ข้อค้นพบที่สำคัญที่สุดของฉบับนี้ — และมันชี้ไปคนละทางกับที่ใช้โฆษณา</div>
+      <div class="fb">เอกสารระบุว่าน้ำหนักลดเป็นสองช่วง: <b>ช่วงสัปดาห์ที่ 0–8 ลด 14.0 กก.</b> และ <b>ช่วงสัปดาห์ที่ 8–52 ลดอีก 24.2 กก.</b>
+        <span class="ev"><b>ประเด็นคือ ผงใช้แค่ 8 สัปดาห์แรกเท่านั้น</b> — แปลว่า <b>ราว 63% ของน้ำหนักที่ลดได้ เกิดขึ้นหลังจากเลิกใช้ผงไปแล้ว</b><br>นี่เป็นหลักฐาน (จากข้อมูลของเขาเอง) ว่า<b>สิ่งที่ทำให้ผลลัพธ์ยั่งยืนคือพฤติกรรมที่เปลี่ยนไป ไม่ใช่ตัวผลิตภัณฑ์</b> ซึ่งเป็นข้อสรุปที่ตรงกับงานวิจัยกระแสหลัก</span></div></div></div>
+
+    <div class="flag"><div class="num">2</div><div><div class="ft">คำประกาศเรื่องทุนขัดกับงานแม่</div>
+      <div class="fb">ฉบับนี้เขียนว่า “ไม่ได้รับทุนจากภายนอก” ทั้งที่ใช้<b>ข้อมูลชุดเดียวกัน</b>กับฉบับ ① ซึ่งระบุว่าได้รับการสนับสนุนจาก Fitter Limited Partnership
+        <span class="ev">เมื่อข้อมูลมาจากโครงการเดียวกัน คำประกาศเรื่องทุนควรตรงกัน มิฉะนั้นผู้อ่านจะประเมินอคติที่อาจเกิดขึ้นไม่ได้</span></div></div></div>
+
+    <div class="flag warn"><div class="num">3</div><div><div class="ft">รายงานชุดผู้ป่วยพิสูจน์เหตุ-ผลไม่ได้</div>
+      <div class="fb">ไม่มีกลุ่มเปรียบเทียบ จึงตอบไม่ได้ว่าถ้าคน 12 คนนี้ทำโปรแกรมโดยไม่ใช้ผง จะได้ผลต่างกันหรือไม่ · รูปแบบนี้มีคุณค่าในฐานะ<b>เรื่องเล่าที่บันทึกไว้ดี</b> ใช้ตั้งสมมติฐานได้ แต่<b>ไม่ใช่หลักฐานยืนยันประสิทธิผล</b></div></div></div>
+
+    <div class="flag warn"><div class="num">4</div><div><div class="ft">ไม่ได้รายงานองค์ประกอบร่างกายของ 12 เคส</div>
+      <div class="fb">ทั้งที่ชื่อเรื่องพูดถึง “Body Composition Improvement” แต่ตารางผลมีเพียงน้ำหนักกับรอบเอว — ตัวเลขมวลกล้ามเนื้อที่ถูกอ้างถึง (+2.33%) เป็นค่าจาก<b>งานฉบับ ①</b> ไม่ใช่ของ 12 เคสนี้</div></div></div>
+  </section>
+</div>
+
+<!-- ============================== ฉบับ 3 ============================== -->
+<div class="panel" id="p3">
+  <section>
+    <h3><span class="no">③</span>รายงานผู้ป่วยรายเดียว ติดตาม 4 ปี</h3>
+    <p class="sub">ฉบับที่โชว์ในคลิป — และเป็นฉบับที่ตีพิมพ์ซ้ำ 2 วารสาร</p>
+    <div class="box red"><b>ข้อค้นพบที่ต้องรู้ก่อน:</b> เคสนี้ถูกตีพิมพ์ <b>2 ครั้ง ใน 2 วารสาร คนละชื่อเรื่อง</b> โดยเป็นผู้ป่วยคนเดียวกันและตัวเลขชุดเดียวกัน</div>
+    <div class="tw"><table class="t">
+      <tr><th style="width:20%"></th><th>ฉบับ ก</th><th>ฉบับ ข (ที่โชว์ในคลิป)</th></tr>
+      <tr><td>ชื่อเรื่อง</td><td>Sustained Visceral Fat Reduction with Muscle Preservation… A 4-Year Follow-up Case Report</td><td>Sustained 48% Weight Loss with Muscle Preservation and 80% Visceral Fat Reduction Over 4 Years: A Case Report</td></tr>
+      <tr><td>วารสาร</td><td>Journal of Clinical Research and Case Studies (OASK) · ISSN 2977-0033 · 2026;4(1) <span class="pill p-red">predatory</span></td><td>Journal of Biomedical Research &amp; Environmental Sciences · ISSN 2766-2276 <span class="pill p-red">predatory</span></td></tr>
+      <tr><td>ผู้แต่ง</td><td>5 คน</td><td><b>6 คน</b> — เพิ่ม Palida Tarcome</td></tr>
+      <tr><td>วันที่</td><td>ส่ง 31 ธ.ค. 2568 → ตอบรับ 8 ม.ค. 2569 <span class="pill p-red">8 วัน</span></td><td>—</td></tr>
+      <tr><td>ผู้ให้ทุน</td><td>“ไม่ได้รับทุนจากภายนอก”</td><td>—</td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h3><span class="no">ค</span>เคสที่รายงาน</h3>
+    <p class="sub">หญิงไทย 52 ปี สูง 152 ซม. · น้ำหนักขึ้นจาก 70 เป็น 102 กก. ในเวลา 10 ปี · ทำงานออฟฟิศ กินไม่เป็นเวลา นอนน้อยกว่า 6 ชม.</p>
+    <div class="tw"><table class="t">
+      <tr><th>ช่วงเวลา</th><th>น้ำหนัก</th><th>BMI</th><th>ลดจากเดิม</th><th>รอบเอว</th><th>ไขมัน</th><th>กล้ามเนื้อ</th><th>ไขมันช่องท้อง</th></tr>
+      <tr><td>เริ่มต้น</td><td>102 กก.</td><td>44.1</td><td>—</td><td>48 นิ้ว</td><td>42.0%</td><td>19.2%</td><td>ระดับ 30</td></tr>
+      <tr><td>8 สัปดาห์</td><td>86 กก.</td><td>37.2</td><td>15.7%</td><td>42 นิ้ว</td><td>34.3%</td><td>21.3%</td><td>ระดับ 24</td></tr>
+      <tr><td>1 ปี</td><td>70 กก.</td><td>30.2</td><td>31.4%</td><td>39 นิ้ว</td><td>32.5%</td><td>23.4%</td><td>ระดับ 14</td></tr>
+      <tr><td>2 ปี</td><td>59 กก.</td><td>25.5</td><td>42.2%</td><td>34 นิ้ว</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>3 ปี</td><td>58 กก.</td><td>25.1</td><td>43.1%</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td><b>4 ปี</b></td><td><b>53 กก.</b></td><td><b>22.9</b></td><td><b>48.0%</b></td><td>—</td><td><b>29.5%</b></td><td><b>26.8%</b></td><td><b>ระดับ 6</b></td></tr>
+    </table></div>
+    <div class="grid3" style="margin-top:14px">
+      <div class="stat"><div class="lbl">น้ำหนักที่ลดรวม</div><div class="val g">49<u>กก.</u></div><div class="note">102 → 53 กก. ใน 4 ปี</div></div>
+      <div class="stat"><div class="lbl">ไขมันช่องท้อง</div><div class="val g">−80<u>%</u></div><div class="note">ระดับ 30 → 6</div></div>
+      <div class="stat"><div class="lbl">มวลกล้ามเนื้อ</div><div class="val g">+7.6<u>จุด</u></div><div class="note">19.2% → 26.8% ของน้ำหนักตัว</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h3><span class="no">🔍</span>บทวิเคราะห์ฉบับ ③</h3>
+
+    <div class="flag"><div class="num">1</div><div><div class="ft">การตีพิมพ์ซ้ำ (duplicate publication)</div>
+      <div class="fb">ผู้ป่วยคนเดียวกัน ตัวเลขชุดเดียวกัน ตีพิมพ์ 2 วารสาร โดยเปลี่ยนชื่อเรื่อง — เป็นสิ่งที่<b>ผิดหลักจริยธรรมการตีพิมพ์สากล</b> เพราะทำให้ผู้อ่านนับเป็นหลักฐาน 2 ชิ้นทั้งที่มีชิ้นเดียว
+        <span class="ev">ตามแนวปฏิบัติสากล (ICMJE) การส่งต้นฉบับเดียวกันไปหลายวารสารพร้อมกันหรือซ้ำกันโดยไม่ประกาศ ถือเป็นการประพฤติมิชอบทางการตีพิมพ์</span></div></div></div>
+
+    <div class="flag"><div class="num">2</div><div><div class="ft">รายชื่อผู้แต่งไม่ตรงกันระหว่างสองฉบับ</div>
+      <div class="fb">ในฉบับ ก ชื่อ <b>Palida Tarcome</b> ปรากฏใน<b>กิตติกรรมประกาศ</b> โดยระบุบทบาทว่าเป็นผู้ช่วยดูแลผู้ป่วยร่วมกับทีมกลุ่มบำบัด · แต่ในฉบับ ข กลายเป็น<b>ผู้แต่งร่วมลำดับที่ 6</b>
+        <span class="ev">การเป็นผู้แต่งมีเกณฑ์สากลชัดเจน (ต้องมีส่วนร่วมออกแบบ/วิเคราะห์ + ร่างหรือแก้เนื้อหาสำคัญ + อนุมัติฉบับสุดท้าย + รับผิดชอบ) การเลื่อนสถานะระหว่างสองฉบับของงานเดียวกันจึงเป็นจุดที่ควรตั้งคำถาม</span></div></div></div>
+
+    <div class="flag warn"><div class="num">3</div><div><div class="ft">n = 1 พิสูจน์เหตุ-ผลไม่ได้</div>
+      <div class="fb">รายงานผู้ป่วยรายเดียวอยู่<b>ล่างสุดของบันไดหลักฐาน</b> ตอบได้แค่ว่า “เคยเกิดขึ้นกับคนคนหนึ่ง” ไม่ได้บอกว่าจะเกิดกับกี่คนใน 100 คน · โดยเฉพาะเมื่อค่าเฉลี่ยของโครงการเดียวกันคือลด 14.43 กก. ไม่ใช่ 49 กก.</div></div></div>
+
+    <div class="flag warn"><div class="num">4</div><div><div class="ft">ผลเกินกว่าที่พบทั่วไปมาก จึงยิ่งต้องการการตรวจทานที่เข้มข้น</div>
+      <div class="fb">เอกสารเองระบุว่าคนราว 80% กลับมาน้ำหนักขึ้นภายใน 3–5 ปี · การที่เคสนี้ลด 48% และรักษาไว้ได้ 4 ปีจึงเป็น<b>ผลลัพธ์ที่โดดเด่นมาก</b> — ซึ่งตามหลักวิชาการ ยิ่งผลพิเศษเท่าไร ยิ่งต้องการหลักฐานและการตรวจทานที่แข็งแรงเท่านั้น แต่กลับตีพิมพ์ในวารสารที่ตรวจทาน 8 วัน</div></div></div>
+
+    <div class="flag ok"><div class="num">✓</div><div><div class="ft">สิ่งที่ฉบับนี้ทำได้ดี — พูดให้เป็นธรรม</div>
+      <div class="fb">บันทึกละเอียดมาก มีค่าครบทุกจุดเวลา ตัวเลข<b>สอดคล้องกันภายในเอกสาร</b> (น้ำหนัก BMI ส่วนสูง คำนวณกลับแล้วตรง) มีมุมมองของผู้ป่วยประกอบ และมีการติดตามยาวถึง 4 ปีซึ่งหายาก · <b>ถ้าข้อมูลถูกต้อง นี่คือเคสที่น่าสนใจจริง</b> — ปัญหาอยู่ที่ “ตีพิมพ์ที่ไหนและซ้ำหรือไม่” ไม่ใช่ที่ตัวเคส</div></div></div>
+  </section>
+</div>
+
+<!-- ============================== สรุป ============================== -->
+<div class="panel" id="p4">
+  <section>
+    <h3><span class="no">✓</span>สรุปทั้ง 3 ฉบับในตารางเดียว</h3>
+    <div class="tw"><table class="t">
+      <tr><th>ประเด็น</th><th>① Cohort 702</th><th>② Case Series 12</th><th>③ Case Report 4 ปี</th></tr>
+      <tr><td>ระดับหลักฐาน</td><td>4 / 6</td><td>5 / 6</td><td>5 / 6</td></tr>
+      <tr><td>มีกลุ่มเปรียบเทียบ</td><td>มี (แต่พื้นฐานไม่เท่ากัน)</td><td>ไม่มี</td><td>ไม่มี</td></tr>
+      <tr><td>สถานะวารสาร</td><td><span class="pill p-red">predatory</span></td><td><span class="pill p-amber">ตรวจทาน 15 วัน</span></td><td><span class="pill p-red">predatory ทั้ง 2 ฉบับ</span></td></tr>
+      <tr><td>ประกาศทุน</td><td>Fitter LP เชียงใหม่</td><td>ไม่มีทุนภายนอก</td><td>ไม่มีทุนภายนอก</td></tr>
+      <tr><td>ตัวเลขที่ควรใช้อ้าง</td><td><b>−14.43 กก. ที่ 52 สัปดาห์</b></td><td>ใช้อ้างไม่ได้ (เลือกเคส)</td><td>ใช้อ้างไม่ได้ (n = 1)</td></tr>
+      <tr><td>ปัญหาหลัก</td><td>บทคัดย่อขัดกับตาราง · ข้อมูลหายมาก</td><td>เลือกเคสที่ดีที่สุด</td><td>ตีพิมพ์ซ้ำ 2 วารสาร</td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h3><span class="no">💡</span>ข้อสรุปที่มีค่าที่สุดจากการอ่านทั้งหมด</h3>
+    <div class="box green"><b>ข้อมูลของเขาเองชี้ว่า “โปรแกรม” สำคัญกว่า “ผง”</b>
+      <ul class="bul" style="margin-top:8px">
+        <li>ที่ 8 สัปดาห์ กลุ่มใช้ผงกับกลุ่มไม่ใช้ผง ลดต่างกันแค่ <b>0.62 กก.</b> (7.58 เทียบ 6.96)</li>
+        <li>ในกลุ่ม 12 เคส น้ำหนักที่ลดได้ <b>ราว 63% เกิดขึ้นหลังหยุดใช้ผงไปแล้ว</b> (สัปดาห์ที่ 8–52)</li>
+        <li>กลุ่มที่ไม่ได้ทำอะไรเลย น้ำหนักขึ้นและมวลกล้ามเนื้อลด</li>
+      </ul>
+      <b>แปลว่า:</b> ตัวที่เปลี่ยนผลลัพธ์คือ<b>การให้คำปรึกษา กลุ่มบำบัด การเดินหลังอาหาร และการติดตามต่อเนื่อง</b> ส่วนอาหารทดแทนมื้อทำหน้าที่ “ทำให้ช่วงแรกง่ายขึ้น” ซึ่งตรงกับงานวิจัยกระแสหลักระดับโลก</div>
+  </section>
+
+  <section>
+    <h3><span class="no">📌</span>ใช้ยังไงให้ไม่พลาด</h3>
+    <div class="grid2">
+      <div>
+        <h4 style="font-size:15px;color:var(--red);margin-bottom:7px">อย่าทำ</h4>
+        <ul class="bul">
+          <li><b>อย่าอ้างตัวเลข 35% หรือ 48%</b> เป็นสิ่งที่ลูกค้าจะได้ — เพราะมาจากเคสที่ถูกเลือก</li>
+          <li><b>อย่าอ้างว่า “มีงานวิจัย 3 ฉบับรองรับ”</b> — เป็นข้อมูลชุดเดียวตัดเป็น 3 บทความ</li>
+          <li><b>อย่าตีพิมพ์งานของเราในวารสารลักษณะนี้</b> เพื่อสู้กลับ — วันที่มีคนตรวจเจอ เราเสียมากกว่าได้</li>
+          <li><b>อย่าโจมตีตัวบุคคล</b> — ทีมนี้เป็นแพทย์จริงและมีจริยธรรมวิจัยรับรอง วิจารณ์ที่ระเบียบวิธีและวารสารก็พอ</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-size:15px;color:var(--green);margin-bottom:7px">ทำแบบนี้แทน</h4>
+        <ul class="bul">
+          <li><b>ถ้ามีคนถาม ใช้ข้อเท็จจริงจากเอกสารเขาเอง</b> — “ค่าเฉลี่ยจริงของงานนั้นคือลด 14 กิโล ส่วน 38 กิโลคือเคสที่ถูกเลือกมา 12 คนจาก 702 คน”</li>
+          <li><b>ชูสิ่งที่งานนั้นพิสูจน์จริง</b> — โปรแกรมและการติดตามคือหัวใจ ไม่ใช่ผลิตภัณฑ์</li>
+          <li><b>อ้างงานระดับโลกแทน</b> — DPP · Look AHEAD · DiRECT เป็นงานที่แข็งจริงและตรวจสอบได้</li>
+          <li><b>สร้างข้อมูลของเราเอง</b> — เก็บก่อน-หลังของลูกค้าอย่างเป็นระบบใน UP Labs (น้ำหนัก รอบเอว องค์ประกอบร่างกาย น้ำตาล ไขมัน ที่ 0/3/6 เดือน) อีก 12 เดือนจะมีหลักฐานที่ตรวจสอบได้จริงโดยไม่ต้องพึ่งวารสารใคร</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3><span class="no">🔎</span>วิธีตรวจงานวิจัยด้วยตัวเอง 6 ข้อ</h3>
+    <p class="sub">ใช้ได้กับทุกงานที่มีคนเอามาอ้างในอนาคต</p>
+    <ol class="bul">
+      <li><b>ดูวันที่ส่งกับวันที่ตอบรับ</b> — ถ้าห่างกันไม่กี่วัน แปลว่าแทบไม่มีการตรวจทาน</li>
+      <li><b>ค้นชื่อวารสารคู่กับคำว่า predatory</b> หรือเทียบกับ Beall’s List</li>
+      <li><b>เปิดดูตาราง อย่าอ่านแค่บทคัดย่อ</b> — ค่า p ในตารางกับข้อสรุปในบทคัดย่อมักไม่ตรงกัน</li>
+      <li><b>ดู n ในแต่ละตาราง</b> — ถ้าตัวเลขคนลดลงเรื่อย ๆ แปลว่าผลสวย ๆ มาจากคนไม่กี่คน</li>
+      <li><b>หาหัวข้อ Funding และ Conflict of Interest</b> — มีสปอนเซอร์ไม่ผิด แต่ต้องประกาศตรงกันทุกฉบับ</li>
+      <li><b>ถามว่าเป็น RCT หรือไม่</b> — ถ้าไม่มีการสุ่ม จะแยกไม่ออกว่าผลมาจากวิธี หรือมาจาก “คนที่ตั้งใจอยู่แล้ว”</li>
+    </ol>
+  </section>
+
+  <section>
+    <h3><span class="no">📚</span>แหล่งอ้างอิง</h3>
+    <ul class="bul" style="font-size:13px">
+      <li>ฉบับ ①: <a href="https://oaskpublishers.com/assets/article-pdf/efficacy-of-intensive-lifestyle-modification-with-meal-replacement-for-sustainable-weight-loss-and-improved-body-composition-in-obese-adults-a-retrospective-cohort-study.pdf" target="_blank" rel="noopener">Efficacy of ILM with Meal Replacement… A Retrospective Cohort Study (PDF)</a> · Open Access J Clin Path Res 2025;1(2):1-9</li>
+      <li>ฉบับ ②: <a href="https://www.endometaboljournal.com/articles/acem-aid1034.php" target="_blank" rel="noopener">Sustainable Weight Loss… A 12-Case Series</a> · Ann Clin Endocrinol Metab 2026;10(1):017-025</li>
+      <li>ฉบับ ③ ก: <a href="https://oaskpublishers.com/assets/article-pdf/sustained-visceral-fat-reduction-with-muscle-preservation-in-obesity-management-using-intensive-lifestyle-modification-and-meal-replacement-a-4-year-follow-up-case-report.pdf" target="_blank" rel="noopener">Sustained Visceral Fat Reduction… A 4-Year Follow-up Case Report (PDF)</a> · J Clin Res Case Stud 2026;4(1)</li>
+      <li>ประวัติผู้วิจัยหลัก: <a href="https://obesityworldconference.com/speaker/nawinda-vanichakulthada" target="_blank" rel="noopener">Obesity World Conference — speaker profile</a></li>
+      <li>สถานะวารสาร: <a href="https://beallslist.net/" target="_blank" rel="noopener">Beall’s List of Potential Predatory Journals and Publishers</a> · รายงาน OASK และ JBRES จากบัญชี Predatory Reports</li>
+    </ul>
+  </section>
+
+  <p class="disc">เอกสารนี้เป็นการ<b>ตรวจสอบระเบียบวิธีวิจัยและสถานะของวารสาร</b> เพื่อประกอบการตัดสินใจใช้อ้างอิง <b>ไม่ใช่การกล่าวหาผู้ใดว่ากระทำผิด</b> — ทุกข้อสังเกตอ้างอิงจากข้อความและตารางในเอกสารต้นฉบับที่เผยแพร่สาธารณะ ซึ่งผู้อ่านตรวจสอบซ้ำได้เองจากลิงก์ข้างต้น · ทีมผู้วิจัยเป็นแพทย์ที่มีตัวตนจริงและมีการรับรองจริยธรรมการวิจัยในมนุษย์จริง · เอกสารนี้ไม่ใช่คำแนะนำทางการแพทย์เฉพาะบุคคล การตัดสินใจเรื่องการลดน้ำหนักและการใช้ผลิตภัณฑ์ควรปรึกษาแพทย์หรือเภสัชกร</p>
+  <div class="foot"><span class="tag">แก่ช้า · เจ็บสั้น · ตายดี</span>UP Wellness · Longevity Care · ตรวจสอบเมื่อ 27 กรกฎาคม 2569</div>
+</div>
+
+</div>
+
+<script>
+const tabs=[...document.querySelectorAll('.tab')],panels=[...document.querySelectorAll('.panel')];
+function go(id){
+  tabs.forEach(t=>t.setAttribute('aria-selected',String(t.dataset.p===id)));
+  panels.forEach(p=>p.classList.toggle('on',p.id===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(history.replaceState)history.replaceState(null,'','#'+id);
+}
+tabs.forEach(t=>{
+  t.addEventListener('click',()=>go(t.dataset.p));
+  t.addEventListener('keydown',e=>{
+    const i=tabs.indexOf(t);
+    if(e.key==='ArrowRight'){e.preventDefault();tabs[(i+1)%tabs.length].focus();tabs[(i+1)%tabs.length].click();}
+    if(e.key==='ArrowLeft'){e.preventDefault();tabs[(i-1+tabs.length)%tabs.length].focus();tabs[(i-1+tabs.length)%tabs.length].click();}
+  });
+});
+if(location.hash&&document.getElementById(location.hash.slice(1)))go(location.hash.slice(1));
+</script>
+</body>
+</html>
