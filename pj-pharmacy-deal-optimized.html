@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deal v3 — ข้อเสนอฉบับผ่านพาเนล 5 มุม | PJ Pharmacy</title>
+<title>Deal v3.1 — ข้อเสนอฉบับตัวเลขจริง | PJ Pharmacy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -29,9 +29,10 @@ body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:
 header.top{background:var(--greenDeep);color:#fff;padding:28px 0 24px;border-bottom:5px solid var(--green)}
 header.top .kick{font-family:var(--mono);font-size:13px;letter-spacing:.16em;color:#9FD3C1;text-transform:uppercase}
 header.top h1{font-family:var(--display);font-size:36px;font-weight:700;line-height:1.22;margin:6px 0 10px}
-header.top p{font-size:17px;color:#CFE6DD;line-height:1.75;max-width:840px}
+header.top p{font-size:17px;color:#CFE6DD;line-height:1.75;max-width:860px}
 .metaline{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
 .pill{font-family:var(--mono);font-size:13px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px}
+.pill.hot{background:#C8E6D8;color:var(--greenDeep);border-color:#C8E6D8;font-weight:600}
 
 nav.tabs{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:2px solid var(--line);box-shadow:0 2px 10px rgba(14,42,34,.07)}
 nav.tabs .inner{display:flex;overflow-x:auto;max-width:1180px;margin:0 auto;padding:0 10px}
@@ -68,12 +69,15 @@ p.lead{font-size:17.5px;color:var(--ink2);line-height:1.85;margin-bottom:14px;ma
 .note .hd{font-family:var(--display);font-weight:700;font-size:19px;margin-bottom:6px}
 .note.red .hd{color:var(--red)}.note.amber .hd{color:var(--amber)}
 .note.green .hd{color:var(--greenDeep)}.note.blue .hd{color:var(--blue)}.note.purple .hd{color:var(--purple)}
+.note.big{font-size:18px}
+.note.big .hd{font-size:22px}
 
 table{width:100%;border-collapse:collapse;font-size:16.5px;margin:10px 0 6px}
 th,td{padding:12px;text-align:left;border-bottom:1px solid var(--lineSoft);vertical-align:top;line-height:1.7}
 th{background:var(--surface2);font-weight:600;font-size:15.5px;color:var(--ink2);border-bottom:2px solid var(--line)}
 td.n,th.n{text-align:right;font-family:var(--mono);white-space:nowrap}
 tr:last-child td{border-bottom:none}
+tr.hi td{background:var(--greenBg);font-weight:600}
 .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin-bottom:16px}
 
 .tag{display:inline-block;font-family:var(--mono);font-size:13px;padding:3px 9px;border-radius:6px;white-space:nowrap;font-weight:500}
@@ -90,19 +94,16 @@ ul.bul li::before{content:"";position:absolute;left:4px;top:12px;width:9px;heigh
 ul.bul.x li::before{background:var(--red)}
 ul.bul.q li::before{background:var(--blue)}
 
-/* score chart */
-.scores{display:grid;gap:14px}
-.srow{display:grid;grid-template-columns:220px 1fr 96px;gap:14px;align-items:center}
-@media(max-width:760px){.srow{grid-template-columns:1fr;gap:6px}}
-.srow .nm{font-size:16.5px;font-weight:500;line-height:1.4}
-.bar{position:relative;height:34px;background:var(--surface2);border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.bar .b1{position:absolute;left:0;top:0;bottom:50%;background:#E4C9C5}
-.bar .b2{position:absolute;left:0;top:50%;bottom:0;background:var(--green)}
-.srow .delta{font-family:var(--mono);font-size:17px;font-weight:600;text-align:right;color:var(--green)}
-.leg{display:flex;gap:20px;font-size:15px;color:var(--ink3);margin-top:10px}
-.leg i{display:inline-block;width:16px;height:12px;border-radius:3px;margin-right:6px;vertical-align:middle}
+.flip{display:grid;grid-template-columns:1fr 60px 1fr;gap:12px;align-items:center;margin:16px 0}
+@media(max-width:760px){.flip{grid-template-columns:1fr;gap:8px}}
+.flip .old,.flip .new{border-radius:var(--r);padding:16px 18px;text-align:center}
+.flip .old{background:var(--redBg);border:1px solid #E4C9C5}
+.flip .new{background:var(--greenBg);border:1px solid #B7DCC9}
+.flip .lbl{font-size:14.5px;color:var(--ink3);margin-bottom:4px}
+.flip .val{font-family:var(--mono);font-size:26px;font-weight:600}
+.flip .old .val{color:var(--red)}.flip .new .val{color:var(--greenDeep)}
+.flip .arr{text-align:center;font-size:26px;color:var(--ink3)}
 
-/* gates */
 .gate{display:grid;grid-template-columns:78px 1fr;gap:18px;margin-bottom:22px;align-items:start}
 .gate .no{width:78px;padding:12px 0;border-radius:14px;color:#fff;font-family:var(--display);text-align:center;line-height:1.25}
 .gate .no b{display:block;font-size:28px;font-weight:700}
@@ -137,13 +138,13 @@ footer.bot b{color:#fff}
 
 <header class="top">
   <div class="wrap">
-    <p class="kick">Deal v3 · หลังพาเนล 5 มุม 2 รอบ</p>
-    <h1>ข้อเสนอที่จะยื่น — ฉบับผ่านการทุบแล้ว</h1>
-    <p>เปลี่ยนจาก "ซื้อร้าน 1.6 ล้าน" เป็น "ซื้อสิทธิ์ด้วย 0 บาท แล้วได้เงินระหว่างพิสูจน์" — ทุกข้อในเอกสารนี้มาจากข้อค้านที่พาเนลยิงเข้ามาจริง</p>
+    <p class="kick">Deal v3.1 · อัปเดตด้วยตัวเลขจริงจากจิ้น</p>
+    <h1>ดีลนี้พลิกเป็นบวก — ถ้าตอบ 2 คำถามได้</h1>
+    <p>ข้อมูล 7 ข้อที่ได้มาวันที่ 17 ส.ค. เปลี่ยนโครงสร้างต้นทุนทั้งหมด จุดคุ้มทุนร่วงจาก ~24,000 เหลือ <b>9,475 บาท/วัน</b> ซึ่งต่ำกว่ายอดที่ร้านทำได้อยู่แล้วมาก</p>
     <div class="metaline">
       <span class="pill">17 ส.ค. 2569</span>
+      <span class="pill hot">กำไร +73,291/เดือน (ถ้า GP 50% จริง)</span>
       <span class="pill">พาเนล 5 มุม × 2 รอบ</span>
-      <span class="pill">คะแนนรวม 2.6 → 7.5</span>
       <span class="pill">นัดคุย 18 ส.ค. 14:00</span>
     </div>
   </div>
@@ -151,109 +152,170 @@ footer.bot b{color:#fff}
 
 <nav class="tabs" role="tablist">
   <div class="inner">
-    <button role="tab" aria-selected="true" data-t="score"><span class="num">1</span>ผลพาเนล</button>
-    <button role="tab" aria-selected="false" data-t="deal"><span class="num">2</span>Deal v3</button>
+    <button role="tab" aria-selected="true" data-t="flip"><span class="num">1</span>ตัวเลขใหม่</button>
+    <button role="tab" aria-selected="false" data-t="deal"><span class="num">2</span>Deal v3.1</button>
     <button role="tab" aria-selected="false" data-t="kill"><span class="num">3</span>เส้นตาย + สคริปต์</button>
-    <button role="tab" aria-selected="false" data-t="next"><span class="num">4</span>ทางเลือก + ทำอะไรต่อ</button>
+    <button role="tab" aria-selected="false" data-t="next"><span class="num">4</span>ทำอะไรต่อ</button>
   </div>
 </nav>
 
-<!-- ===== TAB 1 : SCORES ===== -->
-<section class="panel on" id="score">
+<!-- ===== TAB 1 ===== -->
+<section class="panel on" id="flip">
 <div class="wrap">
 
-  <h2 class="sec"><span class="ic">◎</span>คะแนนก่อน–หลัง</h2>
-  <p class="lead">พาเนลชุดเดิม 5 คน ให้คะแนนดีลเดิมในรอบแรก แล้วให้คะแนนดีลที่ออกแบบใหม่ในรอบสอง <b>ไม่มีใครเปลี่ยนความเห็นเรื่องตัวร้าน — สิ่งที่เปลี่ยนคือโครงสร้างการเข้าถึงร้าน</b></p>
-
-  <div class="card">
-    <div class="scores">
-      <div class="srow"><div class="nm">เภสัชกรร้านชุมชน 15 ปี</div>
-        <div class="bar"><div class="b1" style="width:20%"></div><div class="b2" style="width:70%"></div></div>
-        <div class="delta">2 → 7</div></div>
-      <div class="srow"><div class="nm">นักลงทุน / ผู้ซื้อกิจการ</div>
-        <div class="bar"><div class="b1" style="width:20%"></div><div class="b2" style="width:70%"></div></div>
-        <div class="delta">2 → 7</div></div>
-      <div class="srow"><div class="nm">CFO</div>
-        <div class="bar"><div class="b1" style="width:20%"></div><div class="b2" style="width:70%"></div></div>
-        <div class="delta">2 → 7</div></div>
-      <div class="srow"><div class="nm">CEO เชนค้าปลีกสุขภาพ<br><span style="font-size:14px;color:var(--ink3)">(คะแนนโครงสร้าง)</span></div>
-        <div class="bar"><div class="b1" style="width:30%"></div><div class="b2" style="width:80%"></div></div>
-        <div class="delta">3 → 8</div></div>
-      <div class="srow"><div class="nm">นักเขียนด้านการตัดสินใจ<br><span style="font-size:14px;color:var(--ink3)">(คุณภาพกระบวนการ)</span></div>
-        <div class="bar"><div class="b1" style="width:60%"></div><div class="b2" style="width:85%"></div></div>
-        <div class="delta">6 → 8.5</div></div>
-    </div>
-    <div class="leg"><span><i style="background:#E4C9C5"></i>ดีลเดิม</span><span><i style="background:var(--green)"></i>Deal v2/v3</span></div>
+  <div class="note green big">
+    <div class="hd">★ ข้อมูล 7 ข้อที่เปลี่ยนคำตอบ</div>
+    ทุกการคำนวณก่อนหน้านี้ — รวมทั้งพาเนล 5 มุมที่ให้คะแนน 2–3/10 — ยืนอยู่บนสมมติฐานที่ผิด 3 ตัว:
+    <b>GP 30%</b> (จริงคือ 50%) · <b>ค่าเช่ายังไม่รวมน้ำไฟ</b> (จริงคือรวมแล้ว) · <b>ต้องจ้างเภสัชประจำ 45,000–60,000</b> (จริงคือ part-time 33,660)<br>
+    <b>ข้อสรุปเดิมของพาเนลจึงต้องอ่านใหม่ทั้งหมด — แต่คำแนะนำเชิงโครงสร้าง (จ่ายทีหลัง ขอเอกสารก่อน แบ่งด่าน) ยังใช้ได้และยิ่งมีค่าขึ้น</b>
   </div>
 
-  <div class="note red">
-    <div class="hd">ตัวเลขที่ห้ามเข้าใจผิด</div>
-    CEO ให้ <b>8/10 กับโครงสร้างการตัดสินใจ</b> แต่ยืน <b>3/10 กับ "การซื้อร้านนี้"</b> เท่าเดิม —
-    เพราะทำเลไม่ได้เปลี่ยน วัตสันยังอยู่ชั้น 1 ผู้เช่าชั้น 3 ยังเป็นคนมากินข้าว<br>
-    <b>สิ่งที่ Deal v3 ทำได้คือทำให้การพิสูจน์ว่า CEO ถูก มีราคา 0 บาทและได้เงินระหว่างพิสูจน์ — ไม่ใช่ทำให้ร้านดีขึ้น</b>
-  </div>
-
-  <h2 class="sec"><span class="ic">✕</span>บั๊กที่ CFO เจอในเครื่องคำนวณ — แก้แล้ว</h2>
+  <h2 class="sec"><span class="ic">⇄</span>โครงสร้างต้นทุนเปลี่ยนไปคนละเรื่อง</h2>
   <div class="tblwrap"><table>
-    <thead><tr><th style="width:34%">บั๊ก</th><th>ผลกระทบ</th><th style="width:120px">สถานะ</th></tr></thead>
+    <thead><tr><th style="width:30%">รายการ</th><th>สมมติฐานเดิม</th><th>ข้อมูลจริง (17 ส.ค.)</th><th class="n">ต่างกัน</th></tr></thead>
     <tbody>
-      <tr><td><b>จิ้นลงเอง 1 คน → ค่าเภสัชทั้งเดือน = 0</b> ทั้งที่ยืนแค่ 8 วัน</td>
-        <td>Preset "จิ้นลงเอง" เปลี่ยนจาก <b>−6,547</b> เป็น <b>−55,897</b> เมื่อคิดค่าเภสัชครบตามกฎหมาย</td><td><span class="tag ok">แก้แล้ว</span></td></tr>
-      <tr><td>เภสัช 1 คนคุม 63 ชม./สัปดาห์ไม่ได้</td><td>ตอนนี้แสดงเตือน "ยังมี X วัน/เดือนไม่มีเภสัชคุม" + คิดค่าจ้าง part-time อุด</td><td><span class="tag ok">แก้แล้ว</span></td></tr>
-      <tr><td>ไม่แสดง max drawdown (เงินที่ต้องมีจริง)</td><td>ป้ายโชว์ 1,595,000 แต่จุดต่ำสุดจริงคือ <b>2.6–4.7 ล้าน</b> — เพิ่มช่องใหม่แล้ว</td><td><span class="tag ok">แก้แล้ว</span></td></tr>
-      <tr><td>สูตรคืนทุนลืมหักภาษี</td><td>ยอดที่ต้องขายเพื่อคืนทุนต่ำกว่าจริง</td><td><span class="tag ok">แก้แล้ว</span></td></tr>
-      <tr><td>ไม่ถามว่าสต็อกเป็นราคาทุนหรือราคาขาย</td><td>swing ~390,000 บาท — เพิ่มช่องสลับแล้ว</td><td><span class="tag ok">แก้แล้ว</span></td></tr>
-      <tr><td>กำไรเชิงเศรษฐกิจคำนวณไว้แต่ไม่เคยใช้</td><td>ตอนนี้แสดงเป็นบรรทัดเด่นเมื่อจิ้นลงวันเอง</td><td><span class="tag ok">แก้แล้ว</span></td></tr>
-      <tr><td>ไม่มี VAT · ไม่มีค่ารื้อถอน · ไม่มีทุนหมุนเวียนตอนยอดโต</td><td>ยังไม่มีตัวเลขจากเอกสารจริง</td><td><span class="tag warn">รอข้อมูล</span></td></tr>
+      <tr><td><b>กำไรขั้นต้น (GP)</b></td><td>30% (เฮียบอก)</td><td><b>50%</b> (จิ้นเห็นจากหน้าจอ)</td><td class="n" style="color:var(--green)">+20 จุด</td></tr>
+      <tr><td><b>ค่าเช่า</b></td><td>70,000 + ส่วนกลาง/ไฟ ~20,000</td><td><b>70,000 รวมน้ำไฟแล้ว</b></td><td class="n" style="color:var(--green)">−20,000</td></tr>
+      <tr><td><b>ค่าเภสัชกร</b></td><td>45,000–60,000 ประจำ</td><td><b>33,660</b> — จิ้น 8 วัน + part-time 22 วัน × 9 ชม. × 170</td><td class="n" style="color:var(--green)">−11,340 ถึง −26,340</td></tr>
+      <tr><td><b>ผู้ช่วยเภสัช</b></td><td>25,000</td><td>15,000</td><td class="n" style="color:var(--green)">−10,000</td></tr>
+      <tr class="hi"><td><b>ค่าใช้จ่ายคงที่รวม</b></td><td>191,717</td><td><b>133,027</b></td><td class="n">−58,690</td></tr>
     </tbody>
   </table></div>
 
-  <h2 class="sec"><span class="ic">!</span>สิ่งที่พาเนลจับได้ในรอบ 2 และเปลี่ยนดีลอีกครั้ง</h2>
+  <div class="flip">
+    <div class="old"><div class="lbl">จุดคุ้มทุนเดิม</div><div class="val">24,522</div><div class="lbl">บาท/วัน</div></div>
+    <div class="arr">→</div>
+    <div class="new"><div class="lbl">จุดคุ้มทุนใหม่</div><div class="val">9,475</div><div class="lbl">บาท/วัน</div></div>
+  </div>
+  <p class="lead">ร้านทำได้อยู่แล้ว 15,000–17,000 บาท/วัน — <b>เกินจุดคุ้มทุนใหม่ไปเกือบเท่าตัว</b></p>
+
+  <h2 class="sec"><span class="ic">฿</span>กำไรใหม่ตามระดับยอดขาย</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th>สถานการณ์</th><th class="n">กำไรสุทธิ/เดือน</th><th class="n">หักค่าเวลาจิ้นแล้ว</th><th class="n">คืนทุน</th></tr></thead>
+    <tbody>
+      <tr><td>GP 50% @ 14,500/วัน <span style="color:var(--ink3)">(วันธรรมดา)</span></td><td class="n">+56,443</td><td class="n">+44,203</td><td class="n">ไม่คืนใน 20 ด.</td></tr>
+      <tr class="hi"><td><b>GP 50% @ 16,000/วัน</b> <span style="color:var(--ink3)">(เฉลี่ยตอนนี้)</span></td><td class="n"><b>+73,291</b></td><td class="n"><b>+61,051</b></td><td class="n">ไม่คืนใน 20 ด.</td></tr>
+      <tr><td>GP 55% @ 16,000/วัน</td><td class="n">+92,491</td><td class="n">+80,251</td><td class="n">20 เดือน</td></tr>
+      <tr class="hi"><td><b>GP 50% @ 20,000/วัน</b> <span style="color:var(--ink3)">(ยอดที่จิ้นทำได้จริง)</span></td><td class="n"><b>+118,219</b></td><td class="n"><b>+105,979</b></td><td class="n" style="color:var(--green)"><b>16 เดือน ✅</b></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note blue">
+    <div class="hd">ทำไมเฮียถึงบอกว่าขาดทุน ทั้งที่ตัวเลขเป็นบวก</div>
+    <b>เฮียไม่ได้ขาดทุนเงินสด — เขาขาดทุนเพราะค่าเสื่อมตกแต่ง 4–5 ล้าน</b> เฉลี่ย 5 ปี = 67,000–83,000/เดือน บวกดอกเบี้ยถ้ากู้มา<br>
+    ร้านเดียวกัน เดือนเดียวกัน: <b>เฮีย ประมาณ −10,000 / จิ้น +73,291</b> — ต่างกันเพราะจิ้นไม่ต้องแบกเงิน 4–5 ล้านที่เขาลงไปแล้ว
+  </div>
+
+  <h2 class="sec"><span class="ic">!</span>2 คำถามที่ตัดสินว่าตัวเลขนี้จริงหรือไม่</h2>
+
+  <div class="note red big">
+    <div class="hd">คำถามที่ 1 — "50%" คือ margin หรือ markup</div>
+    คำถามเดียวนี้แพงกว่าราคาสต็อกทั้งก้อน
+    <div class="tblwrap" style="margin-top:12px"><table>
+      <thead><tr><th>ถ้าเป็น</th><th>ความหมาย</th><th class="n">กำไรสุทธิ/เดือน</th><th class="n">หักค่าเวลาจิ้น</th></tr></thead>
+      <tbody>
+        <tr><td><b>margin 50%</b></td><td>ทุน 50 → ขาย 100</td><td class="n" style="color:var(--green)"><b>+73,291</b></td><td class="n" style="color:var(--green)">+61,051</td></tr>
+        <tr><td><b>markup 50%</b></td><td>ทุน 100 → ขาย 150 (= margin 33%)</td><td class="n" style="color:var(--red)"><b>+8,011</b></td><td class="n" style="color:var(--red)">−4,229</td></tr>
+      </tbody>
+    </table></div>
+    <b>ต่างกัน 9 เท่า</b> · วิธีเช็คในหน้าจอ POS: เอา (ราคาขาย − ราคาทุน) ÷ <b>ราคาขาย</b> ไม่ใช่ ÷ ราคาทุน
+  </div>
+
+  <div class="note amber big">
+    <div class="hd">คำถามที่ 2 — 20,000 มาจาก "จิ้น" หรือมาจาก "วันเสาร์อาทิตย์"</div>
+    จิ้นไปเสาร์-อาทิตย์ ซึ่งเป็นวันที่ห้างคนเยอะที่สุดอยู่แล้ว · ถ้าเฉลี่ยทั้งเดือน 16,000 และเสาร์-อาทิตย์ได้ 20,000
+    แปลว่าวันธรรมดาอยู่ที่ <b>~14,500</b><br><br>
+    <b>ถ้าเป็นเอฟเฟกต์ "จิ้น"</b> → จ้างเภสัชเก่ง ๆ ดันวันธรรมดาขึ้นได้ → ยอดทั้งเดือนไป 20,000 → <b>คืนทุน 16 เดือน</b><br>
+    <b>ถ้าเป็นเอฟเฟกต์ "วันหยุด"</b> → เพดานคือ 16,000 เท่าเดิม → กำไรดี แต่ไม่คืนทุนภายในสัญญาที่เหลือ<br><br>
+    <b>วิธีแยก:</b> ขอ POS รายวัน 3 เดือนที่จิ้นไป แล้วเทียบ <b>เสาร์-อาทิตย์ที่จิ้นอยู่ vs เสาร์-อาทิตย์ที่จิ้นไม่อยู่</b>
+    ถ้าต่างกันชัด นั่นคือค่าตัวจิ้น และมันคือทั้งโมเดลธุรกิจ (ดูแท็บ 2)
+  </div>
+
+  <h2 class="sec"><span class="ic">◈</span>วัตสันไม่มีเภสัช = ช่องว่างที่ป้องกันได้</h2>
+  <p class="lead">ข้อสังเกตจากหน้างานว่าวัตสันชั้น 1 ปกติไม่ค่อยมีเภสัชกร <b>กลับด้านการวิเคราะห์คู่แข่งเดิมทั้งหมด</b></p>
   <div class="grid2">
-    <div class="card" style="border-left:6px solid var(--red)">
-      <h3 style="color:var(--red)">CFO — ผ่านเกณฑ์แล้วยังจ่ายค่าสต็อกไม่ไหว</h3>
-      <p style="font-size:16.5px;line-height:1.8;color:var(--ink2)">เกณฑ์ 25,337/วัน คือ "<b>กำไรเป็นศูนย์พอดี</b>" แต่ Deal v2 สั่งจ่ายค่าสต็อก 15% ของยอดขาย จากธุรกิจที่มีกำไรส่วนเกิน 26% → ต้องเติมเงินอีก <b>500,003</b> ทะลุเพดานตัวเอง<br><br>
-      <b>แก้ใน v3:</b> เปลี่ยนเป็นจ่ายคงที่ 20,834/เดือน หรือ 50% ของกำไรหลังหักค่าใช้จ่ายทั้งหมด แล้วแต่ต่ำกว่า · ยกเกณฑ์ผ่านเป็น <b>28,000/วัน</b> · เปิดด่าน 3 ที่ <b>35,000/วัน</b></p>
+    <div class="card" style="border-left:6px solid var(--ink3)">
+      <h3>วัตสันขายได้</h3>
+      <ul class="bul">
+        <li>เครื่องสำอาง · ของใช้ · อาหารเสริม</li>
+        <li>ยาสามัญประจำบ้าน</li>
+      </ul>
     </div>
-    <div class="card" style="border-left:6px solid var(--red)">
-      <h3 style="color:var(--red)">เภสัชกร — จิ้นเข้าร้านจะพังใน 30 วัน</h3>
-      <p style="font-size:16.5px;line-height:1.8;color:var(--ink2)">"วันที่เภสัชโทรลาตอน 09:50 ตอนจิ้นถึงร้านแล้ว" — แผน "วันไหน coverage มีรู จิ้นไม่เข้า" ใช้ได้กับรูที่รู้ล่วงหน้าเท่านั้น<br>
-      และเขามีแรงจูงใจตรง ๆ ที่จะไม่จัดเภสัชลงวันที่จิ้นมา<br><br>
-      <b>แก้ใน v3:</b> ถอนจิ้นออกจากงานหน้าร้านในด่าน 1 — งานหลัก (บุกขาย 118 ร้าน + นับคนเดินผ่าน) ไม่ต้องใช้เภสัชกร</p>
-    </div>
-    <div class="card" style="border-left:6px solid var(--amber)">
-      <h3 style="color:var(--amber)">เภสัชกร + CEO — เราทำ turnaround ให้เขาฟรี</h3>
-      <p style="font-size:16.5px;line-height:1.8;color:var(--ink2)">ถ้าด่าน 1 สำเร็จ ยอดขึ้นจริง คนที่ร้านเพิ่งกลับมาทำเงินจะขายให้เราที่ 500,000 ไหม — <b>ยิ่งด่าน 1 สำเร็จ โอกาสได้ด่าน 2 ยิ่งน้อยลง</b><br><br>
-      <b>แก้ใน v3:</b> ล็อกราคาเพดาน + สิทธิ์ปฏิเสธก่อน (ROFR) + บทลงโทษถ้าเขาปฏิเสธขายทั้งที่เกณฑ์ผ่าน — ต้องอยู่ในสัญญาตั้งแต่เซ็นด่าน 1</p>
-    </div>
-    <div class="card" style="border-left:6px solid var(--amber)">
-      <h3 style="color:var(--amber)">นักเขียน — เป้าหมายซ่อนที่ทำให้เส้นตายอ่อนลง</h3>
-      <p style="font-size:16.5px;line-height:1.8;color:var(--ink2)">v2 เขียนว่าถ้าไม่อยากได้ร้าน ดีลนี้ยังเป็น "ช่องขายระบบให้เขาแทน" — <b>พอการสอบตกไม่รู้สึกเหมือนแพ้ เส้นตายก็หมดฟัน</b><br>
-      และเรากำลังจะใช้ 90 วันไล่ขายระบบ 530K ให้คนที่เพิ่งปฏิเสธ 530K ไปเมื่อ 2 เดือนก่อน<br><br>
-      <b>แก้ใน v3:</b> ตัดเหตุผลข้อนี้ออกจากดีล — ถ้าจะขายระบบ ไปขายกับอีก 40 ร้านตรง ๆ</p>
+    <div class="card" style="border-left:6px solid var(--green)">
+      <h3 style="color:var(--greenDeep)">วัตสันขายไม่ได้ — แต่ PJ ขายได้</h3>
+      <ul class="bul">
+        <li><b>ยาอันตราย · ยาควบคุมพิเศษ</b> ต้องมีเภสัชกรจ่ายตามกฎหมาย</li>
+        <li>การให้คำปรึกษาและจ่ายยาตามอาการ</li>
+        <li>ลูกค้าโรคเรื้อรังที่ต้องเติมยาประจำ</li>
+      </ul>
     </div>
   </div>
+  <div class="note green">
+    <b>นี่อธิบายด้วยว่าทำไม GP ถึงเป็น 50% ไม่ใช่ 30%</b> — เพราะขายของที่ต้องมีเภสัชจ่าย ไม่ได้แข่งขายของทั่วไปกับวัตสัน<br>
+    <b>จุดขายที่ควรติดป้ายให้ใหญ่ที่สุด: "มีเภสัชกรประจำทุกวัน" — ชั้น 1 ให้ไม่ได้</b><br>
+    <span class="tag warn">ต้องยืนยัน</span> เป็นข้อสังเกตจากการไปเห็น ควรเช็คซ้ำหลายวันหลายช่วงเวลาก่อนใช้วางกลยุทธ์
+  </div>
+
+  <h2 class="sec"><span class="ic">◎</span>คะแนนพาเนลรอบ 2 (บนสมมติฐานเดิม)</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th>พาเนล</th><th class="n">รอบ 1</th><th class="n">รอบ 2</th><th>ข้อค้านที่ยังใช้ได้แม้ตัวเลขเปลี่ยน</th></tr></thead>
+    <tbody>
+      <tr><td>เภสัชกรร้านชุมชน 15 ปี</td><td class="n">2</td><td class="n">7</td><td>เรื่องแขวนใบและรู coverage — ยังต้องแก้ (ดูแท็บ 2)</td></tr>
+      <tr><td>นักลงทุน / ผู้ซื้อกิจการ</td><td class="n">2</td><td class="n">7</td><td>อย่าจ่ายเงินสดก่อนเห็นเอกสาร · ต้องมี ROFR + ห้าม non-compete</td></tr>
+      <tr><td>CFO</td><td class="n">2</td><td class="n">7</td><td>ภาระผูกพันสัญญาเช่า 2,520,000 ต้องเขียนคู่กับเงินสดเสมอ</td></tr>
+      <tr><td>CEO เชนค้าปลีก</td><td class="n">3</td><td class="n">8</td><td>วัดด้วยบิล/วัน + conversion ไม่ใช่ยอดบาท</td></tr>
+      <tr><td>นักเขียนด้านการตัดสินใจ</td><td class="n">6</td><td class="n">8.5</td><td>ห้ามผ่อนเกณฑ์กลางด่าน · ต้องมีราคาเดินออกเขียนไว้ก่อน</td></tr>
+    </tbody>
+  </table></div>
 
 </div>
 </section>
 
-<!-- ===== TAB 2 : DEAL v3 ===== -->
+<!-- ===== TAB 2 ===== -->
 <section class="panel" id="deal">
 <div class="wrap">
 
-  <div class="note green">
-    <div class="hd">หลักการเดียวของทั้งดีล</div>
-    <b>เงินสดจากกระเป๋าเรา = 0 จนกว่าตัวเลขจะพิสูจน์ตัวเองด้วย POS จริง · และใบประกอบของจิ้นไม่แตะดีลนี้จนถึงด่าน 2</b><br>
-    ชื่อดีล: สัญญาบริหารทดลอง 90 วัน พร้อมสิทธิ์เข้าซื้อสินทรัพย์แบบมีเงื่อนไข
+  <div class="note purple big">
+    <div class="hd">✓ คำถามชั้นบน — ตอบแล้ว</div>
+    <b>"อยากมี อยากบริหารให้กำไรให้ได้ ไว้เป็นอาชีพด้วย แต่จะใช้โมเดลแบ่ง % ให้คนมาช่วยดู"</b><br><br>
+    คำตอบนี้เปลี่ยนดีลจาก "สิทธิ์ซื้อข้อมูล" เป็น <b>"แผนเข้าซื้อจริง"</b> — และโมเดลแบ่ง % คือสิ่งที่ทำให้มันไม่ขัดกับเป้า passive income
+    <b>ด่าน 2 และ 3 เปิดแล้ว</b>
   </div>
 
-  <h2 class="sec"><span class="ic">?</span>คำถามที่ต้องตอบก่อนเข้าห้อง</h2>
-  <div class="note purple">
-    <div class="hd">"เราอยากมีร้านยาหน้าร้านจริงไหม เมื่อเป้าหมายคือ passive income"</div>
-    <b>ค่าตั้งต้นของคำตอบคือ "ไม่อยาก" — ภาระพิสูจน์อยู่ที่ฝั่ง "อยาก"</b>
-    เพราะ พ.ร.บ.ยา ม.39 บังคับให้มีเภสัชกรอยู่ตลอดเวลาเปิด 63 ชม./สัปดาห์ = อัตโนมัติไม่ได้ จ้างแทนได้แต่ไม่หายไป<br><br>
-    <b>ถ้าตอบ "ไม่อยาก" → ด่าน 2 ปิดตาย เดินได้ถึงด่าน 1 เท่านั้น</b> (และนั่นก็ยังไม่ขาดทุน เพราะด่าน 1 มีเงินเข้า)<br>
-    <b>ถ้าตอบ "อยาก" → ต้องเขียนเหตุผลที่ไม่ใช่ "จิ้นเป็นเภสัชกรก็ควรมีร้านยา"</b> ซึ่งเป็นกับดักตัวตนที่พาเนลระบุไว้
+  <h2 class="sec"><span class="ic">%</span>โมเดลแบ่ง % — ตัวเลขสนับสนุนแนวคิดนี้ตรง ๆ</h2>
+  <p class="lead">ส่วนต่างระหว่างวันที่จิ้นอยู่กับวันธรรมดา ≈ <b>5,500 บาท/วัน</b> ที่ GP 50% = กำไรส่วนเกิน ~2,570 บาท/วัน</p>
+  <div class="note green">
+    <div class="hd">ถ้าเภสัชกรที่จ้างมาทำได้แบบจิ้น 22 วัน = <b>+56,540 บาท/เดือน</b></div>
+    ในขณะที่ส่วนต่างค่าจ้างระหว่างเภสัชธรรมดากับเภสัชเก่งอาจแค่ 10,000–15,000<br>
+    <b>จ่ายแพงเพื่อคนเก่ง + แบ่งกำไรให้ จึงเป็นกลยุทธ์ที่ถูกที่สุดในธุรกิจนี้ ไม่ใช่ที่แพงที่สุด</b>
+  </div>
+
+  <div class="tblwrap"><table>
+    <thead><tr><th style="width:170px">ส่วนประกอบ</th><th>รายละเอียด</th></tr></thead>
+    <tbody>
+      <tr><td><b>ฐาน</b></td><td>170 บาท/ชม. ตามเรตตลาด (= 1,530/วัน ที่ร้านเปิด 9 ชม.)</td></tr>
+      <tr><td><b>ส่วนแบ่ง</b></td><td><b>20–25% ของกำไรสุทธิที่เกิน baseline</b> · baseline = ค่าเฉลี่ยจริงจาก POS ก่อนเขาเข้ามา</td></tr>
+      <tr><td><b>จ่ายเมื่อ</b></td><td>รายเดือน หลังปิดบัญชี · <b>เปิดตัวเลขให้เห็นทุกเดือน</b> ความโปร่งใสคือสิ่งที่ทำให้โมเดลนี้อยู่ได้</td></tr>
+      <tr><td><b>กันเสี่ยง</b></td><td>แบ่งจาก <b>กำไร</b> ไม่ใช่ <b>ยอดขาย</b> — ไม่งั้นเขาจะดันยอดด้วยของ margin ต่ำ แล้วเราจ่ายส่วนแบ่งบนกำไรที่ไม่มีอยู่จริง</td></tr>
+      <tr class="hi"><td><b>ผลลัพธ์</b></td><td>ที่กำไร +73,291 แบ่ง 25% = 18,323 ให้เขา <b>เหลือ 54,968/เดือน โดยต้นกับจิ้นแทบไม่ต้องอยู่หน้าร้าน</b></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 class="sec"><span class="ic">§</span>เรื่องใบอนุญาต — แก้ได้โดยไม่เพิ่มต้นทุนเลย</h2>
+  <div class="note red">
+    <div class="hd">ปัญหาของแผน "ใช้ใบจิ้นแขวน แล้วจิ้นเข้าแค่ 8 วัน"</div>
+    ถ้าจิ้นเป็น<b>ผู้มีหน้าที่ปฏิบัติการ</b>ที่แจ้งไว้ในใบอนุญาต แต่มาจริง 8 วัน อีก 22 วันร้านเปิดโดยไม่มีคนที่แจ้งชื่อไว้อยู่
+    = ผิด <b>พ.ร.บ.ยา ม.21 และ ม.39</b><br>
+    และคนที่รับความเสี่ยงหนักที่สุดไม่ใช่ร้าน แต่คือ <b>ใบประกอบของจิ้นเอง</b> — สภาเภสัชกรรมพักใช้หรือเพิกถอนได้
+  </div>
+  <div class="note green">
+    <div class="hd">✓ ทางแก้ที่ต้นทุนเท่าเดิมทุกบาท</div>
+    <b>แจ้งเภสัชกร part-time เป็นผู้มีหน้าที่ปฏิบัติการเพิ่ม</b> ให้ครอบคลุมทุกวันที่เปิด —
+    สำนักงานสาธารณสุข/สำนักอนามัยมี <b>"ชุดคำขอ เปลี่ยน / เพิ่ม / ถอน ผู้มีหน้าที่ปฏิบัติการ"</b> อยู่แล้ว
+    ร้านที่เปิดหลายผลัดทำแบบนี้เป็นปกติ<br><br>
+    จิ้นยังคุมเอง 8 วัน · จ้าง part-time 22 วันเท่าเดิม · จ่าย 33,660 เท่าเดิม —
+    <b>ต่างกันแค่งานเอกสาร แต่ความเสี่ยงลดจาก "เดิมพันใบประกอบ" เหลือเกือบศูนย์</b><br><br>
+    <span class="tag warn">ต้องยืนยัน</span> ขั้นตอนและจำนวนคนที่แจ้งได้ ต้องเช็คกับ <b>สำนักอนามัย กทม.</b> ก่อน
   </div>
 
   <h2 class="sec"><span class="ic">→</span>โครงสร้าง 4 ด่าน</h2>
@@ -261,22 +323,22 @@ footer.bot b{color:#fff}
   <div class="gate g0">
     <div class="no"><b>0</b><span>ประตูเอกสาร</span></div>
     <div class="bd">
-      <h4>ขอเอกสาร 9 รายการ</h4>
-      <p class="when">18–31 ส.ค. 2569 · <span class="money">เงินออก 0 บาท</span> · ความเสี่ยงอยู่ที่เขา 100%</p>
+      <h4>ขอเอกสาร 9 รายการ — เพิ่ม 2 รายการที่ตัดสินดีล</h4>
+      <p class="when">18–31 ส.ค. 2569 · <span class="money">เงินออก 0 บาท</span></p>
       <ul class="chklist">
-        <li><span class="bx"></span><div><b>1. สัญญาเช่าฉบับจริงทั้งฉบับ</b> — ข้อโอนสิทธิ์ (ป.พ.พ. ม.544) + ข้อรื้อถอนคืนสภาพ</div></li>
-        <li><span class="bx"></span><div><b>2. หนังสือจากห้าง</b> ยืนยันออกสัญญาใหม่ชื่อจิ้น 3+3 ปี ระบุค่าเช่าเป็นตัวเลข + สถานะเงินประกัน 210,000</div></li>
-        <li><span class="bx"></span><div><b>3. คำตอบจากห้าง</b> ว่าทำไมร้านไม่มีชื่อใน directory 118 ร้าน</div></li>
-        <li><span class="bx"></span><div><b>4. สัญญาแฟรนไชส์ DB ทั้งฉบับ</b> + หนังสือปลดภาระจาก บ.ดีบี เฮลธ์ฯ</div></li>
-        <li><span class="bx"></span><div><b>5. POS 12 เดือน</b> — ยอดขาย/วัน <b>จำนวนบิล/วัน และบิลเฉลี่ย</b></div></li>
-        <li><span class="bx"></span><div><b>6. ชื่อ+เลขใบประกอบเภสัชกรปัจจุบัน + ตารางเวรจริง 6 เดือน</b></div></li>
-        <li><span class="bx"></span><div><b>7. หนังสือรับรองสต็อกปลอดภาระ</b> ไม่ติดจำนำ/ค้ำประกัน/เครดิตซัพพลายเออร์</div></li>
-        <li><span class="bx"></span><div><b>8. บิลค่าไฟ 12 เดือน + statement บัญชีร้าน 12 เดือน</b> <span class="tag new">เพิ่มรอบ 2</span> — POS คีย์บิลปลอมได้ บิลค่าไฟกับ statement โกหกไม่ได้</div></li>
-        <li><span class="bx"></span><div><b>9. ผลตรวจ GPP ครั้งล่าสุด + ข้อบกพร่องที่ถูกสั่งแก้ + หนี้ค้างผู้แทนยาทุกเจ้า</b> <span class="tag new">เพิ่มรอบ 2</span> — ถ้าไม่มี ตัวเลข "ปรับปรุง GPP 50,000" คือตัวเลขที่เราแต่งขึ้นเอง</div></li>
+        <li><span class="bx"></span><div><b>1. POS รายวัน 12 เดือน</b> — และ<b>เจาะ 3 เดือนที่จิ้นไป</b> เพื่อเทียบเสาร์-อาทิตย์ที่จิ้นอยู่ vs ไม่อยู่ <span class="tag new">ตัดสินคำถามที่ 2</span></div></li>
+        <li><span class="bx"></span><div><b>2. รายงาน GP จาก POS พร้อมสูตร</b> — ต้องเห็นว่าคำนวณจากราคาขายหรือราคาทุน <span class="tag new">ตัดสินคำถามที่ 1</span></div></li>
+        <li><span class="bx"></span><div><b>3. สัญญาเช่าฉบับจริงทั้งฉบับ</b> — ข้อโอนสิทธิ์ (ป.พ.พ. ม.544) + ข้อรื้อถอนคืนสภาพ</div></li>
+        <li><span class="bx"></span><div><b>4. ใบเสร็จค่าเช่า 3 เดือนล่าสุด</b> — ยืนยันว่า 70,000 รวมน้ำไฟจริง</div></li>
+        <li><span class="bx"></span><div><b>5. หนังสือจากห้าง</b> ยืนยันออกสัญญาใหม่ชื่อจิ้น 3+3 ปี + สถานะเงินประกัน 210,000</div></li>
+        <li><span class="bx"></span><div><b>6. สัญญาแฟรนไชส์ DB + หนังสือปลดภาระ</b> จาก บ.ดีบี เฮลธ์ฯ</div></li>
+        <li><span class="bx"></span><div><b>7. รายการสต็อกทีละ SKU พร้อมวันหมดอายุและราคาทุน</b> + หนังสือรับรองปลอดภาระ</div></li>
+        <li><span class="bx"></span><div><b>8. ผลตรวจ GPP ล่าสุด + ข้อบกพร่องที่ถูกสั่งแก้ + หนี้ค้างผู้แทนยาทุกเจ้า</b></div></li>
+        <li><span class="bx"></span><div><b>9. ชื่อ+เลขใบประกอบเภสัชกรปัจจุบัน + ตารางเวรจริง 6 เดือน</b></div></li>
       </ul>
       <div class="note amber" style="margin-bottom:0">
-        <b>งานคู่ขนานในหน้าต่างเดียวกัน:</b> เจรจากับห้างเรื่อง <b>ลดชั่วโมงเปิด</b> ตั้งแต่ตอนนี้ ไม่ใช่รอด่าน 2 —
-        ถ้าห้างไม่ยอมลด ไม่ต้องเสียเวลา 90 วันเลย · และเริ่มทดสอบทางเลือกอื่นไปพร้อมกัน (ดูแท็บ 4)
+        <b>งานคู่ขนาน:</b> โทรสำนักอนามัย กทม. ถามขั้นตอนแจ้งเภสัชกรผู้มีหน้าที่ปฏิบัติการเพิ่มหลายคน ·
+        เจรจากับห้างเรื่องลดชั่วโมงเปิดตั้งแต่ตอนนี้ ไม่ใช่รอด่าน 2
       </div>
     </div>
   </div>
@@ -284,51 +346,32 @@ footer.bot b{color:#fff}
   <div class="gate g1">
     <div class="no"><b>1</b><span>ทดลอง 90 วัน</span></div>
     <div class="bd">
-      <h4>บริหารทดลอง — เขาถือทุกอย่าง เราถือแค่สิทธิ์บริหาร</h4>
-      <p class="when">1 ก.ย. – 30 พ.ย. 2569 · <span class="money">เงินออก 0 บาท · เงินเข้า 10,880+/เดือน</span></p>
-      <div class="grid2">
-        <div>
-          <h3 class="sub" style="margin-top:0">เขาถือ (ความเสี่ยง 100%)</h3>
-          <ul class="bul">
-            <li>สัญญาเช่า · ใบ ขย.1 · เภสัชกรผู้มีหน้าที่ปฏิบัติการ</li>
-            <li>จ่ายค่าเช่าเอง · จ่ายเงินเดือนเอง · แบกขาดทุนเอง</li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="sub" style="margin-top:0">เราถือ</h3>
-          <ul class="bul">
-            <li>สิทธิ์บริหารเชิงพาณิชย์ + ปรับ product mix/ราคา</li>
-            <li>POS read-only ทุกวัน · <b>ข้อมูลดิบเป็นของเรา ไม่ว่าดีลจะจบยังไง</b> <span class="tag new">เพิ่มรอบ 2</span></li>
-            <li><b>สิทธิ์ปฏิเสธก่อน (ROFR) + ห้ามขายให้คนอื่นระหว่าง 90 วัน</b> <span class="tag new">เพิ่มรอบ 2</span></li>
-          </ul>
-        </div>
+      <h4>บริหารทดลอง — พิสูจน์ว่าค่าตัวจิ้นมีจริง</h4>
+      <p class="when">1 ก.ย. – 30 พ.ย. 2569 · <span class="money">เงินออก 0 บาท · เงินเข้า 10,880+/เดือน</span> · ความเสี่ยงอยู่ที่เขา 100%</p>
+      <p style="font-size:16.5px;line-height:1.8;color:var(--ink2);margin-bottom:12px">
+        <b>เป้าหมายเปลี่ยนไปจาก v3:</b> เดิมด่านนี้คือ "พิสูจน์ว่าร้านรอดไหม" — ตอนนี้คือ
+        <b>"พิสูจน์ว่าเภสัชกรที่เก่งดันวันธรรมดาขึ้นได้จริงไหม"</b> เพราะนั่นคือตัวแปรเดียวที่เหลือ
+      </p>
+      <div class="note green">
+        <div class="hd">🔴 เปลี่ยนจาก v3: จิ้นเข้าร้านได้ — แต่ต้องแจ้งชื่อให้ถูกก่อน</div>
+        เมื่อแจ้งเภสัชกร part-time เป็นผู้มีหน้าที่ปฏิบัติการครบทุกวันแล้ว จิ้นเข้าร้านในวันของตัวเองได้อย่างถูกต้อง<br>
+        <b>แต่ในด่าน 1 ใบอนุญาตยังเป็นชื่อเฮีย — เรื่องนี้จึงเป็นความรับผิดชอบของเขาที่ต้องแจ้งให้ถูก</b>
+        และเราต้องเห็นตารางเวรจริงก่อนจิ้นเข้าวันแรก · <b>วันไหน coverage มีรู จิ้นไม่เข้าวันนั้น</b>
       </div>
-      <div class="note red">
-        <div class="hd">🔴 เปลี่ยนจาก v2: จิ้นไม่เข้าร้าน</div>
-        งานหลักของด่าน 1 คือ <b>บุกขายเข้าตึก 118 ร้าน + ศูนย์อาหาร + รปภ. + แม่บ้าน</b> และ <b>นับคนเดินผ่านหน้าร้านต่อชั่วโมง</b>
-        — ทั้งสองอย่างไม่ต้องใช้เภสัชกร ต้นทำได้ หรือจ้างคนนับถูกกว่า<br>
-        จิ้นเข้าร้านเฉพาะวันที่ต้องดูสต็อกจริง <b>นอกเวลาเปิด และมีเจ้าของอยู่ด้วย</b><br>
-        <b>ถ้ายังยืนยันจะส่งจิ้นเข้า ต้องมีคำตอบเป็นลายลักษณ์อักษรจากสภาเภสัชกรรมหรือทนายก่อนวันแรก — ถ้าคำตอบกำกวม ให้ตีความว่า "ไม่"</b>
-      </div>
-      <h3 class="sub">ค่าตอบแทนเรา</h3>
+      <h3 class="sub">เกณฑ์ตัดสิน — วัดเป็นกำไรขั้นต้นเป็นบาท ไม่ใช่ยอดขาย</h3>
+      <p style="font-size:16.5px;color:var(--ink2);line-height:1.8">เพราะวัดแบบนี้แล้ว<b>ไม่ต้องรอคำตอบว่า margin หรือ markup</b> — ตัวเลขบาทจาก POS โกหกไม่ได้</p>
       <div class="tblwrap"><table>
-        <tr><th style="width:150px">ชั้นพื้น</th><td><b>1,360 บาท/วันที่เราลงแรง</b> (อัตราที่เขาประกาศเอง) — <b>จิ้นต้องตั้งราคาวันของตัวเองก่อน ห้ามใช้ 1,360 ของเขาถ้าเวลาจิ้นมีค่ามากกว่านั้น</b> <span class="tag new">รอบ 2</span></td></tr>
-        <tr><th>ชั้นบน</th><td><b>50% ของกำไรขั้นต้นส่วนที่เกิน baseline</b> · baseline = <b>ค่าเฉลี่ยจริงจาก POS 90 วันก่อนเริ่ม</b> ไม่ใช่ 15,000 ที่เขาพูด <span class="tag new">รอบ 2</span></td></tr>
-      </table></div>
-      <h3 class="sub">เกณฑ์ตัดสิน — เปลี่ยนหน่วยวัด</h3>
-      <div class="tblwrap"><table>
-        <thead><tr><th style="width:170px">จุดตรวจ</th><th>เกณฑ์</th></tr></thead>
+        <thead><tr><th style="width:180px">จุดตรวจ</th><th>เกณฑ์</th><th class="n">เทียบเป็นยอดขาย<br>(ที่ GP 50%)</th></tr></thead>
         <tbody>
-          <tr><td><b>วันที่ 30–60</b></td><td>วัดด้วย <b>จำนวนบิล/วัน และบิลเฉลี่ย</b> ไม่ใช่ยอดบาท (ยอดบาทปั่นได้) · ถ้าบิล/วันไม่ขึ้น = จบที่วันที่ 60 <span class="tag new">รอบ 2</span></td></tr>
-          <tr><td><b>Conversion</b></td><td><b>บิล/วัน ÷ คนเดินผ่าน/วัน</b> — ตัวเดียวที่แยกว่า "ทำเลไม่มีคน" (แก้ไม่ได้) หรือ "มีคนแต่ปิดไม่ได้" (แก้ได้) <span class="tag new">รอบ 2</span></td></tr>
-          <tr><td><b>ผ่านด่าน 1</b></td><td><b>กำไรขั้นต้นจริง ≥ 6,630 บาท/วัน</b> (≈ ยอดขาย 28,000/วัน ที่ GP จริง) เฉลี่ย 60 วันสุดท้าย <span class="tag new">ยกจาก 25,337</span></td></tr>
-          <tr><td><b>เปิดด่าน 3</b></td><td><b>35,000 บาท/วัน</b> — เส้น "คุ้มค่า" แยกจากเส้น "ไม่เจ๊ง" <span class="tag new">รอบ 2</span></td></tr>
+          <tr><td><b>วันที่ 30–60</b></td><td>วัดด้วย <b>จำนวนบิล/วัน</b> และ <b>conversion = บิล ÷ คนเดินผ่าน</b> ไม่ใช่ยอดบาท (ยอดบาทปั่นได้)</td><td class="n">—</td></tr>
+          <tr><td><b>จุดคุ้มทุน</b></td><td>กำไรส่วนเกิน 4,434 บาท/วัน</td><td class="n">9,475</td></tr>
+          <tr><td><b>Kill line (K5)</b></td><td>กำไรส่วนเกิน <b>&lt; 5,500 บาท/วัน</b> เฉลี่ย 60 วันสุดท้าย → ไม่เปิดด่าน 2</td><td class="n">11,752</td></tr>
+          <tr class="hi"><td><b>Go line (เปิดด่าน 3)</b></td><td>กำไรส่วนเกิน <b>≥ 7,800 บาท/วัน</b> — ระดับที่คืนทุนได้จริงภายในสัญญา</td><td class="n">16,667</td></tr>
         </tbody>
       </table></div>
-      <div class="note amber" style="margin-bottom:0">
-        <b>เลขคณิตเตือนล่วงหน้า:</b> เพดานที่ CEO ให้ = 16,000 × 1.20 = <b>19,200</b> ซึ่งต่ำกว่าเกณฑ์ผ่าน 28,000 อยู่มาก
-        <b>ดีลนี้ถูกออกแบบโดยคาดว่าจะไม่ผ่าน — และนั่นคือจุดประสงค์</b> ถ้าครบ 90 วันแล้วยังไม่ถึงแต่กราฟชี้ขึ้นชัด
-        ทางออกคือ <b>ต่อด่าน 1 อีก 90 วัน ไม่ใช่ลดเกณฑ์</b>
+      <div class="note green" style="margin-bottom:0">
+        <b>Go line 16,667 บาท/วัน อยู่ในระยะที่จิ้นพิสูจน์แล้วว่าทำได้</b> (19,000–21,000 ในวันของจิ้น) —
+        ต่างจาก v3 เดิมที่ตั้งไว้ 28,000 ซึ่งสูงกว่าเพดานที่เป็นไปได้
       </div>
     </div>
   </div>
@@ -337,31 +380,28 @@ footer.bot b{color:#fff}
     <div class="no"><b>2</b><span>ย้ายสัญญา</span></div>
     <div class="bd">
       <h4>ย้ายสัญญาเช่าและใบอนุญาตมาที่จิ้น</h4>
-      <p class="when">เปิดเฉพาะเมื่อด่าน 1 ผ่าน · <span class="money out">เงินออก 84,000</span></p>
+      <p class="when">เปิดเมื่อผ่าน Kill line · <span class="money out">เงินออก 84,000</span></p>
       <div class="tblwrap"><table>
-        <thead><tr><th>รายการ</th><th class="n">บาท</th></tr></thead>
         <tbody>
           <tr><td>ทนายร่าง/ตรวจสัญญา</td><td class="n">30,000</td></tr>
-          <tr><td>ค่าธรรมเนียม ขย.1 (ยืนยันจากกฎกระทรวง)</td><td class="n">2,000</td></tr>
-          <tr><td>ค่าตรวจสถานที่ GPP</td><td class="n">2,000</td></tr>
+          <tr><td>ค่าธรรมเนียม ขย.1 + ตรวจ GPP (ยืนยันจากกฎกระทรวง)</td><td class="n">4,000</td></tr>
           <tr><td>ปรับปรุงให้ผ่าน GPP</td><td class="n">50,000</td></tr>
-          <tr><td><s>ยาเสพติดประเภท 3</s> — <b>ตัดออกทั้งหมด ไม่รับโอน</b></td><td class="n">0</td></tr>
-          <tr><td><b>รวม</b></td><td class="n"><b>84,000</b></td></tr>
+          <tr><td><s>ยาเสพติดประเภท 3</s> — ตัดออก ไม่รับโอน</td><td class="n">0</td></tr>
+          <tr class="hi"><td><b>รวม</b></td><td class="n"><b>84,000</b></td></tr>
         </tbody>
       </table></div>
       <h3 class="sub">เงื่อนไขเปิด (ครบทุกข้อ)</h3>
       <ul class="bul">
-        <li>ห้างออกสัญญาใหม่ชื่อจิ้น 3+3 ปี · <b>ค่าเช่า + ส่วนกลาง + ค่าไฟ + ค่าแอร์ + ค่าธรรมเนียมห้างทุกชนิด รวมกัน ≤ 90,000/เดือน ระบุเป็นตัวเลขในสัญญา</b> <span class="tag new">รอบ 2</span></li>
+        <li>ห้างออกสัญญาใหม่ชื่อจิ้น 3+3 ปี · <b>ค่าเช่า + ค่าใช้จ่ายห้างทุกชนิด รวมกัน ≤ 75,000/เดือน ระบุเป็นตัวเลขในสัญญา</b> <span class="tag new">ปรับจาก 90,000 เพราะยืนยันแล้วว่ารวมน้ำไฟ</span></li>
         <li>เงินประกัน 210,000 โอนสิทธิจากสัญญาเดิม ไม่ใช่วางใหม่</li>
-        <li>มีเภสัชกร full-time ตัวจริงชื่อชัด <b>และอยู่ผ่านโปร 90 วันแล้ว</b> ไม่ใช่แค่ "สัญญาพร้อมเซ็น" <span class="tag new">รอบ 2</span></li>
+        <li><b>แจ้งเภสัชกรผู้มีหน้าที่ปฏิบัติการครบทุกวันที่เปิด</b> — จิ้น + part-time ทุกคน <span class="tag new">v3.1</span></li>
         <li>ได้ ขย.1 ในชื่อจิ้นแล้วจริง — ไม่ใช่ "กำลังยื่น"</li>
-        <li><b>สัญญาเช่ามีสิทธิ์บอกเลิกฝ่ายเดียวที่เดือน 12 แจ้งล่วงหน้า 90 วัน</b> <span class="tag new">รอบ 2 · สำคัญมาก</span></li>
+        <li><b>สัญญาเช่ามีสิทธิ์บอกเลิกฝ่ายเดียวที่เดือน 12 แจ้งล่วงหน้า 90 วัน</b></li>
       </ul>
       <div class="note red" style="margin-bottom:0">
-        <div class="hd">🔴 ตัวเลขที่ CFO บังคับให้เขียน</div>
-        <b>เงินสดจากกระเป๋า ≤ 594,000 · แต่ภาระผูกพันตามสัญญาเช่า 3+3 ปี = 2,520,000</b> (70,000 × 36 เดือน)<br>
-        สองบรรทัดนี้ต้องอยู่คู่กันเสมอ — เพดานเงินสด 600,000 เป็นสัญญาณเตือน ไม่ใช่ทางออก
-        ถ้าเตือนตอนเดือนที่ 8 เราเดินออกจากสัญญาที่เหลืออีก 28 เดือนไม่ได้ <b>ถ้าห้างไม่ให้สิทธิ์บอกเลิกที่เดือน 12 — ไม่เซ็นด่าน 2</b>
+        <div class="hd">🔴 สองบรรทัดที่ต้องอยู่คู่กันเสมอ</div>
+        <b>เงินสดจากกระเป๋า ≤ 594,000</b> · แต่ <b>ภาระผูกพันตามสัญญาเช่า 3+3 ปี = 2,520,000</b><br>
+        ถ้าห้างไม่ให้สิทธิ์บอกเลิกที่เดือน 12 — <b>ไม่เซ็นด่าน 2</b>
       </div>
     </div>
   </div>
@@ -370,22 +410,21 @@ footer.bot b{color:#fff}
     <div class="no"><b>3</b><span>สต็อก</span></div>
     <div class="bd">
       <h4>ซื้อสต็อก — จ่ายจากกำไร ไม่ใช่จากยอดขาย</h4>
-      <p class="when">หลังด่าน 2 และยอด ≥ 35,000/วัน · <span class="money">เงินออกวันรับมอบ 0 บาท</span></p>
+      <p class="when">เปิดเมื่อผ่าน Go line (กำไรส่วนเกิน ≥ 7,800/วัน) · <span class="money">เงินออกวันรับมอบ 0 บาท</span></p>
       <div class="tblwrap"><table>
-        <thead><tr><th style="width:170px">กติกา</th><th>รายละเอียด</th></tr></thead>
         <tbody>
-          <tr><td>รูปแบบ</td><td>ฝากขาย 90 วันแรก จ่าย 0 · นับจริงทีละรายการพร้อมวันหมดอายุก่อนตกลงราคา</td></tr>
-          <tr><td>สูตรราคา</td><td>อายุ ≥12 เดือน = เต็มราคาทุน · 6–12 เดือน = ครึ่ง · <b>&lt;6 เดือน = 0</b></td></tr>
-          <tr><td>ตัดออกทั้งหมด</td><td>ยาเสพติดประเภท 3 · อาหารเสริม + เครื่องสำอาง (แยกเจรจาทีหลัง — เป็นของค้างอันดับ 1 ในร้านยา)</td></tr>
-          <tr><td>เพดาน</td><td><b>≤ 500,000</b> ไม่ว่าสูตรจะออกมาเท่าไร · <b>ล็อกในสัญญาตั้งแต่เซ็นด่าน 1</b> <span class="tag new">รอบ 2</span></td></tr>
-          <tr><td><b>วิธีจ่าย</b></td><td><b>20,834/เดือนคงที่ (500,000 ÷ 24) หรือ 50% ของกำไรหลังหักค่าใช้จ่ายทั้งหมด แล้วแต่ต่ำกว่า</b> <span class="tag new">แก้จาก 15% ของยอดขาย</span><br>
-            <span style="color:var(--red)">เดิม 15% ของยอดขาย = ดูดเงิน 114,017/เดือน จากธุรกิจที่กำไรศูนย์ → ต้องเติมอีก 500,003</span></td></tr>
-          <tr><td>กันเงิน</td><td>ไม่ปล่อยงวดใดใน 90 วันแรก (~62,500) เป็นหลักประกันภาระย้อนหลัง</td></tr>
-          <tr><td>ขอบเขต</td><td>ซื้อเฉพาะสินทรัพย์ <b>ไม่รับหนี้ทุกชนิด</b></td></tr>
-          <tr><td>ค้ำยอด</td><td>เขาค้ำ 15,000/วัน 12 เดือน · ยอดที่ขาด × GP หักจากยอดค้างจ่าย<br>
-            <b>ข้อจำกัดที่ต้องรู้: เพดานคุ้มครอง = ยอดค้างจ่ายที่เหลือเท่านั้น</b> เขาเป็นบุคคลธรรมดา ไม่มีนิติบุคคล ไม่มีทรัพย์ให้ยึด — <b>กระดาษมีค่าเท่ากับเงินที่เรายังไม่จ่าย</b></td></tr>
+          <tr><td style="width:170px"><b>รูปแบบ</b></td><td>ฝากขาย 90 วันแรก จ่าย 0 · นับจริงทีละรายการพร้อมวันหมดอายุก่อนตกลงราคา</td></tr>
+          <tr><td><b>สูตรราคา</b></td><td>อายุ ≥12 เดือน = เต็มราคาทุน · 6–12 เดือน = ครึ่ง · <b>&lt;6 เดือน = 0</b></td></tr>
+          <tr><td><b>ตัดออก</b></td><td>ยาเสพติดประเภท 3 · อาหารเสริม + เครื่องสำอาง (ของค้างอันดับ 1 ในร้านยา) แยกเจรจาทีหลัง</td></tr>
+          <tr><td><b>เพดาน</b></td><td><b>≤ 500,000</b> ล็อกในสัญญาตั้งแต่เซ็นด่าน 1</td></tr>
+          <tr><td><b>วิธีจ่าย</b></td><td><b>20,834/เดือนคงที่ หรือ 50% ของกำไรหลังหักค่าใช้จ่ายทั้งหมด แล้วแต่ต่ำกว่า</b><br>
+            <span style="color:var(--red)">ห้ามใช้ 15% ของยอดขาย = ดูดเงิน 114,017/เดือน จากธุรกิจที่ยังไม่มีกำไรพอ</span></td></tr>
+          <tr><td><b>ขอบเขต</b></td><td>ซื้อเฉพาะสินทรัพย์ <b>ไม่รับหนี้ทุกชนิด</b></td></tr>
         </tbody>
       </table></div>
+      <div class="note green" style="margin-bottom:0">
+        ที่กำไร +73,291/เดือน จ่ายค่าสต็อก 20,834 <b>ยังเหลือ 52,457/เดือน</b> — กลไกนี้ไม่ดูดเงินเหมือนแบบเดิม
+      </div>
     </div>
   </div>
 
@@ -399,53 +438,35 @@ footer.bot b{color:#fff}
       <tr><td><b>ดีลเดิมที่เขาเสนอ</b></td><td class="n"><b>1,595,000</b></td><td class="n" style="color:var(--red)"><b>2,520,000</b></td></tr>
     </tbody>
   </table></div>
-  <p class="lead"><b>ส่วนต่างเงินสด 1,001,000 – 1,211,000 บาท</b> · และค่าเสียโอกาสของเงินที่ถูกต้องคือ <b>7,425/เดือน</b> (คิดบนฐาน 594,000) ไม่ใช่ 25,188 ที่คิดบนฐานดีลเดิม</p>
-
-  <h2 class="sec"><span class="ic">§</span>ข้อสัญญาบังคับ 12 ข้อ</h2>
-  <div class="tblwrap"><table>
-    <thead><tr><th style="width:44px">#</th><th>ข้อความที่ต้องมี</th></tr></thead>
-    <tbody>
-      <tr><td class="n">1</td><td>สิทธิถอนตัวทุกด่าน แจ้งล่วงหน้า 15 วัน ไม่มีค่าปรับ ไม่ชดเชยค่าปรับปรุงสถานที่</td></tr>
-      <tr><td class="n">2</td><td><b>เงื่อนไขบังคับก่อน</b> — ไม่มีผลจนกว่าห้างออกสัญญาใหม่ชื่อจิ้น <b>และ</b> ขย.1 ออกในชื่อจิ้น <span class="tag bad">ไม่แลก</span></td></tr>
-      <tr><td class="n">3</td><td>เลิกอัตโนมัติ + คืนเงินทุกบาท ถ้า ขย.1 ไม่ออกหรือถูกเพิกถอน</td></tr>
-      <tr><td class="n">4</td><td>ค้ำยอด 15,000/วัน 12 เดือน หักจากยอดค้างจ่าย</td></tr>
-      <tr><td class="n">5</td><td>กันเงิน 90 วัน เป็นหลักประกันภาระย้อนหลัง</td></tr>
-      <tr><td class="n">6</td><td><b>หนังสือรับผิดชอบภาระย้อนหลัง 100%</b> (ภาษี ประกันสังคม ค่าเช่าค้าง แฟรนไชส์ DB หนี้ซัพพลายเออร์ ข้อพิพาทแรงงาน) <span class="tag bad">ไม่แลก</span></td></tr>
-      <tr><td class="n">7</td><td>ระบุชัดว่าใครจ่ายค่ารื้อถอนคืนสภาพเมื่อจบสัญญา — <b>เป้าหมาย: เจ้าของเดิมรับผิดชอบ 100%</b></td></tr>
-      <tr><td class="n">8</td><td><b>ห้ามใช้คำว่า "ให้ฟรี" ในเอกสารทุกฉบับ</b> ใช้ "การรับโอนภาระผูกพันตามสัญญาเช่า"</td></tr>
-      <tr><td class="n">9</td><td><b>K1–K14 แก้ได้เฉพาะก่อนเริ่มด่านนั้น และแก้ได้ทางเดียวคือเข้มขึ้น · ห้ามผ่อนกลางด่าน · ต้องมีลายเซ็นทั้งต้นและจิ้น</b> <span class="tag new">รอบ 2 · กัน escalation</span></td></tr>
-      <tr><td class="n">10</td><td><b>สิทธิ์ปฏิเสธก่อน (ROFR) + ห้ามเขาขายให้คนอื่นระหว่าง 90 วัน + บทลงโทษถ้าเกณฑ์ผ่านแล้วเขาปฏิเสธขาย</b> <span class="tag new">รอบ 2</span></td></tr>
-      <tr><td class="n">11</td><td><b>ห้ามมี non-compete / exclusivity / NDA ที่กว้างเกินขอบเขตดีลนี้</b> — จะฆ่าทางเลือกอื่นของเราทิ้งทั้งเส้น <span class="tag new">รอบ 2</span></td></tr>
-      <tr><td class="n">12</td><td><b>เราไม่รับผิดในการปฏิบัติการเภสัชกรรมทุกกรณีในด่าน 1 + เขา indemnify เรา</b> <span class="tag new">รอบ 2</span></td></tr>
-    </tbody>
-  </table></div>
+  <p class="lead">ที่กำไร +73,291/เดือน เงินสด 594,000 <b>คืนทุนใน ~8 เดือน</b> — ต่างจากดีลเดิมที่ 1,595,000 ไม่คืนทุนเลยภายในสัญญา</p>
 
 </div>
 </section>
 
-<!-- ===== TAB 3 : KILL + SCRIPT ===== -->
+<!-- ===== TAB 3 ===== -->
 <section class="panel" id="kill">
 <div class="wrap">
 
-  <h2 class="sec"><span class="ic">✕</span>Kill criteria — เกณฑ์เดี่ยว แตะข้อไหน = จบทันที</h2>
-  <p class="lead"><b>ค่าตั้งต้นคือ "ไม่รับ"</b> ทุกข้อนี้ต้องตกลงกันและเซ็นชื่อทั้งต้นและจิ้น <b>ก่อน</b>เข้าห้องวันที่ 18</p>
+  <h2 class="sec"><span class="ic">✕</span>Kill criteria — ปรับตามตัวเลขใหม่</h2>
+  <p class="lead">ตกลงกันและเซ็นชื่อทั้งต้นและจิ้น <b>ก่อน</b>เข้าห้องวันที่ 18 · <b>K1–K14 แก้ได้เฉพาะก่อนเริ่มด่านนั้น และแก้ได้ทางเดียวคือเข้มขึ้น ห้ามผ่อนกลางด่าน</b></p>
   <div class="tblwrap"><table>
     <thead><tr><th style="width:60px">#</th><th>เกณฑ์</th></tr></thead>
     <tbody>
       <tr><td class="n">K1</td><td>สัญญาเช่าไม่มีข้อโอนสิทธิ <b>และ</b> ห้างไม่ออกหนังสือยืนยันภายใน 31 ส.ค.</td></tr>
-      <tr><td class="n">K2</td><td><b>ค่าเช่า + ส่วนกลาง + ไฟ + แอร์ + ค่าธรรมเนียมห้างทุกชนิด รวมกัน &gt; 90,000/เดือน</b> <span class="tag new">แก้รอบ 2</span></td></tr>
+      <tr><td class="n">K2</td><td><b>ค่าเช่า + ค่าใช้จ่ายห้างทุกชนิด รวมกัน &gt; 75,000/เดือน</b> <span class="tag new">ปรับจาก 90,000</span></td></tr>
       <tr><td class="n">K3</td><td>เอกสารด่าน 0 ไม่ครบ 9 รายการ ณ 31 ส.ค. — ไม่ต่อเวลา</td></tr>
-      <tr><td class="n">K4</td><td><b>จำนวนบิล/วัน</b> ใน 30 วันแรกไม่ขึ้นจาก baseline → จบที่วันที่ 60 <span class="tag new">เปลี่ยนหน่วยวัด</span></td></tr>
-      <tr><td class="n">K5</td><td><b>กำไรขั้นต้นจริง &lt; 6,630 บาท/วัน</b> (≈ยอด 28,000/วัน) เฉลี่ย 60 วันสุดท้าย → ไม่เปิดด่าน 2 <span class="tag new">ยกจาก 25,337</span></td></tr>
-      <tr><td class="n">K6</td><td>หาเภสัชกร full-time ตัวจริงไม่ได้ <b>หรือคนที่หาได้ไม่อยู่ผ่านโปร 90 วัน</b> <span class="tag new">เข้มขึ้น</span></td></tr>
-      <tr><td class="n">K7</td><td><b>มีสถานการณ์ใดที่ทำให้ใบประกอบจิ้นเสี่ยงแม้แต่ครั้งเดียว → จบทันทีทุกด่าน</b></td></tr>
+      <tr><td class="n">K4</td><td><b>จำนวนบิล/วัน</b> ใน 30 วันแรกไม่ขึ้นจาก baseline → จบที่วันที่ 60</td></tr>
+      <tr><td class="n">K5</td><td><b>กำไรส่วนเกินจริง &lt; 5,500 บาท/วัน</b> (≈ยอด 11,752 ที่ GP 50%) เฉลี่ย 60 วันสุดท้าย <span class="tag new">ปรับจาก 6,630</span></td></tr>
+      <tr><td class="n">K6</td><td>หาเภสัชกร part-time ที่แจ้งเป็นผู้มีหน้าที่ปฏิบัติการได้ครบทุกวันไม่ได้ <span class="tag new">v3.1</span></td></tr>
+      <tr><td class="n">K7</td><td><b>มีสถานการณ์ใดที่ทำให้ใบประกอบจิ้นเสี่ยง → จบทันทีทุกด่าน</b></td></tr>
       <tr><td class="n">K8</td><td>แฟรนไชส์ DB มีภาระค้าง เว้นแต่ บ.ดีบีฯ ออกหนังสือปลดภาระ</td></tr>
       <tr><td class="n">K9</td><td><b>เขาเรียกเงินสดก้อนใดก่อนด่าน 2 ผ่านครบ</b> <span class="tag bad">ไม่แลก</span></td></tr>
       <tr><td class="n">K10</td><td>เขายืนยัน 1,000,000 เงินสดวันโอนและไม่ขยับ → จบในห้องนั้นเลย</td></tr>
-      <tr><td class="n">K11</td><td><b>ค่ารื้อถอนคืนสภาพไม่ได้ระบุเป็นตัวเลขในสัญญา หรือไม่ได้ให้เจ้าของเดิมรับผิดชอบ</b> <span class="tag new">แก้ให้ไม่ขัด K12</span></td></tr>
+      <tr><td class="n">K11</td><td>ค่ารื้อถอนคืนสภาพไม่ได้ระบุเป็นตัวเลขในสัญญา หรือไม่ได้ให้เจ้าของเดิมรับผิดชอบ</td></tr>
       <tr><td class="n">K12</td><td>เงินสดออกจากกระเป๋ารวมทุกด่านจะเกิน 600,000</td></tr>
-      <tr><td class="n">K13</td><td><b>ห้างไม่ให้สิทธิ์บอกเลิกสัญญาเช่าฝ่ายเดียวที่เดือน 12 → ไม่เซ็นด่าน 2</b> <span class="tag new">รอบ 2</span></td></tr>
-      <tr><td class="n">K14</td><td><b>เขาขอให้จิ้นแขวนใบ ครอบเวร หรือ "ช่วยหน่อยวันนี้" แม้ครั้งเดียว → จบทันทีทุกด่าน</b> <span class="tag new">รอบ 2</span></td></tr>
+      <tr><td class="n">K13</td><td><b>ห้างไม่ให้สิทธิ์บอกเลิกสัญญาเช่าฝ่ายเดียวที่เดือน 12 → ไม่เซ็นด่าน 2</b></td></tr>
+      <tr><td class="n">K14</td><td><b>เขาขอให้จิ้นแขวนใบโดยไม่แจ้งชื่อให้ถูก หรือครอบเวรแม้ครั้งเดียว → จบทันที</b></td></tr>
+      <tr class="hi"><td class="n">K15</td><td><b>"GP 50%" กลายเป็น markup ไม่ใช่ margin และยอดขายอยู่ที่ 16,000/วัน → กำไรเหลือ +8,011 หักค่าเวลาจิ้นแล้วติดลบ → ไม่คุ้มเวลา ปิดดีล</b> <span class="tag new">v3.1</span></td></tr>
     </tbody>
   </table></div>
 
@@ -454,145 +475,113 @@ footer.bot b{color:#fff}
     <div class="card" style="border-left:6px solid var(--green)">
       <h3 style="color:var(--greenDeep)">แลกได้ — เรียงจากยอมง่ายสุด</h3>
       <ol style="margin-left:20px;font-size:16.5px;line-height:1.85">
-        <li><b>ค่าตอบแทนจิ้น 10,880/เดือน</b> — รวมทั้งดีล 32,640 เล็กสำหรับเรา ใหญ่ในความรู้สึกเขา</li>
-        <li><b>ส่วนแบ่ง 50% → 30% หรือตัดทิ้ง</b> — เราไม่ได้เข้ามาหากำไรจากด่าน 1</li>
-        <li><b>ค้ำยอด 12 เดือน → 6 เดือน หรือตัด</b> — กลไกจ่ายจากกำไรคุ้มครองเราอยู่แล้ว</li>
-        <li><b>90 วัน → 60 วัน</b> — ลดแรง sunk-cost ของเราเองด้วย ได้สองต่อ</li>
-        <li><b>เดดไลน์เอกสาร</b> — ของที่เขาถือเอง 31 ส.ค. ไม่ขยับ · ของที่ต้องขอห้าง/DB ยืดได้ แต่ด่าน 1 ไม่เริ่มจนกว่าจะครบ</li>
+        <li><b>ค่าตอบแทนจิ้นในด่าน 1</b> — เล็กสำหรับเรา ใหญ่ในความรู้สึกเขา</li>
+        <li><b>ส่วนแบ่งกำไรด่าน 1 → ตัดทิ้ง</b> — เราไม่ได้เข้ามาหากำไรจากด่านนี้</li>
+        <li><b>90 วัน → 60 วัน</b> — ลดแรง sunk-cost ของเราเองด้วย</li>
+        <li><b>เดดไลน์เอกสารที่ต้องขอห้าง/DB</b> ยืดได้ แต่ด่าน 1 ไม่เริ่มจนกว่าจะครบ</li>
+        <li><b>ราคาสต็อก 500,000 → 600,000</b> ถ้านับของแล้วคุณภาพดีจริง — <b>แต่ห้ามพูดตัวเลขนี้วันที่ 18</b></li>
       </ol>
     </div>
     <div class="card" style="border-left:6px solid var(--red)">
-      <h3 style="color:var(--red)">ห้ามแลก — แตะข้อไหน เดินออก</h3>
+      <h3 style="color:var(--red)">ห้ามแลก</h3>
       <ul class="bul x">
-        <li><b>เงินสด 0 บาทจนด่าน 2 ผ่านครบ</b> — ถอยข้อนี้ = กลับไปเป็นดีล 2/10 ทันที</li>
+        <li><b>เงินสด 0 บาทจนด่าน 2 ผ่านครบ</b></li>
         <li>สต็อก 0 บาทวันรับมอบ + จ่ายจากกำไรเท่านั้น</li>
         <li>สิทธิถอนตัวทุกด่าน ไม่มีค่าปรับ</li>
-        <li><b>K7 + K14 — ใบประกอบจิ้นไม่แตะดีลจนถึงด่าน 2</b> ไม่มีข้อยกเว้น</li>
-        <li>สัญญาเช่าใหม่กับห้างโดยตรงในชื่อจิ้น</li>
+        <li><b>แจ้งเภสัชกรผู้มีหน้าที่ปฏิบัติการให้ถูกต้องครบทุกวัน</b> (K7 + K14)</li>
+        <li>สัญญาเช่าใหม่กับห้างโดยตรงในชื่อจิ้น + สิทธิ์บอกเลิกเดือน 12</li>
         <li>ซื้อเฉพาะสินทรัพย์ ไม่รับหนี้</li>
         <li>ไม่มี non-compete / exclusivity ที่กว้างเกินดีลนี้</li>
       </ul>
     </div>
   </div>
 
-  <h2 class="sec"><span class="ic">☎</span>สคริปต์ 80 นาที</h2>
-  <div class="note blue">
-    <b>เป้าหมายเดียวของวันที่ 18 คือ "กระดาษ" ไม่ใช่ "ความเข้าใจตรงกัน"</b> — คำพูดไม่มีต้นทุนสำหรับเขา แต่ซื้อความสนใจของเราไปได้สองสัปดาห์<br>
-    <b>จบด่าน 0 ใน 40 นาทีแรก · ไม่พูดถึงด่าน 2–3 เลยในวันนี้ · ไม่พูดราคาสต็อกเด็ดขาด</b>
+  <h2 class="sec"><span class="ic">☎</span>สคริปต์ 80 นาที — เปลี่ยนท่าที</h2>
+  <div class="note green">
+    <b>ท่าทีเปลี่ยนจาก "มาขอเอกสารเพื่อจะปฏิเสธ" เป็น "มาขอเอกสารเพื่อจะรับ ถ้าตัวเลขยืน"</b><br>
+    แต่<b>กติกาเดิมยังใช้ทั้งหมด</b>: วันนี้ไม่ให้ตัวเลข ไม่ต่อราคา ไม่รับปาก · เป้าหมายเดียวคือ <b>กระดาษ</b>
   </div>
 
   <div class="script">
-    <span class="t">0–10 นาที · ตั้งกติกา ตัดหนี้บุญคุณ</span>
-    <div class="say">"พี่เจี๊ยบครับ ขอบคุณที่คิดถึงเรา ผมขอพูดตรง ๆ ตั้งแต่ต้นว่าวันนี้ผมกับจิ้นมาฟังกับมาขอเอกสาร เราจะไม่ให้คำตอบและไม่ให้ตัวเลขในห้องนี้ ผมมีเวลา 80 นาที อยากใช้ให้คุ้มที่สุดครับ"</div>
+    <span class="t">0–10 นาที · ตั้งกติกา</span>
+    <div class="say">"พี่เจี๊ยบครับ ขอบคุณที่คิดถึงเรา ผมขอบอกตรง ๆ ว่าผมกับจิ้นสนใจจริงนะครับ แต่วันนี้ผมมาฟังกับมาขอเอกสาร จะยังไม่ให้คำตอบและไม่ให้ตัวเลขในห้องนี้ ผมมีเวลา 80 นาที อยากใช้ให้คุ้มที่สุดครับ"</div>
   </div>
 
   <div class="script">
-    <span class="t">10–40 นาที · ประตูสัญญา + เอกสาร 9 อย่าง (ส่วนที่สำคัญที่สุด)</span>
-    <div class="say">"สัญญาเช่ากับห้าง เขียนไว้ไหมครับว่าโอนสิทธิหรือให้เช่าช่วงได้ ขอดูหน้านั้นเลยได้ไหมครับ เพราะตามกฎหมาย ถ้าสัญญาไม่ได้เขียนอนุญาตไว้ พี่ยกร้านให้ผมไม่ได้ครับ ต่อให้เราตกลงราคากันได้"</div>
-    <p style="font-size:16.5px;color:var(--ink2);line-height:1.8"><b>แล้วยื่นเช็กลิสต์เอกสาร 9 รายการ</b> — ปฏิกิริยาของเขาต่อคำขอที่ไม่มีต้นทุน คือข้อมูลที่มีค่าที่สุดในห้อง ถ้าอึกอักเรื่อง POS หรือสัญญาเช่า ที่เหลือไม่ต้องคุย</p>
+    <span class="t">10–25 นาที · คำถามที่แพงที่สุด ถามก่อนเพื่อน</span>
+    <div class="say">"จิ้นบอกผมว่าเคยเห็นกำไรยาอยู่ที่ห้าสิบถึงหกสิบเปอร์เซ็นต์ ผมอยากเข้าใจให้ตรงกันครับ ตัวเลขนั้นในระบบเขาคิดจากราคาขาย หรือคิดจากราคาทุน ขอเปิดหน้าจอดูสูตรด้วยกันเลยได้ไหมครับ"</div>
+    <p style="font-size:16.5px;color:var(--ink2)">ตัวเลขนี้ swing กำไร <b>9 เท่า</b> — ถ้าได้คำตอบข้อเดียวนี้ วันที่ 18 ก็คุ้มแล้ว</p>
   </div>
 
   <div class="script">
-    <span class="t">40–50 นาที · ถอดคำว่า "ฟรี" ออก</span>
-    <div class="say">"พี่บอกว่ายกร้านให้ฟรี คิดแค่ค่ายา ผมขอไม่มองแบบนั้นครับ เพราะค่าตกแต่งมันติดอยู่กับห้องนี้ ขายต่อไม่ได้ ยกไปไหนไม่ได้ ของที่แพงที่สุดคือค่าเช่ากับค่าเภสัชที่เดินทุกวันไม่ว่าจะมีลูกค้าหรือไม่มี ผมกำลังรับภาระรายเดือนต่อจากพี่ ไม่ได้กำลังรับของขวัญครับ"</div>
+    <span class="t">25–40 นาที · ประตูสัญญาเช่า + เอกสาร 9 อย่าง</span>
+    <div class="say">"สัญญาเช่ากับห้าง เขียนไว้ไหมครับว่าโอนสิทธิหรือให้เช่าช่วงได้ ขอดูหน้านั้นเลยได้ไหมครับ เพราะตามกฎหมาย ถ้าสัญญาไม่ได้เขียนอนุญาตไว้ พี่ยกร้านให้ผมไม่ได้ ต่อให้เราตกลงกันได้ทุกอย่าง"</div>
+    <div class="say">"แล้วผมขอ POS รายวันสามเดือนที่จิ้นไปช่วยด้วยนะครับ อยากดูว่าวันที่จิ้นอยู่กับวันที่จิ้นไม่อยู่ ต่างกันแค่ไหน ถ้าต่างกันจริง แปลว่าปัญหาของร้านนี้แก้ได้ครับ"</div>
   </div>
 
   <div class="script">
-    <span class="t">50–60 นาที · ถามเรื่อง 530K แล้วเงียบ</span>
-    <div class="say">"ตอนเมษาผมเสนอระบบให้พี่ห้าแสนสาม เพื่อแก้ร้านนี้ พี่บอกว่าไม่คุ้ม ผมเข้าใจนะครับ แต่วันนี้พี่กำลังชวนให้ผมลงหนึ่งล้านห้ากับร้านเดียวกัน ช่วยอธิบายให้ผมฟังหน่อยได้ไหมครับว่าอะไรเปลี่ยนไป ผมถามด้วยความอยากเข้าใจจริง ๆ ไม่ได้จับผิด"</div>
-    <p style="font-size:16.5px;color:var(--red);font-weight:600">แล้วเงียบ ปล่อยให้เขาตอบ อย่ารีบเติมช่องว่าง — คำตอบของคำถามนี้มีค่ามากกว่าเอกสารทุกใบ</p>
+    <span class="t">40–55 นาที · ถอดคำว่า "ฟรี" + ถามเรื่อง 530K แล้วเงียบ</span>
+    <div class="say">"พี่บอกว่ายกร้านให้ฟรี คิดแค่ค่ายา ผมขอไม่มองแบบนั้นครับ ค่าตกแต่งมันติดอยู่กับห้องนี้ ขายต่อไม่ได้ ของที่แพงที่สุดคือค่าเช่ากับค่าเภสัชที่เดินทุกวัน ผมกำลังรับภาระรายเดือนต่อจากพี่ครับ"</div>
+    <div class="say">"อีกอย่างที่ผมสงสัยจริง ๆ นะพี่ ตอนเมษาผมเสนอระบบให้พี่ห้าแสนสาม พี่บอกว่าไม่คุ้ม แต่วันนี้พี่ชวนให้ผมลงหนึ่งล้านห้ากับร้านเดียวกัน ช่วยอธิบายให้ผมฟังหน่อยได้ไหมครับว่าอะไรเปลี่ยนไป ผมถามด้วยความอยากเข้าใจจริง ๆ"</div>
+    <p style="font-size:16.5px;color:var(--red);font-weight:600">แล้วเงียบ ปล่อยให้เขาตอบ — คำตอบนี้มีค่ามากกว่าเอกสารทุกใบ</p>
   </div>
 
   <div class="script">
-    <span class="t">60–80 นาที · ยื่นข้อเสนอด่าน 1 แล้วปิด</span>
-    <div class="say">"ผมขอเสนอทางที่ตรงไปตรงมาที่สุดสำหรับทั้งสองฝ่ายนะพี่ ผมไม่ซื้อร้าน แต่ให้ทีมเราเข้าไปช่วยบริหารทดลอง 90 วัน สัญญาเช่า ใบอนุญาต สต็อก ยังเป็นของพี่ทั้งหมด ความเสี่ยงยังอยู่กับพี่ ถ้า 90 วันแล้วร้านทำเงินได้จริง เราค่อยคุยเรื่องซื้อบนตัวเลขที่เห็นด้วยกันสองฝ่าย ถ้าไม่ได้ พี่ก็ไม่เสียอะไร"</div>
-    <div class="say">"ถ้าเงื่อนไขไม่เป็นแบบนี้ ผมขอไม่รับครับพี่ ไม่ใช่เพราะราคา แต่เพราะตัวเลขยังไม่บอกผมว่าร้านนี้ทำเงินได้ และผมไม่ซื้อสิ่งที่ผมยังพิสูจน์ไม่ได้ ขอบคุณที่คิดถึงเราจริง ๆ นะครับ"</div>
+    <span class="t">55–80 นาที · ยื่นข้อเสนอด่าน 1</span>
+    <div class="say">"ผมขอเสนอทางที่ตรงไปตรงมาที่สุดนะพี่ ผมยังไม่ซื้อร้านวันนี้ แต่ให้ทีมเราเข้าไปช่วยบริหารทดลองสามเดือน สัญญาเช่า ใบอนุญาต สต็อก ยังเป็นของพี่ทั้งหมด ความเสี่ยงยังอยู่กับพี่ ถ้าสามเดือนแล้วตัวเลขออกมาดีอย่างที่จิ้นเคยทำได้ เราคุยเรื่องซื้อกันบนตัวเลขที่เห็นด้วยกันสองฝ่ายครับ"</div>
+    <div class="say">"ถ้าเงื่อนไขไม่เป็นแบบนี้ ผมขอไม่รับครับพี่ ไม่ใช่เพราะราคา แต่เพราะผมไม่ซื้อสิ่งที่ผมยังพิสูจน์ไม่ได้ ขอบคุณที่คิดถึงเราจริง ๆ นะครับ"</div>
   </div>
 
-  <h2 class="sec"><span class="ic">⚔</span>เขาพลิกกลับได้ 3 ทาง — ประโยครับมือ</h2>
-
+  <h2 class="sec"><span class="ic">⚔</span>เขาพลิกกลับได้ 3 ทาง</h2>
   <div class="card">
     <h3 style="color:var(--red)">(ก) "ถ้างั้นผมไปหาคนอื่น"</h3>
-    <div class="say">"ผมว่าพี่ควรไปหาครับ ผมพูดจริง ๆ นะ ถ้ามีคนที่จ่ายหนึ่งล้านสดวันโอนได้ พี่ควรรับเลย เพราะเงื่อนไขผมไม่มีทางดีกว่านั้นสำหรับพี่ในระยะสั้น"<br><br>
-    <i>(หยุด ปล่อยเงียบ อย่าเติมอะไรต่อ)</i><br><br>
-    "ผมมีแบบเดียวครับพี่ คือแบบที่ตัวเลขต้องพิสูจน์ตัวเองก่อน ถ้าอีกสองเดือนยังไม่เจอคนที่ใช่ โทรหาผมได้เลย ข้อเสนอผมจะเหมือนเดิม เพราะมันไม่ได้ขึ้นกับว่าผมรีบหรือเปล่าครับ"</div>
-    <p style="font-size:16px;color:var(--ink3)"><b>หลักการ:</b> ห้ามแมตช์ความเร่งของเขา และห้ามขยับเงื่อนไขเพื่อชนะคู่แข่งที่เรายังไม่รู้ว่ามีจริงไหม</p>
+    <div class="say">"ผมว่าพี่ควรไปหาครับ ผมพูดจริง ๆ นะ ถ้ามีคนที่จ่ายหนึ่งล้านสดวันโอนได้ พี่ควรรับเลย"<br><br><i>(หยุด ปล่อยเงียบ)</i><br><br>"ผมมีแบบเดียวครับพี่ คือแบบที่ตัวเลขต้องพิสูจน์ตัวเองก่อน ถ้าอีกสองเดือนยังไม่เจอคนที่ใช่ โทรหาผมได้เลยครับ ข้อเสนอผมจะเหมือนเดิม"</div>
   </div>
-
   <div class="card">
     <h3 style="color:var(--red)">(ข) "ผมยอมลดเหลือ 7 แสน จ่ายเลยวันนี้"</h3>
-    <div class="say">"พี่ลดจากล้านเหลือเจ็ดแสนในประโยคเดียว ผมขอบคุณที่ตรงไปตรงมานะครับ แต่มันบอกผมอย่างหนึ่งว่าตัวเลขหนึ่งล้านเมื่อกี้ไม่ได้มาจากการนับของ ผมเลยยิ่งอยากนับของจริงก่อน"<br><br>
-    "และผมขอเรียนตรง ๆ ครับ ปัญหาของผมไม่ใช่ราคา ต่อให้พี่ให้ฟรี ผมก็ยังไม่รับวันนี้ เพราะสิ่งที่ผมต้องแบกไม่ใช่ค่ายา แต่คือค่าเช่ากับค่าเภสัชทุกเดือนไปอีกสองปี ราคาสต็อกเป็นเรื่องเล็กที่สุดในดีลนี้ครับ"</div>
-    <p style="font-size:16px;color:var(--ink3)"><b>หลักการ:</b> รับข้อมูล ปฏิเสธเฟรม — เขากำลังลากเรากลับสู่สนามราคา ซึ่งเป็นสนามเดียวที่เขายังมีของเล่น</p>
+    <div class="say">"พี่ลดจากล้านเหลือเจ็ดแสนในประโยคเดียว ผมขอบคุณที่ตรงไปตรงมานะครับ แต่มันบอกผมว่าตัวเลขหนึ่งล้านเมื่อกี้ไม่ได้มาจากการนับของ ผมเลยยิ่งอยากนับของจริงก่อน"<br><br>"และปัญหาของผมไม่ใช่ราคาครับ ต่อให้พี่ให้ฟรี ผมก็ยังไม่รับวันนี้ เพราะสิ่งที่ผมต้องแบกคือค่าเช่ากับค่าเภสัชทุกเดือนไปอีกสองปี ราคาสต็อกเป็นเรื่องเล็กที่สุดในดีลนี้"</div>
   </div>
-
   <div class="card">
     <h3 style="color:var(--red)">(ค) "ทดลองบริหารได้ แต่ขอมัดจำหน่อย"</h3>
-    <div class="say">"มัดจำผมให้ไม่ได้ครับพี่ ไม่ใช่เรื่องจำนวน แต่เป็นหลักการ จุดทั้งหมดของ 90 วันนี้คือของยังเป็นของพี่ ความเสี่ยงยังอยู่กับพี่ ถ้าผมวางเงิน มันแปลว่าผมซื้อไปแล้วครึ่งหนึ่ง แล้วเราจะไม่ได้คำตอบที่แท้จริงจากตัวเลขอีกเลย"<br><br>
-    "แต่ผมเข้าใจว่าพี่อยากมั่นใจว่าผมเอาจริง ผมให้ได้สามอย่างครับ: สัญญาผูกพันว่าถ้าตัวเลขถึงเกณฑ์ ผมต้องเข้าซื้อตามสูตรที่ตกลง · ค่าปรับถ้าผมถอนโดยไม่มีเหตุตามสัญญา · และถ้าพี่ต้องการเงินจริง ๆ ให้วางที่ทนายเป็นคนกลาง"<br><br>
-    <i>(ถ้าเขายืนยันว่าต้องเป็นเงินสดถึงมือ)</i><br><br>
-    "งั้นผมขอถามตรง ๆ ครับพี่ พี่ต้องการหลักประกัน หรือพี่ต้องการเงินสดตอนนี้ ผมถามเพราะสองอย่างนี้คนละเรื่องกัน และคำตอบเปลี่ยนสิ่งที่ผมทำได้เยอะเลยครับ"</div>
-    <p style="font-size:16px;color:var(--ink3)"><b>หลักการ:</b> ถ้าเขาไม่รับอะไรเลยนอกจากเงินสดถึงมือ นั่นแปลว่าเขามีปัญหากระแสเงินสด ไม่ใช่ปัญหาความไว้ใจ — <b>และนั่นคือสิ่งเดียวที่เราต้องรู้จริง ๆ จากวันที่ 18</b></p>
+    <div class="say">"มัดจำผมให้ไม่ได้ครับพี่ ไม่ใช่เรื่องจำนวน แต่เป็นหลักการ จุดทั้งหมดของสามเดือนนี้คือของยังเป็นของพี่ ความเสี่ยงยังอยู่กับพี่ ถ้าผมวางเงิน เราจะไม่ได้คำตอบที่แท้จริงจากตัวเลขอีกเลย"<br><br>"แต่ผมให้ได้สามอย่างครับ: สัญญาผูกพันว่าถ้าตัวเลขถึงเกณฑ์ ผมต้องเข้าซื้อ · ค่าปรับถ้าผมถอนโดยไม่มีเหตุ · และถ้าพี่ต้องการหลักประกันจริง ๆ ให้วางที่ทนายเป็นคนกลางครับ"</div>
+    <p style="font-size:16px;color:var(--ink3)"><b>ถ้าเขาไม่รับอะไรเลยนอกจากเงินสดถึงมือ</b> = เขามีปัญหากระแสเงินสด ไม่ใช่ปัญหาความไว้ใจ — และนั่นคือสิ่งเดียวที่เราต้องรู้จริง ๆ</p>
   </div>
 
 </div>
 </section>
 
-<!-- ===== TAB 4 : BATNA + NEXT ===== -->
+<!-- ===== TAB 4 ===== -->
 <section class="panel" id="next">
 <div class="wrap">
 
-  <h2 class="sec"><span class="ic">⇉</span>ทางเลือกอื่นของเงินและเวลาก้อนนี้</h2>
-  <div class="note amber">
-    <div class="hd">คำเตือนจากพาเนล: ตอนนี้ยังเป็น "รายการทางเลือก" ไม่ใช่ "เกณฑ์เปรียบเทียบ"</div>
-    ทางเลือกจะใช้ได้จริงต่อเมื่อมี <b>ตัวเลข + เจ้าของ + การกระทำแรก + วันที่</b> — ตอนนี้มีครบแค่ทางเลือก C
-  </div>
-  <div class="grid3">
-    <div class="card">
-      <h3>A · ทุ่มเข้า UP Wellness</h3>
-      <p style="font-size:16.5px;line-height:1.8;color:var(--ink2)">ไม่มีค่าเช่า ไม่มี ขย.1 ไม่ผูก ม.39 → เข้ากับ passive income โดยตรง · แก้ blind spot "เริ่มของใหม่ก่อนของเดิมทำเงิน"<br><br>
-      <span class="tag warn">ยังไม่มีตัวเลข</span> ต้องการ: กำไร/เคส · เคสที่รับเพิ่มได้ถ้าจิ้นให้เวลา 8 วัน · เงินก้อนที่ดูดซับได้จริง</p>
-    </div>
-    <div class="card">
-      <h3>B · ขายระบบให้ร้านยารายย่อย</h3>
-      <p style="font-size:16.5px;line-height:1.8;color:var(--ink2)">ของมีอยู่แล้ว (ข้อเสนอ 530K + PharmaIQ) · ตัวกระตุ้นยืนยันแล้ว (Telepharmacy บังคับใช้ 22 มิ.ย. 69) · ตลาดที่ยืนยันได้ <b>41 ร้านเขตพระนคร</b><br><br>
-      <span class="tag bad">หลักฐานฝั่งลบ</span> ลูกค้ารายเดียวที่เคยเสนอราคานี้ <b>ปฏิเสธ</b><br>
-      <b>ทดสอบได้ทันที:</b> ติดต่อ 10 ร้าน ในหน้าต่างเดียวกับด่าน 0 นับว่ากี่ร้านยอมนัดคุย</p>
-    </div>
-    <div class="card">
-      <h3>C · ถือเงินไว้เฉย ๆ</h3>
-      <p style="font-size:16.5px;line-height:1.8;color:var(--ink2)">ค่าเสียโอกาส <b>7,425/เดือน</b> (คิดบนฐาน 594,000 ของ v3 ไม่ใช่ 25,188 ที่คิดบนฐานดีลเดิม)<br><br>
-      <span class="tag warn">ต้องระบุที่มา</span> อัตรา 15%/ปี ยังไม่มีที่มาในเอกสาร — ถ้าใช้ 3% ช่องว่างหดเหลือหนึ่งในห้าทันที</p>
-    </div>
-  </div>
-
-  <div class="note green">
-    <div class="hd">จังหวะที่ลงตัวพอดี</div>
-    ด่าน 0 คือหน้าต่าง <b>18–31 ส.ค. ที่เราไม่ต้องทำอะไรนอกจากรอเอกสาร</b> — ใช้หน้าต่างเดียวกันนั้นทดสอบทางเลือก B ไปพร้อมกัน<br>
-    ถ้าสิ้นเดือน B ได้นัดคุย 3 ร้าน ขณะที่เขาส่งเอกสารมา 2 จาก 9 ชิ้น — <b>การตัดสินใจจะตัดสินตัวมันเอง ไม่ต้องมีใครเถียงกัน</b>
-  </div>
-
-  <h2 class="sec"><span class="ic">✓</span>ทำอะไรต่อ — ก่อน 18 ส.ค. 14:00</h2>
+  <h2 class="sec"><span class="ic">✓</span>ทำอะไรต่อ — คืนนี้ถึงพรุ่งนี้ 14:00</h2>
   <div class="tblwrap"><table>
-    <thead><tr><th style="width:50px">#</th><th>งาน</th><th style="width:130px">ใคร</th><th style="width:110px">เมื่อไหร่</th></tr></thead>
+    <thead><tr><th style="width:50px">#</th><th>งาน</th><th style="width:120px">ใคร</th><th style="width:110px">เมื่อไหร่</th></tr></thead>
     <tbody>
-      <tr><td class="n">1</td><td><b>ตอบคำถามชั้นบน</b> — "อยากมีร้านยาหน้าร้านไหม" เขียนคำตอบลงกระดาษ 1 บรรทัด</td><td>จิ้นตอบ ต้นบันทึก</td><td>คืนนี้</td></tr>
-      <tr><td class="n">2</td><td><b>จิ้นตั้งราคาวันของตัวเอง</b> — ห้ามใช้ 1,360 ที่เขาประกาศ ถ้าสูงกว่า ให้เขียนส่วนต่างลงช่อง "เงินที่เสี่ยงจริง"</td><td>จิ้น</td><td>คืนนี้</td></tr>
-      <tr><td class="n">3</td><td><b>ตกลง K1–K14 + ราคาเดินออก เซ็นชื่อกันเองทั้งคู่</b> พร้อมข้อ 9 (ห้ามผ่อนเกณฑ์กลางด่าน)</td><td>ต้น + จิ้น</td><td>คืนนี้</td></tr>
-      <tr><td class="n">4</td><td>เลือก <b>3 ข้อจาก 12 ข้อสัญญาที่ "ไม่แลก"</b> — ที่เหลือใช้เป็นเหรียญต่อรอง</td><td>ต้น</td><td>คืนนี้</td></tr>
-      <tr><td class="n">5</td><td>พิมพ์เช็กลิสต์เอกสาร 9 รายการเป็นกระดาษ 1 หน้า ยื่นให้เขาในห้อง</td><td>ต้น</td><td>18 ส.ค. เช้า</td></tr>
-      <tr><td class="n">6</td><td>ซ้อมสคริปต์ 80 นาที โดยเฉพาะประโยคเดินออกให้พูดได้ลื่นไม่สะดุด</td><td>ต้น + จิ้น</td><td>18 ส.ค. 13:00</td></tr>
-      <tr><td class="n">7</td><td><b>เคลียร์ปฏิทิน</b> — นัดเจริญสติ วัดปากน้ำ 16:00 ทำให้เหลือเวลาจริง ~80 นาที</td><td>ต้น</td><td>คืนนี้</td></tr>
-      <tr><td class="n">8</td><td>ให้ทนาย/สภาเภสัชกรรมยืนยันสถานะจิ้นในด่าน 1 — <b>ก่อนจิ้นเข้าร้านวันแรก ไม่ใช่ก่อนเซ็น</b></td><td>จิ้น</td><td>ก่อนด่าน 1</td></tr>
-      <tr><td class="n">9</td><td>เริ่มทดสอบทางเลือก B — ติดต่อร้านยา 10 ร้านในเขตพระนคร นับว่ากี่ร้านยอมนัด</td><td>ต้น</td><td>18–31 ส.ค.</td></tr>
-      <tr><td class="n">10</td><td><b>ปิดด่าน 0</b> — เอกสารครบ 9 อย่างหรือไม่ ตอบ ผ่าน/ไม่ผ่าน เท่านั้น ไม่ต่อเวลา</td><td>ต้น + จิ้น</td><td>31 ส.ค.</td></tr>
+      <tr class="hi"><td class="n">1</td><td><b>ถามคำถามแพงที่สุดก่อนเพื่อน: "50% คิดจากราคาขายหรือราคาทุน"</b> ขอเปิดหน้าจอ POS ดูสูตรเลย</td><td>ต้น</td><td>18 ส.ค. นาทีที่ 10</td></tr>
+      <tr class="hi"><td class="n">2</td><td><b>ขอ POS รายวัน 3 เดือนที่จิ้นไป</b> เทียบเสาร์-อาทิตย์ที่จิ้นอยู่ vs ไม่อยู่ — แยกค่าตัวจิ้นออกจากเอฟเฟกต์วันหยุด</td><td>ต้น</td><td>18 ส.ค.</td></tr>
+      <tr><td class="n">3</td><td>ขอใบเสร็จค่าเช่า 3 เดือน ยืนยันว่า 70,000 รวมน้ำไฟจริง</td><td>ต้น</td><td>18 ส.ค.</td></tr>
+      <tr><td class="n">4</td><td><b>โทรสำนักอนามัย กทม.</b> ถามขั้นตอนแจ้งเภสัชกรผู้มีหน้าที่ปฏิบัติการเพิ่มหลายคน</td><td>จิ้น</td><td>ก่อน 18 ส.ค.</td></tr>
+      <tr><td class="n">5</td><td>ตกลง K1–K15 + ราคาเดินออก เซ็นชื่อกันเองทั้งคู่</td><td>ต้น + จิ้น</td><td>คืนนี้</td></tr>
+      <tr><td class="n">6</td><td>เคลียร์ปฏิทิน — นัดวัดปากน้ำ 16:00 ทำให้เหลือเวลาจริง ~80 นาที</td><td>ต้น</td><td>คืนนี้</td></tr>
+      <tr><td class="n">7</td><td>ยืนยันข้อสังเกตเรื่องวัตสันไม่มีเภสัช — ไปดูซ้ำหลายวันหลายช่วงเวลา</td><td>ต้น/จิ้น</td><td>สัปดาห์นี้</td></tr>
+      <tr><td class="n">8</td><td>เริ่มมองหาเภสัชกร part-time ที่แจ้งชื่อเป็นผู้มีหน้าที่ปฏิบัติการได้ — ต้องมีตัวจริงก่อนเปิดด่าน 2</td><td>จิ้น</td><td>ก.ย.</td></tr>
+      <tr><td class="n">9</td><td><b>ปิดด่าน 0</b> — เอกสารครบ 9 อย่างหรือไม่ ตอบ ผ่าน/ไม่ผ่าน เท่านั้น</td><td>ต้น + จิ้น</td><td>31 ส.ค.</td></tr>
     </tbody>
   </table></div>
 
-  <div class="note purple">
-    <div class="hd">บรรทัดเดียวที่ต้องถือไว้ตลอด 80 นาที</div>
-    คนที่ไม่ยอมจ่าย <b>530,000</b> เพื่อแก้ร้านตัวเองเมื่อ มิ.ย. 2569 กำลังชวนให้เราลง <b>1,595,000</b> กับร้านเดียวกันในเดือน ส.ค.<br>
-    <b>เราไม่ใช่คนที่ต้องรีบ — คนที่ถือของตกแต่ง 4–5 ล้านที่รื้อไปไหนไม่ได้ คือคนที่ต้องรีบ</b>
+  <h2 class="sec"><span class="ic">◑</span>สิ่งที่ยังไม่เปลี่ยน แม้ตัวเลขจะดีขึ้น</h2>
+  <ul class="bul x">
+    <li><b>ยังไม่มีเอกสารยืนยันสักใบ</b> — ทั้ง GP 50% และยอด 19,000–21,000 ยังเป็นสิ่งที่จำได้ ไม่ใช่สิ่งที่พิมพ์ออกมา</li>
+    <li><b>สัญญาเช่ายังเป็นประตูแรก</b> (ป.พ.พ. ม.544) ถ้าโอนสิทธิ์ไม่ได้ ทุกอย่างจบเหมือนเดิม</li>
+    <li><b>Telepharmacy ยังบังคับใช้อยู่</b> (22 มิ.ย. 2569) — แต่ผลกระทบน้อยลงมากถ้าเราขายของที่ต้องมีเภสัชจ่าย ซึ่งเป็นหมวดที่แพลตฟอร์มแตะยากที่สุด</li>
+    <li><b>ห้ามผ่อนเกณฑ์กลางด่าน</b> — จุดที่ดีลนี้จะพังไม่ใช่ตอนเขาโน้มน้าวเรา แต่ตอนที่เราโน้มน้าวตัวเอง</li>
+  </ul>
+
+  <div class="note purple big">
+    <div class="hd">บรรทัดเดียวที่ถือไว้ตลอด 80 นาที</div>
+    ตอนนี้เรารู้มากกว่าเขาในเรื่องที่สำคัญที่สุด — <b>เรารู้ว่าร้านนี้ทำกำไรเงินสดได้ และรู้ว่าเขาขาดทุนเพราะค่าเสื่อมที่เราไม่ต้องแบก</b><br>
+    <b>อย่าให้เขารู้ว่าเรารู้</b> · ยังไม่ให้ตัวเลข ยังไม่ต่อราคา ขอเอกสารอย่างเดียว
   </div>
 
 </div>
@@ -600,9 +589,9 @@ footer.bot b{color:#fff}
 
 <footer class="bot">
   <div class="wrap">
-    <b>Deal v3</b> — สังเคราะห์จากพาเนล 5 มุม 2 รอบ (เภสัชกรร้านชุมชน · นักลงทุน · CFO · CEO ค้าปลีก · นักเขียนด้านการตัดสินใจ)<br>
-    เอกสารประกอบการตัดสินใจภายใน ไม่ใช่คำแนะนำการลงทุนหรือความเห็นทางกฎหมาย · พาเนลเป็นบุคคลสมมติที่จำลองมุมมอง ไม่ใช่คนจริงและไม่ใช่ผลสำรวจ<br>
-    ทุกตัวเลขที่ไม่ได้ระบุว่ายืนยันแล้ว คือสมมติฐานจนกว่าจะเห็นเอกสารจริง · ข้อกฎหมายต้องตรวจกับ สสจ./สำนักอนามัย กทม. และทนายความก่อนดำเนินการ · 17 ส.ค. 2569
+    <b>Deal v3.1</b> — อัปเดต 17 ส.ค. 2569 ด้วยข้อมูล 7 ข้อจากต้นและจิ้น · โครงสร้างเดิมสังเคราะห์จากพาเนล 5 มุม 2 รอบ<br>
+    เอกสารประกอบการตัดสินใจภายใน ไม่ใช่คำแนะนำการลงทุนหรือความเห็นทางกฎหมาย · พาเนลเป็นบุคคลสมมติที่จำลองมุมมอง ไม่ใช่คนจริง<br>
+    ทุกตัวเลขที่ไม่ได้ระบุว่ายืนยันแล้ว คือสมมติฐานจนกว่าจะเห็นเอกสารจริง · ข้อกฎหมายต้องตรวจกับสำนักอนามัย กทม. และทนายความก่อนดำเนินการ
   </div>
 </footer>
 

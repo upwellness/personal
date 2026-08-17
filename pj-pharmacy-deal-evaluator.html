@@ -249,6 +249,15 @@ footer.bot b{color:#fff}
     <button data-p="tele">④ หลังเทเลฟาร์มาซี</button>
     <button data-p="jin">⑤ จิ้นลงเอง + ต่อราคา</button>
     <button data-p="worst" style="border-color:var(--red);color:var(--red);font-weight:600">⑥ แย่สุด — สต็อกเหลือ 1 ล้าน</button>
+    <button data-p="real2" style="border-color:var(--green);color:var(--greenDeep);font-weight:600;background:var(--greenBg)">⑦ ข้อมูลจริงจากจิ้น ★</button>
+  </div>
+
+  <div class="note green" id="real2note" style="display:none">
+    <div class="hd">★ ชุดข้อมูลใหม่ที่ต้นให้มา — เปลี่ยนคำตอบทั้งดีล</div>
+    <b>GP 50%</b> (จิ้นเห็นจากหน้าจอ ไม่ใช่ 30% ที่เฮียบอก) · <b>ค่าเช่า 70,000 รวมน้ำไฟแล้ว</b> ·
+    <b>ไม่จ้างเภสัชประจำ</b> จิ้นเข้า 8 วัน ที่เหลือจ้าง part-time 170 บาท/ชม. (22 วัน × 9 ชม. = 33,660/เดือน)<br>
+    ผลคือจุดคุ้มทุนร่วงจาก ~24,000 เหลือ <b>~9,500 บาท/วัน</b> — ต่ำกว่ายอดที่ร้านทำได้อยู่แล้วมาก<br>
+    ⚠️ <b>ตัวเลขนี้จะจริงก็ต่อเมื่อ "50%" คือ margin ไม่ใช่ markup</b> — ถ้าเป็น markup 50% จะเท่ากับ margin 33% และกำไรหายไปเกือบ 80,000/เดือน
   </div>
 
   <div class="note amber" id="worstnote" style="display:none">
@@ -1286,6 +1295,13 @@ var P={
   jin:{dailySales:16000,gpPct:30,growth:25,platPct:20,deadPct:35,dealPrice:500000,stockClaimed:1000000,
     nPharm:1,pharmPay:45000,assistPay:13000,jinDays:8,closedMonths:1,workCap:300000,leaseMonths:20},
   // เคสแย่สุด: สต็อกเหลือจริง 1 ล้าน แต่ขอ 1 ล้าน = ส่วนลด 0% ก่อนหักของค้าง
+  // ⑦ ข้อมูลจริงที่ต้น/จิ้นให้มา 17 ส.ค.: GP 50% · ค่าเช่ารวมน้ำไฟ · ไม่มีเภสัชประจำ จ้าง part-time 170/ชม.
+  real2:{dailySales:16000,gpPct:50,daysOpen:30,growth:0,platPct:0,
+    nPharm:0,pharmPay:45000,ftDays:0,jinDays:8,ptRate:1530,nAssist:1,assistPay:15000,bonusPct:0,
+    rent:70000,common:0,elec:0,water:0,net:1200,clean:0,maint:2000,insur:1000,
+    cardPct:1.2,shrinkPct:2,deadPct:35,dealPrice:1000000,stockClaimed:1000000,
+    deposit:210000,legalFee:30000,licenseFee:5000,gppUpgrade:50000,workCap:300000,
+    closedMonths:1,leaseMonths:20},
   worst:{dailySales:15000,gpPct:30,growth:-10,platPct:20,platGP:20,deadPct:35,
     dealPrice:1000000,stockClaimed:1000000,closedMonths:1,deposit:210000,legalFee:30000,
     licenseFee:5000,gppUpgrade:50000,workCap:300000,shrinkPct:3,ownPharm:false,
@@ -1304,6 +1320,7 @@ document.querySelectorAll('#presets button').forEach(function(b){
     });
     document.getElementById('ownPharm').checked=!!S.ownPharm;
     document.getElementById('worstnote').style.display=(b.dataset.p==='worst')?'block':'none';
+    document.getElementById('real2note').style.display=(b.dataset.p==='real2')?'block':'none';
     calc();
   });
 });
