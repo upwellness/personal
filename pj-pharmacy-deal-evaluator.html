@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ประเมินดีลรับช่วงร้านยา PJ Pharmacy — ดิ โอลด์ สยาม</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F1F5F3; --surface:#FFFFFF; --surface2:#F7FAF9;
+  --ink:#0E2A22; --ink2:#3D5750; --ink3:#67807A;
+  --line:#C9D9D3; --lineSoft:#E2EBE8;
+  --green:#0B6E52; --greenDeep:#08503C; --greenBg:#E6F2ED;
+  --amber:#8A5B00; --amberBg:#FBF1DC;
+  --red:#9B2118; --redBg:#FAE9E6;
+  --blue:#15537E; --blueBg:#E6F0F7;
+  --display:'Bai Jamjuree','Kanit',sans-serif;
+  --body:'IBM Plex Sans Thai','Sarabun',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --r:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:var(--body); font-size:18px; line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1240px;margin:0 auto;padding:0 18px}
+
+/* ---------- header ---------- */
+header.top{background:var(--greenDeep);color:#fff;padding:26px 0 22px;border-bottom:5px solid var(--green)}
+header.top .kick{font-family:var(--mono);font-size:13px;letter-spacing:.16em;color:#9FD3C1;text-transform:uppercase}
+header.top h1{font-family:var(--display);font-size:34px;font-weight:700;line-height:1.25;margin:6px 0 8px}
+header.top p{font-size:17px;color:#CFE6DD;line-height:1.75;max-width:820px}
+.metaline{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.pill{font-family:var(--mono);font-size:13px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.3);
+  padding:5px 12px;border-radius:999px;color:#fff}
+
+/* ---------- tabs ---------- */
+nav.tabs{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:2px solid var(--line);
+  box-shadow:0 2px 10px rgba(14,42,34,.07)}
+nav.tabs .inner{display:flex;gap:0;overflow-x:auto;max-width:1240px;margin:0 auto;padding:0 10px}
+nav.tabs button{
+  font-family:var(--display);font-size:17px;font-weight:600;color:var(--ink2);
+  background:none;border:none;border-bottom:4px solid transparent;
+  padding:16px 20px;min-height:58px;cursor:pointer;white-space:nowrap;
+  transition:color .2s,border-color .2s,background .2s;display:flex;align-items:center;gap:9px
+}
+nav.tabs button:hover{background:var(--surface2);color:var(--green)}
+nav.tabs button[aria-selected="true"]{color:var(--greenDeep);border-bottom-color:var(--green);background:var(--greenBg)}
+nav.tabs button:focus-visible{outline:3px solid var(--blue);outline-offset:-3px}
+nav.tabs .num{font-family:var(--mono);font-size:13px;background:var(--ink);color:#fff;
+  width:24px;height:24px;border-radius:6px;display:grid;place-items:center;flex:none}
+nav.tabs button[aria-selected="true"] .num{background:var(--green)}
+
+section.panel{display:none;padding:30px 0 70px}
+section.panel.on{display:block}
+
+/* ---------- generic blocks ---------- */
+h2.sec{font-family:var(--display);font-size:26px;font-weight:700;margin:34px 0 6px;
+  padding-bottom:10px;border-bottom:3px solid var(--line);display:flex;align-items:center;gap:11px}
+h2.sec:first-child{margin-top:4px}
+h2.sec .ic{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;flex:none;
+  background:var(--greenBg);color:var(--greenDeep);font-size:19px}
+h3.sub{font-family:var(--display);font-size:20px;font-weight:600;margin:24px 0 10px}
+p.lead{font-size:17.5px;color:var(--ink2);line-height:1.85;margin-bottom:14px;max-width:900px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;margin-bottom:18px}
+.card > h3{font-family:var(--display);font-size:19px;font-weight:600;margin-bottom:12px}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:900px){.grid2,.grid3{grid-template-columns:1fr}}
+
+.note{border-left:6px solid;border-radius:var(--r);padding:18px 20px;margin:16px 0;font-size:17px;line-height:1.8}
+.note b{font-weight:600}
+.note.red{background:var(--redBg);border-color:var(--red)}
+.note.amber{background:var(--amberBg);border-color:var(--amber)}
+.note.green{background:var(--greenBg);border-color:var(--green)}
+.note.blue{background:var(--blueBg);border-color:var(--blue)}
+.note .hd{font-family:var(--display);font-weight:700;font-size:19px;margin-bottom:6px;display:flex;gap:9px;align-items:center}
+.note.red .hd{color:var(--red)} .note.amber .hd{color:var(--amber)}
+.note.green .hd{color:var(--greenDeep)} .note.blue .hd{color:var(--blue)}
+
+table{width:100%;border-collapse:collapse;font-size:16.5px;margin:10px 0 6px}
+th,td{padding:12px 12px;text-align:left;border-bottom:1px solid var(--lineSoft);vertical-align:top;line-height:1.7}
+th{background:var(--surface2);font-weight:600;font-size:15.5px;color:var(--ink2);border-bottom:2px solid var(--line)}
+td.n,th.n{text-align:right;font-family:var(--mono);white-space:nowrap}
+tr:last-child td{border-bottom:none}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+
+.tag{display:inline-block;font-family:var(--mono);font-size:13px;padding:3px 9px;border-radius:6px;
+  white-space:nowrap;font-weight:500;line-height:1.6}
+.tag.ok{background:var(--greenBg);color:var(--greenDeep)}
+.tag.warn{background:var(--amberBg);color:var(--amber)}
+.tag.bad{background:var(--redBg);color:var(--red)}
+.tag.info{background:var(--blueBg);color:var(--blue)}
+.tag.grey{background:#ECF1EF;color:var(--ink2)}
+
+ul.bul{margin:8px 0 8px 4px;list-style:none}
+ul.bul li{position:relative;padding-left:26px;margin-bottom:9px;line-height:1.8;font-size:17px}
+ul.bul li::before{content:"";position:absolute;left:4px;top:12px;width:9px;height:9px;
+  border-radius:50%;background:var(--green)}
+ul.bul.x li::before{background:var(--red)}
+ul.bul.q li::before{background:var(--blue)}
+
+/* ---------- simulator ---------- */
+.simgrid{display:grid;grid-template-columns:400px 1fr;gap:22px;align-items:start}
+@media(max-width:1000px){.simgrid{grid-template-columns:1fr}}
+
+.acc{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin-bottom:12px;overflow:hidden}
+.acc > button{width:100%;display:flex;align-items:center;gap:11px;padding:15px 16px;background:var(--surface);
+  border:none;cursor:pointer;text-align:left;font-family:var(--display);font-size:17px;font-weight:600;color:var(--ink);min-height:56px}
+.acc > button:hover{background:var(--surface2)}
+.acc > button:focus-visible{outline:3px solid var(--blue);outline-offset:-3px}
+.acc .lt{font-family:var(--mono);font-size:13px;background:var(--ink);color:#fff;width:26px;height:26px;
+  border-radius:6px;display:grid;place-items:center;flex:none}
+.acc .badge{margin-left:auto;font-family:var(--mono);font-size:14px;color:var(--green);font-weight:600}
+.acc .chev{font-size:20px;color:var(--ink3);width:20px;text-align:center}
+.acc .body{padding:6px 16px 18px;border-top:1px solid var(--lineSoft);display:none}
+.acc.open .body{display:block}
+
+.fld{margin-bottom:20px}
+.fld .lbl{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:7px}
+.fld .lbl span.t{font-size:16.5px;font-weight:500;line-height:1.5}
+.fld input[type=number]{font-family:var(--mono);font-size:16px;width:110px;padding:9px 10px;text-align:right;
+  border:2px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);min-height:44px}
+.fld input[type=number]:focus{outline:none;border-color:var(--green)}
+.fld .unit{font-family:var(--mono);font-size:13px;color:var(--ink3);width:34px;display:inline-block}
+.fld input[type=range]{width:100%;accent-color:var(--green);height:30px;cursor:pointer}
+.fld .hint{font-size:14.5px;color:var(--ink3);line-height:1.65;margin-top:3px}
+.rowin{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-bottom:1px dotted var(--lineSoft)}
+.rowin .tx{font-size:16px;line-height:1.5}
+.rowin .tx small{display:block;font-size:14px;color:var(--ink3);line-height:1.6}
+.chk{display:flex;align-items:center;gap:11px;padding:13px;background:var(--greenBg);border-radius:8px;
+  margin-bottom:14px;cursor:pointer;font-size:16.5px;font-weight:500;min-height:52px}
+.chk input{width:22px;height:22px;accent-color:var(--green);cursor:pointer}
+
+.presets{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:16px}
+.presets button{font-family:var(--body);font-size:15.5px;font-weight:500;padding:11px 15px;min-height:48px;
+  background:var(--surface);border:2px solid var(--line);border-radius:8px;cursor:pointer;color:var(--ink);
+  transition:all .2s}
+.presets button:hover{border-color:var(--green);background:var(--greenBg);color:var(--greenDeep)}
+.presets button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+
+.verdict{border:1px solid var(--line);border-left-width:8px;border-radius:var(--r);background:var(--surface);
+  padding:22px;margin-bottom:20px}
+.verdict .vtop{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px}
+.verdict .vtag{font-family:var(--display);font-size:26px;font-weight:700}
+.verdict .vtx{font-size:17px;color:var(--ink2);line-height:1.75}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:20px}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi .k{font-size:14.5px;color:var(--ink3);line-height:1.5}
+.kpi .v{font-family:var(--mono);font-size:23px;font-weight:600;line-height:1.35}
+
+.bestrip{margin-top:22px}
+.bebar{position:relative;height:56px}
+.bebar .track{position:absolute;left:0;right:0;top:24px;height:18px;display:flex;border:2px solid var(--ink);border-radius:4px;overflow:hidden}
+.bebar .zred{background:#F2D3CF} .bebar .zgrn{background:#C9E7DA;flex:1}
+.bebar .mark{position:absolute;top:18px;width:3px;height:30px;background:var(--ink);transform:translateX(-50%)}
+.bebar .cur{position:absolute;top:0;transform:translateX(-50%);font-family:var(--mono);font-size:15px;font-weight:600;white-space:nowrap}
+.belbl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:14px;color:var(--ink2);margin-top:2px}
+
+.pl .r{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1px dotted var(--lineSoft)}
+.pl .r .lb{font-size:16.5px}
+.pl .r .lb small{display:block;font-size:14px;color:var(--ink3);line-height:1.6}
+.pl .r .vl{font-family:var(--mono);font-size:16.5px;white-space:nowrap}
+.pl .r.big .lb{font-weight:600;font-size:17.5px}
+.pl .r.big .vl{font-weight:600;font-size:20px}
+.gap{height:14px}
+.good{color:var(--green)} .bad{color:var(--red)} .warnc{color:var(--amber)}
+
+.sens td{font-family:var(--mono);font-size:14.5px;text-align:right;padding:9px 8px}
+.sens th{font-family:var(--mono);font-size:14px;text-align:center}
+.sens td:first-child{text-align:left;border-right:2px solid var(--line);background:var(--surface2)}
+
+.chartbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+
+/* ---------- steps ---------- */
+.step{display:grid;grid-template-columns:64px 1fr;gap:18px;margin-bottom:22px;align-items:start}
+.step .no{width:64px;height:64px;border-radius:14px;background:var(--greenDeep);color:#fff;
+  font-family:var(--display);font-size:26px;font-weight:700;display:grid;place-items:center}
+.step.s2 .no{background:var(--blue)} .step.s3 .no{background:var(--amber)}
+.step.s4 .no{background:var(--green)} .step.s5 .no{background:var(--ink2)}
+.step .bd{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.step .bd h4{font-family:var(--display);font-size:20px;font-weight:600;margin-bottom:4px}
+.step .bd .when{font-family:var(--mono);font-size:14px;color:var(--ink3);margin-bottom:12px}
+
+.chklist{list-style:none}
+.chklist li{display:flex;gap:12px;padding:11px 0;border-bottom:1px dotted var(--lineSoft);font-size:16.5px;line-height:1.75}
+.chklist li:last-child{border-bottom:none}
+.chklist .bx{width:22px;height:22px;border:2px solid var(--ink3);border-radius:5px;flex:none;margin-top:4px}
+
+.src{font-size:14.5px;color:var(--ink3);line-height:1.75;margin-top:10px;padding-top:10px;border-top:1px solid var(--lineSoft)}
+.src a{color:var(--blue)}
+.src b{color:var(--ink2)}
+
+footer.bot{background:var(--ink);color:#B9CCC6;padding:26px 0;font-size:15px;line-height:1.8}
+footer.bot b{color:#fff}
+
+@media print{nav.tabs{display:none}section.panel{display:block!important;page-break-before:always}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <p class="kick">Deal Evaluation · Community Pharmacy</p>
+    <h1>รับช่วงร้านยา PJ Pharmacy — คุ้มหรือไม่คุ้ม</h1>
+    <p>ชั้น 3 ห้อง C3-18 ดิ โอลด์ สยาม พลาซ่า · ผู้ตัดสินใจ: ต้น + จิ้น (เภสัชกร) · เอกสารนี้รวมทุกอย่างที่ต้องรู้ก่อนจ่ายเงิน อ่านจบได้ในหน้าเดียว</p>
+    <div class="metaline">
+      <span class="pill">อัปเดต 17 ส.ค. 2569</span>
+      <span class="pill">สถานะ: ยังไม่ตัดสินใจ</span>
+      <span class="pill">เส้นตายตัดสิน 24 ส.ค. 2569</span>
+      <span class="pill">นัดคุย 18 ส.ค. 14:00</span>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <div class="inner">
+    <button role="tab" aria-selected="true" data-t="calc"><span class="num">1</span>เครื่องคำนวณดีล</button>
+    <button role="tab" aria-selected="false" data-t="risk"><span class="num">2</span>ประเด็นที่ต้องระวัง</button>
+    <button role="tab" aria-selected="false" data-t="owner"><span class="num">3</span>เจ้าของเก่า</button>
+    <button role="tab" aria-selected="false" data-t="plan"><span class="num">4</span>ขั้นตอนทำจริง</button>
+  </div>
+</nav>
+
+<!-- ============================= TAB 1 : CALCULATOR ============================= -->
+<section class="panel on" id="calc">
+<div class="wrap">
+
+  <div class="note red">
+    <div class="hd">⚠ อ่านก่อนเล่นตัวเลข — ข้อมูล 2 ชุดขัดกันอยู่</div>
+    <b>มูลค่าสต็อก</b> เอกสาร HANDOFF ระบุ "สต็อก 2 ล้าน ขาย 1 ล้าน" (ส่วนลด 50%) แต่ที่ต้นเล่ามาคือ
+    "ซื้อสต็อกมา 2 ล้าน <b>เหลืออยู่ตอนนี้ 1 ล้าน</b> คิดค่ายาที่เหลือ 1 ล้าน" (ส่วนลด <b>0%</b>)<br>
+    สองอย่างนี้ให้ผลต่างกันคนละเรื่อง — <b>ต้องถามให้ได้คำตอบก่อนกรอกช่อง "มูลค่าสต็อกที่เขาอ้าง"</b>
+    ค่าตั้งต้นด้านล่างใช้ตัวเลข 2 ล้านตาม HANDOFF ไว้ก่อน
+  </div>
+
+  <div class="presets" id="presets">
+    <button data-p="owner">① ตามเจ้าของบอก</button>
+    <button data-p="ton">② ตามที่ต้นเล่า</button>
+    <button data-p="real">③ สมมติฐานระวัง</button>
+    <button data-p="tele">④ หลังเทเลฟาร์มาซี</button>
+    <button data-p="jin">⑤ จิ้นลงเอง + ต่อราคา</button>
+    <button data-p="worst" style="border-color:var(--red);color:var(--red);font-weight:600">⑥ แย่สุด — สต็อกเหลือ 1 ล้าน</button>
+  </div>
+
+  <div class="note amber" id="worstnote" style="display:none">
+    <div class="hd">กำลังดูเคสแย่สุด</div>
+    ตั้งบนสมมติฐานที่ต้นเล่า: <b>สต็อกเหลือจริงแค่ 1 ล้าน แต่เขาขอ 1 ล้าน → ส่วนลด 0%</b>
+    และเมื่อหักของค้าง 35% ออก มูลค่าที่ขายออกได้จริงเหลือ 650,000 เท่ากับ <b>เราจ่ายแพงกว่าของที่ได้ 54%</b><br>
+    บวกกับสัญญาเช่าเหลือ 18 เดือน (นับจากวันเปิดร้าน 30 เม.ย. 2568) · ยอดขายไม่โต · มียอด 20% วิ่งผ่านแพลตฟอร์ม
+    — นี่คือภาพที่ต้องเตรียมใจไว้ ถ้าเอกสารออกมาตรงกับที่เล่า</div>
+
+  <div class="verdict" id="verdict">
+    <div class="vtop">
+      <span class="vtag" id="vtag">—</span>
+      <span class="vtx" id="vtx">—</span>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><div class="k">เงินที่ต้องเตรียมจริง</div><div class="v" id="k1">—</div></div>
+      <div class="kpi"><div class="k">กำไรสุทธิ / เดือน</div><div class="v" id="k2">—</div></div>
+      <div class="kpi"><div class="k">คืนทุนภายใน</div><div class="v" id="k3">—</div></div>
+      <div class="kpi"><div class="k">เงินสดตอนจบสัญญา</div><div class="v" id="k4">—</div></div>
+      <div class="kpi"><div class="k">ห่างจุดคุ้มทุน</div><div class="v" id="k5">—</div></div>
+    </div>
+    <div class="bestrip">
+      <div class="bebar" id="bebar">
+        <div class="track"><div class="zred" id="zred"></div><div class="zgrn"></div></div>
+        <div class="mark" id="bemark"></div>
+        <div class="cur" id="becur">—</div>
+      </div>
+      <div class="belbl"><span>0</span><span id="belab">—</span><span id="bemax">—</span></div>
+    </div>
+  </div>
+
+  <div class="simgrid">
+    <!-- INPUTS -->
+    <div>
+      <div class="acc open" data-k="A">
+        <button type="button"><span class="lt">A</span>รายได้และส่วนแบ่ง<span class="badge" id="bA">—</span><span class="chev">−</span></button>
+        <div class="body">
+          <div class="fld" data-slider="dailySales" data-min="5000" data-max="50000" data-step="500" data-unit="บาท"
+               data-label="ยอดขายเฉลี่ยต่อวัน" data-hint="ยืนยันด้วย statement ธนาคาร + รายงาน POS เท่านั้น ไม่รับคำบอกเล่า"></div>
+          <div class="fld" data-slider="daysOpen" data-min="22" data-max="31" data-step="1" data-unit="วัน"
+               data-label="วันเปิดต่อเดือน" data-hint="Google Maps ระบุร้านเปิดทุกวัน 10:00–19:00"></div>
+          <div class="fld" data-slider="gpPct" data-min="12" data-max="45" data-step="1" data-unit="%"
+               data-label="กำไรขั้นต้นเฉลี่ย (GP)" data-hint="ยาสามัญสูง · ยาแบรนด์และยาโรคเรื้อรังต่ำกว่านี้มาก · อาหารเสริม/เวชสำอางสูงกว่า"></div>
+          <div class="fld" data-slider="platPct" data-min="0" data-max="80" data-step="5" data-unit="%"
+               data-label="สัดส่วนยอดที่ขายผ่านแพลตฟอร์ม" data-hint="Telepharmacy มีผลบังคับใช้ 22 มิ.ย. 2569 — อย. รับรองแพลตฟอร์มแรก 7 ราย"></div>
+          <div class="fld" data-slider="platGP" data-min="0" data-max="35" data-step="1" data-unit="%"
+               data-label="ค่า GP ที่แพลตฟอร์มหัก" data-hint="ยังไม่มีตัวเลขทางการเปิดเผย — ต้องถามแพลตฟอร์มโดยตรงก่อนใช้ตัดสินใจ"></div>
+          <div class="fld" data-slider="growth" data-min="-30" data-max="60" data-step="5" data-unit="%"
+               data-label="อัตราโตยอดขายต่อปี" data-hint="ใส่ค่าติดลบได้ ถ้าเชื่อว่าออนไลน์จะดูดยอดหน้าร้าน"></div>
+        </div>
+      </div>
+
+      <div class="acc open" data-k="B">
+        <button type="button"><span class="lt">B</span>ค่าคน<span class="badge" id="bB">—</span><span class="chev">−</span></button>
+        <div class="body">
+          <label class="chk"><input type="checkbox" id="ownPharm"><span>จิ้นลงเป็นเภสัชกรเอง 1 คน (ไม่เป็นเงินสดออก)</span></label>
+          <div id="grpB"></div>
+        </div>
+      </div>
+
+      <div class="acc" data-k="C">
+        <button type="button"><span class="lt">C</span>ค่าสถานที่และสาธารณูปโภค<span class="badge" id="bC">—</span><span class="chev">+</span></button>
+        <div class="body"><div id="grpC"></div></div>
+      </div>
+
+      <div class="acc" data-k="D">
+        <button type="button"><span class="lt">D</span>ค่าดำเนินงานและตัวแปรตามยอด<span class="badge" id="bD">—</span><span class="chev">+</span></button>
+        <div class="body"><div id="grpD"></div></div>
+      </div>
+
+      <div class="acc" data-k="E">
+        <button type="button"><span class="lt">E</span>เงินที่ต้องจ่ายวันแรก<span class="badge" id="bE">—</span><span class="chev">+</span></button>
+        <div class="body"><div id="grpE"></div></div>
+      </div>
+
+      <div class="acc" data-k="F">
+        <button type="button"><span class="lt">F</span>สัญญาและเงินกู้<span class="badge" id="bF">—</span><span class="chev">+</span></button>
+        <div class="body"><div id="grpF"></div></div>
+      </div>
+    </div>
+
+    <!-- OUTPUTS -->
+    <div>
+      <div class="card pl">
+        <h3>งบกำไรขาดทุนต่อเดือน</h3>
+        <div id="plbox"></div>
+      </div>
+
+      <div class="card">
+        <h3>กระแสเงินสดสะสม</h3>
+        <div class="chartbox" id="chart"></div>
+        <p class="hint" id="chartnote" style="font-size:15.5px;color:var(--ink3);line-height:1.75;margin-top:12px"></p>
+      </div>
+
+      <div class="grid2">
+        <div class="card pl">
+          <h3>จุดคุ้มทุน</h3>
+          <div id="bebox"></div>
+        </div>
+        <div class="card pl">
+          <h3>คุณภาพสต็อก</h3>
+          <div id="stkbox"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>ตารางความอ่อนไหว — กำไรก่อนภาษีต่อเดือน</h3>
+        <div class="tblwrap"><table class="sens" id="sens"></table></div>
+        <p style="font-size:15.5px;color:var(--ink3);margin-top:12px;line-height:1.75">
+          แถวคือยอดขายต่อวัน · คอลัมน์คือ GP% · ช่องเขียวคือกำไร ช่องแดงคือขาดทุน
+          ดูว่าต้องขยับไปไกลแค่ไหนถึงจะเข้าเขียว
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ============================= TAB 2 : RISKS ============================= -->
+<section class="panel" id="risk">
+<div class="wrap">
+
+  <h2 class="sec"><span class="ic">!</span>สรุปสั้นที่สุด</h2>
+  <div class="note red">
+    <div class="hd">ยังไม่ควรจ่ายเงินตอนนี้</div>
+    เหตุผลเรียงตามน้ำหนัก: <b>(1)</b> ตัวเลขไม่ผ่านแม้ในสถานการณ์ที่เข้าทางเราที่สุด — ได้แค่ "ไม่เจ๊ง" ไม่ใช่ "คุ้ม" ·
+    <b>(2)</b> อุตสาหกรรมกำลังเปลี่ยนโครงสร้างสวนทางกับเรา ในช่วงเวลาเดียวกับที่สัญญาเช่าจะหมด ·
+    <b>(3)</b> ข้อมูลหลักยังขัดกันเอง 5 จุด ยังไม่มีเอกสารยืนยันสักใบ ·
+    <b>(4)</b> ธุรกิจนี้ผูกกับเวลาที่ต้องยืนหน้าร้าน สวนทางกับเป้าหมาย passive income
+  </div>
+
+  <h2 class="sec"><span class="ic">≠</span>ข้อมูลที่ขัดกันเอง — ต้องเคลียร์ก่อนคำนวณ</h2>
+  <p class="lead">ตัวเลขชุดเดียวกันมาจาก 3 ทาง แล้วไม่ตรงกัน ตราบใดที่ยังไม่เคลียร์ ผลคำนวณทุกอย่างเชื่อไม่ได้</p>
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th style="width:150px">หัวข้อ</th><th>เอกสาร HANDOFF</th><th>ที่ต้นเล่า</th><th>ที่ค้นเจอจากแหล่งสาธารณะ</th><th style="width:110px">ผลกระทบ</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>มูลค่าสต็อก</b></td>
+        <td>สต็อก 2 ล้าน · ขาย 1 ล้าน</td>
+        <td>ซื้อมา 2 ล้าน <b>เหลือ 1 ล้าน</b> · ขาย 1 ล้าน</td>
+        <td>—</td>
+        <td><span class="tag bad">สูงสุด</span><br>ส่วนลด 50% หรือ 0%</td>
+      </tr>
+      <tr>
+        <td><b>เงินตกแต่งร้าน</b></td>
+        <td>~5,000,000</td>
+        <td>หน้าร้าน 3 ล้าน + ภายใน 1 ล้าน = 4 ล้าน</td>
+        <td>—</td>
+        <td><span class="tag warn">กลาง</span><br>เป็น sunk cost ของเขา ไม่ใช่มูลค่าที่เราได้</td>
+      </tr>
+      <tr>
+        <td><b>ค่าเภสัชกร</b></td>
+        <td>60,000 / เดือน</td>
+        <td>เภสัช 1 คน (ไม่ระบุเงิน)</td>
+        <td><b>45,000</b> รวมค่าใบประกอบ — จากประกาศรับสมัครของร้านเอง 16 ส.ค. 2568</td>
+        <td><span class="tag warn">กลาง</span><br>ต่างกัน 15,000/เดือน</td>
+      </tr>
+      <tr>
+        <td><b>ผู้ช่วยเภสัช</b></td>
+        <td>25,000 / เดือน</td>
+        <td>ผู้ช่วย 1 คน</td>
+        <td>ประกาศรับสมัคร 6 ก.ค. 2569 ไม่ระบุเงินเดือน</td>
+        <td><span class="tag warn">กลาง</span></td>
+      </tr>
+      <tr>
+        <td><b>สัญญาเช่าคงเหลือ</b></td>
+        <td>3 ปี ทำไป 1 ปี เหลือ ~2 ปี (24 เดือน)</td>
+        <td>—</td>
+        <td>ร้านเปิดทางการ <b>30 เม.ย. 2568</b> → ถึงวันนี้ผ่านมาแล้ว ~15.5 เดือน</td>
+        <td><span class="tag bad">สูง</span><br>อาจเหลือ ~18–20 เดือน ไม่ใช่ 24</td>
+      </tr>
+      <tr>
+        <td><b>ยอดขาย/วัน</b></td>
+        <td>15,000</td>
+        <td>15,000–17,000</td>
+        <td>—</td>
+        <td><span class="tag ok">ต่ำ</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2 class="sec"><span class="ic">§</span>ข้อกฎหมายที่ตัดสินดีลนี้ (ตรวจจากตัวบทแล้ว)</h2>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>1. ใบอนุญาต ขย.1 โอนต่อกันไม่ได้</h3>
+      <ul class="bul x">
+        <li>ใบอนุญาตขายยาแผนปัจจุบัน คือใบสำคัญที่อนุญาตให้ขายยา <b>ณ สถานที่ที่ระบุในใบอนุญาตเท่านั้น</b> และผูกกับตัวผู้รับอนุญาต</li>
+        <li>เปลี่ยนผู้รับอนุญาต = <b>ต้องยื่นขอใหม่ในนามจิ้น</b> ไม่ใช่เซ็นโอน</li>
+        <li><b>ใบอนุญาตสิ้นอายุ 31 ธันวาคม ของปีที่ออกใบอนุญาต</b> → ต้องต่ออายุทุกปี</li>
+        <li>ระหว่างรอใบใหม่ ขายยาแผนปัจจุบันไม่ได้ แต่ค่าเช่ายังเดิน</li>
+      </ul>
+      <p class="src"><b>ที่มา:</b> พ.ร.บ.ยา พ.ศ. 2510 · กฎกระทรวงการขออนุญาตและการออกใบอนุญาตขายยาแผนปัจจุบัน พ.ศ. 2556 (และฉบับที่ 2) · คู่มือสำหรับประชาชน สสจ.</p>
+    </div>
+
+    <div class="card">
+      <h3>2. เภสัชกรต้องอยู่ตลอดเวลาที่เปิดทำการ</h3>
+      <ul class="bul x">
+        <li><b>มาตรา 21</b> — "ผู้รับอนุญาตขายยาแผนปัจจุบัน ต้องมีเภสัชกรชั้นหนึ่งหรือเภสัชกรชั้นสอง เป็นผู้มีหน้าที่ปฏิบัติการ <b>ประจำอยู่ตลอดเวลาที่เปิดทำการ</b>"</li>
+        <li><b>มาตรา 39</b> — เภสัชกรต้องประจำอยู่ ณ สถานที่ขายยาตลอดเวลาที่เปิดทำการ</li>
+        <li>ร้านเปิด 10:00–19:00 ทุกวัน = <b>63 ชั่วโมง/สัปดาห์</b> → เภสัชกรคนเดียวคุมไม่ครบ ต้องมี part-time อุด</li>
+        <li>จิ้นเป็นเภสัชกร → เป็นผู้มีหน้าที่ปฏิบัติการเองได้ แต่ 8 วัน/เดือนยังไม่ครอบคลุมทั้งเดือน</li>
+      </ul>
+      <p class="src"><b>ที่มา:</b> พระราชบัญญัติยา พ.ศ. 2510 มาตรา 21 และมาตรา 39</p>
+    </div>
+
+    <div class="card">
+      <h3>3. สิทธิการเช่า — โอนต่อไม่ได้ถ้าสัญญาไม่ให้</h3>
+      <ul class="bul x">
+        <li><b>ป.พ.พ. มาตรา 544</b> — "ทรัพย์สินซึ่งเช่านั้น ผู้เช่าจะให้เช่าช่วงหรือโอนสิทธิของตน...ให้แก่บุคคลภายนอก ท่านว่าหาอาจทำได้ไม่ <b>เว้นแต่จะได้ตกลงกันไว้เป็นอย่างอื่นในสัญญาเช่า</b>"</li>
+        <li>แปลว่า ถ้าสัญญาเช่าไม่มีข้อให้โอนสิทธิ์ <b>เจ้าของเก่ายกร้านให้เราไม่ได้ตามกฎหมาย</b> ต้องได้หนังสือยินยอมจากผู้ให้เช่า (ดิ โอลด์ สยาม)</li>
+        <li><b>ป.พ.พ. มาตรา 538</b> — เช่าอสังหาฯ เกิน 3 ปี ถ้าไม่ทำเป็นหนังสือและจดทะเบียน จะบังคับคดีได้เพียง 3 ปี</li>
+      </ul>
+      <p class="src"><b>ที่มา:</b> ประมวลกฎหมายแพ่งและพาณิชย์ มาตรา 538 และ 544</p>
+    </div>
+
+    <div class="card">
+      <h3>4. Telepharmacy — กติกาเปลี่ยนไปแล้วจริง</h3>
+      <ul class="bul x">
+        <li>ประกาศกระทรวงสาธารณสุข เรื่องกำหนดรายละเอียดเกี่ยวกับสถานที่ อุปกรณ์ และวิธีปฏิบัติทางเภสัชกรรมชุมชน <b>(ฉบับที่ 2) พ.ศ. 2569</b> รองรับบริการเภสัชกรรมทางไกลของร้าน ขย.1 — <b>มีผลบังคับใช้ 22 มิ.ย. 2569</b></li>
+        <li>ประกาศสภาเภสัชกรรมที่ <b>48/2569</b> มาตรฐานการให้บริการ Telepharmacy — ราชกิจจานุเบกษา 17 มิ.ย. 2569</li>
+        <li>ประกาศ อย. เรื่องรายการโปรแกรมประยุกต์สำหรับให้บริการ Telepharmacy พ.ศ. 2569 (7 ก.ค. 2569) — อย. รับรองแพลตฟอร์มชุดแรก <b>7 ราย</b></li>
+      </ul>
+      <div class="note amber" style="margin:14px 0 0">
+        <b>สิ่งที่ยังไม่ยืนยัน:</b> อัตราค่า GP ที่แต่ละแพลตฟอร์มหัก และตัวเลข "ร้านยา 18,000 ราย จะล้มแบบโดมิโน"
+        ที่อยู่ในเอกสาร HANDOFF — สองอย่างนี้เป็นคำให้สัมภาษณ์/การคาดการณ์ <b>ห้ามใช้เป็นสมมติฐานตัดสินใจจนกว่าจะยืนยันได้</b>
+      </div>
+      <p class="src"><b>ที่มา:</b> กองยา อย. (drug.fda.moph.go.th) · สภาเภสัชกรรม (pharmacycouncil.org) · ศูนย์บริการข้อมูลภาครัฐฯ 24 มิ.ย. 2569</p>
+    </div>
+  </div>
+
+  <h2 class="sec"><span class="ic">⚑</span>ธงแดง 7 ข้อ</h2>
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th style="width:44px">#</th><th style="width:220px">ธงแดง</th><th>ทำไมอันตราย</th><th style="width:110px">ระดับ</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td><b>คู่แข่งอยู่ในตึกเดียวกัน ชั้นที่คนเดินผ่านก่อน</b></td>
+        <td>วัตสัน สาขาดิโอลด์สยาม อยู่ <b>ชั้น 1 ห้อง C103-104 และ C113</b> เปิด 09:00–19:30 (เปิดก่อน ปิดหลัง PJ) มี 173 รีวิว 4.2 ดาว มี Click &amp; Collect · ส่วน PJ อยู่ชั้น 3 มี <b>0 รีวิว</b><br>แขวงวังบูรพาภิรมย์มีร้านยาในระบบสภาเภสัชฯ <b>9 ร้าน</b> · เขตพระนคร <b>41 ร้าน</b></td>
+        <td><span class="tag bad">สูงมาก</span></td></tr>
+      <tr><td class="n">2</td><td><b>ทราฟฟิกชั้น 3 คือคนมากินข้าว ไม่ใช่คนมาซื้อยา</b></td>
+        <td>ร้านอยู่ติดศูนย์อาหาร ตรงข้ามห้องน้ำ · ห้างมีร้านค้า 118 ร้าน ส่วนใหญ่เป็นเพชร-ทอง-ผ้าไทย-ร้านปืน · คนขึ้นชั้น 3 มาเพื่อกินและร้องคาราโอเกะ</td>
+        <td><span class="tag bad">สูง</span></td></tr>
+      <tr><td class="n">3</td><td><b>สต็อกหมุนช้า = ของค้าง</b></td>
+        <td>ถ้าสต็อก 2 ล้านจริง เทียบต้นทุนขาย ~315,000/เดือน = หมุน <b>6.3 เดือน</b> (ร้านสุขภาพดีอยู่ที่ 2–3 เดือน) แปลว่าอย่างน้อย 30–40% คือของที่ขายไม่ออก · <b>ต้องนับทีละ SKU พร้อมวันหมดอายุ ไม่รับตัวเลขรวม</b></td>
+        <td><span class="tag bad">สูง</span></td></tr>
+      <tr><td class="n">4</td><td><b>เงินจริงที่ต้องเตรียมมากกว่าราคาที่คุยกัน</b></td>
+        <td>ราคาที่คุยคือ 1 ล้าน แต่รวมเงินประกันค่าเช่า ค่าทนาย ค่าใบอนุญาต ปรับปรุง GPP และทุนหมุนเวียนแล้ว <b>ประมาณ 1.6 ล้าน</b> ยังไม่รวมเดือนที่ปิดร้านรอใบอนุญาต</td>
+        <td><span class="tag bad">สูง</span></td></tr>
+      <tr><td class="n">5</td><td><b>เจ้าของตึกอาจไม่ต่อสัญญา</b></td>
+        <td>ถ้าไม่ต่อ เงินตกแต่ง 4–5 ล้านของเขากลายเป็นศูนย์ทันที และเราจะเจอชะตากรรมเดียวกัน · สัญญาเช่าห้างส่วนใหญ่ยังบังคับ <b>คืนพื้นที่สภาพเดิม</b> = ค่ารื้อถอนตอนออก</td>
+        <td><span class="tag bad">สูง</span></td></tr>
+      <tr><td class="n">6</td><td><b>Timing ชนกับ Telepharmacy พอดี</b></td>
+        <td>สัญญาที่เหลือตรงกับช่วง ramp-up ของ telepharmacy — เราต้องปั้นยอดโต 40–70% ในช่วงที่ตลาดกำลังถูกดูดออกจากหน้าร้าน · สินค้าที่โดนดูดก่อนคือตัวที่ทำกำไรให้ร้าน (วิตามิน อาหารเสริม ยาโรคเรื้อรัง สกินแคร์)</td>
+        <td><span class="tag warn">กลาง–สูง</span></td></tr>
+      <tr><td class="n">7</td><td><b>สวนทางเป้าหมาย passive income</b></td>
+        <td>ธุรกิจนี้ผูกกับเวลายืนหน้าร้าน 100% · ถ้าจิ้นลงเป็นเภสัชเอง คือเอาเวลาที่มีมูลค่าไปแลกกับกำไรที่น้อยกว่า — <b>กำไรบัญชีเป็นบวกได้ แต่กำไรเชิงเศรษฐกิจยังติดลบ</b></td>
+        <td><span class="tag warn">กลาง</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2 class="sec"><span class="ic">✓</span>ข้อดีที่มีอยู่จริง (อย่ามองข้าม)</h2>
+  <div class="grid3">
+    <div class="card"><h3>ร้านมียอดขายจริง</h3>
+      <p style="font-size:16.5px;line-height:1.8;color:var(--ink2)">15,000–17,000 บาท/วัน = 450,000–510,000/เดือน ไม่ใช่ร้านร้าง <b>ฐานลูกค้ามีอยู่แล้ว</b> ซึ่งเป็นของที่ซื้อไม่ได้ด้วยเงิน</p></div>
+    <div class="card"><h3>จิ้นเป็นเภสัชกร</h3>
+      <p style="font-size:16.5px;line-height:1.8;color:var(--ink2)">เป็นผู้รับอนุญาตและผู้มีหน้าที่ปฏิบัติการได้ในคนเดียวกัน ทำให้ความเสี่ยงเรื่องใบอนุญาตและ coverage ลดลงมาก และมีสาย wellness ที่ดัน margin ได้</p></div>
+    <div class="card"><h3>ไม่ต้องแบกค่าเสื่อม 4–5 ล้าน</h3>
+      <p style="font-size:16.5px;line-height:1.8;color:var(--ink2)">ของตกแต่งได้มาฟรี → งบดุลเราเบากว่าเจ้าของเดิมทุกเดือน ร้านเดียวกันอาจขาดทุนสำหรับเขา แต่เกือบเท่าทุนสำหรับเรา</p></div>
+    <div class="card"><h3>ป้ายหน้าตึกมีอยู่แล้ว</h3>
+      <p style="font-size:16.5px;line-height:1.8;color:var(--ink2)">ป้าย "PJ PHARMACY" ติดอยู่บนหน้าอาคารข้าง Big C Food Place เห็นจากถนน — เป็น asset ทางการตลาดที่ยังไม่ได้ใช้</p></div>
+    <div class="card"><h3>ยังไม่มีใครแตะ lever ง่าย ๆ เลย</h3>
+      <p style="font-size:16.5px;line-height:1.8;color:var(--ink2)">ไม่มีชื่อใน directory ของห้าง · 0 รีวิว Google · ไม่มีบนแพลตฟอร์มเดลิเวอรี · ไม่มีระบบลูกค้าประจำ — ทั้งหมดนี้แก้ได้เกือบฟรี</p></div>
+    <div class="card"><h3>ผู้ขายไม่มีอำนาจต่อรอง</h3>
+      <p style="font-size:16.5px;line-height:1.8;color:var(--ink2)">คนที่ถือของตกแต่ง 4–5 ล้านที่รื้อไปไหนไม่ได้ คือคนที่ต้องรีบ ไม่ใช่เรา — เวลาอยู่ข้างเรา</p></div>
+  </div>
+
+  <h2 class="sec"><span class="ic">?</span>สิ่งที่โมเดลคำนวณให้ไม่ได้</h2>
+  <ul class="bul q">
+    <li>เจ้าของตึกจะต่อสัญญาไหม ขึ้นค่าเช่ากี่เปอร์เซ็นต์ — ถ้าไม่ต่อ ทุกอย่างจบ</li>
+    <li>หนี้ค้างบริษัทยามีเท่าไหร่ และซัพพลายเออร์จะเปิดเครดิตให้เจ้าของใหม่หรือไม่</li>
+    <li>ระยะเวลาขอ ขย.1 จริงในพื้นที่เขตพระนครกี่วัน (คู่มือประชาชนระบุกระบวนการรวม ~10 วันทำการ แต่ของจริงต้องถาม สสจ./กทม.)</li>
+    <li>สาเหตุที่ขาดทุนคืออะไรกันแน่ — ถ้าเป็นเรื่องทำเลชั้น 3 เราแก้ไม่ได้</li>
+    <li>ค่าเช่า 70,000 รวมค่าส่วนกลางและค่าไฟหรือยัง (ห้างส่วนใหญ่เก็บแยก)</li>
+    <li>ผู้ขายรู้เรื่อง Telepharmacy ที่มีผล 22 มิ.ย. 2569 หรือไม่ — คำตอบจะบอกเยอะว่าทำไมถึงเสนอตอนนี้</li>
+  </ul>
+
+</div>
+</section>
+
+<!-- ============================= TAB 3 : OWNER ============================= -->
+<section class="panel" id="owner">
+<div class="wrap">
+
+  <h2 class="sec"><span class="ic">◉</span>โปรไฟล์เจ้าของเก่า</h2>
+  <div class="note blue">
+    <div class="hd">อ่านคนขายก่อนอ่านตัวเลข</div>
+    เพราะทุกตัวเลขในดีลนี้มาจากปากเขาทั้งหมด ยังไม่มีเอกสารยืนยันสักใบ — เข้าใจแรงจูงใจของเขา = รู้ว่าตัวเลขไหนน่าจะสวยเกินจริง
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>สิ่งที่ยืนยันได้จากแหล่งสาธารณะ</h3>
+      <div class="tblwrap"><table>
+        <tr><th style="width:150px">ร้าน</th><td>PJ Pharmacy (พีเจ ฟาร์มาซี) สาขาดิโอลด์สยามพลาซ่า</td></tr>
+        <tr><th>ที่ตั้ง</th><td>ชั้น 3 ห้อง C3-18 · ติดโซนศูนย์อาหาร ตรงข้ามห้องน้ำ เยื้องร้านกับภูเก็ต</td></tr>
+        <tr><th>เปิดทางการ</th><td>30 เมษายน 2568 (ห้างโพสต์ประชาสัมพันธ์ให้ 110 reactions)</td></tr>
+        <tr><th>เวลาทำการ</th><td>ทุกวัน 10:00–19:00</td></tr>
+        <tr><th>ชื่อเดิมของร้าน</th><td><b>DB Pharmacy</b> — ประกาศรับสมัครงานของร้านเอง (16 ส.ค. 2568) เขียนว่า "Line: dbpharmacy (ชื่อเก่าร้าน)"</td></tr>
+        <tr><th>ทะเบียนราชการ</th><td>ปรากฏชื่อในระบบของสำนักงานรับรองร้านยาคุณภาพ สภาเภสัชกรรม (ไม่มีสถานะ "ยกเลิก" นำหน้า)</td></tr>
+        <tr><th>นิติบุคคล</th><td><b>ไม่พบ</b>บริษัทชื่อ "พีเจ ฟาร์มาซี" ในทะเบียนกรมพัฒนาธุรกิจการค้า → น่าจะเป็นบุคคลธรรมดา/ทะเบียนพาณิชย์</td></tr>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <h3>ร่องรอย DB Pharmacy</h3>
+      <ul class="bul">
+        <li>ธ.ค. 2567 DB Pharmacy ประกาศรับเภสัชกรประจำ <b>4 สาขา</b>: ดิโอลด์สยามพลาซ่า ชั้น 3 · พัทยา · แอร์พอร์ตลิงก์ รามคำแหง · บางแค — เริ่มงาน ม.ค. 2568</li>
+        <li>DB Pharmacy เป็นแบรนด์แฟรนไชส์ของ <b>บริษัท ดีบี เฮลธ์ สโตร์ แอนด์ ดีเวลลอปเม้นท์ จำกัด</b> (ทะเบียน 0105564137085) ก่อตั้ง 2564</li>
+        <li>ค่าแฟรนไชส์ตามเว็บไซต์ DB: DB Health Store 1.35 ล้านบาท/สาขา · DB Warehouse Mini 6.95 ล้าน · DB Warehouse 12.5 ล้าน</li>
+      </ul>
+      <div class="note amber" style="margin-top:14px">
+        <b>ยังไม่ยืนยัน:</b> ลำดับเหตุการณ์ชี้ว่าร้านนี้น่าจะเปิดเป็น DB Pharmacy ราว ม.ค. 2568 แล้วรีแบรนด์เป็น PJ Pharmacy เม.ย. 2568
+        แต่ <b>ยังไม่มีหลักฐานว่าแยกตัวออกมา ซื้อกิจการต่อ หรือเปลี่ยนชื่อเฉย ๆ</b> — ต้องถามตรง ๆ
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sec"><span class="ic">฿</span>ตัวเลขค่าจ้างที่เจ้าของประกาศเอง</h2>
+  <p class="lead">นี่คือข้อมูลชิ้นเดียวในดีลนี้ที่ไม่ได้มาจากปากเขาตอนเจรจา — เขาประกาศไว้ในกลุ่มหางานเภสัชกรตั้งแต่ปีที่แล้ว จึงน่าเชื่อถือกว่าตัวเลขที่บอกในโต๊ะเจรจา</p>
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th style="width:190px">รายการ</th><th>ตัวเลข</th><th>เงื่อนไขที่ประกาศ</th></tr></thead>
+    <tbody>
+      <tr><td><b>เภสัชกร full-time</b></td><td class="n">45,000 บาท/เดือน</td><td>รวมค่าใบประกอบ · ทำงาน 10:00–19:00 (8 ชม. พัก 1 ชม.)</td></tr>
+      <tr><td><b>OT</b></td><td class="n">170 บาท/ชม.</td><td>= 1,360 บาท/วัน · วันหยุดและวันนักขัตฤกษ์นับเป็น OT</td></tr>
+      <tr><td><b>เภสัชกร part-time</b></td><td class="n">1,360 บาท/วัน</td><td>จ้างเป็นรายวันเจาะจง เช่น 11, 12, 13, 18, 19 ต.ค. 2568</td></tr>
+      <tr><td><b>ผู้ช่วยเภสัช</b></td><td class="n">ไม่ระบุ</td><td>1 คน อายุ 25–40 ปี · หน้าที่คีย์ขาย + แนะนำอาหารเสริม/สินค้านอกเคาน์เตอร์</td></tr>
+      <tr><td><b>เงื่อนไขการจ่าย</b></td><td colspan="2">"จ่ายเต็ม ไม่หักภาษี ณ ที่จ่าย ไม่หักประกันสังคม"</td></tr>
+      <tr><td><b>กติกาในร้าน</b></td><td colspan="2">"ขอให้เภสัชเป็นคนหยิบยาเองเป็นหลัก"</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="note amber">
+    <div class="hd">สัญญาณ turnover — ประกาศหาคนซ้ำอย่างน้อย 5 ครั้งใน 12 เดือน</div>
+    ส.ค. 2568 เภสัชกร full-time · ก.ย. 2568 เภสัชกร part-time (2 ครั้ง) · ก.ค. 2569 ผู้ช่วยเภสัช (2 ครั้ง)<br>
+    การหา part-time แบบ "ระบุวันเจาะจง" คือการอุดรูชั่วโมงที่เภสัชกรไม่อยู่ — ซึ่งตามมาตรา 21 <b>ห้ามมีรูแม้ชั่วโมงเดียว</b>
+    ถ้ารับช่วงต่อ ปัญหานี้ตกมาเป็นของเราทันที
+  </div>
+
+  <h2 class="sec"><span class="ic">◆</span>แรงจูงใจที่แท้จริง — ทำไมถึงยอมทิ้ง 4–5 ล้าน</h2>
+  <div class="grid3">
+    <div class="card">
+      <h3 style="color:var(--red)">① เงินตกแต่งไม่มีวันกลับ</h3>
+      <p style="font-size:16.5px;line-height:1.8;color:var(--ink2)">ค่าเสื่อมตกแต่ง 4–5 ล้าน เฉลี่ย 5 ปี = <b>67,000–83,000 บาท/เดือน</b> ที่เขาต้องแบก แต่เราไม่ต้อง<br><br>
+      ต่อให้ร้านทำกำไรเงินสดได้เดือนละไม่กี่หมื่น ก็ใช้เวลาเป็นสิบ ๆ ปีถึงจะคืนทุน — เขาคำนวณออกแล้วว่าจบ จึงตัดขาดทุน</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--red)">② "เภสัชไม่เก่ง" ขัดกับการกระทำ</h3>
+      <p style="font-size:16.5px;line-height:1.8;color:var(--ink2)">ถ้าปัญหาคือเภสัชกรจริง ทางแก้ราคา <b>45,000 บาท/เดือน</b> (เปลี่ยนคน) ไม่ใช่ <b>4–5 ล้าน</b> (ทิ้งร้าน)<br><br>
+      ไม่มีใครทิ้งเงิน 5 ล้านเพื่อหนีปัญหาที่แก้ได้ด้วยเงิน 4 หมื่นห้า — <b>การกระทำฟ้องว่าเขารู้ว่าปัญหาไม่ได้อยู่ที่คนขาย</b></p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--amber)">③ จังหวะที่เสนอ</h3>
+      <p style="font-size:16.5px;line-height:1.8;color:var(--ink2)">กฎ Telepharmacy มีผล 22 มิ.ย. 2569 · เขาเสนอดีลหลังจากนั้น<br><br>
+      อาจบังเอิญ อาจไม่ — <b>ถามตรง ๆ ว่ารู้เรื่องไหม คำตอบจะบอกเยอะ</b></p>
+    </div>
+  </div>
+
+  <div class="note blue">
+    <div class="hd">บริบทที่ต้องรู้: เราเคยขายของให้ร้านนี้แล้วโดนปฏิเสธ</div>
+    26 เม.ย. 2569 มีบันทึกใน pipeline ว่า <b>"PJ Pharmacy · AI Pharmacy Management 8 ระบบ · Pitching · ฿530K dev"</b>
+    → มิ.ย. 2569 บันทึกว่า <b>reject</b><br><br>
+    คนที่ปฏิเสธจ่าย 530,000 เพื่อระบบวิเคราะห์ร้าน ผ่านไป 2 เดือนเสนอยกร้านให้ — <b>ช่วง 2 เดือนนี้เกิดอะไรขึ้น คือคำถามที่ต้องได้คำตอบ</b>
+  </div>
+
+  <h2 class="sec"><span class="ic">☎</span>คำถาม 8 ข้อที่ต้องถามในวันคุย</h2>
+  <p class="lead">เรียงตามลำดับความสำคัญ ถ้ามีเวลาแค่ 20 นาที ถาม 3 ข้อแรกก็พอ</p>
+  <div class="tblwrap">
+  <table>
+    <thead><tr><th style="width:44px">#</th><th style="width:44%">คำถาม</th><th>ฟังอะไรจากคำตอบ</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td><b>"เดือนที่แล้วขาดทุนเท่าไหร่ครับ"</b></td>
+        <td>ตอบ "2–3 หมื่น" = คิดแบบเงินสด ตัวเลขน่าเชื่อ · ตอบ "เป็นแสน" = นับค่าเสื่อมอยู่ ซึ่งเราไม่ต้องแบก ดีลดีกว่าที่เขาคิด · ตอบ "ไม่รู้ ไม่ได้ทำบัญชี" = <b>ตัวเลขทั้งหมดเชื่อไม่ได้ ปิดดีล</b></td></tr>
+      <tr><td class="n">2</td><td><b>"สต็อกตอนนี้เหลือมูลค่าเท่าไหร่ และเป็นราคาทุนหรือราคาขาย"</b></td>
+        <td>ตัวเลขนี้ต่างกันได้ถึง 2 เท่า และเป็นสิ่งเดียวที่เราจ่ายเงินซื้อจริง ๆ</td></tr>
+      <tr><td class="n">3</td><td><b>"สัญญาเช่าเหลือกี่เดือน มีข้อให้โอนสิทธิ์ไหม ขอดูสัญญาได้ไหม"</b></td>
+        <td>ตาม ป.พ.พ. ม.544 ถ้าสัญญาไม่ให้โอน เขาไม่มีสิทธิ์ยกร้านให้เราตั้งแต่แรก</td></tr>
+      <tr><td class="n">4</td><td>"16 เดือนที่ผ่านมา สั่งยาเข้าร้านเพิ่มไปทั้งหมดเท่าไหร่"</td>
+        <td>เอาไปคำนวณย้อนว่ายอดขายจริงเท่าไหร่ ตรวจสอบคำบอกเล่าเรื่อง 15,000–17,000/วัน</td></tr>
+      <tr><td class="n">5</td><td>"ค่าเช่า 70,000 รวมค่าส่วนกลางกับค่าไฟหรือยัง"</td>
+        <td>ห้างส่วนใหญ่เก็บแยก ถ้าแยกจริง ต้นทุนจริงสูงกว่าที่คุยกันอีก 15,000–25,000</td></tr>
+      <tr><td class="n">6</td><td>"มีหนี้ค้างบริษัทยาอยู่เท่าไหร่"</td>
+        <td>อย่ารับโอนภาระนี้เด็ดขาด และดูว่าซัพพลายเออร์จะเปิดเครดิตให้เจ้าของใหม่ไหม</td></tr>
+      <tr><td class="n">7</td><td>"ร้านเดิมชื่อ DB Pharmacy ใช่ไหม ตอนนี้ยังเกี่ยวข้องกับ DB อยู่หรือเปล่า"</td>
+        <td>ถ้ายังมีสัญญาแฟรนไชส์ค้างอยู่ = ต้นทุนที่ยังไม่ถูกพูดถึง</td></tr>
+      <tr><td class="n">8</td><td>"รู้เรื่องกฎ Telepharmacy ที่เพิ่งมีผล 22 มิ.ย. ไหมครับ"</td>
+        <td>ถ้ารู้ = การเสนอตอนนี้มีเหตุผล · ถ้าไม่รู้ = เขาอาจยังไม่เห็นภาพว่าธุรกิจกำลังเปลี่ยน</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note green">
+    <div class="hd">วิธีวางตัวในโต๊ะเจรจา</div>
+    เราไม่ใช่คนที่ต้องรีบ — <b>คนที่ถือของตกแต่ง 4–5 ล้านที่รื้อไปไหนไม่ได้ คือคนที่ต้องรีบ</b><br>
+    อย่าเสนอราคา อย่าตอบรับอะไรในวันคุย ให้ขอเอกสารกลับมาอย่างเดียว แล้วบอกว่า "ขอเอาไปดูตัวเลขก่อน สัปดาห์หน้าให้คำตอบ"
+  </div>
+
+</div>
+</section>
+
+<!-- ============================= TAB 4 : PLAN ============================= -->
+<section class="panel" id="plan">
+<div class="wrap">
+
+  <h2 class="sec"><span class="ic">→</span>ภาพรวมกระบวนการ 5 ระยะ</h2>
+  <p class="lead">แต่ละระยะมี "ประตู" ที่ต้องผ่านก่อนถึงจะเดินต่อได้ ถ้าไม่ผ่าน = หยุดตรงนั้น ไม่ต้องเดินต่อ</p>
+
+  <div class="step s1">
+    <div class="no">0</div>
+    <div class="bd">
+      <h4>ระยะ 0 — ตรวจสอบข้อมูล (Due Diligence)</h4>
+      <p class="when">17–24 ส.ค. 2569 · 7 วัน · ยังไม่จ่ายเงินสักบาท</p>
+      <p style="font-size:16.5px;line-height:1.8;margin-bottom:12px">ขอเอกสาร 10 รายการ ถ้าได้ไม่ครบ 5 รายการแรกภายในกำหนด = ปิดดีล ไม่ต้องคิดต่อ</p>
+      <ul class="chklist">
+        <li><span class="bx"></span><div><b>1. รายงานขายจาก POS ย้อนหลัง 12 เดือน</b> — แยกรายเดือน + แยก SKU <span class="tag bad">บังคับ</span></div></li>
+        <li><span class="bx"></span><div><b>2. Statement บัญชีร้าน 12 เดือน</b> — ยืนยันว่ายอดขายที่บอกเป็นเงินที่เข้าบัญชีจริง <span class="tag bad">บังคับ</span></div></li>
+        <li><span class="bx"></span><div><b>3. สัญญาเช่าตัวจริง</b> — ดูวันหมดอายุ ข้อขึ้นค่าเช่า ข้อโอนสิทธิ์ ข้อคืนพื้นที่สภาพเดิม <span class="tag bad">บังคับ</span></div></li>
+        <li><span class="bx"></span><div><b>4. รายการสต็อกทีละ SKU พร้อมวันหมดอายุ</b> — นับจริง ไม่รับตัวเลขรวม <span class="tag bad">บังคับ</span></div></li>
+        <li><span class="bx"></span><div><b>5. รายการหนี้ค้างบริษัทยา + สถานะเครดิตกับซัพพลายเออร์</b> <span class="tag bad">บังคับ</span></div></li>
+        <li><span class="bx"></span><div>6. บิลค่าไฟ 12 เดือน + บิลค่าส่วนกลาง 3 เดือนล่าสุด</div></li>
+        <li><span class="bx"></span><div>7. หนังสือยินยอมจากผู้ให้เช่า (ดิ โอลด์ สยาม) ให้โอนสิทธิ์ + เจตนาต่อสัญญา</div></li>
+        <li><span class="bx"></span><div>8. งบการเงินปีที่ผ่านมา (ถ้าจดนิติบุคคล)</div></li>
+        <li><span class="bx"></span><div>9. สำเนาใบอนุญาต ขย.1 ปัจจุบัน + ผลตรวจ GPP ครั้งล่าสุด</div></li>
+        <li><span class="bx"></span><div>10. โทรถาม สสจ./สำนักอนามัย กทม. — ระยะเวลาขอ ขย.1 ใหม่ในพื้นที่เขตพระนคร</div></li>
+      </ul>
+      <div class="note red" style="margin-bottom:0">
+        <b>ประตูที่ 1:</b> ไม่ได้เอกสาร 1–5 ครบภายใน <b>24 ส.ค. 2569</b> → ปิดดีล บอกผู้ขายตรง ๆ ไม่ต้องอธิบายยาว
+      </div>
+    </div>
+  </div>
+
+  <div class="step s2">
+    <div class="no">1</div>
+    <div class="bd">
+      <h4>ระยะ 1 — รันตัวเลขจริง แล้วต่อรองโครงสร้างดีลใหม่</h4>
+      <p class="when">25–31 ส.ค. 2569 · 7 วัน</p>
+      <ul class="bul">
+        <li>เอาไฟล์ POS จริงมารันผ่านแท็บ "เครื่องคำนวณดีล" ในหน้านี้ — <b>เปลี่ยนทุกช่องเป็นตัวเลขจริง ไม่เหลือสมมติฐาน</b></li>
+        <li>รันคู่กับเครื่องมือ <code>PharmaIQ_Analytics.html</code> ที่มีอยู่แล้วในโปรเจกต์ เพื่อดู margin จริงรายหมวด + dead stock + ABC</li>
+        <li>ตัวเลขที่ต้องได้คำตอบ: <b>GP จริงเท่าไหร่</b> · <b>สัดส่วนยา vs อาหารเสริม vs เวชสำอาง</b> · <b>ของค้างกี่เปอร์เซ็นต์</b></li>
+      </ul>
+      <h3 class="sub">โครงสร้างดีลที่ควรเสนอกลับ (แทนการจ่าย 1 ล้านก้อนเดียว)</h3>
+      <div class="tblwrap"><table>
+        <thead><tr><th style="width:40px">#</th><th style="width:34%">ข้อเสนอ</th><th>เหตุผล</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><b>จ่ายค่ายาตามที่นับจริง ในราคาทุน หลังหักของค้างและใกล้หมดอายุ</b></td><td>ประเมินไว้ที่ 400,000–600,000 ไม่ใช่ 1,000,000 — ของที่ขายไม่ออกไม่ควรจ่ายเต็มราคา</td></tr>
+          <tr><td class="n">2</td><td><b>หรือขอฝากขาย 90 วัน — ขายได้ค่อยจ่าย</b></td><td>ผลักความเสี่ยงของค้างกลับไปที่คนที่สั่งของเข้ามาเอง เขาไม่มีทางเลือกมากอยู่แล้ว</td></tr>
+          <tr><td class="n">3</td><td><b>ต่อสัญญาเช่า 3+3 ปีให้จบก่อน แล้วค่อยเซ็นอะไรกับเจ้าของร้าน</b></td><td>ถ้าเจ้าของตึกไม่ยอมต่อ ดีลจบตรงนี้ ไม่ต้องเสียเวลาต่อ</td></tr>
+          <tr><td class="n">4</td><td><b>ขอเข้าไปบริหารทดลอง 60–90 วันก่อนซื้อ</b></td><td>พิสูจน์ด้วยของจริงว่าปั้นยอดถึงจุดคุ้มทุนได้ไหม ก่อนที่เงินจะออกจากกระเป๋า</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note amber" style="margin-bottom:0">
+        <b>ประตูที่ 2:</b> รันตัวเลขจริงแล้วยังไม่ผ่านเกณฑ์ที่ตั้งไว้ (ดูหัวข้อ "ตัวเลขที่ต้องจ้อง" ด้านล่าง) → ปิดดีล
+      </div>
+    </div>
+  </div>
+
+  <div class="step s3">
+    <div class="no">2</div>
+    <div class="bd">
+      <h4>ระยะ 2 — กฎหมายและใบอนุญาต</h4>
+      <p class="when">หลังตกลงเงื่อนไข · ประเมิน 1–2 เดือน · <b>ยังไม่มีรายได้ แต่ค่าเช่าเดินแล้ว</b></p>
+      <h3 class="sub">2.1 สัญญาเช่า — ทำก่อนทุกอย่าง</h3>
+      <ul class="bul">
+        <li>ขอ<b>หนังสือยินยอมให้โอนสิทธิการเช่า</b>จากดิ โอลด์ สยาม เป็นลายลักษณ์อักษร (ตาม ป.พ.พ. ม.544 ถ้าไม่มีข้อตกลงไว้ ผู้เช่าโอนสิทธิ์เองไม่ได้)</li>
+        <li>ถ้าทำสัญญาใหม่เกิน 3 ปี ต้อง<b>ทำเป็นหนังสือและจดทะเบียนต่อพนักงานเจ้าหน้าที่</b> ไม่งั้นบังคับคดีได้แค่ 3 ปี (ป.พ.พ. ม.538)</li>
+        <li>ตรวจข้อ "คืนพื้นที่สภาพเดิม" — ถ้ามี ให้ประเมินค่ารื้อถอนไว้ล่วงหน้า</li>
+      </ul>
+      <h3 class="sub">2.2 ใบอนุญาต ขย.1 ในนามใหม่</h3>
+      <ul class="bul">
+        <li><b>ยื่นแบบ ขย.1</b> ที่สำนักงานสาธารณสุขจังหวัด/สำนักอนามัย กทม. — ใบอนุญาตเดิมโอนไม่ได้ ต้องขอใหม่</li>
+        <li>ต้องมี<b>เภสัชกรผู้มีหน้าที่ปฏิบัติการ</b>แจ้งชื่อไว้ (จิ้นรับเองได้)</li>
+        <li>เจ้าหน้าที่จะ<b>ตรวจสถานที่ตามเกณฑ์ GPP</b> ก่อนออกใบอนุญาต</li>
+        <li>ใบอนุญาต<b>สิ้นอายุ 31 ธันวาคม ของปีที่ออก</b> → ถ้าได้ใบปลายปี ต้องต่ออายุทันที</li>
+        <li>ถ้าจะขายยาเสพติดให้โทษประเภท 3 ต้องขอใบอนุญาตแยกอีกฉบับ</li>
+      </ul>
+      <h3 class="sub">2.3 ค่าธรรมเนียมราชการจริง</h3>
+      <div class="tblwrap"><table>
+        <thead><tr><th>รายการ</th><th class="n">ค่าธรรมเนียม</th><th>หมายเหตุ</th></tr></thead>
+        <tbody>
+          <tr><td>ใบอนุญาตขายยาแผนปัจจุบัน (ขย.1)</td><td class="n">2,000</td><td>ต่ออายุปีละ 2,000</td></tr>
+          <tr><td>ค่าตรวจสถานที่ตามเกณฑ์ GPP</td><td class="n">2,000</td><td></td></tr>
+          <tr><td>ใบอนุญาตจำหน่ายยาเสพติดให้โทษประเภท 3</td><td class="n">1,000</td><td>เฉพาะกรณีจะขาย</td></tr>
+          <tr><td><b>รวมค่าธรรมเนียมราชการ</b></td><td class="n"><b>4,000–5,000</b></td><td></td></tr>
+        </tbody>
+      </table></div>
+      <div class="note green" style="margin-top:12px;margin-bottom:0">
+        <b>ข่าวดี:</b> เอกสาร HANDOFF ตั้งงบ "ค่าขอ ขย.1 ใหม่ 20,000 บาท" ไว้ — <b>ค่าธรรมเนียมราชการจริงแค่ 4,000–5,000</b>
+        ส่วนต่างเก็บไว้เป็นค่าที่ปรึกษา/ค่าเดินเรื่องได้ หรือประหยัดไปเลย
+      </div>
+      <p class="src"><b>ที่มา:</b> กฎกระทรวงกำหนดค่าธรรมเนียมเกี่ยวกับยา พ.ศ. 2566 · เอกสารเผยแพร่ สสจ.กาญจนบุรี · คู่มือสำหรับประชาชน สสจ.ตรัง (กระบวนการรวมประมาณ 10 วันทำการ — ของจริงต้องยืนยันกับพื้นที่)</p>
+    </div>
+  </div>
+
+  <div class="step s4">
+    <div class="no">3</div>
+    <div class="bd">
+      <h4>ระยะ 3 — รับมอบและเปิดร้านใหม่</h4>
+      <p class="when">หลังได้ใบอนุญาต · 2–4 สัปดาห์</p>
+      <ul class="bul">
+        <li><b>นับสต็อกร่วมกันสองฝ่าย</b> ทีละ SKU พร้อมวันหมดอายุ ลงนามรับรองทั้งคู่ — จ่ายเงินตามที่นับได้จริงเท่านั้น</li>
+        <li><b>เปิดบัญชีเครดิตกับซัพพลายเออร์ในนามใหม่</b> — อย่าคิดว่าเครดิตเดิมจะโอนมาอัตโนมัติ</li>
+        <li><b>ตรวจอุปกรณ์ตามเกณฑ์ GPP</b> — ตู้เย็นเก็บยาพร้อมเทอร์โมมิเตอร์ ระบบบันทึกอุณหภูมิ ป้ายแสดงชื่อเภสัชกร ชุดปฏิบัติงาน</li>
+        <li><b>ตั้ง POS ใหม่ในนามเรา</b> พร้อม export ได้ทุกเดือน (เพื่อป้อนเข้า PharmaIQ Analytics)</li>
+        <li><b>ลงชื่อร้านใน directory ของห้าง</b> — ตอนนี้ห้างมี 118 ร้านใน directory แต่ไม่มี PJ Pharmacy อยู่เลย</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step s5">
+    <div class="no">4</div>
+    <div class="bd">
+      <h4>ระยะ 4 — 90 วันแรก: พิสูจน์ว่าปั้นยอดได้จริง</h4>
+      <p class="when">สามเดือนแรกหลังเปิด</p>
+      <h3 class="sub">Lever ที่แทบไม่มีต้นทุน (ทำก่อน)</h3>
+      <div class="grid2">
+        <div>
+          <ul class="bul">
+            <li>ลงชื่อใน directory ของห้าง (ฟรี)</li>
+            <li>แก้ชื่อเพจ Facebook ที่สะกดผิด "Phamacy" → "Pharmacy" (ฟรี)</li>
+            <li>เก็บรีวิว Google 20 รีวิวแรก (ตอนนี้ 0 รีวิว)</li>
+          </ul>
+        </div>
+        <div>
+          <ul class="bul">
+            <li>เพิ่มร้านเข้าแพลตฟอร์มเดลิเวอรี/telepharmacy ที่ อย. รับรอง</li>
+            <li>ทำระบบลูกค้าโรคเรื้อรัง = รายได้ประจำที่คาดการณ์ได้</li>
+            <li>ดัน product mix ไปทางอาหารเสริม/เวชสำอาง ที่ margin สูงกว่ายา</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sec"><span class="ic">฿</span>ค่าใช้จ่ายที่ต้อง concern — แยกชั้นความมั่นใจ</h2>
+  <p class="lead">อย่าเอาตัวเลขสองชั้นนี้มาปนกัน ตัวเลขที่ยืนยันแล้วใช้ตัดสินใจได้ ตัวเลขประมาณการใช้ได้แค่ตั้งงบเผื่อ</p>
+
+  <h3 class="sub">ก. เงินก้อนวันแรก</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th style="width:38%">รายการ</th><th class="n" style="width:140px">ประมาณการ</th><th style="width:120px">ความมั่นใจ</th><th>หมายเหตุ</th></tr></thead>
+    <tbody>
+      <tr><td>ค่าสต็อกยา (ราคาที่เขาขอ)</td><td class="n">1,000,000</td><td><span class="tag warn">ต่อรองได้</span></td><td>ควรลงเหลือ 400,000–600,000 หลังนับจริงและหักของค้าง</td></tr>
+      <tr><td>เงินประกันค่าเช่า</td><td class="n">210,000</td><td><span class="tag grey">ประมาณการ</span></td><td>ปกติ 3 เดือน — ต้องดูสัญญาว่าเป็น 3 หรือ 6 เดือน</td></tr>
+      <tr><td>ค่าทนาย + จัดทำสัญญาโอนกิจการ</td><td class="n">30,000</td><td><span class="tag grey">ประมาณการ</span></td><td>คุ้มมากเมื่อเทียบกับความเสี่ยง อย่าประหยัดข้อนี้</td></tr>
+      <tr><td>ค่าธรรมเนียมราชการ (ขย.1 + GPP)</td><td class="n">4,000–5,000</td><td><span class="tag ok">ยืนยันแล้ว</span></td><td>กฎกระทรวงค่าธรรมเนียมเกี่ยวกับยา พ.ศ. 2566</td></tr>
+      <tr><td>ปรับปรุงร้านให้ผ่าน GPP</td><td class="n">50,000</td><td><span class="tag grey">ประมาณการ</span></td><td>ต้องดูผลตรวจ GPP ครั้งล่าสุดก่อนจึงจะรู้จริง</td></tr>
+      <tr><td>เงินทุนหมุนเวียนสำรอง</td><td class="n">300,000</td><td><span class="tag warn">ขั้นต่ำ</span></td><td>ควรมีอย่างน้อยเท่าค่าใช้จ่าย 3 เดือน</td></tr>
+      <tr><td><b>รวมโดยประมาณ</b></td><td class="n"><b>~1,600,000</b></td><td></td><td><b>ไม่ใช่ 1 ล้านอย่างที่คุยกัน</b> และยังไม่รวมเดือนที่ปิดร้านรอใบอนุญาต</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="sub">ข. ค่าใช้จ่ายประจำเดือน</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th style="width:38%">รายการ</th><th class="n" style="width:140px">บาท/เดือน</th><th style="width:120px">ความมั่นใจ</th><th>หมายเหตุ</th></tr></thead>
+    <tbody>
+      <tr><td>ค่าเช่า</td><td class="n">70,000</td><td><span class="tag warn">ต้องเช็ค</span></td><td>รวมค่าส่วนกลาง+ค่าไฟหรือยัง · ขึ้นปีละกี่ %</td></tr>
+      <tr><td>เภสัชกร full-time</td><td class="n">45,000–60,000</td><td><span class="tag warn">ขัดกัน</span></td><td>ประกาศของร้านเอง 45,000 · เอกสาร HANDOFF 60,000</td></tr>
+      <tr><td>เภสัชกร part-time อุดวันหยุด</td><td class="n">~11,000</td><td><span class="tag grey">ประมาณการ</span></td><td>1,360/วัน × ~8 วัน · ตัดออกได้ถ้าจิ้นลงเอง</td></tr>
+      <tr><td>ผู้ช่วยเภสัช</td><td class="n">13,000–25,000</td><td><span class="tag warn">ขัดกัน</span></td><td>ต้องถามอัตราจริงที่จ่ายอยู่</td></tr>
+      <tr><td>ค่าส่วนกลาง + ไฟ + น้ำ + เน็ต</td><td class="n">~20,000</td><td><span class="tag grey">ประมาณการ</span></td><td>ร้านยาต้องเปิดแอร์คุมอุณหภูมิยาตลอดเวลา ค่าไฟสูงกว่าร้านทั่วไป</td></tr>
+      <tr><td>ค่าธรรมเนียมบัตร/QR</td><td class="n">~1.2% ของยอด</td><td><span class="tag grey">ประมาณการ</span></td><td>ที่ยอด 480,000 = ~5,800</td></tr>
+      <tr><td>ยาหมดอายุ + ของหาย (shrinkage)</td><td class="n">2–5% ของยอด</td><td><span class="tag grey">ประมาณการ</span></td><td>ร้านที่บริหารไม่ดีขึ้นถึง 4–5%</td></tr>
+      <tr><td>บัญชี + POS + ของสิ้นเปลือง + การตลาด</td><td class="n">~9,000</td><td><span class="tag grey">ประมาณการ</span></td><td></td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 class="sec"><span class="ic">◎</span>ตัวเลขที่ต้องจ้อง — และเกณฑ์ตัดสิน</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th style="width:230px">ตัวเลข</th><th style="width:170px">เกณฑ์ผ่าน</th><th>ทำไมตัวนี้สำคัญ</th></tr></thead>
+    <tbody>
+      <tr><td><b>กำไรส่วนเกิน (Contribution Margin %)</b></td><td><span class="tag ok">ไม่ต่ำกว่า 25%</span></td>
+        <td>ไม่ใช่ GP 30% ที่เขาบอก — ต้องหักค่า GP แพลตฟอร์ม ค่าบัตร ของหาย ค่าส่ง ออกก่อน <b>นี่คือตัวเลขจริงที่เอาไปจ่ายค่าใช้จ่าย</b></td></tr>
+      <tr><td><b>ยอดขาย/วัน ที่จุดคุ้มทุน</b></td><td><span class="tag ok">ห่างจากปัจจุบันไม่เกิน 25%</span></td>
+        <td>ถ้าต้องโตเกิน 40% ในปีเดียวทั้งที่เจ้าของเดิมทำไม่ได้ ต้องตอบให้ได้ว่า<b>เราจะทำอะไรต่างจากเขา</b></td></tr>
+      <tr><td><b>สต็อกหมุน (เดือน)</b></td><td><span class="tag ok">ไม่เกิน 3.5 เดือน</span></td>
+        <td>ร้านสุขภาพดีอยู่ที่ 2–3 เดือน ถ้าเกิน 5 เดือน แปลว่าเงินจมอยู่กับของที่ขายไม่ออก</td></tr>
+      <tr><td><b>ส่วนลดที่ได้จริงจากค่าสต็อก</b></td><td><span class="tag ok">ไม่ต่ำกว่า 30%</span></td>
+        <td>คิดจากมูลค่าที่ขายออกได้จริง (หลังหักของค้าง) ไม่ใช่จากตัวเลขที่เขาอ้าง</td></tr>
+      <tr><td><b>เดือนที่คืนทุน</b></td><td><span class="tag ok">ไม่เกิน 60% ของสัญญาที่เหลือ</span></td>
+        <td>ถ้าคืนทุนพอดีตอนสัญญาหมด = ทำงาน 2 ปีเพื่อเสมอตัว ไม่ใช่การลงทุน</td></tr>
+      <tr><td><b>กำไรเชิงเศรษฐกิจ (กรณีจิ้นลงเอง)</b></td><td><span class="tag ok">ต้องเป็นบวก</span></td>
+        <td>หักค่าเสียโอกาสเวลาของจิ้นออกแล้วยังเหลือกำไรไหม — ถ้าไม่เหลือ แปลว่าเอาเวลาไปแลกเงินที่น้อยกว่ามูลค่าเวลาตัวเอง</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 class="sec"><span class="ic">◈</span>เรื่องที่ต้อง focus (และเรื่องที่ไม่ต้องสนใจ)</h2>
+  <div class="grid2">
+    <div class="card" style="border-left:6px solid var(--green)">
+      <h3 style="color:var(--greenDeep)">โฟกัสที่นี่</h3>
+      <ul class="bul">
+        <li><b>สัญญาเช่า</b> — เป็นสิ่งเดียวที่ถ้าพลาดแล้วจบทั้งดีล ต้องเคลียร์ก่อนเรื่องอื่นทั้งหมด</li>
+        <li><b>ตัวเลขจาก POS จริง</b> — ไม่ใช่คำบอกเล่า ไม่ใช่ความรู้สึก</li>
+        <li><b>ของค้างในสต็อกกี่เปอร์เซ็นต์</b> — เพราะเป็นเงินก้อนเดียวที่เราจ่ายจริง</li>
+        <li><b>Pharmacist coverage ครบ 63 ชม./สัปดาห์ไหม</b> — เป็นเรื่องใบอนุญาต ไม่ใช่แค่เรื่องยอดขาย</li>
+        <li><b>แผนที่จะทำให้ยอดโต ที่เจ้าของเดิมไม่มี</b> — ถ้าตอบไม่ได้ ก็อย่าซื้อ</li>
+      </ul>
+    </div>
+    <div class="card" style="border-left:6px solid var(--red)">
+      <h3 style="color:var(--red)">อย่าเสียเวลากับสิ่งเหล่านี้</h3>
+      <ul class="bul x">
+        <li><b>เงิน 4–5 ล้านที่เขาลงไป</b> — เป็น sunk cost ของเขา ไม่ใช่ส่วนลดของเรา และมูลค่าขายต่อเป็นศูนย์</li>
+        <li><b>"ของตกแต่งสวยมาก"</b> — ของสวยไม่ทำให้คนขึ้นชั้น 3</li>
+        <li><b>โมเดล Pharmacy Hub ที่สมาคมฯ เสนอ</b> — ยังเป็นแค่ข้อเสนอ ไม่มีสถานะทางกฎหมาย ห้ามใส่ในสมมติฐาน</li>
+        <li><b>ความสงสารเจ้าของ</b> — เขาเลือกลงทุนเอง และยังมีทางเลือกอื่นอยู่</li>
+        <li><b>ความรีบของอีกฝ่าย</b> — ความรีบของเขาไม่ใช่ความรีบของเรา</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="sec"><span class="ic">⏱</span>กำหนดเวลาที่ล็อกไว้แล้ว</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th style="width:170px">วันที่</th><th style="width:230px">เหตุการณ์</th><th>สิ่งที่ต้องได้</th></tr></thead>
+    <tbody>
+      <tr><td><b>18 ส.ค. 2569</b><br><span class="tag info">14:00 น.</span></td><td>นัดคุยที่ ดิ โอลด์ สยาม พลาซ่า</td>
+        <td>ถามคำถาม 8 ข้อในแท็บ "เจ้าของเก่า" · ขอเอกสาร 10 รายการ · <b>อย่าตอบรับหรือเสนอราคาใด ๆ ในวันนี้</b><br>
+        <span class="tag warn">ระวัง</span> ปฏิทินมีนัดเจริญสติ วัดปากน้ำ 16:00 ต่อ (เดินทาง ~40 นาที) → มีเวลาคุยจริงประมาณ 80 นาที</td></tr>
+      <tr><td><b>24 ส.ค. 2569</b><br><span class="tag bad">เส้นตาย</span></td><td>ประตูที่ 1 — ตัดสินว่าเดินต่อหรือปิด</td>
+        <td>ถ้าไม่ได้เอกสาร 5 รายการแรก → ปิดดีล บอกผู้ขายตรง ๆ</td></tr>
+      <tr><td><b>31 ส.ค. 2569</b></td><td>ประตูที่ 2 — ตัดสินใจขั้นสุดท้าย</td>
+        <td>รันตัวเลขจริงเสร็จ → ตัดสินใจภายใน 7 วันหลังได้เอกสารครบ · <b>บันทึกเหตุผลไว้ ไม่ว่าผลจะออกทางไหน</b> เพื่อใช้เทียบกับดีลถัดไป</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note blue">
+    <div class="hd">มุมที่อาจใหญ่กว่าดีลนี้</div>
+    ถ้า Telepharmacy บังคับให้ร้านยารายย่อยทั่วประเทศต้องแปลงตัวเองเป็นดิจิทัลภายใน 1–2 ปี และส่วนใหญ่ทำไม่เป็น
+    <b>นั่นคือกลุ่มลูกค้าที่มีความเจ็บปวดชัดและมีเส้นตายบังคับ</b> — ขายเครื่องมือให้คนกลุ่มนี้ตรงกับเป้าหมาย passive income
+    มากกว่าการยืนขายยาหน้าร้านเอง<br><br>
+    <b>ข้อควรระวัง:</b> ตัวเลข "ร้านยา 18,000 ราย" และการคาดการณ์โดมิโน ยังไม่ได้ยืนยันจากแหล่งปฐมภูมิ ต้องตรวจสอบก่อนใช้วางแผนธุรกิจ
+  </div>
+
+  <h2 class="sec"><span class="ic">▤</span>แหล่งอ้างอิงทั้งหมด</h2>
+  <div class="card">
+    <h3>กฎหมายและระเบียบ (ตรวจจากตัวบท/หน่วยงานเจ้าของเรื่องแล้ว)</h3>
+    <ul class="bul">
+      <li><b>พระราชบัญญัติยา พ.ศ. 2510</b> มาตรา 21 (เภสัชกรผู้มีหน้าที่ปฏิบัติการต้องประจำอยู่ตลอดเวลาที่เปิดทำการ) และมาตรา 39 (หน้าที่ของเภสัชกร)</li>
+      <li><b>กฎกระทรวงการขออนุญาตและการออกใบอนุญาตขายยาแผนปัจจุบัน พ.ศ. 2556</b> และฉบับที่ 2 — เกณฑ์ GPP · ใบอนุญาตสิ้นอายุ 31 ธ.ค. ของปีที่ออก</li>
+      <li><b>กฎกระทรวงกำหนดค่าธรรมเนียมเกี่ยวกับยา พ.ศ. 2566</b> — ใบอนุญาตขายยาแผนปัจจุบัน 2,000 บาท</li>
+      <li><b>ประกาศกระทรวงสาธารณสุข</b> เรื่องกำหนดรายละเอียดเกี่ยวกับสถานที่ อุปกรณ์ และวิธีปฏิบัติทางเภสัชกรรมชุมชน (ฉบับที่ 2) พ.ศ. 2569 — รองรับ Telepharmacy · <b>มีผลบังคับใช้ 22 มิ.ย. 2569</b></li>
+      <li><b>ประกาศสภาเภสัชกรรมที่ 48/2569</b> แนวทางมาตรฐานการให้บริการเภสัชกรรมทางไกล — ราชกิจจานุเบกษา 17 มิ.ย. 2569</li>
+      <li><b>ประกาศสำนักงานคณะกรรมการอาหารและยา</b> เรื่องรายการโปรแกรมประยุกต์สำหรับการให้บริการเภสัชกรรมทางไกล พ.ศ. 2569 (7 ก.ค. 2569)</li>
+      <li><b>ประมวลกฎหมายแพ่งและพาณิชย์</b> มาตรา 538 (เช่าอสังหาฯ เกิน 3 ปีต้องจดทะเบียน) และมาตรา 544 (โอนสิทธิการเช่า/เช่าช่วง)</li>
+    </ul>
+    <h3 style="margin-top:20px">ข้อมูลร้านและตลาด</h3>
+    <ul class="bul">
+      <li>Google Maps — PJ Pharmacy สาขาดิโอลด์สยามพลาซ่า (ที่อยู่ เวลาทำการ จำนวนรีวิว) และ วัตสัน ดิโอลด์สยาม (173 รีวิว 4.2 ดาว)</li>
+      <li>เพจ The Old Siam Plaza — โพสต์เปิดร้าน PJ Pharmacy 30 เม.ย. 2568 (ระบุห้อง C3-18)</li>
+      <li>ประกาศรับสมัครงานของร้านในกลุ่มหางานเภสัชกร (ส.ค.–ก.ย. 2568, ก.ค. 2569) — อัตราค่าจ้างและชื่อร้านเดิม</li>
+      <li>ระบบตรวจสอบรายชื่อร้านยา สำนักงานรับรองร้านยาคุณภาพ สภาเภสัชกรรม (acc-pharm.com) — รายชื่อร้านยาในเขตพระนคร 41 ร้าน · แขวงวังบูรพาภิรมย์ 9 ร้าน</li>
+      <li>เว็บไซต์ ดิ โอลด์ สยาม พลาซ่า — directory 118 ร้านค้า (ไม่ปรากฏชื่อ PJ Pharmacy)</li>
+      <li>db-pharmacy.com และ dataforthai — ข้อมูลบริษัท ดีบี เฮลธ์ สโตร์ แอนด์ ดีเวลลอปเม้นท์ จำกัด</li>
+    </ul>
+    <div class="note amber" style="margin-top:18px;margin-bottom:0">
+      <b>สิ่งที่ยังไม่มีแหล่งยืนยัน — ห้ามใช้ตัดสินใจ:</b> อัตราค่า GP ที่แพลตฟอร์ม telepharmacy หัก ·
+      ตัวเลขร้านยารายย่อย 18,000 รายและการคาดการณ์ปิดตัวแบบโดมิโน · ยอดขายและกำไรขั้นต้นของร้าน (ยังเป็นคำบอกเล่าล้วน ๆ)
+    </div>
+  </div>
+
+</div>
+</section>
+
+<footer class="bot">
+  <div class="wrap">
+    <b>PJ Pharmacy Deal Evaluator</b> — เอกสารประกอบการตัดสินใจภายใน ไม่ใช่คำแนะนำการลงทุนหรือความเห็นทางกฎหมาย<br>
+    ทุกตัวเลขที่ไม่ได้ระบุว่า "ยืนยันแล้ว" คือสมมติฐาน จนกว่าจะเห็นเอกสารจริง · ข้อกฎหมายควรตรวจสอบกับ สสจ./สำนักอนามัย กทม. และทนายความก่อนดำเนินการจริง<br>
+    จัดทำ 17 ส.ค. 2569
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- tabs ---------- */
+var tabs=document.querySelectorAll('nav.tabs button');
+tabs.forEach(function(b){
+  b.addEventListener('click',function(){
+    tabs.forEach(function(x){x.setAttribute('aria-selected','false')});
+    b.setAttribute('aria-selected','true');
+    document.querySelectorAll('section.panel').forEach(function(p){p.classList.remove('on')});
+    document.getElementById(b.dataset.t).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+/* ---------- accordions ---------- */
+document.querySelectorAll('.acc > button').forEach(function(b){
+  b.addEventListener('click',function(){
+    var a=b.parentElement; a.classList.toggle('open');
+    b.querySelector('.chev').textContent=a.classList.contains('open')?'−':'+';
+  });
+});
+
+/* ---------- state ---------- */
+var S={
+  dailySales:15000,daysOpen:30,gpPct:30,growth:0,platPct:0,platGP:20,
+  nPharm:1,pharmPay:60000,ownPharm:false,nAssist:1,assistPay:25000,bonusPct:8,otPay:0,
+  rent:70000,common:0,elec:12000,water:800,net:1200,clean:2000,maint:2000,insur:1000,
+  pos:1500,acct:3000,supplies:1500,marketing:3000,licenseYr:3000,signTaxYr:2000,
+  cardPct:1.2,shrinkPct:2,deliverPct:3,taxRate:20,
+  dealPrice:1000000,stockClaimed:2000000,deadPct:35,deposit:210000,legalFee:30000,
+  licenseFee:5000,gppUpgrade:50000,workCap:300000,closedMonths:1,
+  leaseMonths:24,rentEsc:0,loan:0,loanRate:8
+};
+
+var baht=function(n){return new Intl.NumberFormat('th-TH',{maximumFractionDigits:0}).format(Math.round(n||0));};
+
+/* ---------- build sliders ---------- */
+document.querySelectorAll('[data-slider]').forEach(function(el){
+  var k=el.dataset.slider;
+  el.innerHTML=
+    '<div class="lbl"><span class="t">'+el.dataset.label+'</span>'+
+    '<span><input type="number" id="n_'+k+'" min="'+el.dataset.min+'" max="'+el.dataset.max+'" step="'+el.dataset.step+'"> '+
+    '<span class="unit">'+el.dataset.unit+'</span></span></div>'+
+    '<input type="range" id="r_'+k+'" min="'+el.dataset.min+'" max="'+el.dataset.max+'" step="'+el.dataset.step+'">'+
+    (el.dataset.hint?'<p class="hint">'+el.dataset.hint+'</p>':'');
+  var n=document.getElementById('n_'+k), r=document.getElementById('r_'+k);
+  n.value=S[k]; r.value=S[k];
+  n.addEventListener('input',function(){S[k]=Number(n.value)||0;r.value=S[k];calc();});
+  r.addEventListener('input',function(){S[k]=Number(r.value)||0;n.value=S[k];calc();});
+});
+
+/* ---------- build mini rows ---------- */
+var GROUPS={
+  grpB:[
+    ['nPharm','จำนวนเภสัชกร','คน','ร้านเปิด 63 ชม./สัปดาห์ — เภสัชกรคนเดียวคุมไม่ครบตามมาตรา 21'],
+    ['pharmPay','เงินเดือนเภสัชกร/คน','บาท','ประกาศจริงของร้าน 45,000 · เอกสาร HANDOFF 60,000'],
+    ['nAssist','จำนวนผู้ช่วย','คน',''],
+    ['assistPay','เงินเดือนผู้ช่วย/คน','บาท',''],
+    ['otPay','OT / ค่ากะพิเศษ','บาท',''],
+    ['bonusPct','โบนัส + สวัสดิการ','%','เฉลี่ยรายเดือน · ประกันสังคม 5% เพดาน 750 คำนวณอัตโนมัติ']
+  ],
+  grpC:[
+    ['rent','ค่าเช่า','บาท',''],
+    ['common','ค่าส่วนกลาง / ค่าบริการพื้นที่','บาท','ห้างส่วนใหญ่เก็บแยกจากค่าเช่า — ต้องถามให้ชัด'],
+    ['elec','ค่าไฟ','บาท','ร้านยาต้องเปิดแอร์คุมอุณหภูมิยาตลอดเวลา'],
+    ['water','ค่าน้ำ','บาท',''],
+    ['net','เน็ต + โทรศัพท์','บาท',''],
+    ['clean','แม่บ้าน / รปภ. / ขยะ','บาท',''],
+    ['maint','ซ่อมบำรุง + ล้างแอร์','บาท','ตู้เย็นเก็บยาเสียคือหายนะ ต้องมีแผนสำรอง'],
+    ['insur','ประกันภัยร้าน','บาท','']
+  ],
+  grpD:[
+    ['pos','POS + ซอฟต์แวร์ + กล้อง','บาท',''],
+    ['acct','บัญชี + ยื่นภาษี','บาท',''],
+    ['supplies','ของสิ้นเปลือง (ถุง ซอง ใบเสร็จ)','บาท',''],
+    ['marketing','การตลาด / ป้าย / โปรโมชัน','บาท',''],
+    ['licenseYr','ค่าใบอนุญาต ต่อปี','บาท','ค่าธรรมเนียมต่ออายุ ขย.1 = 2,000 บาท/ปี'],
+    ['signTaxYr','ภาษีป้าย ต่อปี','บาท',''],
+    ['cardPct','ค่าธรรมเนียมบัตร / QR','%','% ของยอดขาย'],
+    ['shrinkPct','ยาหมดอายุ + ของหาย','%','% ของยอดขาย · ร้านบริหารไม่ดีขึ้นถึง 4–5%'],
+    ['deliverPct','ค่าส่งเดลิเวอรี','%','% ของยอดที่ขายผ่านแพลตฟอร์ม'],
+    ['taxRate','ภาษีเงินได้','%','']
+  ],
+  grpE:[
+    ['dealPrice','ค่าสต็อกยา (ราคาที่เขาขอ)','บาท',''],
+    ['stockClaimed','มูลค่าสต็อกที่เขาอ้าง','บาท','⚠ ข้อมูลขัดกัน: HANDOFF ว่า 2 ล้าน · ที่ต้นเล่าว่าเหลือ 1 ล้าน'],
+    ['deadPct','ของค้างสต็อก / ใกล้หมดอายุ','%','ต้องนับจริงทีละ SKU พร้อมวันหมดอายุ'],
+    ['deposit','เงินประกันค่าเช่า','บาท','ปกติ 3 เดือน — ต้องดูสัญญาจริง'],
+    ['legalFee','ค่าทนาย + โอนกิจการ','บาท','อย่าประหยัดข้อนี้'],
+    ['licenseFee','ค่าขอ ขย.1 + ตรวจ GPP','บาท','ค่าธรรมเนียมราชการจริง 4,000–5,000 บาท'],
+    ['gppUpgrade','ปรับปรุงร้านให้ผ่าน GPP','บาท',''],
+    ['workCap','เงินทุนหมุนเวียนสำรอง','บาท','อย่างน้อยเท่าค่าใช้จ่าย 3 เดือน'],
+    ['closedMonths','เดือนที่ปิดร้านรอใบอนุญาต','ด.','ไม่มีรายได้ แต่ค่าเช่ายังเดิน']
+  ],
+  grpF:[
+    ['leaseMonths','สัญญาเช่าที่เหลือ','ด.','⚠ HANDOFF ว่า 24 เดือน แต่ร้านเปิด 30 เม.ย. 2568 อาจเหลือ ~18–20'],
+    ['rentEsc','ค่าเช่าขึ้นต่อปี','%','ดูในสัญญา'],
+    ['loan','เงินกู้ที่ใช้','บาท',''],
+    ['loanRate','ดอกเบี้ยต่อปี','%','']
+  ]
+};
+Object.keys(GROUPS).forEach(function(gid){
+  var host=document.getElementById(gid),h='';
+  GROUPS[gid].forEach(function(f){
+    h+='<div class="rowin"><div class="tx">'+f[1]+(f[3]?'<small>'+f[3]+'</small>':'')+'</div>'+
+       '<span><input type="number" id="n_'+f[0]+'" style="font-family:var(--mono);font-size:16px;width:110px;padding:9px 10px;text-align:right;border:2px solid var(--line);border-radius:8px;min-height:44px"> '+
+       '<span class="unit">'+f[2]+'</span></span></div>';
+  });
+  host.innerHTML=h;
+  GROUPS[gid].forEach(function(f){
+    var n=document.getElementById('n_'+f[0]); n.value=S[f[0]];
+    n.addEventListener('input',function(){S[f[0]]=Number(n.value)||0;calc();});
+  });
+});
+document.getElementById('ownPharm').addEventListener('change',function(e){S.ownPharm=e.target.checked;calc();});
+
+/* ---------- model ---------- */
+function model(){
+  var revenue=S.dailySales*S.daysOpen;
+  var platRev=revenue*(S.platPct/100);
+  var gpAll=revenue*(S.gpPct/100);
+  var platFee=platRev*(S.platGP/100);
+  var cardFee=revenue*(S.cardPct/100);
+  var shrink=revenue*(S.shrinkPct/100);
+  var deliver=platRev*(S.deliverPct/100);
+  var contribution=gpAll-platFee-cardFee-shrink-deliver;
+  var cmRate=revenue>0?contribution/revenue:0;
+
+  var sso=function(p){return Math.min(p*0.05,750);};
+  var pharmCash=S.ownPharm?Math.max(0,S.nPharm-1)*S.pharmPay:S.nPharm*S.pharmPay;
+  var pharmHeads=S.ownPharm?Math.max(0,S.nPharm-1):S.nPharm;
+  var payroll=pharmCash+S.nAssist*S.assistPay+S.otPay+
+    (pharmHeads*sso(S.pharmPay)+S.nAssist*sso(S.assistPay))+
+    ((pharmCash+S.nAssist*S.assistPay)*S.bonusPct)/100;
+
+  var place=S.rent+S.common+S.elec+S.water+S.net+S.clean+S.maint+S.insur;
+  var ops=S.pos+S.acct+S.supplies+S.marketing+S.licenseYr/12+S.signTaxYr/12;
+  var interest=(S.loan*(S.loanRate/100))/12;
+  var opex=payroll+place+ops+interest;
+
+  var ebt=contribution-opex;
+  var tax=ebt>0?(ebt*S.taxRate)/100:0;
+  var netProfit=ebt-tax;
+  var econNet=S.ownPharm?netProfit-S.pharmPay:netProfit;
+
+  var beDaily=cmRate>0?opex/(cmRate*S.daysOpen):Infinity;
+  var gap=S.dailySales>0?(beDaily/S.dailySales-1)*100:0;
+
+  var cogs=revenue*(1-S.gpPct/100);
+  var turn=cogs>0?S.stockClaimed/cogs:0;
+  var usable=S.stockClaimed*(1-S.deadPct/100);
+  var discount=usable>0?(1-S.dealPrice/usable)*100:-100;
+
+  var upfront=S.dealPrice+S.deposit+S.legalFee+S.licenseFee+S.gppUpgrade+S.workCap;
+
+  var g=Math.pow(1+S.growth/100,1/12)-1;
+  var rEsc=Math.pow(1+S.rentEsc/100,1/12)-1;
+  var series=[{month:0,cum:-upfront}],cum=-upfront,payback=null;
+  for(var i=1;i<=S.leaseMonths;i++){
+    var rentM=S.rent*Math.pow(1+rEsc,i)-S.rent;
+    var opexM=opex+rentM;
+    if(i<=S.closedMonths){cum-=opexM;}
+    else{
+      var rev=S.dailySales*S.daysOpen*Math.pow(1+g,i-S.closedMonths);
+      var ebtM=rev*cmRate-opexM;
+      cum+=ebtM-(ebtM>0?(ebtM*S.taxRate)/100:0);
+    }
+    series.push({month:i,cum:cum});
+    if(payback===null&&cum>=0)payback=i;
+  }
+  var reqDaily=cmRate>0?(upfront/Math.max(1,S.leaseMonths-S.closedMonths)+opex)/(S.daysOpen*cmRate):Infinity;
+
+  var salesLv=[0.8,0.95,1.1,1.3,1.5].map(function(f){return Math.round(S.dailySales*f);});
+  var gpLv=[S.gpPct-8,S.gpPct-4,S.gpPct,S.gpPct+4,S.gpPct+8].filter(function(v){return v>0;});
+  var grid=salesLv.map(function(s){
+    return gpLv.map(function(gv){
+      var rv=s*S.daysOpen, pr=rv*(S.platPct/100);
+      var cm=rv*(gv/100)-pr*(S.platGP/100)-rv*(S.cardPct/100)-rv*(S.shrinkPct/100)-pr*(S.deliverPct/100);
+      return cm-opex;
+    });
+  });
+
+  return {revenue:revenue,gpAll:gpAll,platFee:platFee,cardFee:cardFee,shrink:shrink,deliver:deliver,
+    contribution:contribution,cmRate:cmRate,payroll:payroll,place:place,ops:ops,interest:interest,opex:opex,
+    ebt:ebt,tax:tax,netProfit:netProfit,econNet:econNet,beDaily:beDaily,gap:gap,turn:turn,usable:usable,
+    discount:discount,upfront:upfront,series:series,endCash:cum,payback:payback,reqDaily:reqDaily,
+    salesLv:salesLv,gpLv:gpLv,grid:grid};
+}
+
+/* ---------- render ---------- */
+function row(l,v,o){o=o||{};
+  return '<div class="r'+(o.big?' big':'')+'"><div class="lb">'+l+(o.note?'<small>'+o.note+'</small>':'')+
+    '</div><div class="vl '+(o.tone||'')+'">'+v+'</div></div>';
+}
+function gcol(v){ if(v>40000)return '#B5DECC'; if(v>0)return '#DEEFE7'; if(v>-40000)return '#F6DCD8'; return '#EEC0BA'; }
+
+function calc(){
+  var m=model();
+
+  document.getElementById('bA').textContent=baht(m.revenue);
+  document.getElementById('bB').textContent=baht(m.payroll);
+  document.getElementById('bC').textContent=baht(m.place);
+  document.getElementById('bD').textContent=baht(m.ops);
+  document.getElementById('bE').textContent=baht(m.upfront);
+  document.getElementById('bF').textContent=S.leaseMonths+' ด.';
+
+  var vd = m.endCash<0
+    ? {c:'var(--red)',t:'ไม่ผ่าน',x:'สัญญาหมดก่อนคืนทุน เงินที่ลงไปหายไปพร้อมกับสิทธิ์ที่หมดอายุ'}
+    : (m.endCash<m.upfront*0.5
+      ? {c:'var(--amber)',t:'เสี่ยงสูง',x:'คืนทุนเฉียดฉิว ไม่เหลือ margin ให้พลาดแม้แต่เดือนเดียว'}
+      : {c:'var(--green)',t:'พอมีเหตุผล',x:'คืนทุนก่อนหมดสัญญาและเหลือกำไร — แต่ต้องล็อกสัญญาเช่าให้ได้ก่อน'});
+  document.getElementById('verdict').style.borderLeftColor=vd.c;
+  var vt=document.getElementById('vtag'); vt.textContent=vd.t; vt.style.color=vd.c;
+  document.getElementById('vtx').textContent=vd.x;
+
+  document.getElementById('k1').textContent=baht(m.upfront);
+  var k2=document.getElementById('k2'); k2.textContent=baht(m.netProfit);
+  k2.style.color=m.netProfit<0?'var(--red)':'var(--green)';
+  var k3=document.getElementById('k3');
+  k3.textContent=m.payback?m.payback+' เดือน':'ไม่คืนใน '+S.leaseMonths+' ด.';
+  k3.style.color=m.payback?'var(--green)':'var(--red)';
+  var k4=document.getElementById('k4'); k4.textContent=baht(m.endCash);
+  k4.style.color=m.endCash<0?'var(--red)':'var(--green)';
+  var k5=document.getElementById('k5');
+  k5.textContent=(m.gap>0?'+':'')+m.gap.toFixed(0)+'%';
+  k5.style.color=m.gap>0?'var(--red)':'var(--green)';
+
+  var mx=Math.max(m.beDaily*1.5,S.dailySales*1.2,1);
+  var bp=Math.min((m.beDaily/mx)*100,100), cp=Math.min((S.dailySales/mx)*100,100);
+  document.getElementById('zred').style.width=bp+'%';
+  document.getElementById('bemark').style.left=bp+'%';
+  var bc=document.getElementById('becur');
+  bc.style.left=cp+'%'; bc.textContent='▼ '+baht(S.dailySales);
+  bc.style.color=S.dailySales>=m.beDaily?'var(--green)':'var(--red)';
+  document.getElementById('belab').textContent='จุดคุ้มทุน '+baht(m.beDaily)+' /วัน';
+  document.getElementById('bemax').textContent=baht(mx);
+
+  var h='';
+  h+=row('ยอดขาย',baht(m.revenue));
+  h+=row('กำไรขั้นต้น '+S.gpPct+'%',baht(m.gpAll),{tone:'good'});
+  h+=row('ค่า GP แพลตฟอร์ม','('+baht(m.platFee)+')');
+  h+=row('ค่าธรรมเนียมบัตร / QR','('+baht(m.cardFee)+')');
+  h+=row('ยาหมดอายุ + ของหาย','('+baht(m.shrink)+')');
+  h+=row('ค่าส่งเดลิเวอรี','('+baht(m.deliver)+')');
+  h+=row('กำไรส่วนเกิน',baht(m.contribution),{big:true,
+    note:(m.cmRate*100).toFixed(1)+'% ของยอดขาย — นี่คือตัวเลขจริงที่เอาไปจ่ายค่าใช้จ่าย ไม่ใช่ GP'});
+  h+='<div class="gap"></div>';
+  h+=row('ค่าคน','('+baht(m.payroll)+')');
+  h+=row('ค่าสถานที่','('+baht(m.place)+')');
+  h+=row('ค่าดำเนินงาน','('+baht(m.ops)+')');
+  if(m.interest>0)h+=row('ดอกเบี้ย','('+baht(m.interest)+')');
+  h+=row('รวมค่าใช้จ่ายคงที่','('+baht(m.opex)+')',{big:true});
+  h+='<div class="gap"></div>';
+  h+=row('กำไรก่อนภาษี',baht(m.ebt),{tone:m.ebt<0?'bad':'good'});
+  h+=row('ภาษี','('+baht(m.tax)+')');
+  h+=row('กำไรสุทธิ',baht(m.netProfit),{big:true,tone:m.netProfit<0?'bad':'good'});
+  if(S.ownPharm)h+=row('กำไรเชิงเศรษฐกิจ',baht(m.econNet),{tone:m.econNet<0?'bad':'good',
+    note:'หักค่าเสียโอกาสเวลาของจิ้น '+baht(S.pharmPay)+'/เดือน'});
+  document.getElementById('plbox').innerHTML=h;
+
+  document.getElementById('bebox').innerHTML=
+    row('ต้องขายต่อวัน',baht(m.beDaily),{big:true,tone:m.gap>0?'bad':'good'})+
+    row('ต้องโตอีก',(m.gap>0?'+':'')+m.gap.toFixed(0)+'%')+
+    row('ต้องขาย/วัน เพื่อคืนทุนก่อนหมดสัญญา',baht(m.reqDaily),{big:true,
+      note:'คืนเงินลงทุน '+baht(m.upfront)+' ภายใน '+Math.max(1,S.leaseMonths-S.closedMonths)+' เดือน'});
+
+  document.getElementById('stkbox').innerHTML=
+    row('สต็อกหมุน',m.turn.toFixed(1)+' เดือน',{tone:m.turn>3.5?'bad':'good',note:'ร้านสุขภาพดีอยู่ที่ 2–3 เดือน'})+
+    row('มูลค่าที่ขายออกได้จริง',baht(m.usable))+
+    row('ส่วนลดที่ได้จริง',m.discount.toFixed(0)+'%',{big:true,tone:m.discount<30?'bad':'good'});
+
+  // chart
+  var W=680,H=230,P={t:14,r:14,b:26,l:62};
+  var ys=m.series.map(function(d){return d.cum;});
+  var mn=Math.min.apply(null,ys.concat([0])), mxv=Math.max.apply(null,ys.concat([0]));
+  var pad=(mxv-mn)*0.1||1; mn-=pad; mxv+=pad;
+  var px=function(i){return P.l+(i/(m.series.length-1||1))*(W-P.l-P.r);};
+  var py=function(v){return P.t+(1-(v-mn)/(mxv-mn||1))*(H-P.t-P.b);};
+  var pts=m.series.map(function(d,i){return px(i)+','+py(d.cum);}).join(' ');
+  var zy=py(0);
+  var ticks='';
+  [mn,(mn+mxv)/2,mxv].forEach(function(v){
+    ticks+='<line x1="'+P.l+'" y1="'+py(v)+'" x2="'+(W-P.r)+'" y2="'+py(v)+'" stroke="#E2EBE8"/>'+
+      '<text x="'+(P.l-8)+'" y="'+(py(v)+5)+'" text-anchor="end" font-size="12" font-family="var(--mono)" fill="#67807A">'+
+      (Math.round(v/100000)/10)+'M</text>';
+  });
+  var xt='';
+  [0,Math.round(S.leaseMonths/2),S.leaseMonths].forEach(function(i){
+    xt+='<text x="'+px(i)+'" y="'+(H-6)+'" text-anchor="middle" font-size="12" font-family="var(--mono)" fill="#67807A">'+i+'</text>';
+  });
+  document.getElementById('chart').innerHTML=
+    '<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="240" role="img" aria-label="กราฟกระแสเงินสดสะสม">'+
+    ticks+
+    '<line x1="'+P.l+'" y1="'+zy+'" x2="'+(W-P.r)+'" y2="'+zy+'" stroke="#0E2A22" stroke-width="2"/>'+
+    '<polyline fill="none" stroke="'+(m.endCash<0?'#9B2118':'#0B6E52')+'" stroke-width="3" points="'+pts+'"/>'+
+    xt+'</svg>';
+  document.getElementById('chartnote').innerHTML=
+    'เริ่มติดลบที่ <b>'+baht(m.upfront)+'</b> คือเงินที่ต้องเตรียมจริงวันแรก ไม่ใช่แค่ค่ายา'+
+    (S.closedMonths>0?' — '+S.closedMonths+' เดือนแรกยังจ่ายค่าเช่าโดยไม่มีรายได้ ระหว่างรอใบอนุญาต ขย.1':'');
+
+  // sensitivity
+  var t='<thead><tr><th>ขาย/วัน ↓  GP% →</th>';
+  m.gpLv.forEach(function(g){t+='<th>'+g+'%</th>';});
+  t+='</tr></thead><tbody>';
+  m.grid.forEach(function(r,i){
+    t+='<tr><td>'+baht(m.salesLv[i])+'</td>';
+    r.forEach(function(v){
+      t+='<td style="background:'+gcol(v)+';color:'+(v<0?'#9B2118':'#0E2A22')+'">'+baht(v)+'</td>';
+    });
+    t+='</tr>';
+  });
+  document.getElementById('sens').innerHTML=t+'</tbody>';
+}
+
+/* ---------- presets ---------- */
+var P={
+  owner:{dailySales:15000,gpPct:30,growth:0,platPct:0,deadPct:0,dealPrice:1000000,closedMonths:0,
+    deposit:0,legalFee:0,licenseFee:0,gppUpgrade:0,workCap:0,shrinkPct:0,ownPharm:false,
+    pharmPay:60000,assistPay:25000,stockClaimed:2000000,leaseMonths:24},
+  ton:{dailySales:16000,gpPct:30,growth:0,platPct:0,deadPct:35,dealPrice:1000000,stockClaimed:1000000,
+    closedMonths:1,deposit:210000,legalFee:30000,licenseFee:5000,gppUpgrade:50000,workCap:300000,
+    shrinkPct:2,ownPharm:false,pharmPay:45000,assistPay:13000,common:20000,leaseMonths:20},
+  real:{dailySales:15000,gpPct:30,growth:0,platPct:0,deadPct:35,dealPrice:1000000,stockClaimed:2000000,
+    closedMonths:1,deposit:210000,legalFee:30000,licenseFee:5000,gppUpgrade:50000,workCap:300000,
+    shrinkPct:2,ownPharm:false,pharmPay:60000,assistPay:25000,leaseMonths:24},
+  tele:{dailySales:15000,gpPct:30,growth:-10,platPct:35,platGP:20,deadPct:35,dealPrice:1000000,
+    stockClaimed:2000000,closedMonths:1,deposit:210000,shrinkPct:3,ownPharm:false,leaseMonths:24},
+  jin:{dailySales:16000,gpPct:30,growth:25,platPct:20,deadPct:35,dealPrice:500000,stockClaimed:1000000,
+    ownPharm:true,nPharm:1,pharmPay:45000,assistPay:13000,closedMonths:1,workCap:300000,leaseMonths:20},
+  // เคสแย่สุด: สต็อกเหลือจริง 1 ล้าน แต่ขอ 1 ล้าน = ส่วนลด 0% ก่อนหักของค้าง
+  worst:{dailySales:15000,gpPct:30,growth:-10,platPct:20,platGP:20,deadPct:35,
+    dealPrice:1000000,stockClaimed:1000000,closedMonths:1,deposit:210000,legalFee:30000,
+    licenseFee:5000,gppUpgrade:50000,workCap:300000,shrinkPct:3,ownPharm:false,
+    pharmPay:45000,assistPay:13000,common:20000,leaseMonths:18}
+};
+var BASE=JSON.parse(JSON.stringify(S));
+document.querySelectorAll('#presets button').forEach(function(b){
+  b.addEventListener('click',function(){
+    var p=P[b.dataset.p]; if(!p)return;
+    Object.keys(BASE).forEach(function(k){S[k]=BASE[k];});   // reset ให้สะอาดก่อน กัน preset ก่อนหน้าค้าง
+    Object.keys(p).forEach(function(k){S[k]=p[k];});
+    Object.keys(S).forEach(function(k){
+      var n=document.getElementById('n_'+k), r=document.getElementById('r_'+k);
+      if(n&&typeof S[k]==='number')n.value=S[k];
+      if(r&&typeof S[k]==='number')r.value=S[k];
+    });
+    document.getElementById('ownPharm').checked=!!S.ownPharm;
+    document.getElementById('worstnote').style.display=(b.dataset.p==='worst')?'block':'none';
+    calc();
+  });
+});
+
+calc();
+})();
+</script>
+</body>
+</html>
