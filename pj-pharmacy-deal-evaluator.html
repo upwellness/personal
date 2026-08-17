@@ -108,7 +108,7 @@ ul.bul.x li::before{background:var(--red)}
 ul.bul.q li::before{background:var(--blue)}
 
 /* ---------- simulator ---------- */
-.simgrid{display:grid;grid-template-columns:400px 1fr;gap:22px;align-items:start}
+.simgrid{display:grid;grid-template-columns:460px 1fr;gap:22px;align-items:start}
 @media(max-width:1000px){.simgrid{grid-template-columns:1fr}}
 
 .acc{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin-bottom:12px;overflow:hidden}
@@ -151,8 +151,7 @@ ul.bul.q li::before{background:var(--blue)}
 .verdict .vtop{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px}
 .verdict .vtag{font-family:var(--display);font-size:26px;font-weight:700}
 .verdict .vtx{font-size:17px;color:var(--ink2);line-height:1.75}
-.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:20px}
-@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 16px;margin-top:20px}
 .kpi .k{font-size:14.5px;color:var(--ink3);line-height:1.5}
 .kpi .v{font-family:var(--mono);font-size:23px;font-weight:600;line-height:1.35}
 
@@ -178,6 +177,33 @@ ul.bul.q li::before{background:var(--blue)}
 .sens td:first-child{text-align:left;border-right:2px solid var(--line);background:var(--surface2)}
 
 .chartbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+
+/* ---------- sticky results / scrollable inputs ---------- */
+.resultsCol{position:sticky;top:calc(var(--navH,60px) + 14px);align-self:start;
+  max-height:calc(100vh - var(--navH,60px) - 28px);overflow-y:auto;padding-right:6px;scrollbar-width:thin}
+.inputsCol{min-width:0}
+@media(max-width:1000px){.resultsCol{position:static;max-height:none;overflow:visible;padding-right:0}}
+
+/* card flash when a result updates */
+.flashcard{transition:background-color .55s ease}
+.flashcard.flash{background-color:#FFF3BF !important;transition:background-color .05s ease}
+
+/* checkable line items */
+.rowin.checkable{display:grid;grid-template-columns:26px 1fr auto;align-items:center}
+.rowin.checkable .tx{grid-column:2}
+.rowin.checkable > span{grid-column:3}
+.rowchk{display:flex;align-items:center;grid-column:1}
+.rowchk input{width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+.rowin.off{opacity:.42}
+.rowin.off .tx{text-decoration:line-through}
+.ninput:disabled{background:var(--surface2);color:var(--ink3);cursor:not-allowed}
+
+.grpTitle{font-family:var(--display);font-size:14.5px;font-weight:600;color:var(--ink2);
+  margin:16px 0 4px;padding-top:10px;border-top:1px dashed var(--lineSoft)}
+.grpTitle:first-child{margin-top:0;padding-top:0;border-top:none}
+.ptautoRow{font-size:14.5px;padding:10px 12px;border-radius:8px;margin:2px 0 14px;line-height:1.65}
+.ptautoRow.warn{background:var(--amberBg);color:var(--amber)}
+.ptautoRow.ok{background:var(--greenBg);color:var(--greenDeep)}
 
 /* ---------- steps ---------- */
 .step{display:grid;grid-template-columns:64px 1fr;gap:18px;margin-bottom:22px;align-items:start}
@@ -267,32 +293,69 @@ footer.bot b{color:#fff}
     บวกกับสัญญาเช่าเหลือ 18 เดือน (นับจากวันเปิดร้าน 30 เม.ย. 2568) · ยอดขายไม่โต · มียอด 20% วิ่งผ่านแพลตฟอร์ม
     — นี่คือภาพที่ต้องเตรียมใจไว้ ถ้าเอกสารออกมาตรงกับที่เล่า</div>
 
-  <div class="verdict" id="verdict">
-    <div class="vtop">
-      <span class="vtag" id="vtag">—</span>
-      <span class="vtx" id="vtx">—</span>
-    </div>
-    <div class="kpis">
-      <div class="kpi"><div class="k">จ่ายวันแรก</div><div class="v" id="k1">—</div></div>
-      <div class="kpi"><div class="k">เงินที่ต้องมีจริง (จุดต่ำสุด)</div><div class="v" id="k0">—</div></div>
-      <div class="kpi"><div class="k">กำไรสุทธิ / เดือน</div><div class="v" id="k2">—</div></div>
-      <div class="kpi"><div class="k">คืนทุนภายใน</div><div class="v" id="k3">—</div></div>
-      <div class="kpi"><div class="k">เงินสดตอนจบสัญญา</div><div class="v" id="k4">—</div></div>
-      <div class="kpi"><div class="k">ห่างจุดคุ้มทุน</div><div class="v" id="k5">—</div></div>
-    </div>
-    <div class="bestrip">
-      <div class="bebar" id="bebar">
-        <div class="track"><div class="zred" id="zred"></div><div class="zgrn"></div></div>
-        <div class="mark" id="bemark"></div>
-        <div class="cur" id="becur">—</div>
-      </div>
-      <div class="belbl"><span>0</span><span id="belab">—</span><span id="bemax">—</span></div>
-    </div>
-  </div>
-
   <div class="simgrid">
-    <!-- INPUTS -->
-    <div>
+    <!-- LEFT: ผลลัพธ์ — sticky ไม่เลื่อนตาม scroll -->
+    <div class="resultsCol" id="resultsCol">
+
+      <div class="verdict" id="verdict">
+        <div class="vtop">
+          <span class="vtag" id="vtag">—</span>
+          <span class="vtx" id="vtx">—</span>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><div class="k">จ่ายวันแรก</div><div class="v" id="k1">—</div></div>
+          <div class="kpi"><div class="k">เงินที่ต้องมีจริง (จุดต่ำสุด)</div><div class="v" id="k0">—</div></div>
+          <div class="kpi"><div class="k">กำไรสุทธิ / เดือน</div><div class="v" id="k2">—</div></div>
+          <div class="kpi"><div class="k">คืนทุนภายใน</div><div class="v" id="k3">—</div></div>
+          <div class="kpi"><div class="k">เงินสดตอนจบสัญญา</div><div class="v" id="k4">—</div></div>
+          <div class="kpi"><div class="k">ห่างจุดคุ้มทุน</div><div class="v" id="k5">—</div></div>
+        </div>
+        <div class="bestrip">
+          <div class="bebar" id="bebar">
+            <div class="track"><div class="zred" id="zred"></div><div class="zgrn"></div></div>
+            <div class="mark" id="bemark"></div>
+            <div class="cur" id="becur">—</div>
+          </div>
+          <div class="belbl"><span>0</span><span id="belab">—</span><span id="bemax">—</span></div>
+        </div>
+      </div>
+
+      <div class="card pl flashcard" id="plCard">
+        <h3>งบกำไรขาดทุนต่อเดือน</h3>
+        <div id="plbox"></div>
+      </div>
+
+      <div class="card">
+        <h3>กระแสเงินสดสะสม</h3>
+        <div class="chartbox" id="chart"></div>
+        <p class="hint" id="chartnote" style="font-size:15.5px;color:var(--ink3);line-height:1.75;margin-top:12px"></p>
+      </div>
+
+      <div class="card pl">
+        <h3>จุดคุ้มทุน</h3>
+        <div id="bebox"></div>
+      </div>
+      <div class="card pl">
+        <h3>คุณภาพสต็อก</h3>
+        <div id="stkbox"></div>
+      </div>
+
+      <div class="card">
+        <h3>ตารางความอ่อนไหว — กำไรก่อนภาษีต่อเดือน</h3>
+        <div class="tblwrap"><table class="sens" id="sens"></table></div>
+        <p style="font-size:15.5px;color:var(--ink3);margin-top:12px;line-height:1.75">
+          แถวคือยอดขายต่อวัน · คอลัมน์คือ GP% · ช่องเขียวคือกำไร ช่องแดงคือขาดทุน
+          ดูว่าต้องขยับไปไกลแค่ไหนถึงจะเข้าเขียว
+        </p>
+      </div>
+    </div>
+
+    <!-- RIGHT: กรอกข้อมูลทีละรายการ — เลื่อนได้ -->
+    <div class="inputsCol">
+      <p style="font-size:14.5px;color:var(--ink3);margin-bottom:14px">
+        ✓ = รวมรายการนี้ในการคำนวณ · ติ๊กออกแล้วดูฝั่งซ้าย จะเห็นตัวเลขกะพริบตรงที่เปลี่ยน
+      </p>
+
       <div class="acc open" data-k="A">
         <button type="button"><span class="lt">A</span>รายได้และส่วนแบ่ง<span class="badge" id="bA">—</span><span class="chev">−</span></button>
         <div class="body">
@@ -312,11 +375,8 @@ footer.bot b{color:#fff}
       </div>
 
       <div class="acc open" data-k="B">
-        <button type="button"><span class="lt">B</span>ค่าคน<span class="badge" id="bB">—</span><span class="chev">−</span></button>
-        <div class="body">
-          <label class="chk"><input type="checkbox" id="ownPharm"><span>จิ้นลงเป็นเภสัชกรเอง 1 คน (ไม่เป็นเงินสดออก)</span></label>
-          <div id="grpB"></div>
-        </div>
+        <button type="button"><span class="lt">B</span>ค่าคน — เภสัชประจำ + พาร์ทไทม์<span class="badge" id="bB">—</span><span class="chev">−</span></button>
+        <div class="body"><div id="grpB"></div></div>
       </div>
 
       <div class="acc" data-k="C">
@@ -337,40 +397,6 @@ footer.bot b{color:#fff}
       <div class="acc" data-k="F">
         <button type="button"><span class="lt">F</span>สัญญาและเงินกู้<span class="badge" id="bF">—</span><span class="chev">+</span></button>
         <div class="body"><div id="grpF"></div></div>
-      </div>
-    </div>
-
-    <!-- OUTPUTS -->
-    <div>
-      <div class="card pl">
-        <h3>งบกำไรขาดทุนต่อเดือน</h3>
-        <div id="plbox"></div>
-      </div>
-
-      <div class="card">
-        <h3>กระแสเงินสดสะสม</h3>
-        <div class="chartbox" id="chart"></div>
-        <p class="hint" id="chartnote" style="font-size:15.5px;color:var(--ink3);line-height:1.75;margin-top:12px"></p>
-      </div>
-
-      <div class="grid2">
-        <div class="card pl">
-          <h3>จุดคุ้มทุน</h3>
-          <div id="bebox"></div>
-        </div>
-        <div class="card pl">
-          <h3>คุณภาพสต็อก</h3>
-          <div id="stkbox"></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>ตารางความอ่อนไหว — กำไรก่อนภาษีต่อเดือน</h3>
-        <div class="tblwrap"><table class="sens" id="sens"></table></div>
-        <p style="font-size:15.5px;color:var(--ink3);margin-top:12px;line-height:1.75">
-          แถวคือยอดขายต่อวัน · คอลัมน์คือ GP% · ช่องเขียวคือกำไร ช่องแดงคือขาดทุน
-          ดูว่าต้องขยับไปไกลแค่ไหนถึงจะเข้าเขียว
-        </p>
       </div>
     </div>
   </div>
@@ -969,17 +995,31 @@ document.querySelectorAll('.acc > button').forEach(function(b){
 /* ---------- state ---------- */
 var S={
   dailySales:15000,daysOpen:30,gpPct:30,growth:0,platPct:0,platGP:20,
-  nPharm:1,pharmPay:60000,ownPharm:false,nAssist:1,assistPay:25000,bonusPct:8,otPay:0,
+  nPharm:1,pharmPay:60000,nAssist:1,assistPay:25000,bonusPct:8,otPay:0,
   jinDays:0,ptRate:1360,ftDays:26,stockIsRetail:0,
   rent:70000,common:0,elec:12000,water:800,net:1200,clean:2000,maint:2000,insur:1000,
   pos:1500,acct:3000,supplies:1500,marketing:3000,licenseYr:3000,signTaxYr:2000,
   cardPct:1.2,shrinkPct:2,deliverPct:3,taxRate:20,
   dealPrice:1000000,stockClaimed:2000000,deadPct:35,deposit:210000,legalFee:30000,
   licenseFee:5000,gppUpgrade:50000,workCap:300000,closedMonths:1,
-  leaseMonths:24,rentEsc:0,loan:0,loanRate:8
+  leaseMonths:24,rentEsc:0,loan:0,loanRate:8,
+  // ── รวม/ไม่รวมรายการในการคำนวณ (checkbox ฝั่งขวา) — ต้องตั้งค่าเริ่มต้นไว้ที่นี่
+  // เพื่อให้ preset reset กลับมาถูกทุกครั้ง ──
+  on_rent:true,on_common:true,on_elec:true,on_water:true,on_net:true,on_clean:true,on_maint:true,on_insur:true,
+  on_pos:true,on_acct:true,on_supplies:true,on_marketing:true,on_licenseYr:true,on_signTaxYr:true,
+  on_deposit:true,on_legalFee:true,on_licenseFee:true,on_gppUpgrade:true,on_workCap:true,
+  on_otPay:true,on_bonusPct:true
 };
 
 var baht=function(n){return new Intl.NumberFormat('th-TH',{maximumFractionDigits:0}).format(Math.round(n||0));};
+var pick=function(key){return S['on_'+key]===false?0:(S[key]||0);};
+
+/* nav bar height → ตัวแปร CSS ใช้ตั้งตำแหน่ง sticky ของผลลัพธ์ฝั่งซ้าย */
+(function(){
+  var navEl=document.querySelector('nav.tabs');
+  var setH=function(){document.documentElement.style.setProperty('--navH',(navEl?navEl.offsetHeight:60)+'px');};
+  setH(); window.addEventListener('load',setH); window.addEventListener('resize',setH);
+})();
 
 /* ---------- build sliders ---------- */
 document.querySelectorAll('[data-slider]').forEach(function(el){
@@ -996,36 +1036,86 @@ document.querySelectorAll('[data-slider]').forEach(function(el){
   r.addEventListener('input',function(){S[k]=Number(r.value)||0;n.value=S[k];calc();});
 });
 
-/* ---------- build mini rows ---------- */
+/* ---------- shared row renderer (ใช้ทั้ง GROUPS ทั่วไป และ grpB ที่สร้างเอง) ---------- */
+// f = [key, label, unit, hint, checkable?]
+function rowHtml(f){
+  var key=f[0],label=f[1],unit=f[2],hint=f[3],checkable=f[4];
+  return '<div class="rowin'+(checkable?' checkable':'')+'" id="row_'+key+'">'+
+    (checkable?'<label class="rowchk"><input type="checkbox" id="on_'+key+'" aria-label="รวม '+label+' ในการคำนวณ"></label>':'')+
+    '<div class="tx">'+label+(hint?'<small>'+hint+'</small>':'')+'</div>'+
+    '<span><input type="number" id="n_'+key+'" class="ninput" style="font-family:var(--mono);font-size:16px;width:110px;padding:9px 10px;text-align:right;border:2px solid var(--line);border-radius:8px;min-height:44px"> '+
+    '<span class="unit">'+unit+'</span></span></div>';
+}
+function updateRowDim(key){
+  var row=document.getElementById('row_'+key); if(!row)return;
+  var on=S['on_'+key]!==false;
+  row.classList.toggle('off',!on);
+  var n=document.getElementById('n_'+key); if(n)n.disabled=!on;
+}
+function bindRow(f){
+  var key=f[0],checkable=f[4];
+  var n=document.getElementById('n_'+key);
+  if(n){ n.value=S[key]; n.addEventListener('input',function(){S[key]=Number(n.value)||0;calc();}); }
+  if(checkable){
+    var c=document.getElementById('on_'+key);
+    c.checked=S['on_'+key]!==false;
+    c.addEventListener('change',function(){S['on_'+key]=c.checked;updateRowDim(key);calc();});
+    updateRowDim(key);
+  }
+}
+
+/* ---------- กลุ่ม B: เภสัชประจำ + พาร์ทไทม์ (สร้างเองแยกจาก GROUPS ทั่วไป เพราะมีหัวข้อย่อย + แถวคำนวณอัตโนมัติ) ---------- */
+var FIELDS_B_REGULAR=[
+  ['nPharm','จำนวนเภสัชกรประจำ (จ้างเงินเดือน)','คน','ร้านเปิด 63 ชม./สัปดาห์ — เภสัชกรคนเดียวคุมไม่ครบตามมาตรา 21'],
+  ['pharmPay','เงินเดือนเภสัชกร/คน','บาท','ประกาศจริงของร้าน 45,000 · เอกสาร HANDOFF 60,000'],
+  ['ftDays','คุมได้กี่วัน/เดือน/คน','วัน','ทำ 6 วัน/สัปดาห์ ≈ 26 วัน']
+];
+var FIELDS_B_JIN=[
+  ['jinDays','เภสัชประจำที่ไม่คิดเงินสด (เช่น จิ้น) กี่วัน/เดือน','วัน','⚠️ แผนจริงคือ 8 วัน ไม่ใช่ทั้งเดือน — วันที่เหลือยังต้องมีคนคุมอยู่ดี']
+];
+var FIELDS_B_PT=[
+  ['ptRate','ค่าเภสัช part-time/วัน','บาท','อัตราที่ร้านประกาศเอง 1,360 บาท/วัน']
+];
+var FIELDS_B_OTHER=[
+  ['nAssist','จำนวนผู้ช่วย','คน',''],
+  ['assistPay','เงินเดือนผู้ช่วย/คน','บาท',''],
+  ['otPay','OT / ค่ากะพิเศษ','บาท','',true],
+  ['bonusPct','โบนัส + สวัสดิการ','%','ประกันสังคม 5% เพดาน 750 คำนวณอัตโนมัติ',true]
+];
+(function buildGrpB(){
+  var host=document.getElementById('grpB');
+  var h='<div class="grpTitle">เภสัชกรประจำ (จ้างเงินเดือน)</div>';
+  FIELDS_B_REGULAR.forEach(function(f){h+=rowHtml(f);});
+  h+='<div class="grpTitle">เภสัชประจำที่ไม่คิดเงินสด</div>';
+  FIELDS_B_JIN.forEach(function(f){h+=rowHtml(f);});
+  h+='<div id="ptauto"></div>';
+  FIELDS_B_PT.forEach(function(f){h+=rowHtml(f);});
+  h+='<div class="grpTitle">ผู้ช่วยและค่าใช้จ่ายอื่น</div>';
+  FIELDS_B_OTHER.forEach(function(f){h+=rowHtml(f);});
+  host.innerHTML=h;
+  FIELDS_B_REGULAR.concat(FIELDS_B_JIN,FIELDS_B_PT,FIELDS_B_OTHER).forEach(bindRow);
+})();
+
+/* ---------- build mini rows: กลุ่ม C–F ---------- */
+// f = [key, label, unit, hint, checkable] — checkable:true มี checkbox รวม/ไม่รวมให้ติ๊ก
 var GROUPS={
-  grpB:[
-    ['nPharm','จำนวนเภสัชกรประจำ (จ้าง)','คน','ร้านเปิด 63 ชม./สัปดาห์ — เภสัชกรคนเดียวคุมไม่ครบตามมาตรา 21'],
-    ['pharmPay','เงินเดือนเภสัชกร/คน','บาท','ประกาศจริงของร้าน 45,000 · เอกสาร HANDOFF 60,000'],
-    ['ftDays','เภสัชประจำคุมได้กี่วัน/เดือน','วัน','ทำ 6 วัน/สัปดาห์ ≈ 26 วัน · ที่เหลือต้องจ้าง part-time อุด'],
-    ['jinDays','จิ้นคุมเองกี่วัน/เดือน','วัน','⚠️ แผนจริงคือ 8 วัน — ไม่ใช่ทั้งเดือน วันที่เหลือยังต้องจ้างอยู่ดี'],
-    ['ptRate','ค่าเภสัช part-time/วัน','บาท','อัตราที่ร้านประกาศเอง 1,360 บาท/วัน'],
-    ['nAssist','จำนวนผู้ช่วย','คน',''],
-    ['assistPay','เงินเดือนผู้ช่วย/คน','บาท',''],
-    ['otPay','OT / ค่ากะพิเศษ','บาท',''],
-    ['bonusPct','โบนัส + สวัสดิการ','%','เฉลี่ยรายเดือน · ประกันสังคม 5% เพดาน 750 คำนวณอัตโนมัติ']
-  ],
   grpC:[
-    ['rent','ค่าเช่า','บาท',''],
-    ['common','ค่าส่วนกลาง / ค่าบริการพื้นที่','บาท','ห้างส่วนใหญ่เก็บแยกจากค่าเช่า — ต้องถามให้ชัด'],
-    ['elec','ค่าไฟ','บาท','ร้านยาต้องเปิดแอร์คุมอุณหภูมิยาตลอดเวลา'],
-    ['water','ค่าน้ำ','บาท',''],
-    ['net','เน็ต + โทรศัพท์','บาท',''],
-    ['clean','แม่บ้าน / รปภ. / ขยะ','บาท',''],
-    ['maint','ซ่อมบำรุง + ล้างแอร์','บาท','ตู้เย็นเก็บยาเสียคือหายนะ ต้องมีแผนสำรอง'],
-    ['insur','ประกันภัยร้าน','บาท','']
+    ['rent','ค่าเช่า','บาท','',true],
+    ['common','ค่าส่วนกลาง / ค่าบริการพื้นที่','บาท','ห้างส่วนใหญ่เก็บแยกจากค่าเช่า — ต้องถามให้ชัด',true],
+    ['elec','ค่าไฟ','บาท','ร้านยาต้องเปิดแอร์คุมอุณหภูมิยาตลอดเวลา',true],
+    ['water','ค่าน้ำ','บาท','',true],
+    ['net','เน็ต + โทรศัพท์','บาท','',true],
+    ['clean','แม่บ้าน / รปภ. / ขยะ','บาท','',true],
+    ['maint','ซ่อมบำรุง + ล้างแอร์','บาท','ตู้เย็นเก็บยาเสียคือหายนะ ต้องมีแผนสำรอง',true],
+    ['insur','ประกันภัยร้าน','บาท','',true]
   ],
   grpD:[
-    ['pos','POS + ซอฟต์แวร์ + กล้อง','บาท',''],
-    ['acct','บัญชี + ยื่นภาษี','บาท',''],
-    ['supplies','ของสิ้นเปลือง (ถุง ซอง ใบเสร็จ)','บาท',''],
-    ['marketing','การตลาด / ป้าย / โปรโมชัน','บาท',''],
-    ['licenseYr','ค่าใบอนุญาต ต่อปี','บาท','ค่าธรรมเนียมต่ออายุ ขย.1 = 2,000 บาท/ปี'],
-    ['signTaxYr','ภาษีป้าย ต่อปี','บาท',''],
+    ['pos','POS + ซอฟต์แวร์ + กล้อง','บาท','',true],
+    ['acct','บัญชี + ยื่นภาษี','บาท','',true],
+    ['supplies','ของสิ้นเปลือง (ถุง ซอง ใบเสร็จ)','บาท','',true],
+    ['marketing','การตลาด / ป้าย / โปรโมชัน','บาท','',true],
+    ['licenseYr','ค่าใบอนุญาต ต่อปี','บาท','ค่าธรรมเนียมต่ออายุ ขย.1 = 2,000 บาท/ปี',true],
+    ['signTaxYr','ภาษีป้าย ต่อปี','บาท','',true],
     ['cardPct','ค่าธรรมเนียมบัตร / QR','%','% ของยอดขาย'],
     ['shrinkPct','ยาหมดอายุ + ของหาย','%','% ของยอดขาย · ร้านบริหารไม่ดีขึ้นถึง 4–5%'],
     ['deliverPct','ค่าส่งเดลิเวอรี','%','% ของยอดที่ขายผ่านแพลตฟอร์ม'],
@@ -1036,11 +1126,11 @@ var GROUPS={
     ['stockClaimed','มูลค่าสต็อกที่เขาอ้าง','บาท','⚠ ข้อมูลขัดกัน: HANDOFF ว่า 2 ล้าน · ที่ต้นเล่าว่าเหลือ 1 ล้าน'],
     ['stockIsRetail','ตัวเลขข้างบนเป็นราคาขาย?','0/1','ใส่ 1 ถ้าเป็นราคาขายหน้าร้าน (ระบบจะแปลงเป็นราคาทุนให้) · ใส่ 0 ถ้าเป็นราคาทุน — คำถามนี้ swing หลายแสน'],
     ['deadPct','ของค้างสต็อก / ใกล้หมดอายุ','%','ต้องนับจริงทีละ SKU พร้อมวันหมดอายุ'],
-    ['deposit','เงินประกันค่าเช่า','บาท','ปกติ 3 เดือน — ต้องดูสัญญาจริง'],
-    ['legalFee','ค่าทนาย + โอนกิจการ','บาท','อย่าประหยัดข้อนี้'],
-    ['licenseFee','ค่าขอ ขย.1 + ตรวจ GPP','บาท','ค่าธรรมเนียมราชการจริง 4,000–5,000 บาท'],
-    ['gppUpgrade','ปรับปรุงร้านให้ผ่าน GPP','บาท',''],
-    ['workCap','เงินทุนหมุนเวียนสำรอง','บาท','อย่างน้อยเท่าค่าใช้จ่าย 3 เดือน'],
+    ['deposit','เงินประกันค่าเช่า','บาท','ปกติ 3 เดือน — ต้องดูสัญญาจริง',true],
+    ['legalFee','ค่าทนาย + โอนกิจการ','บาท','อย่าประหยัดข้อนี้',true],
+    ['licenseFee','ค่าขอ ขย.1 + ตรวจ GPP','บาท','ค่าธรรมเนียมราชการจริง 4,000–5,000 บาท',true],
+    ['gppUpgrade','ปรับปรุงร้านให้ผ่าน GPP','บาท','',true],
+    ['workCap','เงินทุนหมุนเวียนสำรอง','บาท','อย่างน้อยเท่าค่าใช้จ่าย 3 เดือน',true],
     ['closedMonths','เดือนที่ปิดร้านรอใบอนุญาต','ด.','ไม่มีรายได้ แต่ค่าเช่ายังเดิน']
   ],
   grpF:[
@@ -1052,18 +1142,10 @@ var GROUPS={
 };
 Object.keys(GROUPS).forEach(function(gid){
   var host=document.getElementById(gid),h='';
-  GROUPS[gid].forEach(function(f){
-    h+='<div class="rowin"><div class="tx">'+f[1]+(f[3]?'<small>'+f[3]+'</small>':'')+'</div>'+
-       '<span><input type="number" id="n_'+f[0]+'" style="font-family:var(--mono);font-size:16px;width:110px;padding:9px 10px;text-align:right;border:2px solid var(--line);border-radius:8px;min-height:44px"> '+
-       '<span class="unit">'+f[2]+'</span></span></div>';
-  });
+  GROUPS[gid].forEach(function(f){h+=rowHtml(f);});
   host.innerHTML=h;
-  GROUPS[gid].forEach(function(f){
-    var n=document.getElementById('n_'+f[0]); n.value=S[f[0]];
-    n.addEventListener('input',function(){S[f[0]]=Number(n.value)||0;calc();});
-  });
+  GROUPS[gid].forEach(bindRow);
 });
-document.getElementById('ownPharm').addEventListener('change',function(e){S.ownPharm=e.target.checked;calc();});
 
 /* ---------- model ---------- */
 function model(){
@@ -1083,13 +1165,14 @@ function model(){
   var pharmCash=S.nPharm*S.pharmPay;
   var covered=S.nPharm*S.ftDays+S.jinDays;
   var gapDays=Math.max(0,S.daysOpen-covered);       // วันที่ยังไม่มีเภสัชคุม
-  var ptCost=gapDays*S.ptRate;                       // ต้องจ้างรายวันอุด
-  var payroll=pharmCash+S.nAssist*S.assistPay+S.otPay+ptCost+
+  var ptCost=gapDays*S.ptRate;                       // ต้องจ้างรายวันอุด (พาร์ทไทม์ — คำนวณอัตโนมัติ ไม่ใช่กรอกเอง)
+  var otPayV=pick('otPay'), bonusPctV=pick('bonusPct');
+  var payroll=pharmCash+S.nAssist*S.assistPay+otPayV+ptCost+
     (S.nPharm*sso(S.pharmPay)+S.nAssist*sso(S.assistPay))+
-    ((pharmCash+S.nAssist*S.assistPay)*S.bonusPct)/100;
+    ((pharmCash+S.nAssist*S.assistPay)*bonusPctV)/100;
 
-  var place=S.rent+S.common+S.elec+S.water+S.net+S.clean+S.maint+S.insur;
-  var ops=S.pos+S.acct+S.supplies+S.marketing+S.licenseYr/12+S.signTaxYr/12;
+  var place=pick('rent')+pick('common')+pick('elec')+pick('water')+pick('net')+pick('clean')+pick('maint')+pick('insur');
+  var ops=pick('pos')+pick('acct')+pick('supplies')+pick('marketing')+pick('licenseYr')/12+pick('signTaxYr')/12;
   var interest=(S.loan*(S.loanRate/100))/12;
   var opex=payroll+place+ops+interest;
 
@@ -1110,7 +1193,7 @@ function model(){
   var usable=stockCost*(1-S.deadPct/100);
   var discount=usable>0?(1-S.dealPrice/usable)*100:-100;
 
-  var upfront=S.dealPrice+S.deposit+S.legalFee+S.licenseFee+S.gppUpgrade+S.workCap;
+  var upfront=S.dealPrice+pick('deposit')+pick('legalFee')+pick('licenseFee')+pick('gppUpgrade')+pick('workCap');
 
   var g=Math.pow(1+S.growth/100,1/12)-1;
   var rEsc=Math.pow(1+S.rentEsc/100,1/12)-1;
@@ -1157,8 +1240,16 @@ function row(l,v,o){o=o||{};
 }
 function gcol(v){ if(v>40000)return '#B5DECC'; if(v>0)return '#DEEFE7'; if(v>-40000)return '#F6DCD8'; return '#EEC0BA'; }
 
+var calcRan=false;
 function calc(){
   var m=model();
+
+  var ptautoEl=document.getElementById('ptauto');
+  if(ptautoEl){
+    ptautoEl.innerHTML = m.gapDays>0
+      ? '<div class="ptautoRow warn">→ พาร์ทไทม์ที่ต้องจ้างอุด <b>อัตโนมัติ</b>: '+m.gapDays.toFixed(0)+' วัน/เดือน × '+baht(S.ptRate)+' = <b>'+baht(m.ptCost)+' บาท/เดือน</b></div>'
+      : '<div class="ptautoRow ok">✓ เภสัชประจำ + เภสัชที่ไม่คิดเงินสด คุมครบทุกวันที่ร้านเปิดแล้ว — ไม่ต้องจ้างพาร์ทไทม์เพิ่ม</div>';
+  }
 
   document.getElementById('bA').textContent=baht(m.revenue);
   document.getElementById('bB').textContent=baht(m.payroll);
@@ -1277,21 +1368,33 @@ function calc(){
     t+='</tr>';
   });
   document.getElementById('sens').innerHTML=t+'</tbody>';
+
+  // แฟลชให้เห็นชัดว่าฝั่งซ้ายเพิ่งอัปเดต (ข้ามการโหลดครั้งแรก)
+  if(calcRan){
+    ['verdict','plCard'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(!el)return;
+      el.classList.add('flashcard','flash');
+      void el.offsetWidth; // force reflow ให้ transition รีสตาร์ททุกครั้ง
+      setTimeout(function(){el.classList.remove('flash');},480);
+    });
+  }
+  calcRan=true;
 }
 
 /* ---------- presets ---------- */
 var P={
   owner:{dailySales:15000,gpPct:30,growth:0,platPct:0,deadPct:0,dealPrice:1000000,closedMonths:0,
-    deposit:0,legalFee:0,licenseFee:0,gppUpgrade:0,workCap:0,shrinkPct:0,ownPharm:false,
+    deposit:0,legalFee:0,licenseFee:0,gppUpgrade:0,workCap:0,shrinkPct:0,
     pharmPay:60000,assistPay:25000,stockClaimed:2000000,leaseMonths:24},
   ton:{dailySales:16000,gpPct:30,growth:0,platPct:0,deadPct:35,dealPrice:1000000,stockClaimed:1000000,
     closedMonths:1,deposit:210000,legalFee:30000,licenseFee:5000,gppUpgrade:50000,workCap:300000,
-    shrinkPct:2,ownPharm:false,pharmPay:45000,assistPay:13000,common:20000,leaseMonths:20},
+    shrinkPct:2,pharmPay:45000,assistPay:13000,common:20000,leaseMonths:20},
   real:{dailySales:15000,gpPct:30,growth:0,platPct:0,deadPct:35,dealPrice:1000000,stockClaimed:2000000,
     closedMonths:1,deposit:210000,legalFee:30000,licenseFee:5000,gppUpgrade:50000,workCap:300000,
-    shrinkPct:2,ownPharm:false,pharmPay:60000,assistPay:25000,leaseMonths:24},
+    shrinkPct:2,pharmPay:60000,assistPay:25000,leaseMonths:24},
   tele:{dailySales:15000,gpPct:30,growth:-10,platPct:35,platGP:20,deadPct:35,dealPrice:1000000,
-    stockClaimed:2000000,closedMonths:1,deposit:210000,shrinkPct:3,ownPharm:false,leaseMonths:24},
+    stockClaimed:2000000,closedMonths:1,deposit:210000,shrinkPct:3,leaseMonths:24},
   jin:{dailySales:16000,gpPct:30,growth:25,platPct:20,deadPct:35,dealPrice:500000,stockClaimed:1000000,
     nPharm:1,pharmPay:45000,assistPay:13000,jinDays:8,closedMonths:1,workCap:300000,leaseMonths:20},
   // เคสแย่สุด: สต็อกเหลือจริง 1 ล้าน แต่ขอ 1 ล้าน = ส่วนลด 0% ก่อนหักของค้าง
@@ -1304,7 +1407,7 @@ var P={
     closedMonths:1,leaseMonths:20},
   worst:{dailySales:15000,gpPct:30,growth:-10,platPct:20,platGP:20,deadPct:35,
     dealPrice:1000000,stockClaimed:1000000,closedMonths:1,deposit:210000,legalFee:30000,
-    licenseFee:5000,gppUpgrade:50000,workCap:300000,shrinkPct:3,ownPharm:false,
+    licenseFee:5000,gppUpgrade:50000,workCap:300000,shrinkPct:3,
     pharmPay:45000,assistPay:13000,common:20000,leaseMonths:18}
 };
 var BASE=JSON.parse(JSON.stringify(S));
@@ -1317,8 +1420,11 @@ document.querySelectorAll('#presets button').forEach(function(b){
       var n=document.getElementById('n_'+k), r=document.getElementById('r_'+k);
       if(n&&typeof S[k]==='number')n.value=S[k];
       if(r&&typeof S[k]==='number')r.value=S[k];
+      if(k.indexOf('on_')===0){
+        var key=k.slice(3), c=document.getElementById('on_'+key);
+        if(c){c.checked=S[k]!==false; updateRowDim(key);}
+      }
     });
-    document.getElementById('ownPharm').checked=!!S.ownPharm;
     document.getElementById('worstnote').style.display=(b.dataset.p==='worst')?'block':'none';
     document.getElementById('real2note').style.display=(b.dataset.p==='real2')?'block':'none';
     calc();
