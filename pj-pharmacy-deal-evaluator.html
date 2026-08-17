@@ -264,7 +264,8 @@ footer.bot b{color:#fff}
       <span class="vtx" id="vtx">—</span>
     </div>
     <div class="kpis">
-      <div class="kpi"><div class="k">เงินที่ต้องเตรียมจริง</div><div class="v" id="k1">—</div></div>
+      <div class="kpi"><div class="k">จ่ายวันแรก</div><div class="v" id="k1">—</div></div>
+      <div class="kpi"><div class="k">เงินที่ต้องมีจริง (จุดต่ำสุด)</div><div class="v" id="k0">—</div></div>
       <div class="kpi"><div class="k">กำไรสุทธิ / เดือน</div><div class="v" id="k2">—</div></div>
       <div class="kpi"><div class="k">คืนทุนภายใน</div><div class="v" id="k3">—</div></div>
       <div class="kpi"><div class="k">เงินสดตอนจบสัญญา</div><div class="v" id="k4">—</div></div>
@@ -960,6 +961,7 @@ document.querySelectorAll('.acc > button').forEach(function(b){
 var S={
   dailySales:15000,daysOpen:30,gpPct:30,growth:0,platPct:0,platGP:20,
   nPharm:1,pharmPay:60000,ownPharm:false,nAssist:1,assistPay:25000,bonusPct:8,otPay:0,
+  jinDays:0,ptRate:1360,ftDays:26,stockIsRetail:0,
   rent:70000,common:0,elec:12000,water:800,net:1200,clean:2000,maint:2000,insur:1000,
   pos:1500,acct:3000,supplies:1500,marketing:3000,licenseYr:3000,signTaxYr:2000,
   cardPct:1.2,shrinkPct:2,deliverPct:3,taxRate:20,
@@ -988,8 +990,11 @@ document.querySelectorAll('[data-slider]').forEach(function(el){
 /* ---------- build mini rows ---------- */
 var GROUPS={
   grpB:[
-    ['nPharm','จำนวนเภสัชกร','คน','ร้านเปิด 63 ชม./สัปดาห์ — เภสัชกรคนเดียวคุมไม่ครบตามมาตรา 21'],
+    ['nPharm','จำนวนเภสัชกรประจำ (จ้าง)','คน','ร้านเปิด 63 ชม./สัปดาห์ — เภสัชกรคนเดียวคุมไม่ครบตามมาตรา 21'],
     ['pharmPay','เงินเดือนเภสัชกร/คน','บาท','ประกาศจริงของร้าน 45,000 · เอกสาร HANDOFF 60,000'],
+    ['ftDays','เภสัชประจำคุมได้กี่วัน/เดือน','วัน','ทำ 6 วัน/สัปดาห์ ≈ 26 วัน · ที่เหลือต้องจ้าง part-time อุด'],
+    ['jinDays','จิ้นคุมเองกี่วัน/เดือน','วัน','⚠️ แผนจริงคือ 8 วัน — ไม่ใช่ทั้งเดือน วันที่เหลือยังต้องจ้างอยู่ดี'],
+    ['ptRate','ค่าเภสัช part-time/วัน','บาท','อัตราที่ร้านประกาศเอง 1,360 บาท/วัน'],
     ['nAssist','จำนวนผู้ช่วย','คน',''],
     ['assistPay','เงินเดือนผู้ช่วย/คน','บาท',''],
     ['otPay','OT / ค่ากะพิเศษ','บาท',''],
@@ -1020,6 +1025,7 @@ var GROUPS={
   grpE:[
     ['dealPrice','ค่าสต็อกยา (ราคาที่เขาขอ)','บาท',''],
     ['stockClaimed','มูลค่าสต็อกที่เขาอ้าง','บาท','⚠ ข้อมูลขัดกัน: HANDOFF ว่า 2 ล้าน · ที่ต้นเล่าว่าเหลือ 1 ล้าน'],
+    ['stockIsRetail','ตัวเลขข้างบนเป็นราคาขาย?','0/1','ใส่ 1 ถ้าเป็นราคาขายหน้าร้าน (ระบบจะแปลงเป็นราคาทุนให้) · ใส่ 0 ถ้าเป็นราคาทุน — คำถามนี้ swing หลายแสน'],
     ['deadPct','ของค้างสต็อก / ใกล้หมดอายุ','%','ต้องนับจริงทีละ SKU พร้อมวันหมดอายุ'],
     ['deposit','เงินประกันค่าเช่า','บาท','ปกติ 3 เดือน — ต้องดูสัญญาจริง'],
     ['legalFee','ค่าทนาย + โอนกิจการ','บาท','อย่าประหยัดข้อนี้'],
@@ -1063,10 +1069,14 @@ function model(){
   var cmRate=revenue>0?contribution/revenue:0;
 
   var sso=function(p){return Math.min(p*0.05,750);};
-  var pharmCash=S.ownPharm?Math.max(0,S.nPharm-1)*S.pharmPay:S.nPharm*S.pharmPay;
-  var pharmHeads=S.ownPharm?Math.max(0,S.nPharm-1):S.nPharm;
-  var payroll=pharmCash+S.nAssist*S.assistPay+S.otPay+
-    (pharmHeads*sso(S.pharmPay)+S.nAssist*sso(S.assistPay))+
+  // ── เภสัชกรต้องอยู่ตลอดเวลาเปิด (พ.ร.บ.ยา ม.21+39) ──
+  // เภสัชประจำที่จ้างคุมได้ nPharm×ftDays วัน · จิ้นคุมเอง jinDays วัน · ที่เหลือต้องจ้าง part-time
+  var pharmCash=S.nPharm*S.pharmPay;
+  var covered=S.nPharm*S.ftDays+S.jinDays;
+  var gapDays=Math.max(0,S.daysOpen-covered);       // วันที่ยังไม่มีเภสัชคุม
+  var ptCost=gapDays*S.ptRate;                       // ต้องจ้างรายวันอุด
+  var payroll=pharmCash+S.nAssist*S.assistPay+S.otPay+ptCost+
+    (S.nPharm*sso(S.pharmPay)+S.nAssist*sso(S.assistPay))+
     ((pharmCash+S.nAssist*S.assistPay)*S.bonusPct)/100;
 
   var place=S.rent+S.common+S.elec+S.water+S.net+S.clean+S.maint+S.insur;
@@ -1077,21 +1087,25 @@ function model(){
   var ebt=contribution-opex;
   var tax=ebt>0?(ebt*S.taxRate)/100:0;
   var netProfit=ebt-tax;
-  var econNet=S.ownPharm?netProfit-S.pharmPay:netProfit;
+  // ค่าเสียโอกาสเวลาจิ้น = วันที่จิ้นยืนเอง × เรต part-time ที่ตลาดจ่ายจริง
+  var jinCost=S.jinDays*S.ptRate;
+  var econNet=netProfit-jinCost;
 
   var beDaily=cmRate>0?opex/(cmRate*S.daysOpen):Infinity;
   var gap=S.dailySales>0?(beDaily/S.dailySales-1)*100:0;
 
   var cogs=revenue*(1-S.gpPct/100);
-  var turn=cogs>0?S.stockClaimed/cogs:0;
-  var usable=S.stockClaimed*(1-S.deadPct/100);
+  // ถ้าตัวเลขที่เขาอ้างเป็นราคาขาย ต้องแปลงกลับเป็นราคาทุนก่อนเทียบ
+  var stockCost=S.stockIsRetail?S.stockClaimed*(1-S.gpPct/100):S.stockClaimed;
+  var turn=cogs>0?stockCost/cogs:0;
+  var usable=stockCost*(1-S.deadPct/100);
   var discount=usable>0?(1-S.dealPrice/usable)*100:-100;
 
   var upfront=S.dealPrice+S.deposit+S.legalFee+S.licenseFee+S.gppUpgrade+S.workCap;
 
   var g=Math.pow(1+S.growth/100,1/12)-1;
   var rEsc=Math.pow(1+S.rentEsc/100,1/12)-1;
-  var series=[{month:0,cum:-upfront}],cum=-upfront,payback=null;
+  var series=[{month:0,cum:-upfront}],cum=-upfront,payback=null,trough=-upfront;
   for(var i=1;i<=S.leaseMonths;i++){
     var rentM=S.rent*Math.pow(1+rEsc,i)-S.rent;
     var opexM=opex+rentM;
@@ -1102,9 +1116,12 @@ function model(){
       cum+=ebtM-(ebtM>0?(ebtM*S.taxRate)/100:0);
     }
     series.push({month:i,cum:cum});
+    if(cum<trough)trough=cum;                          // เงินที่ต้องมีจริง = จุดต่ำสุด ไม่ใช่ upfront
     if(payback===null&&cum>=0)payback=i;
   }
-  var reqDaily=cmRate>0?(upfront/Math.max(1,S.leaseMonths-S.closedMonths)+opex)/(S.daysOpen*cmRate):Infinity;
+  // คืนทุนต้องใช้กำไร "หลังภาษี" จึงต้องหารกลับด้วย (1−อัตราภาษี)
+  var afterTax=1-S.taxRate/100;
+  var reqDaily=cmRate>0?(upfront/(Math.max(1,S.leaseMonths-S.closedMonths)*Math.max(0.01,afterTax))+opex)/(S.daysOpen*cmRate):Infinity;
 
   var salesLv=[0.8,0.95,1.1,1.3,1.5].map(function(f){return Math.round(S.dailySales*f);});
   var gpLv=[S.gpPct-8,S.gpPct-4,S.gpPct,S.gpPct+4,S.gpPct+8].filter(function(v){return v>0;});
@@ -1120,7 +1137,8 @@ function model(){
     contribution:contribution,cmRate:cmRate,payroll:payroll,place:place,ops:ops,interest:interest,opex:opex,
     ebt:ebt,tax:tax,netProfit:netProfit,econNet:econNet,beDaily:beDaily,gap:gap,turn:turn,usable:usable,
     discount:discount,upfront:upfront,series:series,endCash:cum,payback:payback,reqDaily:reqDaily,
-    salesLv:salesLv,gpLv:gpLv,grid:grid};
+    salesLv:salesLv,gpLv:gpLv,grid:grid,
+    gapDays:gapDays,ptCost:ptCost,jinCost:jinCost,trough:trough,stockCost:stockCost};
 }
 
 /* ---------- render ---------- */
@@ -1150,6 +1168,8 @@ function calc(){
   document.getElementById('vtx').textContent=vd.x;
 
   document.getElementById('k1').textContent=baht(m.upfront);
+  var k0=document.getElementById('k0'); k0.textContent=baht(Math.abs(m.trough));
+  k0.style.color=Math.abs(m.trough)>m.upfront*1.2?'var(--red)':'var(--ink)';
   var k2=document.getElementById('k2'); k2.textContent=baht(m.netProfit);
   k2.style.color=m.netProfit<0?'var(--red)':'var(--green)';
   var k3=document.getElementById('k3');
@@ -1181,7 +1201,9 @@ function calc(){
   h+=row('กำไรส่วนเกิน',baht(m.contribution),{big:true,
     note:(m.cmRate*100).toFixed(1)+'% ของยอดขาย — นี่คือตัวเลขจริงที่เอาไปจ่ายค่าใช้จ่าย ไม่ใช่ GP'});
   h+='<div class="gap"></div>';
-  h+=row('ค่าคน','('+baht(m.payroll)+')');
+  h+=row('ค่าคน','('+baht(m.payroll)+')',{note:m.gapDays>0
+    ? '⚠️ ยังมี '+m.gapDays.toFixed(0)+' วัน/เดือนที่ไม่มีเภสัชคุม → รวมค่าจ้าง part-time อุดไว้แล้ว '+baht(m.ptCost)+' บาท'
+    : 'เภสัชกรคุมครบทุกวันเปิดตาม พ.ร.บ.ยา ม.21'});
   h+=row('ค่าสถานที่','('+baht(m.place)+')');
   h+=row('ค่าดำเนินงาน','('+baht(m.ops)+')');
   if(m.interest>0)h+=row('ดอกเบี้ย','('+baht(m.interest)+')');
@@ -1190,8 +1212,8 @@ function calc(){
   h+=row('กำไรก่อนภาษี',baht(m.ebt),{tone:m.ebt<0?'bad':'good'});
   h+=row('ภาษี','('+baht(m.tax)+')');
   h+=row('กำไรสุทธิ',baht(m.netProfit),{big:true,tone:m.netProfit<0?'bad':'good'});
-  if(S.ownPharm)h+=row('กำไรเชิงเศรษฐกิจ',baht(m.econNet),{tone:m.econNet<0?'bad':'good',
-    note:'หักค่าเสียโอกาสเวลาของจิ้น '+baht(S.pharmPay)+'/เดือน'});
+  if(S.jinDays>0)h+=row('กำไรเชิงเศรษฐกิจ',baht(m.econNet),{big:true,tone:m.econNet<0?'bad':'good',
+    note:'หักค่าเสียโอกาสเวลาจิ้น '+S.jinDays+' วัน × '+baht(S.ptRate)+' = '+baht(m.jinCost)+'/เดือน — ตัวเลขนี้คือความจริง ไม่ใช่บรรทัดบน'});
   document.getElementById('plbox').innerHTML=h;
 
   document.getElementById('bebox').innerHTML=
@@ -1262,7 +1284,7 @@ var P={
   tele:{dailySales:15000,gpPct:30,growth:-10,platPct:35,platGP:20,deadPct:35,dealPrice:1000000,
     stockClaimed:2000000,closedMonths:1,deposit:210000,shrinkPct:3,ownPharm:false,leaseMonths:24},
   jin:{dailySales:16000,gpPct:30,growth:25,platPct:20,deadPct:35,dealPrice:500000,stockClaimed:1000000,
-    ownPharm:true,nPharm:1,pharmPay:45000,assistPay:13000,closedMonths:1,workCap:300000,leaseMonths:20},
+    nPharm:1,pharmPay:45000,assistPay:13000,jinDays:8,closedMonths:1,workCap:300000,leaseMonths:20},
   // เคสแย่สุด: สต็อกเหลือจริง 1 ล้าน แต่ขอ 1 ล้าน = ส่วนลด 0% ก่อนหักของค้าง
   worst:{dailySales:15000,gpPct:30,growth:-10,platPct:20,platGP:20,deadPct:35,
     dealPrice:1000000,stockClaimed:1000000,closedMonths:1,deposit:210000,legalFee:30000,
